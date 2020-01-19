@@ -8,7 +8,30 @@
 
 #include "Tokenizer.hpp"
 #include "Token.hpp"
+#include <vector>
 
+std::vector<Token*> Tokenizer::Tokenize(std::string word) {
+    
+    return std::vector<Token*>();
+}
 
+Token* Tokenizer::isInteger(std::string word) {
+    
+    return nullptr;
+}
 
+Token* Tokenizer::isFloat(std::string word) {
+    
+    return nullptr;
+}
+
+Token* Tokenizer::isID(std::string word) {
+    
+    return nullptr;
+}
+
+Token* Tokenizer::isKeyword(std::string word) {
+    
+    return nullptr;
+}
 
