@@ -21,7 +21,7 @@ public:
     
     Tokenizer();
     ~Tokenizer();
-    std::vector<Token*> Tokenize(std::string);
+    std::vector<Token*> Tokenize(std::string, int);
     std::vector<Token*> matches;
     
 private:
@@ -75,10 +75,10 @@ private:
         { "local", TokenType::Local },
     };
     
-    Token* isInteger(std::string);
-    Token* isFloat(std::string);
-    Token* isID(std::string);
-    Token* isKeyword(std::string);
+    Token* isInteger(std::string, int);
+    Token* isFloat(std::string, int);
+    Token* isID(std::string, int);
+    Token* isKeyword(std::string, int);
     
 };
 
