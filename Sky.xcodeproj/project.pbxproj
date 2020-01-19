@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		F512112C23D1528D0026C90C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F512112B23D1528D0026C90C /* main.cpp */; };
+		F524E8C923D4C86900436511 /* Lexer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F524E8C723D4C86900436511 /* Lexer.cpp */; };
+		F524E8CC23D4C87700436511 /* Token.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F524E8CA23D4C87700436511 /* Token.cpp */; };
+		F524E8CF23D4C89A00436511 /* Tokenizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F524E8CD23D4C89A00436511 /* Tokenizer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,12 @@
 /* Begin PBXFileReference section */
 		F512112823D1528D0026C90C /* Sky */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Sky; sourceTree = BUILT_PRODUCTS_DIR; };
 		F512112B23D1528D0026C90C /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		F524E8C723D4C86900436511 /* Lexer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Lexer.cpp; sourceTree = "<group>"; };
+		F524E8C823D4C86900436511 /* Lexer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Lexer.hpp; sourceTree = "<group>"; };
+		F524E8CA23D4C87700436511 /* Token.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Token.cpp; sourceTree = "<group>"; };
+		F524E8CB23D4C87700436511 /* Token.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Token.hpp; sourceTree = "<group>"; };
+		F524E8CD23D4C89A00436511 /* Tokenizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tokenizer.cpp; sourceTree = "<group>"; };
+		F524E8CE23D4C89A00436511 /* Tokenizer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tokenizer.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +66,23 @@
 		F512112A23D1528D0026C90C /* Sky */ = {
 			isa = PBXGroup;
 			children = (
+				F524E8C623D4C84300436511 /* Lexer */,
 				F512112B23D1528D0026C90C /* main.cpp */,
 			);
 			path = Sky;
+			sourceTree = "<group>";
+		};
+		F524E8C623D4C84300436511 /* Lexer */ = {
+			isa = PBXGroup;
+			children = (
+				F524E8C723D4C86900436511 /* Lexer.cpp */,
+				F524E8C823D4C86900436511 /* Lexer.hpp */,
+				F524E8CA23D4C87700436511 /* Token.cpp */,
+				F524E8CB23D4C87700436511 /* Token.hpp */,
+				F524E8CD23D4C89A00436511 /* Tokenizer.cpp */,
+				F524E8CE23D4C89A00436511 /* Tokenizer.hpp */,
+			);
+			path = Lexer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,6 +142,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F524E8CC23D4C87700436511 /* Token.cpp in Sources */,
+				F524E8CF23D4C89A00436511 /* Tokenizer.cpp in Sources */,
+				F524E8C923D4C86900436511 /* Lexer.cpp in Sources */,
 				F512112C23D1528D0026C90C /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
