@@ -34,6 +34,7 @@
 		F524E8CB23D4C87700436511 /* Token.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Token.hpp; sourceTree = "<group>"; };
 		F524E8CD23D4C89A00436511 /* Tokenizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tokenizer.cpp; sourceTree = "<group>"; };
 		F524E8CE23D4C89A00436511 /* Tokenizer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tokenizer.hpp; sourceTree = "<group>"; };
+		F524E8D123D4DB8100436511 /* TokenType.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TokenType.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +82,7 @@
 				F524E8CB23D4C87700436511 /* Token.hpp */,
 				F524E8CD23D4C89A00436511 /* Tokenizer.cpp */,
 				F524E8CE23D4C89A00436511 /* Tokenizer.hpp */,
+				F524E8D123D4DB8100436511 /* TokenType.hpp */,
 			);
 			path = Lexer;
 			sourceTree = "<group>";
