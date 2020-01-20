@@ -13,8 +13,9 @@
 #include "TokenType.hpp"
 
 std::vector<Token*> Tokenizer::Tokenize(std::string word, int lineno) {
-    matches.push_back(isInteger(word, lineno));
-    matches.push_back(isFloat(word, lineno));
+    if (isInteger(word, lineno) != nullptr) matches.push_back(isInteger(word, lineno));
+    if (isFloat(word, lineno) != nullptr) matches.push_back(isFloat(word, lineno));
+    if (isID(word, lineno) != nullptr) matches.push_back(isID(word, lineno));
     return matches;
 }
 
