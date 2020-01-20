@@ -75,10 +75,10 @@ private:
         { "local", TokenType::Local },
     };
     
-    Token* isInteger(std::string, int);
-    Token* isFloat(std::string, int);
-    Token* isID(std::string, int);
-    Token* isKeyword(std::string, int);
+    bool isInteger(std::string, int);
+    bool isFloat(std::string, int);
+    bool isID(std::string, int);
+    bool isKeyword(std::string, int);
     
 };
 
