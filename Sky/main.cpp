@@ -7,9 +7,11 @@
 //
 
 #include <iostream>
+#include "Lexer.hpp"
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-    std::cout << "Hello, World!\n";
+    Lexer* lexer = new Lexer();
+    lexer->lex("Test.txt");
     return 0;
 }

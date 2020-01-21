@@ -16,10 +16,17 @@
 
 class Token {
 public:
+    
     Token(TokenType, int, std::string);
+    
+    TokenType getType();
+    int getLineno();
+    std::string getValue();
+    
+private:
+    
     TokenType type;
     int lineno;
     std::string value;
-    
 };
 #endif /* Token_hpp */

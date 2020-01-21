@@ -10,5 +10,13 @@
 #define Lexer_hpp
 
 #include <stdio.h>
+#include <string>
+#include "Tokenizer.hpp"
 
+class Lexer {
+public:
+    void lex(std::string);
+private:
+    Tokenizer* tokenizer;
+};
 #endif /* Lexer_hpp */

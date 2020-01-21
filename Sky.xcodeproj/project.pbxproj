@@ -35,6 +35,7 @@
 		F524E8CD23D4C89A00436511 /* Tokenizer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Tokenizer.cpp; sourceTree = "<group>"; };
 		F524E8CE23D4C89A00436511 /* Tokenizer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Tokenizer.hpp; sourceTree = "<group>"; };
 		F524E8D123D4DB8100436511 /* TokenType.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TokenType.hpp; sourceTree = "<group>"; };
+		F5FAC25723D676F200E2CA2E /* Test.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Test.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +68,7 @@
 		F512112A23D1528D0026C90C /* Sky */ = {
 			isa = PBXGroup;
 			children = (
+				F5FAC25623D676B400E2CA2E /* Tests */,
 				F524E8C623D4C84300436511 /* Lexer */,
 				F512112B23D1528D0026C90C /* main.cpp */,
 			);
@@ -85,6 +87,14 @@
 				F524E8D123D4DB8100436511 /* TokenType.hpp */,
 			);
 			path = Lexer;
+			sourceTree = "<group>";
+		};
+		F5FAC25623D676B400E2CA2E /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				F5FAC25723D676F200E2CA2E /* Test.txt */,
+			);
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -25,7 +25,6 @@ public:
     std::vector<Token*> matches;
     
 private:
-    std::string word;
     
     const std::unordered_map<std::string, TokenType> RESERVED_WORDS = {
         { "==", TokenType::Eq },
@@ -75,10 +74,10 @@ private:
         { "local", TokenType::Local },
     };
     
-    bool isInteger(std::string, int);
-    bool isFloat(std::string, int);
-    bool isID(std::string, int);
-    bool isKeyword(std::string, int);
+    bool isInteger(std::string);
+    bool isFloat(std::string);
+    bool isID(std::string);
+    bool isKeyword(std::string);
     
 };
 
