@@ -12,7 +12,62 @@
 #include "Token.hpp"
 #include "TokenType.hpp"
 
-std::vector<Token*> Tokenizer::Tokenize(std::string word, int lineno) {
+std::vector<Token*> matches;
+const std::unordered_map<std::string, TokenType> RESERVED_WORDS = {
+    { "==", TokenType::Eq },
+    { "<>", TokenType::NotEq },
+    { "<", TokenType::Lt },
+    { ">", TokenType::Gt },
+    { "<=", TokenType::LEq },
+    { ">=", TokenType::GEq },
+    { "+", TokenType::Plus },
+    { "-", TokenType::Minus },
+    { "*", TokenType::Mult },
+    { "/", TokenType::Div },
+    { "=", TokenType::Asgn },
+    { "(", TokenType::OpenPr },
+    { ")", TokenType::ClosePr },
+    { "{", TokenType::OpenCbr },
+    { "}", TokenType::CloseCbr },
+    { "[", TokenType::OpenSqbr },
+    { "]", TokenType::CloseSqbr },
+    { ";", TokenType::Semi },
+    { ",", TokenType::Comma },
+    { ".", TokenType::Dot },
+    { ":", TokenType::Colon },
+    { "::", TokenType::DblColon },
+    { "//", TokenType:: InlineCmt },
+    { "/*", TokenType::BlockOpenCmt },
+    { "*/", TokenType::BlockCloseCmt },
+    { "if", TokenType::If },
+    { "then", TokenType::Then },
+    { "else", TokenType::Else },
+    { "integer", TokenType::__Integer },
+    { "float", TokenType::__Float },
+    { "while", TokenType::While },
+    { "class", TokenType::Class },
+    { "do", TokenType::Do },
+    { "end", TokenType::End },
+    { "public", TokenType::Public },
+    { "private", TokenType::Private },
+    { "or", TokenType::Or },
+    { "and", TokenType::And },
+    { "not", TokenType::Not },
+    { "read", TokenType::Read },
+    { "write", TokenType::Write },
+    { "return", TokenType::Return },
+    { "main", TokenType::Main },
+    { "inherits", TokenType::Inherits},
+    { "local", TokenType::Local },
+};
+
+Tokenizer::Tokenizer() {}
+
+Tokenizer::~Tokenizer() {}
+
+int Tokenizer::Tokenize(std::string word, int lineno) {
+    matches.clear();
+    
     if (isInteger(word)) {
         Token* integerToken = new Token(TokenType::Integer, lineno, word);
         matches.push_back(integerToken);
@@ -33,7 +88,7 @@ std::vector<Token*> Tokenizer::Tokenize(std::string word, int lineno) {
         }
     }
     
-    return matches;
+    return int(matches.size());
 }
 
 bool Tokenizer::isInteger(std::string word) {
@@ -55,4 +110,6 @@ bool Tokenizer::isKeyword(std::string word) {
     
     return nullptr;
 }
+
+std::vector<Token*> Tokenizer::getMatches() { return matches; }
 

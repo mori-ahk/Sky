@@ -1,2 +1,4 @@
+integer a=5;
+float b
 123
 1.23

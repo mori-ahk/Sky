@@ -15,6 +15,8 @@
 
 class Lexer {
 public:
+    Lexer();
+    ~Lexer();
     void lex(std::string);
 private:
     Tokenizer* tokenizer;
