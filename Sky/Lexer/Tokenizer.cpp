@@ -88,6 +88,13 @@ int Tokenizer::Tokenize(std::string word, int lineno) {
         }
     }
     
+    if (isSpecial(word)) {
+        if (RESERVED_WORDS.find(word) != RESERVED_WORDS.end()) {
+            Token* specialToken = new Token(RESERVED_WORDS.at(word), lineno, word);
+            matches.push_back(specialToken);
+        }
+    }
+    
     return int(matches.size());
 }
 
@@ -106,9 +113,9 @@ bool Tokenizer::isID(std::string word) {
     return std::regex_match(word, reg);
 }
 
-bool Tokenizer::isKeyword(std::string word) {
-    
-    return nullptr;
+bool Tokenizer::isSpecial(std::string word) {
+    std::regex reg("\\[|\\]|\\(|\\)|\\{|\\}|\\+|-|=|==|<=|>=|>|<|//|\\*|/\\*|\\*/|:|::|;|,|/|<>|\\.");
+    return std::regex_match(word, reg);
 }
 
 std::vector<Token*> Tokenizer::getMatches() { return matches; }

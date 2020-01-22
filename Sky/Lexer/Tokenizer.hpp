@@ -28,8 +28,7 @@ private:
     bool isInteger(std::string);
     bool isFloat(std::string);
     bool isID(std::string);
-    bool isKeyword(std::string);
-    
+    bool isSpecial(std::string);
 };
 
 #endif /* Tokenizer_hpp */

@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <string>
+#include <fstream>
 #include "Tokenizer.hpp"
 
 class Lexer {
@@ -21,6 +22,6 @@ public:
     
 private:
     Tokenizer* tokenizer;
-    void handleWord(std::string&, int);
+    void handleWord(std::string&, int, char&, std::ifstream&);
 };
 #endif /* Lexer_hpp */

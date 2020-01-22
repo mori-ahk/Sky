@@ -21,7 +21,7 @@ Lexer::~Lexer() {
     delete tokenizer;
 }
 
-void Lexer::handleWord(std::string& word, int lineNumber) {
+void Lexer::handleWord(std::string& word, int lineNumber, char& currChar, std::ifstream& stream) {
     int numMatches = 0;
     numMatches = tokenizer->Tokenize(word, lineNumber);
     if (numMatches == 0) {
@@ -29,7 +29,10 @@ void Lexer::handleWord(std::string& word, int lineNumber) {
         tokenizer->Tokenize(word, lineNumber);
         Token* matchedToken = tokenizer->getMatches().size() != 0 ? tokenizer->getMatches().at(0) : nullptr;
         word.clear();
-        if (matchedToken != nullptr) totalMatches.push_back(matchedToken);
+        if (matchedToken != nullptr) {
+            totalMatches.push_back(matchedToken);
+            if (currChar != '\n') stream.putback(currChar);
+        }
     }
 }
 
@@ -42,6 +45,7 @@ void Lexer::lex(std::string filePath) {
     std::ifstream infile;
     
     infile.open (filePath, std::ios::in);
+    restart:
     while(!infile.eof()) {
         infile.get(currChar);
         
@@ -50,16 +54,16 @@ void Lexer::lex(std::string filePath) {
                 word += currChar;
                 infile.get(currChar);
                 word += currChar;
-                handleWord(word, lineNumber);
+                handleWord(word, lineNumber, currChar, infile);
                 break;
             case '\n':
                 word += currChar;
-                handleWord(word, lineNumber);
+                handleWord(word, lineNumber, currChar, infile);
                 lineNumber++;
                 break;
             default:
                 word += currChar;
-                handleWord(word, lineNumber);
+                handleWord(word, lineNumber, currChar, infile);
                 break;
         }
     }
