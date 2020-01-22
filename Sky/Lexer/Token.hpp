@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <string>
+#include <iostream>
 #include "TokenType.hpp"
 
 
@@ -23,6 +24,7 @@ public:
     int getLineno();
     std::string getValue();
     
+    friend std::ostream& operator<<(std::ostream&, Token&);
 private:
     
     TokenType type;

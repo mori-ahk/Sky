@@ -18,7 +18,9 @@ public:
     Lexer();
     ~Lexer();
     void lex(std::string);
+    
 private:
     Tokenizer* tokenizer;
+    void handleWord(std::string&, int);
 };
 #endif /* Lexer_hpp */

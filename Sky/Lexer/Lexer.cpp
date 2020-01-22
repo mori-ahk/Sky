@@ -21,31 +21,54 @@ Lexer::~Lexer() {
     delete tokenizer;
 }
 
+void Lexer::handleWord(std::string& word, int lineNumber) {
+    int numMatches = 0;
+    numMatches = tokenizer->Tokenize(word, lineNumber);
+    if (numMatches == 0) {
+        if (word.size() > 0) word.pop_back();
+        tokenizer->Tokenize(word, lineNumber);
+        Token* matchedToken = tokenizer->getMatches().size() != 0 ? tokenizer->getMatches().at(0) : nullptr;
+        word.clear();
+        if (matchedToken != nullptr) totalMatches.push_back(matchedToken);
+    }
+}
+
 void Lexer::lex(std::string filePath) {
     
-    char letter;
+    char currChar;
     int lineNumber = 1;
-    int numMatches = 0;
+    
     std::string word;
     std::ifstream infile;
     
     infile.open (filePath, std::ios::in);
     while(!infile.eof()) {
-        infile.get(letter);
-        word += letter;
-        numMatches = tokenizer->Tokenize(word, lineNumber);
-        if (numMatches == 0) {
-            if (word.size() > 0) word.pop_back();
-            tokenizer->Tokenize(word, lineNumber);
-            Token* matchedToken = tokenizer->getMatches().size() != 0 ? tokenizer->getMatches().at(0) : nullptr;
-            word = "";
-            if (matchedToken != nullptr) totalMatches.push_back(matchedToken);
-        }
+        infile.get(currChar);
         
-        if (letter == '\n') lineNumber++;
+        switch (currChar) {
+            case '.':
+                word += currChar;
+                infile.get(currChar);
+                word += currChar;
+                handleWord(word, lineNumber);
+                break;
+            case '\n':
+                word += currChar;
+                handleWord(word, lineNumber);
+                lineNumber++;
+                break;
+            default:
+                word += currChar;
+                handleWord(word, lineNumber);
+                break;
+        }
     }
     
     infile.close();
+    
+    for (auto& c : totalMatches) {
+        std::cout << *c << std::endl;
+    }
     
     return;
 }
