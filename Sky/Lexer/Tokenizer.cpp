@@ -65,7 +65,7 @@ Tokenizer::Tokenizer() {}
 
 Tokenizer::~Tokenizer() {}
 
-int Tokenizer::Tokenize(std::string word, int lineno) {
+int Tokenizer::Tokenize(std::string& word, int& lineno) {
     matches.clear();
     
     if (isInteger(word)) {

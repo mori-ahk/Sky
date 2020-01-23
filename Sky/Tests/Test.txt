@@ -10,4 +10,7 @@ this is block comment
 func (int a, int b) {
     float b = 5;
 }
+if (a==5) {
+    float b = a;
+}
 
