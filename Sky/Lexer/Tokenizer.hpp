@@ -21,7 +21,7 @@ public:
     
     Tokenizer();
     ~Tokenizer();
-    int Tokenize(std::string, int);
+    int Tokenize(std::string&, int&);
     std::vector<Token*> getMatches();
 private:
 
