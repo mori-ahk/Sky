@@ -1,8 +1,8 @@
 ==    +    (    if     do
 <>    -    )    then    end
 <    *    {    else    public
->    /    }    private  or
-<=    =    [    while    class
+>    /    }    private  while
+<=    =    [     or   class
 >=        ]    integer    and
 ;            float    not
 ,            read    inherits
