@@ -12,44 +12,111 @@
 #include "Token.hpp"
 #include "TokenType.hpp"
 
-std::vector<Token*> Tokenizer::Tokenize(std::string word, int lineno) {
-    if (isInteger(word, lineno) != nullptr) matches.push_back(isInteger(word, lineno));
-    if (isFloat(word, lineno) != nullptr) matches.push_back(isFloat(word, lineno));
-    if (isID(word, lineno) != nullptr) matches.push_back(isID(word, lineno));
-    return matches;
-}
+std::vector<Token*> matches;
+const std::unordered_map<std::string, TokenType> RESERVED_WORDS = {
+    { "==", TokenType::Eq },
+    { "<>", TokenType::NotEq },
+    { "<", TokenType::Lt },
+    { ">", TokenType::Gt },
+    { "<=", TokenType::LEq },
+    { ">=", TokenType::GEq },
+    { "+", TokenType::Plus },
+    { "-", TokenType::Minus },
+    { "*", TokenType::Mult },
+    { "/", TokenType::Div },
+    { "=", TokenType::Asgn },
+    { "(", TokenType::OpenPr },
+    { ")", TokenType::ClosePr },
+    { "{", TokenType::OpenCbr },
+    { "}", TokenType::CloseCbr },
+    { "[", TokenType::OpenSqbr },
+    { "]", TokenType::CloseSqbr },
+    { ";", TokenType::Semi },
+    { ",", TokenType::Comma },
+    { ".", TokenType::Dot },
+    { ":", TokenType::Colon },
+    { "::", TokenType::DblColon },
+    { "//", TokenType:: InlineCmt },
+    { "/*", TokenType::BlockOpenCmt },
+    { "*/", TokenType::BlockCloseCmt },
+    { "if", TokenType::If },
+    { "then", TokenType::Then },
+    { "else", TokenType::Else },
+    { "integer", TokenType::__Integer },
+    { "float", TokenType::__Float },
+    { "while", TokenType::While },
+    { "class", TokenType::Class },
+    { "do", TokenType::Do },
+    { "end", TokenType::End },
+    { "public", TokenType::Public },
+    { "private", TokenType::Private },
+    { "or", TokenType::Or },
+    { "and", TokenType::And },
+    { "not", TokenType::Not },
+    { "read", TokenType::Read },
+    { "write", TokenType::Write },
+    { "return", TokenType::Return },
+    { "main", TokenType::Main },
+    { "inherits", TokenType::Inherits},
+    { "local", TokenType::Local },
+};
 
-Token* Tokenizer::isInteger(std::string word, int lineno) {
-    std::regex reg ("([1-9][0-9]*|0)");
-    if (std::regex_match(word, reg)) {
+Tokenizer::Tokenizer() {}
+
+Tokenizer::~Tokenizer() {}
+
+int Tokenizer::Tokenize(std::string word, int lineno) {
+    matches.clear();
+    
+    if (isInteger(word)) {
         Token* integerToken = new Token(TokenType::Integer, lineno, word);
-        return integerToken;
-    } else return nullptr;
-}
-
-Token* Tokenizer::isFloat(std::string word, int lineno) {
-    std::regex reg ("(([1-9][0-9]*|0)(.[0-9]*[1-9]|.0)([e]?[+-]?[1-9][0-9]*|0))");
-    if (std:: regex_match(word, reg)) {
+        matches.push_back(integerToken);
+    }
+    
+    if (isFloat(word)) {
         Token* floatToken = new Token(TokenType::Float, lineno, word);
-        return floatToken;
-    } else return nullptr;
-}
-
-Token* Tokenizer::isID(std::string word, int lineno) {
-    std::regex reg ("(([a-z]|[A-Z])([a-z]|[A-Z]|[1-9][0-9]*|_)*)");
-    if (std::regex_match(word, reg)) {
+        matches.push_back(floatToken);
+    }
+    
+    if (isID(word)) {
         if (RESERVED_WORDS.find(word) != RESERVED_WORDS.end()) {
             Token* reservedWordToken = new Token(RESERVED_WORDS.at(word), lineno, word);
-            return reservedWordToken;
+            matches.push_back(reservedWordToken);
         } else {
             Token* idToken = new Token(TokenType::Id, lineno, word);
-            return idToken;
+            matches.push_back(idToken);
         }
-    } else return nullptr;
+    }
+    
+    if (isSpecial(word)) {
+        if (RESERVED_WORDS.find(word) != RESERVED_WORDS.end()) {
+            Token* specialToken = new Token(RESERVED_WORDS.at(word), lineno, word);
+            matches.push_back(specialToken);
+        }
+    }
+    
+    return int(matches.size());
 }
 
-Token* Tokenizer::isKeyword(std::string word, int lineno) {
-    
-    return nullptr;
+bool Tokenizer::isInteger(std::string word) {
+    std::regex reg ("([1-9][0-9]*|0)");
+    return std::regex_match(word, reg);
 }
+
+bool Tokenizer::isFloat(std::string word) {
+    std::regex reg ("[1-9][0-9]*.[0-9]*[0-9]?[e]?[+-]?[0-9][0-9]*");
+    return std::regex_match(word, reg);
+}
+
+bool Tokenizer::isID(std::string word) {
+    std::regex reg ("(([a-z]|[A-Z])([a-z]|[A-Z]|[1-9][0-9]*|_)*)");
+    return std::regex_match(word, reg);
+}
+
+bool Tokenizer::isSpecial(std::string word) {
+    std::regex reg("\\[|\\]|\\(|\\)|\\{|\\}|\\+|-|=|==|<=|>=|>|<|//|\\*|/\\*|\\*/|:|::|;|,|/|<>|\\.");
+    return std::regex_match(word, reg);
+}
+
+std::vector<Token*> Tokenizer::getMatches() { return matches; }
 

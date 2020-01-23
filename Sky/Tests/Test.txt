@@ -1,0 +1,13 @@
+_integer a=5;
+float b
+123
+01.23
+// this is inline comment
+// and this line is just for fun
+/*
+this is block comment
+*/
+func (int a, int b) {
+    float b = 5;
+}
+
