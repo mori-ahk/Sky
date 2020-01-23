@@ -35,5 +35,4 @@ multiple line
 block comment
 */
 
-
 // this is an inline comment
