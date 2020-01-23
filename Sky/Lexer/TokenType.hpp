@@ -60,6 +60,7 @@ enum class TokenType {
     Main,
     Inherits,
     Local,
+    Error,
 };
 
 #endif /* TokenType_hpp */

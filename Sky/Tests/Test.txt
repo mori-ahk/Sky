@@ -27,6 +27,9 @@ abc1
 a1bc
 abc_1abc
 abc1_abc_1abc
+_abc
+
+@ # $ !    " ' ? \ | & ~ 
 
 /* this is a single line block comment */
 

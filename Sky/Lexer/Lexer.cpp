@@ -12,6 +12,7 @@
 #include <fstream>
 
 std::vector<Token*> totalMatches;
+std::vector<Token*> totalErrors;
 
 Lexer::Lexer() {
     tokenizer = new Tokenizer();
@@ -23,16 +24,27 @@ Lexer::~Lexer() {
 
 void Lexer::handleWord(std::string& word, int lineNumber, char& currChar, std::ifstream& stream) {
     int numMatches = 0;
+    char droppedChar;
+    
     numMatches = tokenizer->Tokenize(word, lineNumber);
     if (numMatches == 0) {
         
-        if (word.size() > 0) word.pop_back();
+        if (word.size() > 0) {
+            droppedChar = word.back();
+            word.pop_back();
+        }
+        
         tokenizer->Tokenize(word, lineNumber);
         Token* matchedToken = tokenizer->getMatches().size() != 0 ? tokenizer->getMatches().at(0) : nullptr;
         
         if (matchedToken != nullptr) {
             totalMatches.push_back(matchedToken);
             if (currChar != '\n') stream.putback(currChar);
+        } else {
+            word += droppedChar;
+            if (word != " " && word != "\n" && word != "") {
+                totalErrors.push_back(new Token(TokenType::Error, lineNumber, word));
+            }
         }
         
         word.clear();
@@ -46,9 +58,9 @@ void Lexer::lex(std::string filePath) {
     
     std::string word;
     std::ifstream stream;
-
+    
     stream.open (filePath, std::ios::in);
-    restart:
+restart:
     while(!stream.eof()) {
         stream.get(currChar);
         
@@ -72,4 +84,12 @@ void Lexer::lex(std::string filePath) {
     }
     
     stream.close();
+    
+    for (auto& c: totalMatches) {
+        std::cout << *c << std::endl;
+    }
+    
+    for (auto& c: totalErrors) {
+        std::cout << *c << std::endl;
+    }
 }
