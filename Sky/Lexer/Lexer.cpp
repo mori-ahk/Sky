@@ -45,36 +45,31 @@ void Lexer::lex(std::string filePath) {
     int lineNumber = 1;
     
     std::string word;
-    std::ifstream infile;
-    
-    infile.open (filePath, std::ios::in);
-    while(!infile.eof()) {
-        infile.get(currChar);
+    std::ifstream stream;
+
+    stream.open (filePath, std::ios::in);
+    restart:
+    while(!stream.eof()) {
+        stream.get(currChar);
         
         switch (currChar) {
-            case '.':
+            case 'e': case '.':
                 word += currChar;
-                infile.get(currChar);
+                stream.get(currChar);
                 word += currChar;
-                handleWord(word, lineNumber, currChar, infile);
+                handleWord(word, lineNumber, currChar, stream);
                 break;
             case '\n':
                 word += currChar;
-                handleWord(word, lineNumber, currChar, infile);
+                handleWord(word, lineNumber, currChar, stream);
                 lineNumber++;
                 break;
             default:
                 word += currChar;
-                handleWord(word, lineNumber, currChar, infile);
+                handleWord(word, lineNumber, currChar, stream);
                 break;
         }
     }
     
-    infile.close();
-    
-    for (auto& c : totalMatches) {
-        std::cout << *c << std::endl;
-    }
-    
-    return;
+    stream.close();
 }

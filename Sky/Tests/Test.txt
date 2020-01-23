@@ -1,16 +1,38 @@
-_integer a=5;
-float b
-123
-01.23
-// this is inline comment
-// and this line is just for fun
-/*
-this is block comment
-*/
-func (int a, int b) {
-    float b = 5;
-}
-if (a==5) {
-    float b = a;
-}
+==    +    (    if     do
+<>    -    )    then    end
+<    *    {    else    public
+>    /    }    private  while
+<=    =    [     or   class
+>=        ]    integer    and
+;            float    not
+,            read    inherits
+.            write    local
+:            return
+::            main
 
+0
+1
+10
+12
+123
+12345
+    
+1.23
+12.34
+120.340e10
+12345.6789e-123
+
+abc
+abc1
+a1bc
+abc_1abc
+abc1_abc_1abc
+
+/* this is a single line block comment */
+
+/* this is a
+multiple line
+block comment
+*/
+
+// this is an inline comment
