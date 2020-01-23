@@ -104,7 +104,7 @@ bool Tokenizer::isInteger(std::string word) {
 }
 
 bool Tokenizer::isFloat(std::string word) {
-    std::regex reg ("[1-9][0-9]*.[0-9]*[0-9]?[e]?[+-]?[0-9][0-9]*");
+    std::regex reg ("[1-9][0-9]*.[0-9]*[0-9]?[e]?[+-]?[1-9]?[0-9]*");
     return std::regex_match(word, reg);
 }
 
