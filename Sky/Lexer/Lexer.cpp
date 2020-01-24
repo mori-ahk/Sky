@@ -10,6 +10,7 @@
 #include "Token.hpp"
 #include <iostream>
 #include <fstream>
+#include <regex>
 
 std::vector<Token*> totalMatches;
 std::vector<Token*> totalErrors;
@@ -22,74 +23,49 @@ Lexer::~Lexer() {
     delete tokenizer;
 }
 
-void Lexer::handleWord(std::string& word, int lineNumber, char& currChar, std::ifstream& stream) {
-    int numMatches = 0;
-    char droppedChar;
-    
-    numMatches = tokenizer->Tokenize(word, lineNumber);
-    if (numMatches == 0) {
-        
-        if (word.size() > 0) {
-            droppedChar = word.back();
-            word.pop_back();
-        }
-        
-        tokenizer->Tokenize(word, lineNumber);
-        Token* matchedToken = tokenizer->getMatches().size() != 0 ? tokenizer->getMatches().at(0) : nullptr;
-        
-        if (matchedToken != nullptr) {
-            totalMatches.push_back(matchedToken);
-            if (currChar != '\n') stream.putback(currChar);
-        } else {
-            word += droppedChar;
-            if (word != " " && word != "\n" && word != "") {
-                totalErrors.push_back(new Token(TokenType::Error, lineNumber, word));
-            }
-        }
-        
-        word.clear();
+void Lexer::handleWord(std::string& line, int lineNumber, int& pos) {
+    Token* matchedToken = tokenizer->Tokenize(line, lineNumber, pos);
+    if (matchedToken == nullptr) {
+        Token* errorToken = new Token(TokenType::Error, lineNumber, matchedToken->getValue());
+        totalErrors.push_back(errorToken);
+    } else {
+        totalMatches.push_back(matchedToken);
     }
+    pos += matchedToken->getValue().size();
 }
 
 void Lexer::lex(std::string filePath) {
-    
-    char currChar;
-    int lineNumber = 1;
+
+    int lineNumber = 0;
     
     std::string word;
+    std::string line;
     std::ifstream stream;
-    
+    std::regex reg("\\s+");
+    int pos = 0;
     stream.open (filePath, std::ios::in);
-restart:
     while(!stream.eof()) {
-        stream.get(currChar);
-        
-        switch (currChar) {
-            case 'e': case '.':
-                word += currChar;
-                stream.get(currChar);
-                word += currChar;
-                handleWord(word, lineNumber, currChar, stream);
-                break;
-            case '\n':
-                word += currChar;
-                handleWord(word, lineNumber, currChar, stream);
-                lineNumber++;
-                break;
-            default:
-                word += currChar;
-                handleWord(word, lineNumber, currChar, stream);
-                break;
+        std::getline(stream, line);
+        word = line;
+        line = std::regex_replace(line, reg, "");
+        lineNumber++;
+        while (word.size() != 0) {
+            word = line.substr(pos);
+            handleWord(word, lineNumber, pos);
         }
+        
+        
     }
     
     stream.close();
     
-    for (auto& c: totalMatches) {
-        std::cout << *c << std::endl;
-    }
+   
     
-    for (auto& c: totalErrors) {
-        std::cout << *c << std::endl;
-    }
+//    for (auto& c: totalMatches) {
+//        std::cout << *c << std::endl;
+//    }
+//
+//    for (auto& c: totalErrors) {
+//        std::cout << *c << std::endl;
+//    }
 }

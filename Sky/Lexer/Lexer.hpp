@@ -22,6 +22,6 @@ public:
     
 private:
     Tokenizer* tokenizer;
-    void handleWord(std::string&, int, char&, std::ifstream&);
+    void handleWord(std::string&, int, int&);
 };
 #endif /* Lexer_hpp */
