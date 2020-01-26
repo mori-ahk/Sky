@@ -66,50 +66,50 @@ Tokenizer::~Tokenizer() {}
 
 Token* Tokenizer::Tokenize(std::string& word, int& lineno, int& pos) {
     
-    if (!isID(word, pos).empty()) {
-        std::string match = isID(word, pos);
+    if (!isID(word).empty()) {
+        std::string match = isID(word);
         if (RESERVED_WORDS.find(match) != RESERVED_WORDS.end()) {
-            Token* reservedWordToken = new Token(RESERVED_WORDS.at(match), lineno, match);
-            return reservedWordToken;
+            Token* reservedToken = new Token(RESERVED_WORDS.at(match), lineno, match);
+            return reservedToken;
         } else {
             Token* idToken = new Token(TokenType::Id, lineno, match);
             return idToken;
         }
     }
     
-    if (!isFloat(word, pos).empty()) {
-        std::string match = isFloat(word, pos);
+    if (!isFloat(word).empty()) {
+        std::string match = isFloat(word);
         Token* floatToken = new Token(TokenType::Float, lineno, match);
         return floatToken;
     }
     
-    if (!isInteger(word, pos).empty()) {
-        std::string match = isInteger(word, pos);
+    if (!isInteger(word).empty()) {
+        std::string match = isInteger(word);
         Token* integerToken = new Token(TokenType::Integer, lineno, match);
         return integerToken;
     }
     
-    if (!isLongOperator(word, pos).empty()) {
-        std::string match = isLongOperator(word, pos);
+    if (!isLongOperator(word).empty()) {
+        std::string match = isLongOperator(word);
         if (RESERVED_WORDS.find(match) != RESERVED_WORDS.end()) {
             Token* longOpToken = new Token(RESERVED_WORDS.at(match), lineno, match);
             return longOpToken;
         }
     }
     
-    if (!isShortOperator(word, pos).empty()) {
-        std::string match = isShortOperator(word, pos);
-        if (RESERVED_WORDS.find(match) != RESERVED_WORDS.end()) {
-            Token* shortOpToken = new Token(RESERVED_WORDS.at(match), lineno, match);
-            return shortOpToken;
-        }
-    }
-    
-    if (!isComment(word, pos).empty()) {
-        std::string match = isComment(word, pos);
+    if (!isComment(word).empty()) {
+        std::string match = isComment(word);
         if (RESERVED_WORDS.find(match) != RESERVED_WORDS.end()) {
             Token* commentToken = new Token(RESERVED_WORDS.at(match), lineno, match);
             return commentToken;
+        }
+    }
+    
+    if (!isShortOperator(word).empty()) {
+        std::string match = isShortOperator(word);
+        if (RESERVED_WORDS.find(match) != RESERVED_WORDS.end()) {
+            Token* shortOpToken = new Token(RESERVED_WORDS.at(match), lineno, match);
+            return shortOpToken;
         }
     }
     
@@ -117,42 +117,42 @@ Token* Tokenizer::Tokenize(std::string& word, int& lineno, int& pos) {
 }
 
 
-std::string Tokenizer::isID(std::string& word, int& pos) {
+std::string Tokenizer::isID(std::string& word) {
     std::regex reg ("^(([a-z]|[A-Z])([a-z]|[A-Z]|[1-9][0-9]*|_)*)");
     std::smatch match;
     std::regex_search(word, match, reg);
     return !match.empty() ? match[0].str() : std::string();
 }
 
-std::string Tokenizer::isFloat(std::string& word, int& pos) {
-    std::regex reg ("^([1-9][0-9]*.[0-9]*[0-9]?[e]?[+-]?[1-9]?[0-9]*)");
+std::string Tokenizer::isFloat(std::string& word) {
+    std::regex reg ("^([0-9]*\\.[0-9]*[e]?[+-]?[1-9]?[0-9]*)");
     std::smatch match;
     std::regex_search(word, match, reg);
     return !match.empty() ? match[0].str() : std::string();
 }
 
-std::string Tokenizer::isInteger(std::string& word, int& pos) {
-    std::regex reg ("^([1-9][0-9]*|0)");
+std::string Tokenizer::isInteger(std::string& word) {
+    std::regex reg ("^([0-9]*|0)");
     std::smatch match;
     std::regex_search(word, match, reg);
     return !match.empty() ? match[0].str() : std::string();
 }
 
-std::string Tokenizer::isLongOperator(std::string& word, int& pos) {
+std::string Tokenizer::isLongOperator(std::string& word) {
     std::regex reg("^(==|<=|>=|<>|::)");
     std::smatch match;
     std::regex_search(word, match, reg);
     return !match.empty() ? match[0].str() : std::string();
 }
 
-std::string Tokenizer::isShortOperator(std::string& word, int& pos) {
+std::string Tokenizer::isShortOperator(std::string& word) {
     std::regex reg("^(\\[|\\]|\\(|\\)|\\{|\\}|\\+|-|=|>|<|\\*|:|;|,|/|\\.)");
     std::smatch match;
     std::regex_search(word, match, reg);
     return !match.empty() ? match[0].str() : std::string();
 }
 
-std::string Tokenizer::isComment(std::string& word, int& pos) {
+std::string Tokenizer::isComment(std::string& word) {
     std::regex reg("^(//|/\\*|\\*/)");
     std::smatch match;
     std::regex_search(word, match, reg);

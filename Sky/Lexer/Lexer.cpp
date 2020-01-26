@@ -23,49 +23,59 @@ Lexer::~Lexer() {
     delete tokenizer;
 }
 
+bool Lexer::doesOnlyContainWhitespace(std::string& line) {
+    for (char c: line) {
+        if (c != ' ') return false;
+    }
+    return true;
+}
+
+std::string Lexer::extractErrorString(std::string& line) {
+    int counter = 0;
+    while (line.size() > counter && line.at(counter) != ' ') counter++;
+    return line.substr(0, counter);
+}
+
 void Lexer::handleWord(std::string& line, int lineNumber, int& pos) {
+    if (doesOnlyContainWhitespace(line)) return;
     Token* matchedToken = tokenizer->Tokenize(line, lineNumber, pos);
     if (matchedToken == nullptr) {
-        Token* errorToken = new Token(TokenType::Error, lineNumber, matchedToken->getValue());
+        std::string errorTokenString = extractErrorString(line);
+        Token* errorToken = new Token(TokenType::Error, lineNumber, errorTokenString);
         totalErrors.push_back(errorToken);
+        pos += errorTokenString.size();
+        return;
     } else {
         totalMatches.push_back(matchedToken);
+        pos += matchedToken->getValue().size();
     }
-    pos += matchedToken->getValue().size();
 }
 
 void Lexer::lex(std::string filePath) {
-
-    int lineNumber = 0;
-    
-    std::string word;
     std::string line;
     std::ifstream stream;
-    std::regex reg("\\s+");
     int pos = 0;
+    int lineNumber = 0;
     stream.open (filePath, std::ios::in);
+    
     while(!stream.eof()) {
         std::getline(stream, line);
-        word = line;
-        line = std::regex_replace(line, reg, "");
         lineNumber++;
-        while (word.size() != 0) {
-            word = line.substr(pos);
-            handleWord(word, lineNumber, pos);
+        while (line.size() != 0) {
+            handleWord(line, lineNumber, pos);
+            while (line.size() > pos && line.at(pos) == ' ') pos++;
+            line = line.substr(pos);
+            pos = 0;
         }
-        
-        
     }
     
     stream.close();
     
-   
-    
-//    for (auto& c: totalMatches) {
-//        std::cout << *c << std::endl;
-//    }
-//
-//    for (auto& c: totalErrors) {
-//        std::cout << *c << std::endl;
-//    }
+    for (auto& c: totalMatches) {
+        std::cout << *c << std::endl;
+    }
+
+    for (auto& c: totalErrors) {
+        std::cout << *c << std::endl;
+    }
 }

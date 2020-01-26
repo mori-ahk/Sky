@@ -25,13 +25,12 @@ public:
     
 private:
 
-    std::string isInteger(std::string&, int&);
-    std::string isFloat(std::string&, int&);
-    std::string isID(std::string&, int&);
-    std::string isLongOperator(std::string&, int&);
-    std::string isShortOperator(std::string&, int&);
-    std::string isComment(std::string&, int&);
-    
+    std::string isInteger(std::string&);
+    std::string isFloat(std::string&);
+    std::string isID(std::string&);
+    std::string isLongOperator(std::string&);
+    std::string isShortOperator(std::string&);
+    std::string isComment(std::string&);
 };
 
 #endif /* Tokenizer_hpp */

@@ -23,5 +23,7 @@ public:
 private:
     Tokenizer* tokenizer;
     void handleWord(std::string&, int, int&);
+    bool doesOnlyContainWhitespace(std::string&);
+    std::string extractErrorString(std::string&);
 };
 #endif /* Lexer_hpp */
