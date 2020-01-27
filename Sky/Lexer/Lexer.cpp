@@ -21,14 +21,6 @@ Lexer::~Lexer() {
     delete tokenizer;
 }
 
-std::vector<Token*> Lexer::getTotalMatches() {
-    return totalMatches;
-}
-
-std::vector<Token*> Lexer::getTotalErrors() {
-    return totalErrors;
-}
-
 bool Lexer::doesOnlyContainWhitespace(std::string& line) {
     for (char c: line) {
         if (c != ' ') return false;
@@ -50,14 +42,13 @@ void Lexer::handleWord(std::string& line, int lineNumber, int& pos) {
         Token* errorToken = new Token(TokenType::Error, lineNumber, errorTokenString);
         totalErrors.push_back(errorToken);
         pos += errorTokenString.size();
-        return;
     } else {
         totalMatches.push_back(matchedToken);
         pos += matchedToken->getValue().size();
     }
 }
 
-void Lexer::lex(std::string filePath) {
+void Lexer::read(std::string& filePath) {
     std::string line;
     std::ifstream stream;
     int pos = 0;
@@ -76,4 +67,42 @@ void Lexer::lex(std::string filePath) {
     }
     
     stream.close();
+}
+
+
+void Lexer::write(std::string& filePath) {
+    std::string fileName;
+    
+    for (auto& c : filePath) {
+        if (c == '.') break;
+        fileName += c;
+    }
+    
+    int lastPrintedLine = totalMatches.front()->getLineno();
+    std::ofstream stream(fileName + "_tokens.txt");
+    for (int i = 0; i < totalMatches.size(); i++) {
+        if (i+1 < totalMatches.size() && totalMatches.at(i)->getLineno() < totalMatches.at(i+1)->getLineno()) {
+            stream << *(totalMatches.at(i)) << std::endl;
+        } else stream << *(totalMatches.at(i)) << " ";
+    }
+    
+    stream.close();
+    
+    lastPrintedLine = totalMatches.front()->getLineno();
+    stream.open(fileName + "_errors.txt");
+    for (int i = 0; i < totalErrors.size(); i++) {
+        if (i+1 < totalErrors.size() && totalErrors.at(i)->getLineno() < totalErrors.at(i+1)->getLineno()) {
+            stream << *(totalErrors.at(i)) << std::endl;
+        } else stream << *(totalErrors.at(i)) << " ";
+    }
+    
+    stream.close();
+}
+
+
+void Lexer::lex(std::string filePath) {
+    totalMatches.clear();
+    totalErrors.clear();
+    read(filePath);
+    write(filePath);
 }

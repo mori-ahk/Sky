@@ -24,11 +24,10 @@ public:
 private:
     Tokenizer* tokenizer;
     void handleWord(std::string&, int, int&);
+    void read(std::string&);
+    void write(std::string&);
     bool doesOnlyContainWhitespace(std::string&);
     std::string extractErrorString(std::string&);
-    
-    std::vector<Token*> getTotalMatches();
-    std::vector<Token*> getTotalErrors();
     
 };
 #endif /* Lexer_hpp */

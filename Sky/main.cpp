@@ -10,8 +10,11 @@
 #include "Lexer.hpp"
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
+    
     Lexer* lexer = new Lexer();
-    lexer->lex("Test.txt");
+    lexer->lex("Test_1.txt");
+    lexer->lex("Test_2.txt");
+    
+    delete lexer;
     return 0;
 }
