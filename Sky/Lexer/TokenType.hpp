@@ -38,8 +38,7 @@ enum class TokenType {
     Colon, // :
     DblColon, // ::
     InlineCmt, // //
-    BlockOpenCmt, // /*
-    BlockCloseCmt, // */
+    BlockCmt, // /* ... */
     If,
     Then,
     Else,

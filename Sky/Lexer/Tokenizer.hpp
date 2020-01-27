@@ -30,7 +30,8 @@ private:
     std::string isID(std::string&);
     std::string isLongOperator(std::string&);
     std::string isShortOperator(std::string&);
-    std::string isComment(std::string&);
+    std::string isInlineComment(std::string&);
+    std::string isMultilineComment(std::string&);
 };
 
 #endif /* Tokenizer_hpp */

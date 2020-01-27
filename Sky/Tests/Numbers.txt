@@ -1,0 +1,14 @@
+// Integers
+0 123 1230
+
+// Invalid Integers
+0123
+
+// Floats
+1.23 12.34
+.10 .1e-10
+01.123 01.123e450
+120.340e10 12345.6789e-123
+
+// Invalid Floats
+1. 1.e

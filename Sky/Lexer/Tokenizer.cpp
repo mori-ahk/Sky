@@ -36,8 +36,6 @@ const std::unordered_map<std::string, TokenType> RESERVED_WORDS = {
     { ":", TokenType::Colon },
     { "::", TokenType::DblColon },
     { "//", TokenType:: InlineCmt },
-    { "/*", TokenType::BlockOpenCmt },
-    { "*/", TokenType::BlockCloseCmt },
     { "if", TokenType::If },
     { "then", TokenType::Then },
     { "else", TokenType::Else },
@@ -97,12 +95,16 @@ Token* Tokenizer::Tokenize(std::string& word, int& lineno, int& pos) {
         }
     }
     
-    if (!isComment(word).empty()) {
-        std::string match = isComment(word);
-        if (RESERVED_WORDS.find(match) != RESERVED_WORDS.end()) {
-            Token* commentToken = new Token(RESERVED_WORDS.at(match), lineno, match);
-            return commentToken;
-        }
+    if (!isInlineComment(word).empty()) {
+        std::string match = isInlineComment(word);
+        Token* inlineCommentToken = new Token(TokenType::InlineCmt, lineno, match);
+        return inlineCommentToken;
+    }
+    
+    if (!isMultilineComment(word).empty()) {
+        std::string match = isMultilineComment(word);
+        Token* multilineCommentToken = new Token(TokenType::BlockCmt, lineno, match);
+        return multilineCommentToken;
     }
     
     if (!isShortOperator(word).empty()) {
@@ -125,7 +127,7 @@ std::string Tokenizer::isID(std::string& word) {
 }
 
 std::string Tokenizer::isFloat(std::string& word) {
-    std::regex reg ("^([0-9]*\\.[0-9]*[e]?[+-]?[1-9]?[0-9]*)");
+    std::regex reg ("^([0-9]*\\.[0-9]+[e]?[+-]?[0-9]+)");
     std::smatch match;
     std::regex_search(word, match, reg);
     return !match.empty() ? match[0].str() : std::string();
@@ -152,10 +154,16 @@ std::string Tokenizer::isShortOperator(std::string& word) {
     return !match.empty() ? match[0].str() : std::string();
 }
 
-std::string Tokenizer::isComment(std::string& word) {
-    std::regex reg("^(//|/\\*|\\*/)");
+std::string Tokenizer::isInlineComment(std::string& word) {
+    std::regex reg("^((//)\\s+(.)*)");
     std::smatch match;
     std::regex_search(word, match, reg);
     return !match.empty() ? match[0].str() : std::string();
 }
 
+std::string Tokenizer::isMultilineComment(std::string& word) {
+    std::regex reg("^((/\\*)(.|\n)*?(\\*/))");
+    std::smatch match;
+    std::regex_search(word, match, reg);
+    return !match.empty() ? match[0].str() : std::string();
+}

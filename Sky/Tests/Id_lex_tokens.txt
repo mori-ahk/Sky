@@ -1,0 +1,4 @@
+[InlineCmt, // Valid Ids, 1]
+[Id, abc, 2] [Id, a_bc, 2] [Id, abc_, 2] [Id, a1bc, 2]
+[InlineCmt, // Invalid Ids, 4]
+[Mult, *, 5] [Id, abc, 5] [Integer, 1, 5] [Id, abc, 5] 
