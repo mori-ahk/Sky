@@ -21,14 +21,16 @@ public:
     
     Tokenizer();
     ~Tokenizer();
-    int Tokenize(std::string&, int&);
-    std::vector<Token*> getMatches();
+    Token* Tokenize(std::string&, int&, int&);
+    
 private:
 
-    bool isInteger(std::string);
-    bool isFloat(std::string);
-    bool isID(std::string);
-    bool isSpecial(std::string);
+    std::string isInteger(std::string&);
+    std::string isFloat(std::string&);
+    std::string isID(std::string&);
+    std::string isLongOperator(std::string&);
+    std::string isShortOperator(std::string&);
+    std::string isComment(std::string&);
 };
 
 #endif /* Tokenizer_hpp */

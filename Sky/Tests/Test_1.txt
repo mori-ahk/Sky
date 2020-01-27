@@ -1,8 +1,8 @@
 ==    +    (    if     do
 <>    -    )    then    end
 <    *    {    else    public
->    /    }    private  while
-<=    =    [     or   class
+>    /    }    while    privat
+<=    =    [    class    or
 >=        ]    integer    and
 ;            float    not
 ,            read    inherits
@@ -27,9 +27,6 @@ abc1
 a1bc
 abc_1abc
 abc1_abc_1abc
-_abc
-
-@ # $ !    " ' ? \ | & ~ 
 
 /* this is a single line block comment */
 
