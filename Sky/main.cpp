@@ -7,13 +7,21 @@
 //
 
 #include <iostream>
+#include <filesystem>
 #include "Lexer.hpp"
+
 
 int main(int argc, const char * argv[]) {
     
+    const std::string basePath = "Tests/";
+    std::string fileName;
     Lexer* lexer = new Lexer();
-    lexer->lex("Comment.txt");
-    //lexer->lex("Test_2.txt");
+    while (fileName != "exit") {
+        std::cout << "Please enter a file name: (type exit to terminate)" << std::endl;
+        std::cin >> fileName;
+        std::cout << basePath + fileName << std::endl;
+        lexer->lex(basePath + fileName);
+    }
     
     delete lexer;
     return 0;
