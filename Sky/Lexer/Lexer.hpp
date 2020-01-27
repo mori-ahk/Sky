@@ -13,6 +13,7 @@
 #include <string>
 #include <fstream>
 #include "Tokenizer.hpp"
+#include "Token.hpp"
 
 class Lexer {
 public:
@@ -25,5 +26,9 @@ private:
     void handleWord(std::string&, int, int&);
     bool doesOnlyContainWhitespace(std::string&);
     std::string extractErrorString(std::string&);
+    
+    std::vector<Token*> getTotalMatches();
+    std::vector<Token*> getTotalErrors();
+    
 };
 #endif /* Lexer_hpp */

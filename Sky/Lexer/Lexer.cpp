@@ -7,10 +7,8 @@
 //
 
 #include "Lexer.hpp"
-#include "Token.hpp"
 #include <iostream>
 #include <fstream>
-#include <regex>
 
 std::vector<Token*> totalMatches;
 std::vector<Token*> totalErrors;
@@ -21,6 +19,14 @@ Lexer::Lexer() {
 
 Lexer::~Lexer() {
     delete tokenizer;
+}
+
+std::vector<Token*> Lexer::getTotalMatches() {
+    return totalMatches;
+}
+
+std::vector<Token*> Lexer::getTotalErrors() {
+    return totalErrors;
 }
 
 bool Lexer::doesOnlyContainWhitespace(std::string& line) {
@@ -70,12 +76,4 @@ void Lexer::lex(std::string filePath) {
     }
     
     stream.close();
-    
-    for (auto& c: totalMatches) {
-        std::cout << *c << std::endl;
-    }
-
-    for (auto& c: totalErrors) {
-        std::cout << *c << std::endl;
-    }
 }
