@@ -48,8 +48,7 @@ std::string TokenTypeString[] = {
     "Colon", // :
     "DblColon", // ::
     "InlineCmt", // //
-    "BlockOpenCmt", // /*
-    "BlockCloseCmt", // */
+    "BlockCmt", // /* ... */
     "If",
     "Then",
     "Else",

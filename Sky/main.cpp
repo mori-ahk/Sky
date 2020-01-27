@@ -12,8 +12,8 @@
 int main(int argc, const char * argv[]) {
     
     Lexer* lexer = new Lexer();
-    lexer->lex("Test_1.txt");
-    lexer->lex("Test_2.txt");
+    lexer->lex("Comment.txt");
+    //lexer->lex("Test_2.txt");
     
     delete lexer;
     return 0;
