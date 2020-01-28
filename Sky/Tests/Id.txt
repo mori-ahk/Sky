@@ -2,4 +2,4 @@
 abc a_bc abc_ a1bc
 
 // Invalid Ids
-_abc *abc 1abc
+_abc
