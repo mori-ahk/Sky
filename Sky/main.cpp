@@ -23,6 +23,5 @@ int main(int argc, const char * argv[]) {
         lexer->lex(basePath + fileName);
     }
     
-    delete lexer;
     return 0;
 }
