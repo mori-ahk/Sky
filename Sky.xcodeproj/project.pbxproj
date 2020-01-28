@@ -41,6 +41,7 @@
 		F551619623DF7A4D00B85AB6 /* LongOp.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LongOp.txt; sourceTree = "<group>"; };
 		F551619723DF7A9700B85AB6 /* Numbers.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Numbers.txt; sourceTree = "<group>"; };
 		F551619823DF82E100B85AB6 /* Id.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Id.txt; sourceTree = "<group>"; };
+		F551619923DFA36D00B85AB6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +77,7 @@
 				F5FAC25623D676B400E2CA2E /* Tests */,
 				F524E8C623D4C84300436511 /* Lexer */,
 				F512112B23D1528D0026C90C /* main.cpp */,
+				F551619923DFA36D00B85AB6 /* README.md */,
 			);
 			path = Sky;
 			sourceTree = "<group>";
