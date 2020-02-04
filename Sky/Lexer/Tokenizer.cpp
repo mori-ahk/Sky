@@ -155,7 +155,7 @@ std::string Tokenizer::isShortOperator(std::string& word) {
 }
 
 std::string Tokenizer::isInlineComment(std::string& word) {
-    std::regex reg("^((//)\\s+(.)*)");
+    std::regex reg("^((//)(\\s+)?(.)*)");
     std::smatch match;
     std::regex_search(word, match, reg);
     return !match.empty() ? match[0].str() : std::string();

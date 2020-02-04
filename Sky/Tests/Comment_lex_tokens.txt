@@ -1,6 +1,0 @@
-[InlineCmt, // this is inline comment , 1]
-[InlineCmt, // this is inline comment that includes token keywords such as: integer, float, public, 3]
-[BlockCmt, /* this multiline comments
-which includes tabs     and spaces
-as well as return characters
-*/, 5] 
