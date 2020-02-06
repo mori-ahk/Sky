@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.15)
+project(Sky)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(Sky main.cpp Lexer/Lexer.cpp Lexer/Lexer.h Lexer/Token.cpp Lexer/Token.h Lexer/Tokenizer.cpp Lexer/Tokenizer.h Lexer/TokenType.h)

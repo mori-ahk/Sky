@@ -1,0 +1,3 @@
+/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles/Sky.dir

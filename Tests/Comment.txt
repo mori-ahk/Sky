@@ -1,0 +1,10 @@
+// this is inline comment 
+
+// this is inline comment that includes token keywords such as: integer, float, public
+
+/* this multiline comments
+which includes tabs     and spaces
+as well as return characters
+*/
+
+1//5
