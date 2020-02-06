@@ -11,7 +11,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="374213ba-f36a-47cc-9e77-845267a0c010" name="Default Changelist" comment="" />
+    <list default="true" id="374213ba-f36a-47cc-9e77-845267a0c010" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -83,7 +85,7 @@
       <updated>1579739057579</updated>
       <workItem from="1579739059460" duration="565000" />
       <workItem from="1579739638167" duration="3000" />
-      <workItem from="1580935023633" duration="4865000" />
+      <workItem from="1580935023633" duration="5089000" />
     </task>
     <servers />
   </component>
