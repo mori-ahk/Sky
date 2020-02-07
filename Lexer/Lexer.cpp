@@ -18,6 +18,11 @@ Lexer::~Lexer() {
     delete tokenizer;
 }
 
+bool Lexer::isComment(Token* matchedToken) {
+    if (matchedToken->getType() == TokenType::InlineCmt || matchedToken->getType() == TokenType::BlockCmt) return true;
+    else return false;
+}
+
 bool Lexer::doesOnlyContainWhitespace(std::string& line) {
     for (char c: line) {
         if (c != ' ') return false;
@@ -45,7 +50,11 @@ void Lexer::handleWord(std::string& line, int lineNumber, int& pos) {
         totalErrors.push_back(errorToken);
         pos += errorTokenString.size();
     } else {
-        totalMatches.push_back(matchedToken);
+        //Ignoring comment tokens
+        if (!isComment(matchedToken)) {
+            totalMatches.push_back(matchedToken);
+        }
+
         pos += matchedToken->getValue().size();
     }
 }

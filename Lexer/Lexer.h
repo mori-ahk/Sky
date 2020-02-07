@@ -24,6 +24,7 @@ private:
     void read(std::string&);
     void write(std::string&);
     bool doesOnlyContainWhitespace(std::string&);
+    bool isComment(Token*);
     std::string extractErrorString(std::string&);
 
 };
