@@ -204,6 +204,87 @@ Lexer/Tokenizer.cpp.s:
 	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.s
 .PHONY : Lexer/Tokenizer.cpp.s
 
+Parser/Grammar.o: Parser/Grammar.cpp.o
+
+.PHONY : Parser/Grammar.o
+
+# target to build an object file
+Parser/Grammar.cpp.o:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Grammar.cpp.o
+.PHONY : Parser/Grammar.cpp.o
+
+Parser/Grammar.i: Parser/Grammar.cpp.i
+
+.PHONY : Parser/Grammar.i
+
+# target to preprocess a source file
+Parser/Grammar.cpp.i:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Grammar.cpp.i
+.PHONY : Parser/Grammar.cpp.i
+
+Parser/Grammar.s: Parser/Grammar.cpp.s
+
+.PHONY : Parser/Grammar.s
+
+# target to generate assembly for a file
+Parser/Grammar.cpp.s:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Grammar.cpp.s
+.PHONY : Parser/Grammar.cpp.s
+
+Parser/Production.o: Parser/Production.cpp.o
+
+.PHONY : Parser/Production.o
+
+# target to build an object file
+Parser/Production.cpp.o:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Production.cpp.o
+.PHONY : Parser/Production.cpp.o
+
+Parser/Production.i: Parser/Production.cpp.i
+
+.PHONY : Parser/Production.i
+
+# target to preprocess a source file
+Parser/Production.cpp.i:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Production.cpp.i
+.PHONY : Parser/Production.cpp.i
+
+Parser/Production.s: Parser/Production.cpp.s
+
+.PHONY : Parser/Production.s
+
+# target to generate assembly for a file
+Parser/Production.cpp.s:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Production.cpp.s
+.PHONY : Parser/Production.cpp.s
+
+Parser/Rule.o: Parser/Rule.cpp.o
+
+.PHONY : Parser/Rule.o
+
+# target to build an object file
+Parser/Rule.cpp.o:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Rule.cpp.o
+.PHONY : Parser/Rule.cpp.o
+
+Parser/Rule.i: Parser/Rule.cpp.i
+
+.PHONY : Parser/Rule.i
+
+# target to preprocess a source file
+Parser/Rule.cpp.i:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Rule.cpp.i
+.PHONY : Parser/Rule.cpp.i
+
+Parser/Rule.s: Parser/Rule.cpp.s
+
+.PHONY : Parser/Rule.s
+
+# target to generate assembly for a file
+Parser/Rule.cpp.s:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Rule.cpp.s
+.PHONY : Parser/Rule.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -249,6 +330,15 @@ help:
 	@echo "... Lexer/Tokenizer.o"
 	@echo "... Lexer/Tokenizer.i"
 	@echo "... Lexer/Tokenizer.s"
+	@echo "... Parser/Grammar.o"
+	@echo "... Parser/Grammar.i"
+	@echo "... Parser/Grammar.s"
+	@echo "... Parser/Production.o"
+	@echo "... Parser/Production.i"
+	@echo "... Parser/Production.s"
+	@echo "... Parser/Rule.o"
+	@echo "... Parser/Rule.i"
+	@echo "... Parser/Rule.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

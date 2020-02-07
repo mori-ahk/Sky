@@ -109,12 +109,54 @@ CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Tokenizer.cpp -o CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.s
 
+CMakeFiles/Sky.dir/Parser/Grammar.cpp.o: CMakeFiles/Sky.dir/flags.make
+CMakeFiles/Sky.dir/Parser/Grammar.cpp.o: ../Parser/Grammar.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Sky.dir/Parser/Grammar.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Sky.dir/Parser/Grammar.cpp.o -c /Users/mortezaahmadi/Dev/Clion/Sky/Parser/Grammar.cpp
+
+CMakeFiles/Sky.dir/Parser/Grammar.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Sky.dir/Parser/Grammar.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/mortezaahmadi/Dev/Clion/Sky/Parser/Grammar.cpp > CMakeFiles/Sky.dir/Parser/Grammar.cpp.i
+
+CMakeFiles/Sky.dir/Parser/Grammar.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Sky.dir/Parser/Grammar.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/mortezaahmadi/Dev/Clion/Sky/Parser/Grammar.cpp -o CMakeFiles/Sky.dir/Parser/Grammar.cpp.s
+
+CMakeFiles/Sky.dir/Parser/Rule.cpp.o: CMakeFiles/Sky.dir/flags.make
+CMakeFiles/Sky.dir/Parser/Rule.cpp.o: ../Parser/Rule.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Sky.dir/Parser/Rule.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Sky.dir/Parser/Rule.cpp.o -c /Users/mortezaahmadi/Dev/Clion/Sky/Parser/Rule.cpp
+
+CMakeFiles/Sky.dir/Parser/Rule.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Sky.dir/Parser/Rule.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/mortezaahmadi/Dev/Clion/Sky/Parser/Rule.cpp > CMakeFiles/Sky.dir/Parser/Rule.cpp.i
+
+CMakeFiles/Sky.dir/Parser/Rule.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Sky.dir/Parser/Rule.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/mortezaahmadi/Dev/Clion/Sky/Parser/Rule.cpp -o CMakeFiles/Sky.dir/Parser/Rule.cpp.s
+
+CMakeFiles/Sky.dir/Parser/Production.cpp.o: CMakeFiles/Sky.dir/flags.make
+CMakeFiles/Sky.dir/Parser/Production.cpp.o: ../Parser/Production.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Sky.dir/Parser/Production.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Sky.dir/Parser/Production.cpp.o -c /Users/mortezaahmadi/Dev/Clion/Sky/Parser/Production.cpp
+
+CMakeFiles/Sky.dir/Parser/Production.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Sky.dir/Parser/Production.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/mortezaahmadi/Dev/Clion/Sky/Parser/Production.cpp > CMakeFiles/Sky.dir/Parser/Production.cpp.i
+
+CMakeFiles/Sky.dir/Parser/Production.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Sky.dir/Parser/Production.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/mortezaahmadi/Dev/Clion/Sky/Parser/Production.cpp -o CMakeFiles/Sky.dir/Parser/Production.cpp.s
+
 # Object files for target Sky
 Sky_OBJECTS = \
 "CMakeFiles/Sky.dir/main.cpp.o" \
 "CMakeFiles/Sky.dir/Lexer/Lexer.cpp.o" \
 "CMakeFiles/Sky.dir/Lexer/Token.cpp.o" \
-"CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o"
+"CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o" \
+"CMakeFiles/Sky.dir/Parser/Grammar.cpp.o" \
+"CMakeFiles/Sky.dir/Parser/Rule.cpp.o" \
+"CMakeFiles/Sky.dir/Parser/Production.cpp.o"
 
 # External object files for target Sky
 Sky_EXTERNAL_OBJECTS =
@@ -123,9 +165,12 @@ Sky: CMakeFiles/Sky.dir/main.cpp.o
 Sky: CMakeFiles/Sky.dir/Lexer/Lexer.cpp.o
 Sky: CMakeFiles/Sky.dir/Lexer/Token.cpp.o
 Sky: CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o
+Sky: CMakeFiles/Sky.dir/Parser/Grammar.cpp.o
+Sky: CMakeFiles/Sky.dir/Parser/Rule.cpp.o
+Sky: CMakeFiles/Sky.dir/Parser/Production.cpp.o
 Sky: CMakeFiles/Sky.dir/build.make
 Sky: CMakeFiles/Sky.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable Sky"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable Sky"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Sky.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
