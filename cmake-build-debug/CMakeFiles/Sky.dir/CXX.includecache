@@ -6,6 +6,16 @@
 
 #IncludeRegexTransform: 
 
+/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Lexer.cpp
+Lexer.h
+/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Lexer.h
+Token.h
+/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Token.h
+iostream
+-
+fstream
+-
+
 /Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Lexer.h
 stdio.h
 -
@@ -45,10 +55,4 @@ Token.h
 /Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Token.h
 TokenType.h
 /Users/mortezaahmadi/Dev/Clion/Sky/Lexer/TokenType.h
-
-/Users/mortezaahmadi/Dev/Clion/Sky/main.cpp
-iostream
--
-Lexer/Lexer.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Lexer.h
 
