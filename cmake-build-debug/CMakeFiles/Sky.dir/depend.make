@@ -16,6 +16,15 @@ CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o: ../Lexer/TokenType.h
 CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o: ../Lexer/Tokenizer.cpp
 CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o: ../Lexer/Tokenizer.h
 
+CMakeFiles/Sky.dir/Parser/Grammar.cpp.o: ../Parser/Grammar.cpp
+CMakeFiles/Sky.dir/Parser/Grammar.cpp.o: ../Parser/Grammar.h
+CMakeFiles/Sky.dir/Parser/Grammar.cpp.o: ../Parser/Rule.h
+CMakeFiles/Sky.dir/Parser/Grammar.cpp.o: ../Parser/RuleType.h
+
+CMakeFiles/Sky.dir/Parser/Rule.cpp.o: ../Parser/Rule.cpp
+CMakeFiles/Sky.dir/Parser/Rule.cpp.o: ../Parser/Rule.h
+CMakeFiles/Sky.dir/Parser/Rule.cpp.o: ../Parser/RuleType.h
+
 CMakeFiles/Sky.dir/main.cpp.o: ../Lexer/Lexer.h
 CMakeFiles/Sky.dir/main.cpp.o: ../Lexer/Token.h
 CMakeFiles/Sky.dir/main.cpp.o: ../Lexer/TokenType.h

@@ -231,33 +231,6 @@ Parser/Grammar.cpp.s:
 	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Grammar.cpp.s
 .PHONY : Parser/Grammar.cpp.s
 
-Parser/Production.o: Parser/Production.cpp.o
-
-.PHONY : Parser/Production.o
-
-# target to build an object file
-Parser/Production.cpp.o:
-	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Production.cpp.o
-.PHONY : Parser/Production.cpp.o
-
-Parser/Production.i: Parser/Production.cpp.i
-
-.PHONY : Parser/Production.i
-
-# target to preprocess a source file
-Parser/Production.cpp.i:
-	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Production.cpp.i
-.PHONY : Parser/Production.cpp.i
-
-Parser/Production.s: Parser/Production.cpp.s
-
-.PHONY : Parser/Production.s
-
-# target to generate assembly for a file
-Parser/Production.cpp.s:
-	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Production.cpp.s
-.PHONY : Parser/Production.cpp.s
-
 Parser/Rule.o: Parser/Rule.cpp.o
 
 .PHONY : Parser/Rule.o
@@ -333,9 +306,6 @@ help:
 	@echo "... Parser/Grammar.o"
 	@echo "... Parser/Grammar.i"
 	@echo "... Parser/Grammar.s"
-	@echo "... Parser/Production.o"
-	@echo "... Parser/Production.i"
-	@echo "... Parser/Production.s"
 	@echo "... Parser/Rule.o"
 	@echo "... Parser/Rule.i"
 	@echo "... Parser/Rule.s"

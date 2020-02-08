@@ -107,12 +107,6 @@
 		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Grammar.h">
 			<Option target="Sky"/>
 		</Unit>
-		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Production.cpp">
-			<Option target="Sky"/>
-		</Unit>
-		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Production.h">
-			<Option target="Sky"/>
-		</Unit>
 		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Rule.cpp">
 			<Option target="Sky"/>
 		</Unit>
