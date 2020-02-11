@@ -7,13 +7,6 @@
 #include <unordered_set>
 #include <vector>
 
-
-const std::unordered_map<std::string, Rule*> RULES = {
-
-        {"START", new Rule(RuleType::START, {"main", "class", "id"}, {"$"}, {"PROGRAM"})},
-        {"PROGRAM", new Rule(RuleType::PROGRAM, {"main", "class", "id"}, {"$"}, {"CLASS_DECLARATIONS FUNCTION"})}
-};
-
 std::unordered_map<RuleType, std::vector<std::string>> RHS = {
         {RuleType::START,                               {"PROGRAM"}},
         {RuleType::PROGRAM,                             {"CLASS_DECLARATIONS FUNCTION_DEFINITIONS main FUNCTION_BODY"}},
@@ -83,4 +76,74 @@ std::unordered_map<RuleType, std::vector<std::string>> RHS = {
         {RuleType::ASSIGNMENT_OP,                       {"="}},
         {RuleType::FUNCTION_PARAMS_TAIL,                {", TYPE id ARRAY_DIMENSIONS"}},
         {RuleType::INDICES,                             {"INDEX INDICES",                                       "#"}},
+};
+
+std::unordered_map<RuleType, std::unordered_set<std::string>> FIRST = {
+        {RuleType::START,                               {"main", "class", "id"}},
+        {RuleType::PROGRAM,                             {"main", "class", "id"}},
+        {RuleType::CLASS_DECLARATIONS,                  {"class"}},
+        {RuleType::CLASS_DECLARATION,                   {"class"}},
+        {RuleType::FUNCTION_DEFINITIONS,                {"id"}},
+        {RuleType::FUNCTION_DEFINITION,                 {"id"}},
+        {RuleType::MEMBER_DECLARATIONS,                 {"public", "private"}},
+        {RuleType::MEMBER_DECLARATION,                  {"id", "__Integer", "__Float"}},
+        {RuleType::FUNCTION_OR_VARIABLE_DECLARATION,    {"id", "("}},
+        {RuleType::VISIBILITY,                          {"public", "private"}},
+        {RuleType::STATEMENT,                           {"id", "if", "while", "read", "write", "return"}},
+        {RuleType::STATEMENT_VARIABLE,                  {"id"}},
+        {RuleType::STATEMENT_VARIABLE_OR_FUNCTION_CALL, {"(", ".", "["}},
+        {RuleType::STATEMENT_VARIABLE_EXT,              {"."}},
+        {RuleType::STATEMENT_FUNCTION_CALL,             {"."}},
+        {RuleType::ASSIGN_STATEMENT_OR_FUNCTION_CALL,   {"id"}},
+        {RuleType::VARIABLE_OR_FUNCTION_CALL_EXT,       {"(", ".", "[", "="}},
+        {RuleType::VARIABLE_EXT,                        {".", "="}},
+        {RuleType::FUNCTION_CALL_EXT,                   {";", "."}},
+        {RuleType::FUNCTION_PARAMS,                     {"id", "__Integer", "__Float"}},
+        {RuleType::ADD_OP,                              {"+", "-", "or"}},
+        {RuleType::OPTIONAL_INHERITS,                   {"inherits"}},
+        {RuleType::REL_EXPRESSION,                      {"id", "(", "+", "-", "Integer", "Float", "not"}},
+        {RuleType::FUNCTION_DECLARATION,                {"("}},
+        {RuleType::FUNCTION_CALL_PARAMS_TAILS,          {","}},
+        {RuleType::LOCAL_SCOPE,                         {"local"}},
+        {RuleType::ARRAY_DIMENSIONS,                    {"["}},
+        {RuleType::EXPRESSION,                          {"id", "(", "+", "-", "Integer", "Float", "not"}},
+        {RuleType::REL_EXPRESSION_OR_NULL,              {"==", "<>", "<", ">", "<=", ">="}},
+        {RuleType::STATEMENTS,                          {"id", "if", "while", "read", "write", "return"}},
+        {RuleType::ARITH_EXPRESSION,                    {"TERM RIGHT_REC_ARITH_EXPRESSION"}},
+        {RuleType::RIGHT_REC_ARITH_EXPRESSION,          {"ADD_OP TERM RIGHT_REC_ARITH_EXPRESSION",              "#"}},
+        {RuleType::FUNCTION_SIGNATURE,                  {"id FUNCTION_SIGNATURE_NAMESPACE"}},
+        {RuleType::FUNCTION_SIGNATURE_NAMESPACE,        {"FUNCTION_SIGNATURE_EXT",                              ":: id FUNCTION_SIGNATURE_EXT"}},
+        {RuleType::FUNCTION_SIGNATURE_EXT,              {"( FUNCTION_PARAMS ) : TYPE_OR_VOID"}},
+        {RuleType::FUNCTION_PARAMS_TAILS,               {"FUNCTION_PARAMS_TAIL FUNCTION_PARAMS_TAILS",          "#"}},
+        {RuleType::INHERITED_CLASSES,                   {", id INHERITED_CLASSES"}},
+        {RuleType::SIGN,                                {"+",                                                   "-"}},
+        {RuleType::COMPARE_OP,                          {"==",                                                  "<>",      "<",     ">",                    "<=",         ">="}},
+        {RuleType::INDEX,                               {"[ ARITH_EXPRESSION ]"}},
+        {RuleType::VARIABLE_DECLARATIONS,               {"VARIABLE_DECLARATION VARIABLE_DECLARATIONS",          "#"}},
+        {RuleType::FACTOR,                              {"VARIABLE_FUNCTION_CALL",                              "Integer", "float", "( ARITH_EXPRESSION )", "not FACTOR", "SIGN FACTOR"}},
+        {RuleType::VARIABLE_FUNCTION_CALL,              {"id VARIABLE_OR_FUNCTION_CALL"}},
+        {RuleType::VARIABLE_OR_FUNCTION_CALL,           {"INDICES FACTOR_VARIABLE",                             "( FUNCTION_CALL_PARAMS ) FACTOR_FUNCTION_CALL"}},
+        {RuleType::FACTOR_VARIABLE,                     {". VARIABLE_FUNCTION_CALL",                            "#"}},
+        {RuleType::TERM,                                {"FACTOR RIGHT_REC_TERM"}},
+        {RuleType::MULT_OP,                             {"*",                                                   "/",       "and"}},
+        {RuleType::RIGHT_REC_TERM,                      {"MULT_OP FACTOR RIGHT_REC_TERM",                       "#"}},
+        {RuleType::TYPE_OR_VOID,                        {"TYPE",                                                "void"}},
+        {RuleType::TYPE,                                {"TYPE_NON_ID",                                         "id"}},
+        {RuleType::TYPE_NON_ID,                         {"__Integer",                                           "__Float"}},
+        {RuleType::ARRAY_SIZE,                          {"[ OPTIONAL_INT ]"}},
+        {RuleType::OPTIONAL_INT,                        {"Integer",                                             "#"}},
+        {RuleType::FUNCTION_CALL_PARAMS_TAIL,           {", EXPRESSION"}},
+        {RuleType::FUNCTION_CALL_PARAMS,                {"EXPRESSION FUNCTION_CALL_PARAMS_TAILS",               "#"}},
+        {RuleType::VARIABLE_DECLARATION,                {"id ARRAY_DIMENSIONS ;"}},
+        {RuleType::FUNCTION_BODY,                       {"LOCAL_SCOPE do STATEMENT end"}},
+        {RuleType::STATEMENT_BLOCK,                     {"do STATEMENTS end", "STATEMENT",                      "#"}},
+        {RuleType::ASSIGNMENT_OP,                       {"="}},
+        {RuleType::FUNCTION_PARAMS_TAIL,                {", TYPE id ARRAY_DIMENSIONS"}},
+        {RuleType::INDICES,                             {"INDEX INDICES",                                       "#"}},
+};
+
+const std::unordered_map<std::string, Rule*> RULES = {
+
+        {"START", new Rule(RuleType::START, {"main", "class", "id"}, {"$"}, RHS[RuleType::START])},
+        {"PROGRAM", new Rule(RuleType::PROGRAM, {"main", "class", "id"}, {"$"}, {"CLASS_DECLARATIONS FUNCTION"})}
 };
