@@ -24,14 +24,18 @@ public:
 
     bool doesBelongToFirst(Token*);
     bool doesBelongToFollow(Token*);
-
+    std::string getNextRule();
 private:
 
+    void seperateRHS(std::vector<std::string>&);
+    bool doesContainWhitespace(std::string&);
     std::string name;
     RuleType type;
     std::unordered_set<std::string> first;
     std::unordered_set<std::string> follow;
     std::vector<std::string> RHS;
+    int currentRule;
+
 
 };
 

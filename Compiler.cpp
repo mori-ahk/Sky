@@ -18,7 +18,7 @@ void Compiler::compile(std::string filePath) {
     lexer->lex(filePath);
     auto nextToken = lexer->next();
     while(nextToken != nullptr) {
-        parser->parse(nextToken);
+        parser->parse(nextToken, "START");
         nextToken = lexer->next();
     }
 }

@@ -20,29 +20,11 @@ TokenType.h
 stdio.h
 -
 
-/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Grammar.h
-Rule.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Rule.h
-RuleType.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Parser/RuleType.h
-unordered_map
--
-unordered_set
--
+/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Rule.cpp
 vector
 -
-string
--
-
-/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Parser.cpp
-Parser.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Parser.h
-
-/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Parser.h
-Grammar.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Grammar.h
-../Lexer/Token.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Token.h
+Rule.h
+/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Rule.h
 
 /Users/mortezaahmadi/Dev/Clion/Sky/Parser/Rule.h
 string

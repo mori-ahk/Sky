@@ -9,8 +9,8 @@ Rule::Rule(RuleType type, std::unordered_set<std::string> first, std::unordered_
     this->type = type;
     this->first = first;
     this->follow = follow;
-    this->RHS = RHS;
-
+    seperateRHS(RHS);
+    currentRule = 0;
 }
 
 bool Rule::doesBelongToFirst(Token* token) {
@@ -19,6 +19,36 @@ bool Rule::doesBelongToFirst(Token* token) {
 
 bool Rule::doesBelongToFollow(Token* token) {
     return follow.find(token->getValue()) != follow.end();
+}
+
+void Rule::seperateRHS(std::vector<std::string>& RHS) {
+    for(std::string& rule: RHS) {
+        if (!doesContainWhitespace(rule)) {
+            this->RHS.push_back(rule);
+            continue;
+        }
+        std::string toPushBack;
+        for(int i = 0; i < rule.size(); i++) {
+            if (rule.at(i) == ' ') {
+                this->RHS.push_back(toPushBack);
+                toPushBack.clear();
+            } else {
+                toPushBack += rule.at(i);
+                if (i == rule.size() - 1) this->RHS.push_back(toPushBack);
+            }
+        }
+    }
+}
+
+bool Rule::doesContainWhitespace(std::string& rule) {
+    for(char c: rule) {
+        if (c == ' ') return true;
+    }
+    return false;
+}
+
+std::string Rule::getNextRule() {
+    return currentRule > RHS.size() - 1 ? std::string() : RHS.at(currentRule++);
 }
 
 std::string RuleTypeString[] = {
