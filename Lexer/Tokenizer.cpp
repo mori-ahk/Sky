@@ -52,6 +52,7 @@ const std::unordered_map<std::string, TokenType> RESERVED_WORDS = {
         { "main", TokenType::Main },
         { "inherits", TokenType::Inherits},
         { "local", TokenType::Local },
+        { "void", TokenType::Void },
 };
 
 Tokenizer::Tokenizer() {}

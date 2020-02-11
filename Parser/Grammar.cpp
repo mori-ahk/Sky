@@ -4,6 +4,9 @@
 
 #include "Grammar.h"
 
+Grammar::Grammar() {}
+Grammar::~Grammar() {}
+
 const std::unordered_map<RuleType, std::vector<std::string> >& Grammar::getRHS() {
     return RHS;
 }

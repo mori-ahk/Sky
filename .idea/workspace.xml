@@ -12,9 +12,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="374213ba-f36a-47cc-9e77-845267a0c010" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Compiler.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Compiler.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Parser/Parser.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Parser/Parser.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lexer/Lexer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Lexer/Lexer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lexer/Lexer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Lexer/Lexer.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lexer/Token.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Lexer/Token.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lexer/TokenType.h" beforeDir="false" afterPath="$PROJECT_DIR$/Lexer/TokenType.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lexer/Tokenizer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Lexer/Tokenizer.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parser/Grammar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Grammar.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parser/Grammar.h" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Grammar.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parser/Rule.h" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Rule.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Lexer.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Lexer.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Token.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Token.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/main.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Sky" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Sky" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Sky.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Sky.cbp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,7 +117,8 @@
       <workItem from="1581045265725" duration="900000" />
       <workItem from="1581102087663" duration="2836000" />
       <workItem from="1581381660989" duration="1457000" />
-      <workItem from="1581392353608" duration="6003000" />
+      <workItem from="1581392353608" duration="6047000" />
+      <workItem from="1581450603290" duration="1358000" />
     </task>
     <servers />
   </component>
@@ -111,6 +138,10 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="569" y="334" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1680.1050@0.0.1680.1050" timestamp="1579739090830" />
+    <state x="610" y="248" key="#com.intellij.ide.util.MemberChooser" timestamp="1581451896268">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="610" y="248" key="#com.intellij.ide.util.MemberChooser/0.0.1680.1050@0.0.1680.1050" timestamp="1581451896268" />
     <state width="1638" height="363" key="GridCell.Tab.0.bottom" timestamp="1581053955367">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
@@ -147,10 +178,10 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="341" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1581135087857" />
-    <state x="517" y="357" key="com.intellij.ide.util.TipDialog" timestamp="1581392360009">
+    <state x="517" y="357" key="com.intellij.ide.util.TipDialog" timestamp="1581450603843">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="517" y="357" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581392360009" />
+    <state x="517" y="357" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581450603843" />
     <state x="498" y="147" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1581395190888">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>

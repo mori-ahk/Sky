@@ -1,8 +1,10 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/Sky.dir/Compiler.cpp.o"
   "CMakeFiles/Sky.dir/Lexer/Lexer.cpp.o"
   "CMakeFiles/Sky.dir/Lexer/Token.cpp.o"
   "CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o"
   "CMakeFiles/Sky.dir/Parser/Grammar.cpp.o"
+  "CMakeFiles/Sky.dir/Parser/Parser.cpp.o"
   "CMakeFiles/Sky.dir/Parser/Rule.cpp.o"
   "CMakeFiles/Sky.dir/main.cpp.o"
   "Sky"

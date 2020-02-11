@@ -6,6 +6,7 @@
 #define SKY_RULE_H
 
 #include <string>
+#include <vector>
 #include <unordered_set>
 #include "RuleType.h"
 

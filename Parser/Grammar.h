@@ -13,6 +13,8 @@
 #include <string>
 class Grammar {
 public:
+    Grammar();
+    ~Grammar();
     const std::unordered_map<RuleType, std::vector<std::string> >& getRHS();
     const std::unordered_map<RuleType, std::unordered_set<std::string> >& getFIRST();
     const std::unordered_map<RuleType, std::unordered_set<std::string> >& getFOLLOW();

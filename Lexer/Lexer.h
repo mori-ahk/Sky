@@ -25,7 +25,9 @@ private:
     void write(std::string&);
     bool doesOnlyContainWhitespace(std::string&);
     bool isComment(Token*);
+    Token* next();
     std::string extractErrorString(std::string&);
+    int currentToken;
 
 };
 

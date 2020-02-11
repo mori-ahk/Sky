@@ -66,6 +66,7 @@ std::string TokenTypeString[] = {
         "Inherits",
         "Local",
         "Error",
+        "Void",
 };
 
 

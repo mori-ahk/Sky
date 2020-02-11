@@ -57,6 +57,7 @@ enum class TokenType {
     Inherits,
     Local,
     Error,
+    Void,
 };
 
 

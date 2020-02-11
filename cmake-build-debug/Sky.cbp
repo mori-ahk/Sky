@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Compiler.cpp">
+			<Option target="Sky"/>
+		</Unit>
+		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Compiler.h">
+			<Option target="Sky"/>
+		</Unit>
 		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Lexer.cpp">
 			<Option target="Sky"/>
 		</Unit>
@@ -105,6 +111,12 @@
 			<Option target="Sky"/>
 		</Unit>
 		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Grammar.h">
+			<Option target="Sky"/>
+		</Unit>
+		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Parser.cpp">
+			<Option target="Sky"/>
+		</Unit>
+		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Parser.h">
 			<Option target="Sky"/>
 		</Unit>
 		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Rule.cpp">
