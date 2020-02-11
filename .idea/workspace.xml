@@ -13,6 +13,7 @@
   <component name="ChangeListManager">
     <list default="true" id="374213ba-f36a-47cc-9e77-845267a0c010" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parser/Grammar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Grammar.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parser/Grammar.h" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Grammar.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -90,7 +91,7 @@
       <workItem from="1581045265725" duration="900000" />
       <workItem from="1581102087663" duration="2836000" />
       <workItem from="1581381660989" duration="1457000" />
-      <workItem from="1581392353608" duration="5241000" />
+      <workItem from="1581392353608" duration="6003000" />
     </task>
     <servers />
   </component>

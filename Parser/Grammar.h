@@ -12,13 +12,16 @@
 #include <vector>
 #include <string>
 class Grammar {
-private:
-    void generateRules();
+public:
+    const std::unordered_map<RuleType, std::vector<std::string> >& getRHS();
+    const std::unordered_map<RuleType, std::unordered_set<std::string> >& getFIRST();
+    const std::unordered_map<RuleType, std::unordered_set<std::string> >& getFOLLOW();
+    const Rule* getRule(std::string);
 
 };
 
 
-const std::unordered_map<RuleType, std::vector<std::string>> RHS = {
+const std::unordered_map<RuleType, std::vector<std::string> > RHS = {
         {RuleType::START,                               {"PROGRAM"}},
         {RuleType::PROGRAM,                             {"CLASS_DECLARATIONS FUNCTION_DEFINITIONS main FUNCTION_BODY"}},
         {RuleType::CLASS_DECLARATIONS,                  {"CLASS_DECLARATION CLASS_DECLARATIONS",                "#"}},
@@ -155,7 +158,7 @@ const std::unordered_map<RuleType, std::unordered_set<std::string>> FIRST = {
         {RuleType::INDICES,                             {"["}},
 };
 
-const std::unordered_map<RuleType, std::unordered_set<std::string>> FOLLOW = {
+const std::unordered_map<RuleType, std::unordered_set<std::string> > FOLLOW = {
         {RuleType::START,                               {"#"}},
         {RuleType::PROGRAM,                             {"#"}},
         {RuleType::CLASS_DECLARATIONS,                  {"main", "id"}},
