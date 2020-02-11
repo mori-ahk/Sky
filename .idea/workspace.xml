@@ -13,7 +13,6 @@
   <component name="ChangeListManager">
     <list default="true" id="374213ba-f36a-47cc-9e77-845267a0c010" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Parser/Grammar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Grammar.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parser/Grammar.h" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Grammar.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +90,7 @@
       <workItem from="1581045265725" duration="900000" />
       <workItem from="1581102087663" duration="2836000" />
       <workItem from="1581381660989" duration="1457000" />
-      <workItem from="1581392353608" duration="2902000" />
+      <workItem from="1581392353608" duration="3435000" />
     </task>
     <servers />
   </component>
@@ -155,10 +154,10 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="498" y="147" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1680.1050@0.0.1680.1050" timestamp="1581395190888" />
-    <state x="498" y="160" width="683" height="729" key="find.popup" timestamp="1581394743330">
+    <state x="498" y="160" width="683" height="729" key="find.popup" timestamp="1581399839461">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="498" y="160" width="683" height="729" key="find.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1581394743330" />
+    <state x="498" y="160" width="683" height="729" key="find.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1581399839461" />
     <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1581115756601">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
