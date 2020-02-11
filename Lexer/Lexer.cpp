@@ -16,6 +16,14 @@ Lexer::Lexer() {
 
 Lexer::~Lexer() {
     delete tokenizer;
+
+    for(auto token: totalMatches) {
+        delete token;
+    }
+
+    for(auto token: totalErrors) {
+        delete token;
+    }
 }
 
 bool Lexer::isComment(Token* matchedToken) {
@@ -38,7 +46,7 @@ std::string Lexer::extractErrorString(std::string& line) {
 
 void Lexer::handleWord(std::string& line, int lineNumber, int& pos) {
     if (doesOnlyContainWhitespace(line)) return;
-    if (line.at(0) == '\n') {
+    if (line.at(0) == '\n' || line.at(0) == '\t') {
         pos++;
         return;
     }
@@ -112,7 +120,7 @@ void Lexer::write(std::string& filePath) {
 }
 
 Token* Lexer::next() {
-    return currentToken > totalMatches.size() ? nullptr : totalMatches.at(currentToken++);
+    return currentToken > totalMatches.size() - 1 ? nullptr : totalMatches.at(currentToken++);
 }
 
 
@@ -120,5 +128,5 @@ void Lexer::lex(std::string filePath) {
     totalMatches.clear();
     totalErrors.clear();
     read(filePath);
-    write(filePath);
+//    write(filePath);
 }

@@ -10,12 +10,17 @@ Rule::Rule(RuleType type, std::unordered_set<std::string> first, std::unordered_
     this->first = first;
     this->follow = follow;
     this->RHS = RHS;
+
 }
 
-bool Rule::doesBelongToFirst() {
-    Rule* rule = new Rule(RuleType::START, {"main", "class", "id"}, {"$"}, {"PROGRAM"});
-    return false;
+bool Rule::doesBelongToFirst(Token* token) {
+    return first.find(token->getValue()) != first.end();
 }
+
+bool Rule::doesBelongToFollow(Token* token) {
+    return follow.find(token->getValue()) != follow.end();
+}
+
 std::string RuleTypeString[] = {
         "MULT_OP",
         "LOCAL_SCOPE",

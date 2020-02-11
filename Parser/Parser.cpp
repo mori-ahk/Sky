@@ -4,14 +4,15 @@
 
 #include "Parser.h"
 
-Parser::Parser() {
-    this->token = nullptr;
-}
+Parser::Parser() {}
 
-Parser::~Parser() {
-    delete token;
-}
+Parser::~Parser() {}
 
-void Parser::parse() {
-
+void Parser::parse(Token* token, std::string ruleString) {
+    Rule* rule = grammar->getRule(ruleString);
+    if (rule->doesBelongToFirst(token)) {
+        parse(token, rule->getRHS().back());
+    } else {
+        std::cout << "false" << std::endl;
+    }
 }

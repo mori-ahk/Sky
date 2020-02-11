@@ -5,6 +5,7 @@
 #ifndef SKY_PARSER_H
 #define SKY_PARSER_H
 
+#include <string>
 #include "Grammar.h"
 #include "../Lexer/Token.h"
 class Parser {
@@ -12,12 +13,10 @@ public:
     Parser();
     ~Parser();
 
-    void parse();
+    void parse(Token*, std::string);
 
 private:
-    Token* token;
     Grammar* grammar;
-    void nextToken();
 };
 
 

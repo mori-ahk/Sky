@@ -15,10 +15,7 @@ class Grammar {
 public:
     Grammar();
     ~Grammar();
-    const std::unordered_map<RuleType, std::vector<std::string> >& getRHS();
-    const std::unordered_map<RuleType, std::unordered_set<std::string> >& getFIRST();
-    const std::unordered_map<RuleType, std::unordered_set<std::string> >& getFOLLOW();
-    const Rule* getRule(std::string);
+    Rule* getRule(std::string);
 
 };
 
@@ -288,6 +285,54 @@ const std::unordered_map<std::string, Rule*> RULES = {
         {"ASSIGNMENT_OP", new Rule(RuleType::ASSIGNMENT_OP, FIRST.at(RuleType::ASSIGNMENT_OP), FOLLOW.at(RuleType::ASSIGNMENT_OP), RHS.at(RuleType::ASSIGNMENT_OP))},
         {"FUNCTION_PARAMS_TAIL", new Rule(RuleType::FUNCTION_PARAMS_TAIL, FIRST.at(RuleType::FUNCTION_PARAMS_TAIL), FOLLOW.at(RuleType::FUNCTION_PARAMS_TAIL), RHS.at(RuleType::FUNCTION_PARAMS_TAIL))},
         {"INDICES", new Rule(RuleType::INDICES, FIRST.at(RuleType::INDICES), FOLLOW.at(RuleType::INDICES), RHS.at(RuleType::INDICES))},
+};
+
+const std::unordered_set<std::string> TERMINALS = {
+        "if",
+        "then",
+        "else",
+        "__Integer",
+        "__Float",
+        "while",
+        "class",
+        "do",
+        "end",
+        "public",
+        "private",
+        "or",
+        "and",
+        "not",
+        "read",
+        "write",
+        "return",
+        "main",
+        "inherits",
+        "local",
+        "error",
+        "void",
+        "==",
+        "<>",
+        "<",
+        ">",
+        "<=",
+        ">=",
+        "+",
+        "-",
+        "*",
+        "/",
+        "=",
+        "(",
+        ")",
+        "{",
+        "}",
+        "[",
+        "]",
+        ";",
+        ",",
+        ".",
+        ":",
+        "::",
+        "#",
 };
 
 #endif //SKY_GRAMMAR_H

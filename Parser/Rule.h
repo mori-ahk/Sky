@@ -9,7 +9,7 @@
 #include <vector>
 #include <unordered_set>
 #include "RuleType.h"
-
+#include "../Lexer/Token.h"
 class Rule {
 public:
 
@@ -22,8 +22,8 @@ public:
     std::unordered_set<std::string>& getFollow();
     std::vector<std::string>& getRHS();
 
-    bool doesBelongToFirst();
-    bool doesBelongToFollow();
+    bool doesBelongToFirst(Token*);
+    bool doesBelongToFollow(Token*);
 
 private:
 
