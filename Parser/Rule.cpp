@@ -12,19 +12,19 @@ Rule::Rule(RuleType type, std::unordered_set<std::string> first, std::unordered_
     this->RHS = RHS;
     this->nullable = nullable;
     this->endable = endable;
-//    seperateRHS(RHS);
     currentRule = 0;
 }
 
 bool Rule::doesBelongToFirst(Token* token) {
-    return first.find(token->getValue()) != first.end();
+    return first.find(token->getReverseTokenTypeMap()[token->getType()]) != first.end();
 }
 
 bool Rule::doesBelongToFollow(Token* token) {
-    return follow.find(token->getValue()) != follow.end();
+    return follow.find(token->getReverseTokenTypeMap()[token->getType()]) != follow.end();
 }
 
 void Rule::seperateRHS(std::string& production) {
+    this->separatedRHS.clear();
     if (!doesContainWhitespace(production)) {
         this->separatedRHS.push_back(production);
         return;

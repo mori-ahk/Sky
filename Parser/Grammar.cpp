@@ -19,7 +19,7 @@ bool Grammar::shouldTake(std::string& production, Token* token) {
     std::vector<std::string> separated = split(production);
     std::string firstRule = separated.front();
     if (isTerminal(firstRule)) {
-        return firstRule == token->getValue();
+        return firstRule == token->getReverseTokenTypeMap()[token->getType()];
     }
     Rule* rule = getRule(firstRule);
     return rule->doesBelongToFirst(token) or

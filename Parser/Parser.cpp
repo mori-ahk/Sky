@@ -6,26 +6,34 @@
 
 Parser::Parser(Lexer* lexer) {
     this->lexer = lexer;
-    currentRule = grammar->getRule(START);
+//    currentRule = grammar->getRule(START);
     currentToken = lexer->next();
 }
 
 Parser::~Parser() {}
 
 bool Parser::parse(std::string LHS) {
+    if (currentToken == nullptr) return true;
     if (grammar->isTerminal(LHS)) {
         std::cout << currentToken->getValue() << std::endl;
+//        std::cout << LHS << std::endl;
         if (currentToken->getTokenTypeMap()[LHS] == currentToken->getType()) {
             currentToken = lexer->next();
             return true;
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
+    Rule* currentRule = grammar->getRule(LHS);
     if (!currentRule->doesBelongToFirst(currentToken)) {
-        return currentRule->isNullable() and currentRule->doesBelongToFollow(currentToken);
+        if (currentRule->isNullable() and currentRule->doesBelongToFollow(currentToken)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    currentRule = grammar->getRule(LHS);
     for(auto& production : currentRule->getRHS()) {
         if (grammar->shouldTake(production, currentToken)) {
             currentRule->seperateRHS(production);
@@ -34,10 +42,12 @@ bool Parser::parse(std::string LHS) {
     }
 
     for(auto& rule: currentRule->getSeparatedRHS()) {
-        if (parse(rule)) return true;
-        else {
+        bool result = parse(rule);
+        if (!result) {
             std::cout << "ERROR expected: " << rule << std::endl;
         }
     }
+
+    return true;
 }
 

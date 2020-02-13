@@ -21,9 +21,11 @@ public:
     int getLineno();
     std::string getValue();
     std::unordered_map<std::string, TokenType>& getTokenTypeMap();
+    std::unordered_map<TokenType, std::string>& getReverseTokenTypeMap();
     friend std::ostream& operator<<(std::ostream&, Token&);
 private:
-
+    void reverseMap(std::unordered_map<std::string, TokenType>&);
+    std::unordered_map<TokenType, std::string> reverseTokenTypeMap;
     TokenType type;
     int lineno;
     std::string value;

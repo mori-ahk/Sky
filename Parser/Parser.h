@@ -17,7 +17,7 @@ public:
 private:
     Lexer* lexer;
     Grammar* grammar;
-    Rule* currentRule;
+//    Rule* currentRule;
     Token* currentToken;
     std::string START = "START";
 };

@@ -70,11 +70,24 @@ std::unordered_map<std::string, TokenType> TokenTypeMap = {
         {"void",TokenType::Void},
 };
 
+
+
+void Token::reverseMap(std::unordered_map<std::string, TokenType>& map) {
+    for(auto& element: map) {
+        reverseTokenTypeMap[element.second] = element.first;
+    }
+}
+
 std::unordered_map<std::string, TokenType>& Token::getTokenTypeMap() {
     return TokenTypeMap;
 }
 
+std::unordered_map<TokenType, std::string>& Token::getReverseTokenTypeMap() {
+    reverseMap(TokenTypeMap);
+    return reverseTokenTypeMap;
+}
+
 std::ostream& operator<<(std::ostream& os, Token& t) {
-    os << "[" << "TokenTypeMap[t.getType()]" << ", " << t.getValue() << ", " << t.getLineno() << "]";
+    os << "[" <<  "[t.getType()]" << ", " << t.getValue() << ", " << t.getLineno() << "]";
     return os;
 }

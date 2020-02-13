@@ -12,7 +12,6 @@ public:
     ~Compiler();
     void compile();
 private:
-
     Lexer* lexer;
     Parser* parser;
 };
