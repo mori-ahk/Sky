@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <string>
 #include <iostream>
+#include <unordered_map>
 #include "TokenType.h"
 
 
@@ -19,7 +20,7 @@ public:
     TokenType getType();
     int getLineno();
     std::string getValue();
-
+    std::unordered_map<std::string, TokenType>& getTokenTypeMap();
     friend std::ostream& operator<<(std::ostream&, Token&);
 private:
 

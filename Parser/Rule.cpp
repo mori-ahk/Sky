@@ -5,11 +5,14 @@
 #include <vector>
 #include "Rule.h"
 
-Rule::Rule(RuleType type, std::unordered_set<std::string> first, std::unordered_set<std::string> follow, std::vector<std::string> RHS) {
+Rule::Rule(RuleType type, std::unordered_set<std::string> first, std::unordered_set<std::string> follow, std::vector<std::string> RHS, bool nullable, bool endable) {
     this->type = type;
     this->first = first;
     this->follow = follow;
-    seperateRHS(RHS);
+    this->RHS = RHS;
+    this->nullable = nullable;
+    this->endable = endable;
+//    seperateRHS(RHS);
     currentRule = 0;
 }
 
@@ -21,24 +24,26 @@ bool Rule::doesBelongToFollow(Token* token) {
     return follow.find(token->getValue()) != follow.end();
 }
 
-void Rule::seperateRHS(std::vector<std::string>& RHS) {
-    for(std::string& rule: RHS) {
-        if (!doesContainWhitespace(rule)) {
-            this->RHS.push_back(rule);
-            continue;
-        }
-        std::string toPushBack;
-        for(int i = 0; i < rule.size(); i++) {
-            if (rule.at(i) == ' ') {
-                this->RHS.push_back(toPushBack);
-                toPushBack.clear();
-            } else {
-                toPushBack += rule.at(i);
-                if (i == rule.size() - 1) this->RHS.push_back(toPushBack);
-            }
+void Rule::seperateRHS(std::string& production) {
+    if (!doesContainWhitespace(production)) {
+        this->separatedRHS.push_back(production);
+        return;
+    }
+
+    std::string toPushBack;
+    for(int i = 0; i < production.size(); i++) {
+        if (production.at(i) == ' ') {
+            this->separatedRHS.push_back(toPushBack);
+            toPushBack.clear();
+        } else {
+            toPushBack += production.at(i);
+            if (i == production.size() - 1) this->separatedRHS.push_back(toPushBack);
         }
     }
+
 }
+
+
 
 bool Rule::doesContainWhitespace(std::string& rule) {
     for(char c: rule) {
@@ -47,8 +52,32 @@ bool Rule::doesContainWhitespace(std::string& rule) {
     return false;
 }
 
+std::unordered_set<std::string>& Rule::getFirst() {
+    return first;
+}
+
+std::unordered_set<std::string>& Rule::getFollow() {
+    return follow;
+}
+
+std::vector<std::string>& Rule::getRHS() {
+    return RHS;
+}
+
+std::vector<std::string>& Rule::getSeparatedRHS() {
+    return separatedRHS;
+}
+
+bool Rule::isNullable() {
+    return nullable;
+}
+
+bool Rule::isEndable() {
+    return endable;
+}
+
 std::string Rule::getNextRule() {
-    return currentRule > RHS.size() - 1 ? std::string() : RHS.at(currentRule++);
+    return currentRule < separatedRHS.size() ? separatedRHS.at(currentRule++) : std::string();
 }
 
 std::string RuleTypeString[] = {

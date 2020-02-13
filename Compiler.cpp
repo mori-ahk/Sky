@@ -4,9 +4,10 @@
 
 #include "Compiler.h"
 
-Compiler::Compiler() {
+Compiler::Compiler(std::string filePath) {
     this->lexer = new Lexer();
-    this->parser = new Parser();
+    lexer->lex(filePath);
+    this->parser = new Parser(lexer);
 }
 
 Compiler::~Compiler() {
@@ -14,11 +15,6 @@ Compiler::~Compiler() {
     delete parser;
 }
 
-void Compiler::compile(std::string filePath) {
-    lexer->lex(filePath);
-    auto nextToken = lexer->next();
-    while(nextToken != nullptr) {
-        parser->parse(nextToken, "START");
-        nextToken = lexer->next();
-    }
+void Compiler::compile() {
+    parser->parse("START");
 }

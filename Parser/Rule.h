@@ -13,27 +13,32 @@
 class Rule {
 public:
 
-    Rule(RuleType, std::unordered_set<std::string>, std::unordered_set<std::string>, std::vector<std::string>);
+    Rule(RuleType, std::unordered_set<std::string>, std::unordered_set<std::string>, std::vector<std::string>, bool nullable = false, bool endable = false);
     ~Rule();
 
     RuleType getType();
-    std::string getName();
     std::unordered_set<std::string>& getFirst();
     std::unordered_set<std::string>& getFollow();
     std::vector<std::string>& getRHS();
+    std::vector<std::string>& getSeparatedRHS();
 
+    bool isNullable();
+    bool isEndable();
     bool doesBelongToFirst(Token*);
     bool doesBelongToFollow(Token*);
+    void seperateRHS(std::string&);
     std::string getNextRule();
 private:
 
-    void seperateRHS(std::vector<std::string>&);
     bool doesContainWhitespace(std::string&);
-    std::string name;
     RuleType type;
     std::unordered_set<std::string> first;
     std::unordered_set<std::string> follow;
     std::vector<std::string> RHS;
+    std::vector<std::string> separatedRHS;
+    bool nullable;
+    bool endable;
+
     int currentRule;
 
 

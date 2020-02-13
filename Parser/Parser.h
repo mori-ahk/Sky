@@ -7,16 +7,20 @@
 
 #include <string>
 #include "Grammar.h"
-#include "../Lexer/Token.h"
+#include "../Lexer/Lexer.h"
 class Parser {
 public:
-    Parser();
+    Parser(Lexer*);
     ~Parser();
 
-    void parse(Token*, std::string);
+    bool parse(std::string);
 
 private:
+    Lexer* lexer;
     Grammar* grammar;
+    Rule* currentRule;
+    Token* currentToken;
+    std::string START = "START";
 };
 
 

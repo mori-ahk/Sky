@@ -4,16 +4,33 @@
 
 #include "Parser.h"
 
-Parser::Parser() {}
+Parser::Parser(Lexer* lexer) {
+    this->lexer = lexer;
+    currentRule = grammar->getRule(START);
+    currentToken = lexer->next();
+}
 
 Parser::~Parser() {}
 
-void Parser::parse(Token* token, std::string ruleString) {
-    if (ruleString.empty()) return;
-    Rule* rule = grammar->getRule(ruleString);
-    if (rule->doesBelongToFirst(token)) {
-        parse(token, rule->getNextRule());
-    } else {
-        std::cout << "false" << std::endl;
+bool Parser::parse(std::string LHS) {
+    if (grammar->isTerminal(LHS)) {
+        std::cout << currentToken->getValue() << std::endl;
+        if (LHS == currentToken->getType())
+        currentToken = lexer->next();
+
+        return true;
     }
+    currentRule = grammar->getRule(LHS);
+    for(auto& production : currentRule->getRHS()) {
+        if (grammar->shouldTake(production, currentToken)) {
+            currentRule->seperateRHS(production);
+            break;
+        }
+    }
+
+    if (currentRule->doesBelongToFirst(currentToken)) {
+        return parse(currentRule->getNextRule());
+    } else if (currentRule->doesBelongToFollow(currentToken)) {
+        return true;
+    } else return false;
 }

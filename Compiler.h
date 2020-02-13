@@ -8,9 +8,9 @@
 #include "Parser/Parser.h"
 class Compiler {
 public:
-    Compiler();
+    Compiler(std::string);
     ~Compiler();
-    void compile(std::string);
+    void compile();
 private:
 
     Lexer* lexer;
