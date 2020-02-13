@@ -18,7 +18,9 @@ bool Grammar::isTerminal(std::string& rule) {
 bool Grammar::shouldTake(std::string& production, Token* token) {
     std::vector<std::string> separated = split(production);
     std::string firstRule = separated.front();
-    if (isTerminal(firstRule)) return true;
+    if (isTerminal(firstRule)) {
+        return firstRule == token->getValue();
+    }
     Rule* rule = getRule(firstRule);
     return rule->doesBelongToFirst(token) or
            (rule->isNullable() and rule->doesBelongToFollow(token));

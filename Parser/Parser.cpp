@@ -34,7 +34,10 @@ bool Parser::parse(std::string LHS) {
     }
 
     for(auto& rule: currentRule->getSeparatedRHS()) {
-        return parse(rule);
+        if (parse(rule)) return true;
+        else {
+            std::cout << "ERROR expected: " << rule << std::endl;
+        }
     }
 }
 
