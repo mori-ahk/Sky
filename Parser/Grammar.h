@@ -170,7 +170,7 @@ const std::unordered_map<RuleType, std::unordered_set<std::string> > FOLLOW = {
         {RuleType::MEMBER_DECLARATIONS,                 {"}"}},
         {RuleType::MEMBER_DECLARATION,                  {"}", "public", "private"}},
         {RuleType::FUNCTION_OR_VARIABLE_DECLARATION,    {"}", "public", "private"}},
-        {RuleType::VISIBILITY,                          {"id", "integer", "float"}},
+        {RuleType::VISIBILITY,                          {"id", "Integer", "Float"}},
         {RuleType::STATEMENT,                           {"id", "semi", "if", "else", "while", "read", "write", "return", "end"}},
         {RuleType::STATEMENT_VARIABLE,                  {")"}},
         {RuleType::STATEMENT_VARIABLE_OR_FUNCTION_CALL, {")"}},

@@ -5,8 +5,7 @@
 #include "Token.h"
 #include "TokenType.h"
 #include <iostream>
-#include <string>
-
+#include <unordered_map>
 Token::Token(TokenType type, int lineno, std::string value) {
     this->type = type;
     this->lineno = lineno;
@@ -20,55 +19,55 @@ int Token::getLineno() { return this->lineno; }
 std::string Token::getValue() { return this->value; }
 
 std::unordered_map<std::string, TokenType> TokenTypeMap = {
-        {"Id", TokenType::Id},
+        {"id", TokenType::Id},
         {"Integer",TokenType::Integer},
         {"Float",TokenType::Float},
-        {"Eq",TokenType::Eq},
-        {"NotEq",TokenType::NotEq},
-        {"Lt",TokenType::Lt},
-        {"Gt",TokenType::Gt},
-        {"LEq",TokenType::LEq},
-        {"GEq",TokenType::GEq},
-        {"Plus",TokenType::Plus},
-        {"Minus",TokenType::Minus},
-        {"Mult",TokenType::Mult},
-        {"Div",TokenType::Div},
-        {"Asgn",TokenType::Asgn},
-        {"OpenPr",TokenType::OpenPr},
-        {"ClosePr",TokenType::ClosePr},
-        {"OpenCbr",TokenType::OpenCbr},
-        {"CloseCbr",TokenType::CloseCbr},
-        {"OpenSqbr",TokenType::OpenSqbr},
-        {"CloseSqbr",TokenType::CloseSqbr},
-        {"Semi",TokenType::Semi},
-        {"Comma",TokenType::Comma},
-        {"Dot",TokenType::Dot},
-        {"Colon",TokenType::Colon},
-        {"DblColon",TokenType::DblColon},
+        {"==",TokenType::Eq},
+        {"<>",TokenType::NotEq},
+        {"<",TokenType::Lt},
+        {">",TokenType::Gt},
+        {"<=",TokenType::LEq},
+        {">=",TokenType::GEq},
+        {"+",TokenType::Plus},
+        {"-",TokenType::Minus},
+        {"*",TokenType::Mult},
+        {"/",TokenType::Div},
+        {"=",TokenType::Asgn},
+        {"(",TokenType::OpenPr},
+        {")",TokenType::ClosePr},
+        {"{",TokenType::OpenCbr},
+        {"}",TokenType::CloseCbr},
+        {"[",TokenType::OpenSqbr},
+        {"]",TokenType::CloseSqbr},
+        {";",TokenType::Semi},
+        {",",TokenType::Comma},
+        {".",TokenType::Dot},
+        {":",TokenType::Colon},
+        {"::",TokenType::DblColon},
         {"InlineCmt",TokenType::InlineCmt},
         {"BlockCmt",TokenType::BlockCmt},
-        {"If",TokenType::If},
-        {"Then",TokenType::Then},
-        {"Else",TokenType::Else},
+        {"if",TokenType::If},
+        {"then",TokenType::Then},
+        {"else",TokenType::Else},
         {"__Integer",TokenType::__Integer},
         {"__Float",TokenType::__Float},
-        {"While",TokenType::While},
-        {"Class",TokenType::Class},
-        {"Do",TokenType::Do},
-        {"End",TokenType::End},
-        {"Public",TokenType::Public},
-        {"Private",TokenType::Private},
-        {"Or",TokenType::Or},
-        {"And",TokenType::And},
-        {"Not",TokenType::Not},
-        {"Read",TokenType::Read},
-        {"Write",TokenType::Write},
-        {"Return",TokenType::Return},
-        {"Main",TokenType::Main},
-        {"Inherits",TokenType::Inherits},
-        {"Local",TokenType::Local},
-        {"Error",TokenType::Error},
-        {"Void",TokenType::Void},
+        {"while",TokenType::While},
+        {"class",TokenType::Class},
+        {"do",TokenType::Do},
+        {"end",TokenType::End},
+        {"public",TokenType::Public},
+        {"private",TokenType::Private},
+        {"or",TokenType::Or},
+        {"and",TokenType::And},
+        {"not",TokenType::Not},
+        {"read",TokenType::Read},
+        {"write",TokenType::Write},
+        {"return",TokenType::Return},
+        {"main",TokenType::Main},
+        {"inherits",TokenType::Inherits},
+        {"local",TokenType::Local},
+        {"error",TokenType::Error},
+        {"void",TokenType::Void},
 };
 
 std::unordered_map<std::string, TokenType>& Token::getTokenTypeMap() {
@@ -76,6 +75,6 @@ std::unordered_map<std::string, TokenType>& Token::getTokenTypeMap() {
 }
 
 std::ostream& operator<<(std::ostream& os, Token& t) {
-    os << "[" << TokenTypeMap[t.getType()] << ", " << t.getValue() << ", " << t.getLineno() << "]";
+    os << "[" << "TokenTypeMap[t.getType()]" << ", " << t.getValue() << ", " << t.getLineno() << "]";
     return os;
 }

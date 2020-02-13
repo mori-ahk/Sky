@@ -15,11 +15,16 @@ Parser::~Parser() {}
 bool Parser::parse(std::string LHS) {
     if (grammar->isTerminal(LHS)) {
         std::cout << currentToken->getValue() << std::endl;
-        if (LHS == currentToken->getType())
-        currentToken = lexer->next();
-
-        return true;
+        if (currentToken->getTokenTypeMap()[LHS] == currentToken->getType()) {
+            currentToken = lexer->next();
+            return true;
+        } else return false;
     }
+
+    if (!currentRule->doesBelongToFirst(currentToken)) {
+        return currentRule->isNullable() and currentRule->doesBelongToFollow(currentToken);
+    }
+
     currentRule = grammar->getRule(LHS);
     for(auto& production : currentRule->getRHS()) {
         if (grammar->shouldTake(production, currentToken)) {
@@ -28,9 +33,8 @@ bool Parser::parse(std::string LHS) {
         }
     }
 
-    if (currentRule->doesBelongToFirst(currentToken)) {
-        return parse(currentRule->getNextRule());
-    } else if (currentRule->doesBelongToFollow(currentToken)) {
-        return true;
-    } else return false;
+    for(auto& rule: currentRule->getSeparatedRHS()) {
+        return parse(rule);
+    }
 }
+

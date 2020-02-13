@@ -14,7 +14,6 @@ public:
     ~Parser();
 
     bool parse(std::string);
-
 private:
     Lexer* lexer;
     Grammar* grammar;
