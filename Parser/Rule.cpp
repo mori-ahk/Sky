@@ -5,13 +5,6 @@
 #include <vector>
 #include "Rule.h"
 
-Rule::Rule(std::unordered_set<std::string> first, std::unordered_set<std::string> follow, std::vector<std::string> RHS, bool nullable) {
-    this->first = first;
-    this->follow = follow;
-    this->RHS = RHS;
-    this->nullable = nullable;
-}
-
 Rule::Rule(std::string name) {
     this->name = name;
 }

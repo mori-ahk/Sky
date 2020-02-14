@@ -13,7 +13,6 @@
 class Rule {
 public:
 
-    Rule(std::unordered_set<std::string>, std::unordered_set<std::string>, std::vector<std::string>, bool nullable = false);
     Rule(std::string);
     ~Rule();
 
