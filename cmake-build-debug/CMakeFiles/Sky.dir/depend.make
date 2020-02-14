@@ -10,7 +10,6 @@ CMakeFiles/Sky.dir/Compiler.cpp.o: ../Lexer/Tokenizer.h
 CMakeFiles/Sky.dir/Compiler.cpp.o: ../Parser/Grammar.h
 CMakeFiles/Sky.dir/Compiler.cpp.o: ../Parser/Parser.h
 CMakeFiles/Sky.dir/Compiler.cpp.o: ../Parser/Rule.h
-CMakeFiles/Sky.dir/Compiler.cpp.o: ../Parser/RuleType.h
 
 CMakeFiles/Sky.dir/Lexer/Lexer.cpp.o: ../Lexer/Lexer.cpp
 CMakeFiles/Sky.dir/Lexer/Lexer.cpp.o: ../Lexer/Lexer.h
@@ -32,7 +31,6 @@ CMakeFiles/Sky.dir/Parser/Grammar.cpp.o: ../Lexer/TokenType.h
 CMakeFiles/Sky.dir/Parser/Grammar.cpp.o: ../Parser/Grammar.cpp
 CMakeFiles/Sky.dir/Parser/Grammar.cpp.o: ../Parser/Grammar.h
 CMakeFiles/Sky.dir/Parser/Grammar.cpp.o: ../Parser/Rule.h
-CMakeFiles/Sky.dir/Parser/Grammar.cpp.o: ../Parser/RuleType.h
 
 CMakeFiles/Sky.dir/Parser/Parser.cpp.o: ../Lexer/Lexer.h
 CMakeFiles/Sky.dir/Parser/Parser.cpp.o: ../Lexer/Token.h
@@ -42,13 +40,11 @@ CMakeFiles/Sky.dir/Parser/Parser.cpp.o: ../Parser/Grammar.h
 CMakeFiles/Sky.dir/Parser/Parser.cpp.o: ../Parser/Parser.cpp
 CMakeFiles/Sky.dir/Parser/Parser.cpp.o: ../Parser/Parser.h
 CMakeFiles/Sky.dir/Parser/Parser.cpp.o: ../Parser/Rule.h
-CMakeFiles/Sky.dir/Parser/Parser.cpp.o: ../Parser/RuleType.h
 
 CMakeFiles/Sky.dir/Parser/Rule.cpp.o: ../Lexer/Token.h
 CMakeFiles/Sky.dir/Parser/Rule.cpp.o: ../Lexer/TokenType.h
 CMakeFiles/Sky.dir/Parser/Rule.cpp.o: ../Parser/Rule.cpp
 CMakeFiles/Sky.dir/Parser/Rule.cpp.o: ../Parser/Rule.h
-CMakeFiles/Sky.dir/Parser/Rule.cpp.o: ../Parser/RuleType.h
 
 CMakeFiles/Sky.dir/main.cpp.o: ../Compiler.h
 CMakeFiles/Sky.dir/main.cpp.o: ../Lexer/Lexer.h
@@ -58,6 +54,5 @@ CMakeFiles/Sky.dir/main.cpp.o: ../Lexer/Tokenizer.h
 CMakeFiles/Sky.dir/main.cpp.o: ../Parser/Grammar.h
 CMakeFiles/Sky.dir/main.cpp.o: ../Parser/Parser.h
 CMakeFiles/Sky.dir/main.cpp.o: ../Parser/Rule.h
-CMakeFiles/Sky.dir/main.cpp.o: ../Parser/RuleType.h
 CMakeFiles/Sky.dir/main.cpp.o: ../main.cpp
 

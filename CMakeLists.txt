@@ -3,4 +3,4 @@ project(Sky)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Sky main.cpp Lexer/Lexer.cpp Lexer/Lexer.h Lexer/Token.cpp Lexer/Token.h Lexer/Tokenizer.cpp Lexer/Tokenizer.h Lexer/TokenType.h Parser/Grammar.cpp Parser/Grammar.h Parser/Rule.cpp Parser/Rule.h Parser/RuleType.h Parser/Parser.cpp Parser/Parser.h Compiler.cpp Compiler.h)
+add_executable(Sky main.cpp Lexer/Lexer.cpp Lexer/Lexer.h Lexer/Token.cpp Lexer/Token.h Lexer/Tokenizer.cpp Lexer/Tokenizer.h Lexer/TokenType.h Parser/Grammar.cpp Parser/Grammar.h Parser/Rule.cpp Parser/Rule.h Parser/Parser.cpp Parser/Parser.h Compiler.cpp Compiler.h)

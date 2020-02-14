@@ -12,25 +12,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="374213ba-f36a-47cc-9e77-845267a0c010" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Tests/bubble.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Parser/Grammar.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Compiler.h" beforeDir="false" afterPath="$PROJECT_DIR$/Compiler.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lexer/Token.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Lexer/Token.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lexer/Token.h" beforeDir="false" afterPath="$PROJECT_DIR$/Lexer/Token.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lexer/Tokenizer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Lexer/Tokenizer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parser/Grammar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Grammar.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parser/Grammar.h" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Grammar.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parser/Parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Parser.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parser/Parser.h" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Parser.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parser/Rule.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Rule.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/Numbers.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/Numbers.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/Program.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/Program.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parser/Rule.h" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Rule.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parser/RuleType.h" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Lexer.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Lexer.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Token.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Token.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/depend.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/main.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Sky" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Sky" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Sky.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Sky.cbp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,6 +111,8 @@
       <workItem from="1581539044784" duration="16430000" />
       <workItem from="1581556137781" duration="9457000" />
       <workItem from="1581631136766" duration="5779000" />
+      <workItem from="1581646239651" duration="914000" />
+      <workItem from="1581699205517" duration="5170000" />
     </task>
     <servers />
   </component>
@@ -137,75 +136,79 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="610" y="248" key="#com.intellij.ide.util.MemberChooser/0.0.1680.1050@0.0.1680.1050" timestamp="1581541236694" />
-    <state width="1638" height="295" key="GridCell.Tab.0.bottom" timestamp="1581637441406">
+    <state x="578" y="279" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1581640590099">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1581637441406" />
-    <state width="1638" height="295" key="GridCell.Tab.0.center" timestamp="1581637441405">
+    <state x="578" y="279" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581640590099" />
+    <state width="1085" height="363" key="GridCell.Tab.0.bottom" timestamp="1581704806486">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1581637441405" />
-    <state width="1638" height="295" key="GridCell.Tab.0.left" timestamp="1581637441405">
+    <state width="1085" height="363" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1581704806486" />
+    <state width="1085" height="363" key="GridCell.Tab.0.center" timestamp="1581704806485">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1581637441405" />
-    <state width="1638" height="295" key="GridCell.Tab.0.right" timestamp="1581637441406">
+    <state width="1085" height="363" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1581704806485" />
+    <state width="1085" height="363" key="GridCell.Tab.0.left" timestamp="1581704806484">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1581637441406" />
-    <state width="1638" height="363" key="GridCell.Tab.1.bottom" timestamp="1581636950004">
+    <state width="1085" height="363" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1581704806484" />
+    <state width="1085" height="363" key="GridCell.Tab.0.right" timestamp="1581704806485">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="363" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1581636950004" />
-    <state width="1638" height="363" key="GridCell.Tab.1.center" timestamp="1581636950004">
+    <state width="1085" height="363" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1581704806485" />
+    <state width="1085" height="363" key="GridCell.Tab.1.bottom" timestamp="1581704806489">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="363" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1581636950004" />
-    <state width="1638" height="363" key="GridCell.Tab.1.left" timestamp="1581636950003">
+    <state width="1085" height="363" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1581704806489" />
+    <state width="1085" height="363" key="GridCell.Tab.1.center" timestamp="1581704806488">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="363" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1581636950003" />
-    <state width="1638" height="363" key="GridCell.Tab.1.right" timestamp="1581636950004">
+    <state width="1085" height="363" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1581704806488" />
+    <state width="1085" height="363" key="GridCell.Tab.1.left" timestamp="1581704806487">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="363" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1581636950004" />
+    <state width="1085" height="363" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1581704806487" />
+    <state width="1085" height="363" key="GridCell.Tab.1.right" timestamp="1581704806488">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state width="1085" height="363" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1581704806488" />
     <state x="341" y="164" key="SettingsEditor" timestamp="1581616415396">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="341" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1581616415396" />
-    <state x="517" y="357" key="com.intellij.ide.util.TipDialog" timestamp="1581631137486">
+    <state x="517" y="357" key="com.intellij.ide.util.TipDialog" timestamp="1581699205482">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="517" y="357" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581631137486" />
+    <state x="517" y="357" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581699205482" />
     <state x="498" y="147" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1581395190888">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="498" y="147" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1680.1050@0.0.1680.1050" timestamp="1581395190888" />
-    <state x="498" y="160" width="683" height="729" key="find.popup" timestamp="1581621816750">
+    <state x="498" y="160" width="683" height="729" key="find.popup" timestamp="1581702788004">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="498" y="160" width="683" height="729" key="find.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1581621816750" />
+    <state x="498" y="160" width="683" height="729" key="find.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1581702788004" />
     <state x="602" y="163" key="refactoring.ChangeSignatureDialog" timestamp="1581632052494">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="602" y="163" key="refactoring.ChangeSignatureDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581632052494" />
-    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1581635677627">
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1581701471842">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1581635677627" />
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1581701471842" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Parser/Parser.cpp</url>
-          <line>23</line>
-          <option name="timeStamp" value="28" />
+          <url>file://$PROJECT_DIR$/Parser/Grammar.cpp</url>
+          <line>10</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Parser/Parser.cpp</url>
-          <line>32</line>
-          <option name="timeStamp" value="30" />
+          <url>file://$PROJECT_DIR$/Parser/Grammar.cpp</url>
+          <line>89</line>
+          <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

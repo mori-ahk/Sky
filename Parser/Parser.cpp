@@ -6,7 +6,7 @@
 
 Parser::Parser(Lexer* lexer) {
     this->lexer = lexer;
-//    currentRule = grammar->getRule(START);
+    this->grammar = new Grammar();
     currentToken = lexer->next();
 }
 
@@ -14,29 +14,22 @@ Parser::~Parser() {}
 
 bool Parser::parse(std::string LHS) {
     if (currentToken == nullptr) return true;
-    if (grammar->isTerminal(LHS)) {
+    if (Rule::isTerminal(LHS)) {
         std::cout << currentToken->getValue() << std::endl;
-//        std::cout << LHS << std::endl;
         if (currentToken->getTokenTypeMap()[LHS] == currentToken->getType()) {
             currentToken = lexer->next();
             return true;
-        } else {
-            return false;
-        }
+        } else return false;
     }
 
     Rule* currentRule = grammar->getRule(LHS);
     if (!currentRule->doesBelongToFirst(currentToken)) {
-        if (currentRule->isNullable() and currentRule->doesBelongToFollow(currentToken)) {
-            return true;
-        } else {
-            return false;
-        }
+        return currentRule->isNullable() and currentRule->doesBelongToFollow(currentToken);
     }
 
     for(auto& production : currentRule->getRHS()) {
         if (grammar->shouldTake(production, currentToken)) {
-            currentRule->seperateRHS(production);
+            currentRule->seperateRHS(production, true);
             break;
         }
     }
