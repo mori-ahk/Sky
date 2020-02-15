@@ -27,15 +27,19 @@ bool Parser::parse(std::string LHS) {
         return currentRule->isNullable() and currentRule->doesBelongToFollow(currentToken);
     }
 
+    std::vector<std::string> rulesToProcess;
     for(auto& production : currentRule->getRHS()) {
-        if (grammar->shouldTake(production, currentToken)) {
-            currentRule->seperateRHS(production, true);
-            break;
+        if (production.front() != "#") {
+            if (grammar->shouldTake(production.front(), currentToken)) {
+                rulesToProcess = production;
+                break;
+            }
         }
     }
 
-    for(auto& rule: currentRule->getSeparatedRHS()) {
+    for(auto& rule: rulesToProcess) {
         bool result = parse(rule);
+        auto v = grammar->getRule(rule);
         if (!result) {
             std::cout << "ERROR expected: " << rule << std::endl;
         }

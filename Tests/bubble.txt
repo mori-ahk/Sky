@@ -21,14 +21,14 @@ bubbleSort(integer arr[], integer size) : void
                   temp = arr[j];
                   arr[j] = arr[j+1];
                   arr[j+1] = temp;
-                end;
+                end
               else
 	        ;
             j = j+1;
           end;
         i = i+1;
       end;
-  end;
+  end
 
 /* Print the array */
 printArray(integer arr[], integer size) : void
@@ -43,7 +43,7 @@ printArray(integer arr[], integer size) : void
         write(arr[i]);
         i = i+1;
       end;
-  end;
+  end
 
 // main funtion to test above
 main
@@ -60,4 +60,4 @@ main
     printarray(arr, 7);
     bubbleSort(arr, 7);
     printarray(arr, 7);
-  end;
+  end

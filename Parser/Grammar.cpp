@@ -6,6 +6,9 @@
 
 
 Grammar::Grammar() {
+    // Adding terminals to RULES map
+    for (auto& _rule: Rule::getTerminals()) ruleNames.push_back(_rule.first);
+    for (auto& _rule: Rule::getTerminals()) RULES[_rule.first] = new Rule(_rule.first);
     parseGrammar();
     constructFirstSet();
     constructFollowSet();
@@ -27,28 +30,24 @@ void Grammar::parseGrammar() {
         std::string ruleName = line.substr(0, it);
         line.erase(0,it + delimiter.length());
         std::string RHS = line.substr(0, line.find("  ."));
+        std::vector<std::string> _RHS = split(RHS);
 
+        if (!doesContainRuleName(ruleName)) ruleNames.push_back(ruleName);
         if (RULES.find(ruleName) == RULES.end()) {
             RULES[ruleName] = new Rule(ruleName);
         }
 
-        if (RHS.empty()) RULES[ruleName]->addToRHS("#");
-        else RULES[ruleName]->addToRHS(RHS);
-    }
-
-    for (auto& rule: RULES) {
-        for (auto& production: rule.second->getRHS()) {
-            rule.second->seperateRHS(production);
-        }
+        if (RHS.empty()) RULES[ruleName]->addToRHS({"#"});
+        else RULES[ruleName]->addToRHS(_RHS);
     }
 }
 
 void Grammar::constructFirstSet() {
-    for (auto& rule: RULES)
-        rule.second->visited = false;
+    for (auto& rule: ruleNames)
+        RULES[rule]->visited = false;
 
-    for (auto& rule: RULES)
-        if (!rule.second->visited) constructFirstSetHelper(rule.second);
+    for (auto& rule: ruleNames)
+        if (!RULES[rule]->visited) constructFirstSetHelper(RULES[rule]);
 }
 
 void Grammar::constructFirstSetHelper(Rule* rule) {
@@ -58,69 +57,105 @@ void Grammar::constructFirstSetHelper(Rule* rule) {
         return;
     }
 
-    for (std::string& production : rule->getRHS()) {
-        if (production == "#") rule->addToFirst("#");
+    for (auto& production : rule->getRHS()) {
+        if (production.front() == "#") rule->addToFirst("#");
     }
 
-    for (std::string& _rule: rule->getSeparatedRHS()) {
-        if (_rule == "#") continue;
-        rule->nullable = true;
-        Rule* toDiscover;
+    for (auto& production : rule->getRHS()) {
+        if (production.front() == "#") continue;
+        bool nullable = true;
+        for (std::string& _rule: production) {
 
-        if (!Rule::isTerminal(_rule))
-             toDiscover = RULES[_rule];
-        else {
-            rule->addToFirst(_rule);
-            continue;
+            Rule* toDiscover = RULES[_rule];
+            if (!toDiscover->visited) constructFirstSetHelper(toDiscover);
+
+            // union the two sets except the null character.
+            auto firstSet = std::unordered_set<std::string>(toDiscover->getFirst());
+            firstSet.erase("#");
+            rule->getFirst().insert(firstSet.begin(), firstSet.end());
+
+            if (toDiscover->getFirst().find("#") == toDiscover->getFirst().end()) {
+                nullable = false;
+                break;
+            }
         }
 
-        if (!toDiscover->visited) constructFirstSetHelper(toDiscover);
-
-        // union the two sets except the null character.
-        rule->getFirst().insert(toDiscover->getFirst().begin(), toDiscover->getFirst().end());
-        rule->getFirst().erase("#");
-
-        if (toDiscover->getFirst().find("#") == toDiscover->getFirst().end()) {
-            rule->nullable = false;
-            break;
-        }
-    }
-
-    if (rule->nullable) {
-        rule->addToFirst("#");
+        if (nullable) rule->addToFirst("#");
     }
 }
-
 
 void Grammar::constructFollowSet()  {
-    for (auto& rule: RULES)
-        rule.second->visited = false;
+    for (auto& rule: ruleNames) {
+        RULES[rule]->visited = false;
+        RULES[rule]->clearWatchList();
+    }
 
-    for (auto& rule: RULES)
-        if (!rule.second->visited) constructFollowSetHelper(rule.second);
+    for (auto& rule: ruleNames)
+        if (!RULES[rule]->visited) constructFollowSetHelper(RULES[rule]);
+
 }
 
+void Grammar::constructFollowSetHelper(Rule* rule) {
+    rule->visited = true;
+    if (rule->getName() == "START") {
+        rule->addToFollow("$");
+        return;
+    }
 
-void Grammar::constructFollowSetHelper(Rule *) {
+    auto v = findUsage(rule->getName());
+    for (auto& usage : v) {
+        auto rules = usage.second;
+        int lookAfter = rule->indexOf(rules, rule->getName());
+        bool nullable = true;
+        for (int i = lookAfter + 1; i < rules.size(); i++) {
+            auto firstSet = std::unordered_set<std::string>(RULES[rules.at(i)]->getFirst());
+            firstSet.erase("#");
 
+            for (auto element: firstSet)
+                rule->addToFollow(element);
+            if (!RULES[rules.at(i)]->isNullable()) {
+                nullable = false;
+                break;
+            }
+        }
+
+        if (nullable) {
+            Rule* usageRule = RULES[usage.first];
+            usageRule->addToWatchList(rule);
+            if (!usageRule->visited) constructFollowSetHelper(usageRule);
+        }
+    }
+}
+
+longVector Grammar::findUsage(std::string name) {
+    longVector toReturn;
+    for (auto& rule : RULES) {
+        for (auto& production : rule.second->getRHS()) {
+            for(auto& _rule : production) {
+                if (name == _rule) {
+                    auto pair = std::make_pair(rule.second->getName(), production);
+                    toReturn.push_back(pair);
+                    break;
+                }
+            }
+        }
+    }
+
+    return toReturn;
 }
 
 Rule* Grammar::getRule(std::string& rule) {
     return RULES.at(rule);
 }
 
-
 bool Grammar::shouldTake(std::string& production, Token* token) {
-    std::vector<std::string> separated = split(production);
-    std::string firstRule = separated.front();
-    if (Rule::isTerminal(firstRule)) {
-        return firstRule == token->getReverseTokenTypeMap()[token->getType()];
+    if (Rule::isTerminal(production)) {
+        return production == token->getReverseTokenTypeMap()[token->getType()];
     }
-    Rule* rule = getRule(firstRule);
+    Rule* rule = getRule(production);
     return rule->doesBelongToFirst(token) or
            (rule->isNullable() and rule->doesBelongToFollow(token));
 }
-
 
 std::vector<std::string> Grammar::split(std::string& production) {
     std::vector<std::string> toReturn;
@@ -138,5 +173,11 @@ std::vector<std::string> Grammar::split(std::string& production) {
     return toReturn;
 }
 
+bool Grammar::doesContainRuleName(std::string& rule) {
+    for (auto& _rule : ruleNames) {
+        if (_rule == rule) return true;
+    }
+    return false;
+}
 
 

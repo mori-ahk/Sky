@@ -17,33 +17,6 @@ bool Rule::doesBelongToFollow(Token* token) {
     return follow.find(token->getReverseTokenTypeMap()[token->getType()]) != follow.end();
 }
 
-void Rule::seperateRHS(std::string& production, bool isParsing) {
-    if (isParsing) this->separatedRHS.clear();
-    if (!doesContainWhitespace(production)) {
-        this->separatedRHS.push_back(production);
-        return;
-    }
-
-    std::string toPushBack;
-    for(int i = 0; i < production.size(); i++) {
-        if (production.at(i) == ' ') {
-            this->separatedRHS.push_back(toPushBack);
-            toPushBack.clear();
-        } else {
-            toPushBack += production.at(i);
-            if (i == production.size() - 1) this->separatedRHS.push_back(toPushBack);
-        }
-    }
-
-}
-
-bool Rule::doesContainWhitespace(std::string& rule) {
-    for(char c: rule) {
-        if (c == ' ') return true;
-    }
-    return false;
-}
-
 std::unordered_set<std::string>& Rule::getFirst() {
     return first;
 }
@@ -56,28 +29,37 @@ std::string Rule::getName() {
     return name;
 }
 
-std::vector<std::string>& Rule::getRHS() {
+std::vector<std::vector<std::string>>& Rule::getRHS() {
     return RHS;
 }
 
-std::vector<std::string>& Rule::getSeparatedRHS() {
-    return separatedRHS;
-}
-
-void Rule::addToRHS(std::string rhs) {
+void Rule::addToRHS(std::vector<std::string> rhs) {
     RHS.push_back(rhs);
 }
 
 void Rule::addToFirst(std::string terminal) {
+    int prevSize = first.size();
     this->first.insert(terminal);
+    if (prevSize != first.size())
+        callWatchlist(true);
 }
 
 void Rule::addToFollow(std::string terminal) {
+    int prevSize = follow.size();
     this->follow.insert(terminal);
+    if (prevSize != follow.size())
+        callWatchlist(false);
+}
+
+int Rule::indexOf(std::vector<std::string> vector, std::string rule) {
+    for (int i = 0; i < vector.size(); i++) {
+        if (rule == vector.at(i)) return i;
+    }
+    return -1;
 }
 
 bool Rule::isNullable() {
-    return nullable;
+    return first.find("#") != first.end();
 }
 
 bool Rule::isTerminal() {
@@ -86,5 +68,34 @@ bool Rule::isTerminal() {
 
 bool Rule::isTerminal(std::string & rule) {
     return TERMINALS.find(rule) != TERMINALS.end();
+}
+
+const std::unordered_map<std::string, std::string>& Rule::getTerminals() {
+    return TERMINALS;
+}
+
+void Rule::addToWatchList(Rule *rule) {
+    watchlist.push_back(rule);
+    callWatchlist(false);
+}
+
+void Rule::clearWatchList() {
+    watchlist.clear();
+}
+
+void Rule::callWatchlist(bool isFirst) {
+    if (isFirst) {
+        for (auto &s: first) {
+            for (Rule* r: watchlist) {
+                r->addToFirst(s);
+            }
+        }
+    } else {
+        for (auto &s: follow) {
+            for (Rule* r: watchlist) {
+                r->addToFollow(s);
+            }
+        }
+    }
 }
 

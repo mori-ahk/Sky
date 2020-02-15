@@ -18,36 +18,39 @@ public:
 
     std::unordered_set<std::string>& getFirst();
     std::unordered_set<std::string>& getFollow();
-    std::vector<std::string>& getRHS();
-    std::vector<std::string>& getSeparatedRHS();
+    std::vector<std::vector<std::string>>& getRHS();
     std::string getName();
 
-    void addToRHS(std::string);
+    static const std::unordered_map<std::string, std::string>& getTerminals();
+    static bool isTerminal(std::string&);
+
+    void addToRHS(std::vector<std::string>);
     void addToFirst(std::string);
     void addToFollow(std::string);
-    void seperateRHS(std::string&, bool isParsing = false);
+    void addToWatchList(Rule*);
+    void clearWatchList();
 
+    int indexOf(std::vector<std::string>, std::string);
 
     bool isTerminal();
-    static bool isTerminal(std::string&);
     bool isNullable();
     bool doesBelongToFirst(Token*);
     bool doesBelongToFollow(Token*);
 
     bool visited;
-    bool nullable;
 
 private:
 
-    bool doesContainWhitespace(std::string&);
     std::string name;
     std::unordered_set<std::string> first;
     std::unordered_set<std::string> follow;
-    std::vector<std::string> RHS;
-    std::vector<std::string> separatedRHS;
+    std::vector<std::vector<std::string>> RHS;
+    std::vector<Rule*> watchlist;
+
+    void callWatchlist(bool);
 };
 
-const std::unordered_map<std::string, std::string> TERMINALS = {
+static const std::unordered_map<std::string, std::string> TERMINALS = {
         {"id","id"},
         {"if","if"},
         {"then","then"},

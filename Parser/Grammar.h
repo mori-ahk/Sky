@@ -13,6 +13,8 @@
 #include <fstream>
 #include <iostream>
 
+typedef std::vector<std::pair<std::string, std::vector<std::string>>> longVector;
+
 class Grammar {
 public:
     Grammar();
@@ -28,10 +30,12 @@ private:
     void constructFollowSet();
     void parseGrammar();
 
+    bool doesContainRuleName(std::string&);
+
+    longVector findUsage(std::string);
     std::vector<std::string> split(std::string&);
     std::unordered_map<std::string, Rule*> RULES;
-
-
+    std::vector<std::string> ruleNames;
 };
 
 
