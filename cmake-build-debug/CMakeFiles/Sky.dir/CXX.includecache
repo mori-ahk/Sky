@@ -6,34 +6,14 @@
 
 #IncludeRegexTransform: 
 
-/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Lexer.cpp
-Lexer.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Lexer.h
-Token.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Token.h
-iostream
--
-fstream
--
-
-/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Lexer.h
-stdio.h
--
-string
--
-fstream
--
-Tokenizer.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Tokenizer.h
-Token.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Token.h
-
 /Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Token.h
 stdio.h
 -
 string
 -
 iostream
+-
+unordered_map
 -
 TokenType.h
 /Users/mortezaahmadi/Dev/Clion/Sky/Lexer/TokenType.h
@@ -42,17 +22,19 @@ TokenType.h
 stdio.h
 -
 
-/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Tokenizer.h
-stdio.h
+/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Rule.cpp
+vector
 -
+Rule.h
+/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Rule.h
+
+/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Rule.h
 string
 -
 vector
 -
-unordered_map
+unordered_set
 -
-Token.h
+../Lexer/Token.h
 /Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Token.h
-TokenType.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/TokenType.h
 

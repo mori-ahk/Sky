@@ -123,6 +123,33 @@ Sky/fast:
 	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/build
 .PHONY : Sky/fast
 
+Compiler.o: Compiler.cpp.o
+
+.PHONY : Compiler.o
+
+# target to build an object file
+Compiler.cpp.o:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Compiler.cpp.o
+.PHONY : Compiler.cpp.o
+
+Compiler.i: Compiler.cpp.i
+
+.PHONY : Compiler.i
+
+# target to preprocess a source file
+Compiler.cpp.i:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Compiler.cpp.i
+.PHONY : Compiler.cpp.i
+
+Compiler.s: Compiler.cpp.s
+
+.PHONY : Compiler.s
+
+# target to generate assembly for a file
+Compiler.cpp.s:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Compiler.cpp.s
+.PHONY : Compiler.cpp.s
+
 Lexer/Lexer.o: Lexer/Lexer.cpp.o
 
 .PHONY : Lexer/Lexer.o
@@ -204,6 +231,87 @@ Lexer/Tokenizer.cpp.s:
 	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.s
 .PHONY : Lexer/Tokenizer.cpp.s
 
+Parser/Grammar.o: Parser/Grammar.cpp.o
+
+.PHONY : Parser/Grammar.o
+
+# target to build an object file
+Parser/Grammar.cpp.o:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Grammar.cpp.o
+.PHONY : Parser/Grammar.cpp.o
+
+Parser/Grammar.i: Parser/Grammar.cpp.i
+
+.PHONY : Parser/Grammar.i
+
+# target to preprocess a source file
+Parser/Grammar.cpp.i:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Grammar.cpp.i
+.PHONY : Parser/Grammar.cpp.i
+
+Parser/Grammar.s: Parser/Grammar.cpp.s
+
+.PHONY : Parser/Grammar.s
+
+# target to generate assembly for a file
+Parser/Grammar.cpp.s:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Grammar.cpp.s
+.PHONY : Parser/Grammar.cpp.s
+
+Parser/Parser.o: Parser/Parser.cpp.o
+
+.PHONY : Parser/Parser.o
+
+# target to build an object file
+Parser/Parser.cpp.o:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Parser.cpp.o
+.PHONY : Parser/Parser.cpp.o
+
+Parser/Parser.i: Parser/Parser.cpp.i
+
+.PHONY : Parser/Parser.i
+
+# target to preprocess a source file
+Parser/Parser.cpp.i:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Parser.cpp.i
+.PHONY : Parser/Parser.cpp.i
+
+Parser/Parser.s: Parser/Parser.cpp.s
+
+.PHONY : Parser/Parser.s
+
+# target to generate assembly for a file
+Parser/Parser.cpp.s:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Parser.cpp.s
+.PHONY : Parser/Parser.cpp.s
+
+Parser/Rule.o: Parser/Rule.cpp.o
+
+.PHONY : Parser/Rule.o
+
+# target to build an object file
+Parser/Rule.cpp.o:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Rule.cpp.o
+.PHONY : Parser/Rule.cpp.o
+
+Parser/Rule.i: Parser/Rule.cpp.i
+
+.PHONY : Parser/Rule.i
+
+# target to preprocess a source file
+Parser/Rule.cpp.i:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Rule.cpp.i
+.PHONY : Parser/Rule.cpp.i
+
+Parser/Rule.s: Parser/Rule.cpp.s
+
+.PHONY : Parser/Rule.s
+
+# target to generate assembly for a file
+Parser/Rule.cpp.s:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/Rule.cpp.s
+.PHONY : Parser/Rule.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -240,6 +348,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... Sky"
+	@echo "... Compiler.o"
+	@echo "... Compiler.i"
+	@echo "... Compiler.s"
 	@echo "... Lexer/Lexer.o"
 	@echo "... Lexer/Lexer.i"
 	@echo "... Lexer/Lexer.s"
@@ -249,6 +360,15 @@ help:
 	@echo "... Lexer/Tokenizer.o"
 	@echo "... Lexer/Tokenizer.i"
 	@echo "... Lexer/Tokenizer.s"
+	@echo "... Parser/Grammar.o"
+	@echo "... Parser/Grammar.i"
+	@echo "... Parser/Grammar.s"
+	@echo "... Parser/Parser.o"
+	@echo "... Parser/Parser.i"
+	@echo "... Parser/Parser.s"
+	@echo "... Parser/Rule.o"
+	@echo "... Parser/Rule.i"
+	@echo "... Parser/Rule.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

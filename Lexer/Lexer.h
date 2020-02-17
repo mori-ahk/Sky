@@ -17,6 +17,7 @@ public:
     Lexer();
     ~Lexer();
     void lex(std::string);
+    Token* next();
 
 private:
     Tokenizer* tokenizer;
@@ -26,6 +27,7 @@ private:
     bool doesOnlyContainWhitespace(std::string&);
     bool isComment(Token*);
     std::string extractErrorString(std::string&);
+    int currentToken;
 
 };
 

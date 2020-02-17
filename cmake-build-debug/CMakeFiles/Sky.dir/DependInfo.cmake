@@ -4,9 +4,13 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/Users/mortezaahmadi/Dev/Clion/Sky/Compiler.cpp" "/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles/Sky.dir/Compiler.cpp.o"
   "/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Lexer.cpp" "/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Lexer.cpp.o"
   "/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Token.cpp" "/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Token.cpp.o"
   "/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Tokenizer.cpp" "/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o"
+  "/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Grammar.cpp" "/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles/Sky.dir/Parser/Grammar.cpp.o"
+  "/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Parser.cpp" "/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles/Sky.dir/Parser/Parser.cpp.o"
+  "/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Rule.cpp" "/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles/Sky.dir/Parser/Rule.cpp.o"
   "/Users/mortezaahmadi/Dev/Clion/Sky/main.cpp" "/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles/Sky.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
