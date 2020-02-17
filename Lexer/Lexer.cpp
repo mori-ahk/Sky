@@ -6,9 +6,6 @@
 #include "Token.h"
 #include <iostream>
 
-std::vector<Token*> totalMatches;
-std::vector<Token*> totalErrors;
-
 Lexer::Lexer() {
     tokenizer = new Tokenizer();
     currentToken = 0;
@@ -17,11 +14,15 @@ Lexer::Lexer() {
 Lexer::~Lexer() {
     delete tokenizer;
 
-    for(auto token: totalMatches) {
+    for (auto token: totalMatches) {
         delete token;
     }
 
-    for(auto token: totalErrors) {
+    for (auto token: totalErrors) {
+        delete token;
+    }
+
+    for (auto token: totalTokens) {
         delete token;
     }
 }
@@ -56,11 +57,13 @@ void Lexer::handleWord(std::string& line, int lineNumber, int& pos) {
         std::string errorTokenString = extractErrorString(line);
         Token* errorToken = new Token(TokenType::Error, lineNumber, errorTokenString);
         totalErrors.push_back(errorToken);
+        totalTokens.push_back(errorToken);
         pos += errorTokenString.size();
     } else {
         //Ignoring comment tokens
         if (!isComment(matchedToken)) {
             totalMatches.push_back(matchedToken);
+            totalTokens.push_back(matchedToken);
         }
 
         pos += matchedToken->getValue().size();
@@ -120,7 +123,7 @@ void Lexer::write(std::string& filePath) {
 }
 
 Token* Lexer::next() {
-    return currentToken > totalMatches.size() - 1 ? nullptr : totalMatches.at(currentToken++);
+    return currentToken > totalTokens.size() - 1 ? nullptr : totalTokens.at(currentToken++);
 }
 
 

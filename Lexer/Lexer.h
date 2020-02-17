@@ -28,7 +28,9 @@ private:
     bool isComment(Token*);
     std::string extractErrorString(std::string&);
     int currentToken;
-
+    std::vector<Token*> totalMatches;
+    std::vector<Token*> totalErrors;
+    std::vector<Token*> totalTokens;
 };
 
 #endif //SKY_LEXER_H
