@@ -12,12 +12,15 @@ class Parser {
 public:
     Parser(Lexer*);
     ~Parser();
-
     bool parse(std::string);
+
 private:
     Lexer* lexer;
     Grammar* grammar;
     Token* currentToken;
+
+    void next();
+    bool shouldTakeNext(std::string&);
 };
 
 

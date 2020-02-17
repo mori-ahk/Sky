@@ -10,14 +10,25 @@ Parser::Parser(Lexer* lexer) {
     currentToken = lexer->next();
 }
 
+
 Parser::~Parser() {}
+
+void Parser::next() {
+    while (currentToken->getType() == currentToken->getTokenTypeMap().at("error")) currentToken = lexer->next();
+    currentToken = lexer->next();
+}
+
+bool Parser::shouldTakeNext(std::string& LHS) {
+    return currentToken->getTokenTypeMap().at(LHS) == currentToken->getType();
+}
 
 bool Parser::parse(std::string LHS) {
     if (currentToken == nullptr) return true;
+
     if (Rule::isTerminal(LHS)) {
         std::cout << currentToken->getValue() << std::endl;
-        if (currentToken->getTokenTypeMap()[LHS] == currentToken->getType()) {
-            currentToken = lexer->next();
+        if (shouldTakeNext(LHS)) {
+            next();
             return true;
         } else return false;
     }
@@ -39,7 +50,6 @@ bool Parser::parse(std::string LHS) {
 
     for(auto& rule: rulesToProcess) {
         bool result = parse(rule);
-        auto v = grammar->getRule(rule);
         if (!result) {
             std::cout << "ERROR expected: " << rule << std::endl;
         }
