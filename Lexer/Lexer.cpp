@@ -49,6 +49,7 @@ void Lexer::handleWord(std::string& line, int lineNumber, int& pos) {
     if (doesOnlyContainWhitespace(line)) return;
     if (line.at(0) == '\n' || line.at(0) == '\t') {
         pos++;
+        linePosition += pos;
         return;
     }
 
@@ -59,6 +60,8 @@ void Lexer::handleWord(std::string& line, int lineNumber, int& pos) {
         totalErrors.push_back(errorToken);
         totalTokens.push_back(errorToken);
         pos += errorTokenString.size();
+        linePosition += pos;
+        errorToken->setPosition(linePosition);
     } else {
         //Ignoring comment tokens
         if (!isComment(matchedToken)) {
@@ -67,6 +70,8 @@ void Lexer::handleWord(std::string& line, int lineNumber, int& pos) {
         }
 
         pos += matchedToken->getValue().size();
+        linePosition += pos;
+        matchedToken->setPosition(linePosition);
     }
 }
 
@@ -84,7 +89,10 @@ void Lexer::read(std::string& filePath) {
     }
 
     while (fileContent.size() != 0) {
-        if (fileContent.at(pos) == '\n') lineNumber++;
+        if (fileContent.at(pos) == '\n') {
+            lineNumber++;
+            linePosition = 0;
+        }
         handleWord(fileContent, lineNumber, pos);
         while (fileContent.size() > pos && fileContent.at(pos) == ' ') pos++;
         fileContent = fileContent.substr(pos);

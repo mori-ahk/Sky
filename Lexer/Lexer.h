@@ -18,7 +18,7 @@ public:
     ~Lexer();
     void lex(std::string);
     Token* next();
-
+    int linePosition;
 private:
     Tokenizer* tokenizer;
     void handleWord(std::string&, int, int&);

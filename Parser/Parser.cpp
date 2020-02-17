@@ -22,7 +22,23 @@ bool Parser::shouldTakeNext(std::string& LHS) {
     return currentToken->getTokenTypeMap().at(LHS) == currentToken->getType();
 }
 
-bool Parser::parse(std::string LHS) {
+void Parser::printError(Rule& rule) {
+    if (!rule.isNullable()) {
+        std::cout << "ERROR: at line " << currentToken->getLineno() << " at position: " << currentToken->getPosition() << " expected one of these: ";
+        for (auto _rule: rule.getFollow()) {
+            std::cout << _rule << ", ";
+        }
+        std::cout << *rule.getFirst().begin() << std::endl;
+    }
+}
+
+void Parser::panic(std::string& rule) {
+    while (!parse(rule, true)) next();
+}
+
+
+bool Parser::parse(std::string LHS, bool isOnPanicMode) {
+
     if (currentToken == nullptr) return true;
 
     if (Rule::isTerminal(LHS)) {
@@ -35,7 +51,7 @@ bool Parser::parse(std::string LHS) {
 
     Rule* currentRule = grammar->getRule(LHS);
     if (!currentRule->doesBelongToFirst(currentToken)) {
-        return currentRule->isNullable() and currentRule->doesBelongToFollow(currentToken);
+        return (isOnPanicMode or currentRule->isNullable()) and currentRule->doesBelongToFollow(currentToken);
     }
 
     std::vector<std::string> rulesToProcess;
@@ -51,7 +67,8 @@ bool Parser::parse(std::string LHS) {
     for(auto& rule: rulesToProcess) {
         bool result = parse(rule);
         if (!result) {
-            std::cout << "ERROR expected: " << rule << std::endl;
+            panic(rule);
+            printError(*currentRule);
         }
     }
 
