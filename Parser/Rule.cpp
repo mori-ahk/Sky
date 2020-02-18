@@ -25,7 +25,7 @@ std::unordered_set<std::string>& Rule::getFollow() {
     return follow;
 }
 
-std::string Rule::getName() {
+std::string& Rule::getName() {
     return name;
 }
 

@@ -16,7 +16,7 @@ class QUADRATIC inherits POLYNOMIAL {
 	private float b;
 	private float c;
 
-	public build(float A, float B, float C) : QUADRATIC;
+	public build(float A, float B, float C) :QUADRATIC;
 	public evaluate(float x) : float;
 };
 
@@ -31,7 +31,7 @@ LINEAR::evaluate(float x) : float
     float result;
   do
     result = 0.0;
-    result = a * x + b;
+    result a * x + b;
     return (result);
   end
 
@@ -82,4 +82,4 @@ main
         write(f1.evaluate(counter));
         write(f2.evaluate(counter));
       end;
-  end
+   end

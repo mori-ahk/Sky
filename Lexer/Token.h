@@ -20,6 +20,8 @@ public:
     TokenType getType();
     int getLineno();
     std::string getValue();
+    int getPosition();
+    void setPosition(int&);
     std::unordered_map<std::string, TokenType>& getTokenTypeMap();
     std::unordered_map<TokenType, std::string>& getReverseTokenTypeMap();
     friend std::ostream& operator<<(std::ostream&, Token&);
@@ -29,6 +31,7 @@ private:
     TokenType type;
     int lineno;
     std::string value;
+    int position;
 };
 
 

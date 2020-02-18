@@ -19,7 +19,7 @@ public:
     std::unordered_set<std::string>& getFirst();
     std::unordered_set<std::string>& getFollow();
     std::vector<std::vector<std::string>>& getRHS();
-    std::string getName();
+    std::string& getName();
 
     static const std::unordered_map<std::string, std::string>& getTerminals();
     static bool isTerminal(std::string&);

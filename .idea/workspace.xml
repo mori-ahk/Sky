@@ -13,15 +13,18 @@
   <component name="ChangeListManager">
     <list default="true" id="374213ba-f36a-47cc-9e77-845267a0c010" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lexer/Lexer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Lexer/Lexer.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lexer/Lexer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Lexer/Lexer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Lexer/Token.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Lexer/Token.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Parser/Grammar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Grammar.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Parser/Grammar.h" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Grammar.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Parser/Grammar.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Grammar.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Lexer/Token.h" beforeDir="false" afterPath="$PROJECT_DIR$/Lexer/Token.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parser/Parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Parser.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parser/Parser.h" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Parser.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parser/Rule.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Rule.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parser/Rule.h" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Rule.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/bubble.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/bubble.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tests/Program.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/Program.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Lexer.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Lexer.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Token.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Token.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/main.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Sky" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Sky" afterDir="false" />
     </list>
@@ -139,38 +142,42 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="578" y="279" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581640590099" />
-    <state width="1638" height="295" key="GridCell.Tab.0.bottom" timestamp="1581738691096">
+    <state width="1638" height="295" key="GridCell.Tab.0.bottom" timestamp="1581983463269">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1581738691096" />
-    <state width="1638" height="295" key="GridCell.Tab.0.center" timestamp="1581738691095">
+    <state width="1638" height="295" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1581983463269" />
+    <state width="1638" height="295" key="GridCell.Tab.0.center" timestamp="1581983463268">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1581738691095" />
-    <state width="1638" height="295" key="GridCell.Tab.0.left" timestamp="1581738691094">
+    <state width="1638" height="295" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1581983463268" />
+    <state width="1638" height="295" key="GridCell.Tab.0.left" timestamp="1581983463267">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1581738691094" />
-    <state width="1638" height="295" key="GridCell.Tab.0.right" timestamp="1581738691095">
+    <state width="1638" height="295" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1581983463267" />
+    <state width="1638" height="295" key="GridCell.Tab.0.right" timestamp="1581983463268">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="295" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1581738691095" />
-    <state width="1638" height="345" key="GridCell.Tab.1.bottom" timestamp="1581735861602">
+    <state width="1638" height="295" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1581983463268" />
+    <state width="1638" height="345" key="GridCell.Tab.1.bottom" timestamp="1581982344010">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="345" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1581735861602" />
-    <state width="1638" height="345" key="GridCell.Tab.1.center" timestamp="1581735861601">
+    <state width="1638" height="345" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1581982344010" />
+    <state width="1638" height="345" key="GridCell.Tab.1.center" timestamp="1581982344009">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="345" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1581735861601" />
-    <state width="1638" height="345" key="GridCell.Tab.1.left" timestamp="1581735861601">
+    <state width="1638" height="345" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1581982344009" />
+    <state width="1638" height="345" key="GridCell.Tab.1.left" timestamp="1581982344008">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="345" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1581735861601" />
-    <state width="1638" height="345" key="GridCell.Tab.1.right" timestamp="1581735861602">
+    <state width="1638" height="345" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1581982344008" />
+    <state width="1638" height="345" key="GridCell.Tab.1.right" timestamp="1581982344009">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="345" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1581735861602" />
+    <state width="1638" height="345" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1581982344009" />
+    <state x="641" y="243" key="RollbackChangesDialog" timestamp="1581980934177">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="641" y="243" key="RollbackChangesDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581980934177" />
     <state x="341" y="164" key="SettingsEditor" timestamp="1581616415396">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
@@ -199,26 +206,5 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1581724904908" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Parser/Parser.cpp</url>
-          <line>43</line>
-          <option name="timeStamp" value="75" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Parser/Grammar.cpp</url>
-          <line>39</line>
-          <option name="timeStamp" value="82" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Parser/Grammar.cpp</url>
-          <line>19</line>
-          <option name="timeStamp" value="85" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

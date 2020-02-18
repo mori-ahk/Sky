@@ -12,12 +12,18 @@ class Parser {
 public:
     Parser(Lexer*);
     ~Parser();
+    bool parse(std::string, bool isOnPanicMode = false);
 
-    bool parse(std::string);
 private:
     Lexer* lexer;
     Grammar* grammar;
     Token* currentToken;
+
+    void next();
+    void printError(Rule&);
+    void panic(std::string&);
+
+    bool shouldTakeNext(std::string&);
 };
 
 

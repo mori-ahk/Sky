@@ -18,6 +18,12 @@ int Token::getLineno() { return this->lineno; }
 
 std::string Token::getValue() { return this->value; }
 
+int Token::getPosition() { return position; }
+
+void Token::setPosition(int& pos) {
+    this->position = pos;
+}
+
 std::unordered_map<std::string, TokenType> TokenTypeMap = {
         {"id", TokenType::Id},
         {"intnum",TokenType::Integer},

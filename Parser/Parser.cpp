@@ -10,21 +10,48 @@ Parser::Parser(Lexer* lexer) {
     currentToken = lexer->next();
 }
 
+
 Parser::~Parser() {}
 
-bool Parser::parse(std::string LHS) {
+void Parser::next() {
+    while (currentToken->getType() == currentToken->getTokenTypeMap().at("error")) currentToken = lexer->next();
+    currentToken = lexer->next();
+}
+
+bool Parser::shouldTakeNext(std::string& LHS) {
+    return currentToken->getTokenTypeMap().at(LHS) == currentToken->getType();
+}
+
+void Parser::printError(Rule& rule) {
+    if (!rule.isNullable()) {
+        std::cout << "ERROR: at line " << currentToken->getLineno() << " at position: " << currentToken->getPosition() << " expected one of these: ";
+        for (auto _rule: rule.getFollow()) {
+            std::cout << _rule << ", ";
+        }
+        std::cout << *rule.getFirst().begin() << std::endl;
+    }
+}
+
+void Parser::panic(std::string& rule) {
+    while (!parse(rule, true)) next();
+}
+
+
+bool Parser::parse(std::string LHS, bool isOnPanicMode) {
+
     if (currentToken == nullptr) return true;
+
     if (Rule::isTerminal(LHS)) {
         std::cout << currentToken->getValue() << std::endl;
-        if (currentToken->getTokenTypeMap()[LHS] == currentToken->getType()) {
-            currentToken = lexer->next();
+        if (shouldTakeNext(LHS)) {
+            next();
             return true;
         } else return false;
     }
 
     Rule* currentRule = grammar->getRule(LHS);
     if (!currentRule->doesBelongToFirst(currentToken)) {
-        return currentRule->isNullable() and currentRule->doesBelongToFollow(currentToken);
+        return (isOnPanicMode or currentRule->isNullable()) and currentRule->doesBelongToFollow(currentToken);
     }
 
     std::vector<std::string> rulesToProcess;
@@ -39,9 +66,9 @@ bool Parser::parse(std::string LHS) {
 
     for(auto& rule: rulesToProcess) {
         bool result = parse(rule);
-        auto v = grammar->getRule(rule);
         if (!result) {
-            std::cout << "ERROR expected: " << rule << std::endl;
+            panic(rule);
+            printError(*currentRule);
         }
     }
 
