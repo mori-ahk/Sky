@@ -13,20 +13,8 @@
   <component name="ChangeListManager">
     <list default="true" id="374213ba-f36a-47cc-9e77-845267a0c010" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lexer/Lexer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Lexer/Lexer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lexer/Lexer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Lexer/Lexer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lexer/Token.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Lexer/Token.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Lexer/Token.h" beforeDir="false" afterPath="$PROJECT_DIR$/Lexer/Token.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Parser/Parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Parser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Parser/Parser.h" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Parser.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Parser/Rule.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Rule.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Parser/Rule.h" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Rule.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Tests/Program.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Tests/Program.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Lexer.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Lexer.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Token.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Token.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/main.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Sky" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Sky" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parser/Grammar.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Grammar.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,6 +103,8 @@
       <workItem from="1581720651849" duration="1610000" />
       <workItem from="1581723343671" duration="11443000" />
       <workItem from="1581735209379" duration="3247000" />
+      <workItem from="1582078966942" duration="6235000" />
+      <workItem from="1582088405895" duration="2406000" />
     </task>
     <servers />
   </component>
@@ -142,37 +132,45 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="578" y="279" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581640590099" />
-    <state width="1638" height="295" key="GridCell.Tab.0.bottom" timestamp="1581983463269">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state width="1638" height="345" key="GridCell.Tab.0.bottom" timestamp="1582067049164">
+      <screen x="0" y="0" width="1280" height="800" />
     </state>
+    <state width="1638" height="345" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1582067049164" />
     <state width="1638" height="295" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1581983463269" />
-    <state width="1638" height="295" key="GridCell.Tab.0.center" timestamp="1581983463268">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state width="1638" height="345" key="GridCell.Tab.0.center" timestamp="1582067049163">
+      <screen x="0" y="0" width="1280" height="800" />
     </state>
+    <state width="1638" height="345" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1582067049163" />
     <state width="1638" height="295" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1581983463268" />
-    <state width="1638" height="295" key="GridCell.Tab.0.left" timestamp="1581983463267">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state width="1638" height="345" key="GridCell.Tab.0.left" timestamp="1582067049162">
+      <screen x="0" y="0" width="1280" height="800" />
     </state>
+    <state width="1638" height="345" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1582067049162" />
     <state width="1638" height="295" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1581983463267" />
-    <state width="1638" height="295" key="GridCell.Tab.0.right" timestamp="1581983463268">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state width="1638" height="345" key="GridCell.Tab.0.right" timestamp="1582067049164">
+      <screen x="0" y="0" width="1280" height="800" />
     </state>
+    <state width="1638" height="345" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1582067049164" />
     <state width="1638" height="295" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1581983463268" />
-    <state width="1638" height="345" key="GridCell.Tab.1.bottom" timestamp="1581982344010">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state width="1638" height="345" key="GridCell.Tab.1.bottom" timestamp="1582067049166">
+      <screen x="0" y="0" width="1280" height="800" />
     </state>
+    <state width="1638" height="345" key="GridCell.Tab.1.bottom/0.0.1280.800@0.0.1280.800" timestamp="1582067049166" />
     <state width="1638" height="345" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1581982344010" />
-    <state width="1638" height="345" key="GridCell.Tab.1.center" timestamp="1581982344009">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state width="1638" height="345" key="GridCell.Tab.1.center" timestamp="1582067049165">
+      <screen x="0" y="0" width="1280" height="800" />
     </state>
+    <state width="1638" height="345" key="GridCell.Tab.1.center/0.0.1280.800@0.0.1280.800" timestamp="1582067049165" />
     <state width="1638" height="345" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1581982344009" />
-    <state width="1638" height="345" key="GridCell.Tab.1.left" timestamp="1581982344008">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state width="1638" height="345" key="GridCell.Tab.1.left" timestamp="1582067049165">
+      <screen x="0" y="0" width="1280" height="800" />
     </state>
+    <state width="1638" height="345" key="GridCell.Tab.1.left/0.0.1280.800@0.0.1280.800" timestamp="1582067049165" />
     <state width="1638" height="345" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1581982344008" />
-    <state width="1638" height="345" key="GridCell.Tab.1.right" timestamp="1581982344009">
-      <screen x="0" y="0" width="1680" height="1050" />
+    <state width="1638" height="345" key="GridCell.Tab.1.right" timestamp="1582067049166">
+      <screen x="0" y="0" width="1280" height="800" />
     </state>
+    <state width="1638" height="345" key="GridCell.Tab.1.right/0.0.1280.800@0.0.1280.800" timestamp="1582067049166" />
     <state width="1638" height="345" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1581982344009" />
     <state x="641" y="243" key="RollbackChangesDialog" timestamp="1581980934177">
       <screen x="0" y="0" width="1680" height="1050" />
@@ -182,10 +180,10 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="341" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1581616415396" />
-    <state x="517" y="357" key="com.intellij.ide.util.TipDialog" timestamp="1581735223508">
+    <state x="517" y="357" key="com.intellij.ide.util.TipDialog" timestamp="1582088409999">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="517" y="357" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581735223508" />
+    <state x="517" y="357" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582088409999" />
     <state x="498" y="147" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1581395190888">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
@@ -202,9 +200,9 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="602" y="163" key="refactoring.ChangeSignatureDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581632052494" />
-    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1581724904908">
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1582079118171">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1581724904908" />
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1582079118171" />
   </component>
 </project>
