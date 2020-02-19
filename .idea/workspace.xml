@@ -14,7 +14,6 @@
     <list default="true" id="374213ba-f36a-47cc-9e77-845267a0c010" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parser/Grammar.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Grammar.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +103,8 @@
       <workItem from="1581723343671" duration="11443000" />
       <workItem from="1581735209379" duration="3247000" />
       <workItem from="1582078966942" duration="6235000" />
-      <workItem from="1582088405895" duration="2406000" />
+      <workItem from="1582088405895" duration="2456000" />
+      <workItem from="1582126775806" duration="3222000" />
     </task>
     <servers />
   </component>
@@ -180,10 +180,10 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="341" y="164" key="SettingsEditor/0.0.1680.1050@0.0.1680.1050" timestamp="1581616415396" />
-    <state x="517" y="357" key="com.intellij.ide.util.TipDialog" timestamp="1582088409999">
+    <state x="517" y="357" key="com.intellij.ide.util.TipDialog" timestamp="1582126781052">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="517" y="357" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582088409999" />
+    <state x="517" y="357" key="com.intellij.ide.util.TipDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1582126781052" />
     <state x="498" y="147" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1581395190888">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
