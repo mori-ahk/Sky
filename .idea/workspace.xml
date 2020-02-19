@@ -14,6 +14,7 @@
     <list default="true" id="374213ba-f36a-47cc-9e77-845267a0c010" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parser/Grammar.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Grammar.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +105,7 @@
       <workItem from="1581735209379" duration="3247000" />
       <workItem from="1582078966942" duration="6235000" />
       <workItem from="1582088405895" duration="2456000" />
-      <workItem from="1582126775806" duration="3222000" />
+      <workItem from="1582126775806" duration="4180000" />
     </task>
     <servers />
   </component>
@@ -200,9 +201,9 @@
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
     <state x="602" y="163" key="refactoring.ChangeSignatureDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1581632052494" />
-    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1582079118171">
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup" timestamp="1582136639862">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1582079118171" />
+    <state x="505" y="233" width="670" height="676" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1582136639862" />
   </component>
 </project>
