@@ -11,7 +11,11 @@ Parser::Parser(Lexer* lexer) {
 }
 
 
-Parser::~Parser() {}
+Parser::~Parser() {
+    delete currentToken;
+    delete lexer;
+    delete grammar;
+}
 
 void Parser::next() {
     while (currentToken->getType() == currentToken->getTokenTypeMap().at("error")) currentToken = lexer->next();
@@ -20,6 +24,10 @@ void Parser::next() {
 
 bool Parser::shouldTakeNext(std::string& LHS) {
     return currentToken->getTokenTypeMap().at(LHS) == currentToken->getType();
+}
+
+bool Parser::isUseless(std::string & rule) {
+    return USELESS.find(rule) != USELESS.end();
 }
 
 void Parser::printError(Rule& rule) {
@@ -36,9 +44,8 @@ void Parser::panic(std::string& rule) {
     while (!parse(rule, true)) next();
 }
 
-
 bool Parser::parse(std::string LHS, bool isOnPanicMode) {
-
+    if (currentToken == nullptr and isOnPanicMode) return true;
     if (currentToken == nullptr) return true;
 
     if (Rule::isTerminal(LHS)) {

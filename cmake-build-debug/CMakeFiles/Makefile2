@@ -74,12 +74,12 @@ preinstall:
 CMakeFiles/Sky.dir/all:
 	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/depend
 	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9 "Built target Sky"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12 "Built target Sky"
 .PHONY : CMakeFiles/Sky.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Sky.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles 9
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles 12
 	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/Sky.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles 0
 .PHONY : CMakeFiles/Sky.dir/rule

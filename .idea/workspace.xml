@@ -12,9 +12,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="374213ba-f36a-47cc-9e77-845267a0c010" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Parser/AST/ASTBuilder.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Parser/AST/ASTBuilder.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Parser/AST/ASTNode.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Parser/AST/ASTNode.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Parser/Grammar.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Grammar.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parser/Parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Parser.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Parser/Parser.h" beforeDir="false" afterPath="$PROJECT_DIR$/Parser/Parser.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Sky.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Sky.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Sky.cbp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +120,7 @@
       <workItem from="1581735209379" duration="3247000" />
       <workItem from="1582078966942" duration="6235000" />
       <workItem from="1582088405895" duration="2456000" />
-      <workItem from="1582126775806" duration="4180000" />
+      <workItem from="1582126775806" duration="7507000" />
     </task>
     <servers />
   </component>
