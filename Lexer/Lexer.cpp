@@ -47,7 +47,7 @@ std::string Lexer::extractErrorString(std::string& line) {
 
 void Lexer::handleWord(std::string& line, int lineNumber, int& pos) {
     if (doesOnlyContainWhitespace(line)) return;
-    if (line.at(0) == '\n' || line.at(0) == '\t') {
+    if (line.at(0) == ' ' || line.at(0) == '\n' || line.at(0) == '\t') {
         pos++;
         linePosition += pos;
         return;

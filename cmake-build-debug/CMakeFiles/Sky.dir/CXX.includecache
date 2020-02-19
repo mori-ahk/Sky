@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Lexer.cpp
+Lexer.h
+/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Lexer.h
+Token.h
+/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Token.h
+iostream
+-
+
 /Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Lexer.h
 stdio.h
 -
@@ -47,42 +55,4 @@ Token.h
 /Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Token.h
 TokenType.h
 /Users/mortezaahmadi/Dev/Clion/Sky/Lexer/TokenType.h
-
-/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Grammar.h
-Rule.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Rule.h
-unordered_map
--
-unordered_set
--
-vector
--
-string
--
-fstream
--
-iostream
--
-
-/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Parser.cpp
-Parser.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Parser.h
-
-/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Parser.h
-string
--
-Grammar.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Grammar.h
-../Lexer/Lexer.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Lexer.h
-
-/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Rule.h
-string
--
-vector
--
-unordered_set
--
-../Lexer/Token.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Token.h
 

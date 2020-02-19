@@ -40,6 +40,7 @@ void Parser::panic(std::string& rule) {
 bool Parser::parse(std::string LHS, bool isOnPanicMode) {
 
     if (currentToken == nullptr) return true;
+    if (currentToken == nullptr and isOnPanicMode) return true;
 
     if (Rule::isTerminal(LHS)) {
         std::cout << currentToken->getValue() << std::endl;
