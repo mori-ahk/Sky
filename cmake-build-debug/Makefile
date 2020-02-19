@@ -231,33 +231,6 @@ Lexer/Tokenizer.cpp.s:
 	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.s
 .PHONY : Lexer/Tokenizer.cpp.s
 
-Parser/AST/AST.o: Parser/AST/AST.cpp.o
-
-.PHONY : Parser/AST/AST.o
-
-# target to build an object file
-Parser/AST/AST.cpp.o:
-	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/AST.cpp.o
-.PHONY : Parser/AST/AST.cpp.o
-
-Parser/AST/AST.i: Parser/AST/AST.cpp.i
-
-.PHONY : Parser/AST/AST.i
-
-# target to preprocess a source file
-Parser/AST/AST.cpp.i:
-	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/AST.cpp.i
-.PHONY : Parser/AST/AST.cpp.i
-
-Parser/AST/AST.s: Parser/AST/AST.cpp.s
-
-.PHONY : Parser/AST/AST.s
-
-# target to generate assembly for a file
-Parser/AST/AST.cpp.s:
-	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/AST.cpp.s
-.PHONY : Parser/AST/AST.cpp.s
-
 Parser/AST/ASTBuilder.o: Parser/AST/ASTBuilder.cpp.o
 
 .PHONY : Parser/AST/ASTBuilder.o
@@ -285,32 +258,59 @@ Parser/AST/ASTBuilder.cpp.s:
 	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.s
 .PHONY : Parser/AST/ASTBuilder.cpp.s
 
-Parser/AST/Node.o: Parser/AST/Node.cpp.o
+Parser/AST/ASTNode.o: Parser/AST/ASTNode.cpp.o
 
-.PHONY : Parser/AST/Node.o
+.PHONY : Parser/AST/ASTNode.o
 
 # target to build an object file
-Parser/AST/Node.cpp.o:
-	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/Node.cpp.o
-.PHONY : Parser/AST/Node.cpp.o
+Parser/AST/ASTNode.cpp.o:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.o
+.PHONY : Parser/AST/ASTNode.cpp.o
 
-Parser/AST/Node.i: Parser/AST/Node.cpp.i
+Parser/AST/ASTNode.i: Parser/AST/ASTNode.cpp.i
 
-.PHONY : Parser/AST/Node.i
+.PHONY : Parser/AST/ASTNode.i
 
 # target to preprocess a source file
-Parser/AST/Node.cpp.i:
-	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/Node.cpp.i
-.PHONY : Parser/AST/Node.cpp.i
+Parser/AST/ASTNode.cpp.i:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.i
+.PHONY : Parser/AST/ASTNode.cpp.i
 
-Parser/AST/Node.s: Parser/AST/Node.cpp.s
+Parser/AST/ASTNode.s: Parser/AST/ASTNode.cpp.s
 
-.PHONY : Parser/AST/Node.s
+.PHONY : Parser/AST/ASTNode.s
 
 # target to generate assembly for a file
-Parser/AST/Node.cpp.s:
-	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/Node.cpp.s
-.PHONY : Parser/AST/Node.cpp.s
+Parser/AST/ASTNode.cpp.s:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.s
+.PHONY : Parser/AST/ASTNode.cpp.s
+
+Parser/AST/SemanticActions.o: Parser/AST/SemanticActions.cpp.o
+
+.PHONY : Parser/AST/SemanticActions.o
+
+# target to build an object file
+Parser/AST/SemanticActions.cpp.o:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.o
+.PHONY : Parser/AST/SemanticActions.cpp.o
+
+Parser/AST/SemanticActions.i: Parser/AST/SemanticActions.cpp.i
+
+.PHONY : Parser/AST/SemanticActions.i
+
+# target to preprocess a source file
+Parser/AST/SemanticActions.cpp.i:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.i
+.PHONY : Parser/AST/SemanticActions.cpp.i
+
+Parser/AST/SemanticActions.s: Parser/AST/SemanticActions.cpp.s
+
+.PHONY : Parser/AST/SemanticActions.s
+
+# target to generate assembly for a file
+Parser/AST/SemanticActions.cpp.s:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.s
+.PHONY : Parser/AST/SemanticActions.cpp.s
 
 Parser/Grammar.o: Parser/Grammar.cpp.o
 
@@ -441,15 +441,15 @@ help:
 	@echo "... Lexer/Tokenizer.o"
 	@echo "... Lexer/Tokenizer.i"
 	@echo "... Lexer/Tokenizer.s"
-	@echo "... Parser/AST/AST.o"
-	@echo "... Parser/AST/AST.i"
-	@echo "... Parser/AST/AST.s"
 	@echo "... Parser/AST/ASTBuilder.o"
 	@echo "... Parser/AST/ASTBuilder.i"
 	@echo "... Parser/AST/ASTBuilder.s"
-	@echo "... Parser/AST/Node.o"
-	@echo "... Parser/AST/Node.i"
-	@echo "... Parser/AST/Node.s"
+	@echo "... Parser/AST/ASTNode.o"
+	@echo "... Parser/AST/ASTNode.i"
+	@echo "... Parser/AST/ASTNode.s"
+	@echo "... Parser/AST/SemanticActions.o"
+	@echo "... Parser/AST/SemanticActions.i"
+	@echo "... Parser/AST/SemanticActions.s"
 	@echo "... Parser/Grammar.o"
 	@echo "... Parser/Grammar.i"
 	@echo "... Parser/Grammar.s"

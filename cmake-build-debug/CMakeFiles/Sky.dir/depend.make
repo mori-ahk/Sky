@@ -7,6 +7,9 @@ CMakeFiles/Sky.dir/Compiler.cpp.o: ../Lexer/Lexer.h
 CMakeFiles/Sky.dir/Compiler.cpp.o: ../Lexer/Token.h
 CMakeFiles/Sky.dir/Compiler.cpp.o: ../Lexer/TokenType.h
 CMakeFiles/Sky.dir/Compiler.cpp.o: ../Lexer/Tokenizer.h
+CMakeFiles/Sky.dir/Compiler.cpp.o: ../Parser/AST/ASTBuilder.h
+CMakeFiles/Sky.dir/Compiler.cpp.o: ../Parser/AST/ASTNode.h
+CMakeFiles/Sky.dir/Compiler.cpp.o: ../Parser/AST/SemanticActions.h
 CMakeFiles/Sky.dir/Compiler.cpp.o: ../Parser/Grammar.h
 CMakeFiles/Sky.dir/Compiler.cpp.o: ../Parser/Parser.h
 CMakeFiles/Sky.dir/Compiler.cpp.o: ../Parser/Rule.h
@@ -26,6 +29,17 @@ CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o: ../Lexer/TokenType.h
 CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o: ../Lexer/Tokenizer.cpp
 CMakeFiles/Sky.dir/Lexer/Tokenizer.cpp.o: ../Lexer/Tokenizer.h
 
+CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.o: ../Parser/AST/ASTBuilder.cpp
+CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.o: ../Parser/AST/ASTBuilder.h
+CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.o: ../Parser/AST/ASTNode.h
+CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.o: ../Parser/AST/SemanticActions.h
+
+CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.o: ../Parser/AST/ASTNode.cpp
+CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.o: ../Parser/AST/ASTNode.h
+
+CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.o: ../Parser/AST/SemanticActions.cpp
+CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.o: ../Parser/AST/SemanticActions.h
+
 CMakeFiles/Sky.dir/Parser/Grammar.cpp.o: ../Lexer/Token.h
 CMakeFiles/Sky.dir/Parser/Grammar.cpp.o: ../Lexer/TokenType.h
 CMakeFiles/Sky.dir/Parser/Grammar.cpp.o: ../Parser/Grammar.cpp
@@ -36,6 +50,9 @@ CMakeFiles/Sky.dir/Parser/Parser.cpp.o: ../Lexer/Lexer.h
 CMakeFiles/Sky.dir/Parser/Parser.cpp.o: ../Lexer/Token.h
 CMakeFiles/Sky.dir/Parser/Parser.cpp.o: ../Lexer/TokenType.h
 CMakeFiles/Sky.dir/Parser/Parser.cpp.o: ../Lexer/Tokenizer.h
+CMakeFiles/Sky.dir/Parser/Parser.cpp.o: ../Parser/AST/ASTBuilder.h
+CMakeFiles/Sky.dir/Parser/Parser.cpp.o: ../Parser/AST/ASTNode.h
+CMakeFiles/Sky.dir/Parser/Parser.cpp.o: ../Parser/AST/SemanticActions.h
 CMakeFiles/Sky.dir/Parser/Parser.cpp.o: ../Parser/Grammar.h
 CMakeFiles/Sky.dir/Parser/Parser.cpp.o: ../Parser/Parser.cpp
 CMakeFiles/Sky.dir/Parser/Parser.cpp.o: ../Parser/Parser.h
@@ -51,6 +68,9 @@ CMakeFiles/Sky.dir/main.cpp.o: ../Lexer/Lexer.h
 CMakeFiles/Sky.dir/main.cpp.o: ../Lexer/Token.h
 CMakeFiles/Sky.dir/main.cpp.o: ../Lexer/TokenType.h
 CMakeFiles/Sky.dir/main.cpp.o: ../Lexer/Tokenizer.h
+CMakeFiles/Sky.dir/main.cpp.o: ../Parser/AST/ASTBuilder.h
+CMakeFiles/Sky.dir/main.cpp.o: ../Parser/AST/ASTNode.h
+CMakeFiles/Sky.dir/main.cpp.o: ../Parser/AST/SemanticActions.h
 CMakeFiles/Sky.dir/main.cpp.o: ../Parser/Grammar.h
 CMakeFiles/Sky.dir/main.cpp.o: ../Parser/Parser.h
 CMakeFiles/Sky.dir/main.cpp.o: ../Parser/Rule.h

@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <deque>
 
 class ASTNode {
 public:
@@ -14,10 +15,15 @@ public:
     ASTNode();
     ~ASTNode();
     std::string& getName();
-    std::vector<ASTNode*>& getChildren();
+    std::deque<ASTNode*>& getChildren();
+
+    void addChildToLeft(ASTNode*);
+    void addChildToRight(ASTNode*);
+    void adoptChildren(std::deque<ASTNode*>);
+
 private:
     std::string name;
-    std::vector<ASTNode*> children;
+    std::deque<ASTNode*> children;
 
 };
 

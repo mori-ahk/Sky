@@ -161,35 +161,22 @@ CMakeFiles/Sky.dir/Compiler.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Sky.dir/Compiler.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/mortezaahmadi/Dev/Clion/Sky/Compiler.cpp -o CMakeFiles/Sky.dir/Compiler.cpp.s
 
-CMakeFiles/Sky.dir/Parser/AST/Node.cpp.o: CMakeFiles/Sky.dir/flags.make
-CMakeFiles/Sky.dir/Parser/AST/Node.cpp.o: ../Parser/AST/Node.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Sky.dir/Parser/AST/Node.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Sky.dir/Parser/AST/Node.cpp.o -c /Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/Node.cpp
+CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.o: CMakeFiles/Sky.dir/flags.make
+CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.o: ../Parser/AST/ASTNode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.o -c /Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/ASTNode.cpp
 
-CMakeFiles/Sky.dir/Parser/AST/Node.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Sky.dir/Parser/AST/Node.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/Node.cpp > CMakeFiles/Sky.dir/Parser/AST/Node.cpp.i
+CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/ASTNode.cpp > CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.i
 
-CMakeFiles/Sky.dir/Parser/AST/Node.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Sky.dir/Parser/AST/Node.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/Node.cpp -o CMakeFiles/Sky.dir/Parser/AST/Node.cpp.s
-
-CMakeFiles/Sky.dir/Parser/AST/AST.cpp.o: CMakeFiles/Sky.dir/flags.make
-CMakeFiles/Sky.dir/Parser/AST/AST.cpp.o: ../Parser/AST/AST.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/Sky.dir/Parser/AST/AST.cpp.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Sky.dir/Parser/AST/AST.cpp.o -c /Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/AST.cpp
-
-CMakeFiles/Sky.dir/Parser/AST/AST.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Sky.dir/Parser/AST/AST.cpp.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/AST.cpp > CMakeFiles/Sky.dir/Parser/AST/AST.cpp.i
-
-CMakeFiles/Sky.dir/Parser/AST/AST.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Sky.dir/Parser/AST/AST.cpp.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/AST.cpp -o CMakeFiles/Sky.dir/Parser/AST/AST.cpp.s
+CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/ASTNode.cpp -o CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.s
 
 CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.o: CMakeFiles/Sky.dir/flags.make
 CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.o: ../Parser/AST/ASTBuilder.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.o -c /Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/ASTBuilder.cpp
 
 CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.i: cmake_force
@@ -199,6 +186,19 @@ CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.i: cmake_force
 CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/ASTBuilder.cpp -o CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.s
+
+CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.o: CMakeFiles/Sky.dir/flags.make
+CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.o: ../Parser/AST/SemanticActions.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.o -c /Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/SemanticActions.cpp
+
+CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/SemanticActions.cpp > CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.i
+
+CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/SemanticActions.cpp -o CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.s
 
 # Object files for target Sky
 Sky_OBJECTS = \
@@ -210,9 +210,9 @@ Sky_OBJECTS = \
 "CMakeFiles/Sky.dir/Parser/Rule.cpp.o" \
 "CMakeFiles/Sky.dir/Parser/Parser.cpp.o" \
 "CMakeFiles/Sky.dir/Compiler.cpp.o" \
-"CMakeFiles/Sky.dir/Parser/AST/Node.cpp.o" \
-"CMakeFiles/Sky.dir/Parser/AST/AST.cpp.o" \
-"CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.o"
+"CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.o" \
+"CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.o" \
+"CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.o"
 
 # External object files for target Sky
 Sky_EXTERNAL_OBJECTS =
@@ -225,9 +225,9 @@ Sky: CMakeFiles/Sky.dir/Parser/Grammar.cpp.o
 Sky: CMakeFiles/Sky.dir/Parser/Rule.cpp.o
 Sky: CMakeFiles/Sky.dir/Parser/Parser.cpp.o
 Sky: CMakeFiles/Sky.dir/Compiler.cpp.o
-Sky: CMakeFiles/Sky.dir/Parser/AST/Node.cpp.o
-Sky: CMakeFiles/Sky.dir/Parser/AST/AST.cpp.o
+Sky: CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.o
 Sky: CMakeFiles/Sky.dir/Parser/AST/ASTBuilder.cpp.o
+Sky: CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.o
 Sky: CMakeFiles/Sky.dir/build.make
 Sky: CMakeFiles/Sky.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/mortezaahmadi/Dev/Clion/Sky/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable Sky"

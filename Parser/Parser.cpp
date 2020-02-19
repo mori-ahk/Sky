@@ -30,6 +30,10 @@ bool Parser::isUseless(std::string & rule) {
     return USELESS.find(rule) != USELESS.end();
 }
 
+bool Parser::isKeyword(std::string& rule) {
+    return KEYWORDS.find(rule) != KEYWORDS.end();
+}
+
 void Parser::printError(Rule& rule) {
     if (!rule.isNullable()) {
         std::cout << "ERROR: at line " << currentToken->getLineno() << " at position: " << currentToken->getPosition() << " expected one of these: ";
@@ -56,26 +60,40 @@ bool Parser::parse(std::string LHS, bool isOnPanicMode) {
         } else return false;
     }
 
+
     Rule* currentRule = grammar->getRule(LHS);
     if (!currentRule->doesBelongToFirst(currentToken)) {
         return (isOnPanicMode or currentRule->isNullable()) and currentRule->doesBelongToFollow(currentToken);
     }
 
     std::vector<std::string> rulesToProcess;
+    bool found = false;
     for(auto& production : currentRule->getRHS()) {
-        if (production.front() != "#") {
-            if (grammar->shouldTake(production.front(), currentToken)) {
-                rulesToProcess = production;
-                break;
+        if (found) break;
+        for (auto& _rule: production) {
+            if (_rule != "#" and _rule.front() != '@') {
+                if (grammar->shouldTake(_rule, currentToken)) {
+                    rulesToProcess = production;
+                    found = true;
+                    break;
+                }
             }
         }
     }
 
     for(auto& rule: rulesToProcess) {
-        bool result = parse(rule);
-        if (!result) {
-            panic(rule);
-            printError(*currentRule);
+        if (isKeyword(rule)) {
+
+        }
+        if (rule.front() == '@') { // do action
+            ASTBuilder->handle(rule);
+            continue;
+        } else {
+            bool result = parse(rule);
+            if (!result) {
+                panic(rule);
+                printError(*currentRule);
+            }
         }
     }
 

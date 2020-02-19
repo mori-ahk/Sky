@@ -6,11 +6,10 @@
 #define SKY_PARSER_H
 
 #include <string>
-#include <stack>
 #include <unordered_set>
 #include "Grammar.h"
 #include "../Lexer/Lexer.h"
-#include "AST/ASTNode.h"
+#include "AST/ASTBuilder.h"
 
 class Parser {
 public:
@@ -22,15 +21,16 @@ private:
     Lexer* lexer;
     Grammar* grammar;
     Token* currentToken;
-
-    std::stack<ASTNode*> stack;
+    ASTBuilder* ASTBuilder;
 
     void next();
     void printError(Rule&);
     void panic(std::string&);
 
     bool shouldTakeNext(std::string&);
-    bool isUseless(std::string&;
+    bool isUseless(std::string&);
+    bool isKeyword(std::string&);
+
 };
 
 const std::unordered_set<std::string> USELESS = {
@@ -47,4 +47,28 @@ const std::unordered_set<std::string> USELESS = {
         "coloncolon",
 };
 
+
+const std::unordered_set<std::string> KEYWORDS = {
+        "if",
+        "then",
+        "else",
+        "integer",
+        "float",
+        "while",
+        "class",
+        "do",
+        "end",
+        "public",
+        "private",
+        "or",
+        "and",
+        "not",
+        "read",
+        "write",
+        "return",
+        "main",
+        "inherits",
+        "local",
+        "void",
+}
 #endif //SKY_PARSER_H

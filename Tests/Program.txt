@@ -31,7 +31,7 @@ LINEAR::evaluate(float x) : float
     float result;
   do
     result = 0.0;
-    result a * x + b;
+    result = a * x + b;
     return (result);
   end
 

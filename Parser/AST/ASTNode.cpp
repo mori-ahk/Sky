@@ -24,6 +24,20 @@ std::string& ASTNode::getName() {
     return name;
 }
 
-std::vector<ASTNode*>& ASTNode::getChildren() {
+std::deque<ASTNode*>& ASTNode::getChildren() {
     return children;
+}
+
+void ASTNode::addChildToLeft(ASTNode* node) {
+    children.push_back(node);
+}
+
+void ASTNode::addChildToRight(ASTNode* node) {
+    children.push_front(node);
+}
+
+void ASTNode::adoptChildren(std::deque<ASTNode*> _children) {
+    for (auto it = _children.begin() ; it != _children.end(); it++) {
+        children.push_front(*it);
+    }
 }

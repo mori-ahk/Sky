@@ -107,22 +107,22 @@
 		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Tokenizer.h">
 			<Option target="Sky"/>
 		</Unit>
-		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/AST.cpp">
-			<Option target="Sky"/>
-		</Unit>
-		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/AST.h">
-			<Option target="Sky"/>
-		</Unit>
 		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/ASTBuilder.cpp">
 			<Option target="Sky"/>
 		</Unit>
 		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/ASTBuilder.h">
 			<Option target="Sky"/>
 		</Unit>
-		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/Node.cpp">
+		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/ASTNode.cpp">
 			<Option target="Sky"/>
 		</Unit>
-		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/Node.h">
+		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/ASTNode.h">
+			<Option target="Sky"/>
+		</Unit>
+		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/SemanticActions.cpp">
+			<Option target="Sky"/>
+		</Unit>
+		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/SemanticActions.h">
 			<Option target="Sky"/>
 		</Unit>
 		<Unit filename="/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Grammar.cpp">
