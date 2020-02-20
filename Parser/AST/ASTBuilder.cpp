@@ -52,8 +52,9 @@ void ASTBuilder::adoptChild() {
 
 
 void ASTBuilder::handle(std::string& action, std::string& LHS) {
-    printStack();
-    std::cout << "LHS: " << LHS << " action: " << action << std::endl;
+    if (isIgnoreModeOn) return;
+//    printStack();
+//    std::cout << "LHS: " << LHS << " action: " << action << std::endl;
     std::string action_number = action.substr(0, 2);
     if (action_number == "@1") {
         if (action.size() > 2) {

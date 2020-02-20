@@ -38,13 +38,11 @@ bool Parser::isKeyword(std::string& rule) {
 
 void Parser::printError(Rule& rule) {
     if (currentToken == nullptr) return;
-    if (!rule.isNullable()) {
         std::cout << "ERROR: at line " << currentToken->getLineno() << " at position: " << currentToken->getPosition() << " expected one of these: ";
         for (auto _rule: rule.getFollow()) {
             std::cout << _rule << ", ";
         }
-        std::cout << *rule.getFirst().begin() << std::endl;
-    }
+        std::cout << std::endl;
 }
 
 void Parser::panic(std::string& rule) {
@@ -61,7 +59,7 @@ bool Parser::parse(std::string LHS, bool isOnPanicMode) {
             if (isKeyword(LHS)) {
                 std::string value = currentToken->getValue();
                 AST_Builder->push(new ASTNode(value));
-                AST_Builder->printStack();
+//                AST_Builder->printStack();
             }
             next();
             return true;
@@ -72,7 +70,7 @@ bool Parser::parse(std::string LHS, bool isOnPanicMode) {
     if (!currentRule->doesBelongToFirst(currentToken)) {
         if ((isOnPanicMode or currentRule->isNullable()) and currentRule->doesBelongToFollow(currentToken)) {
             AST_Builder->push(new ASTNode(LHS));
-            AST_Builder->printStack();
+//            AST_Builder->printStack();
             return true;
         } else return false;
     }
@@ -99,8 +97,9 @@ bool Parser::parse(std::string LHS, bool isOnPanicMode) {
         } else {
             bool result = parse(rule);
             if (!result) {
-                panic(rule);
+                AST_Builder->isIgnoreModeOn = true;
                 printError(*currentRule);
+                panic(rule);
             }
         }
     }
