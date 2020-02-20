@@ -1,0 +1,21 @@
+printArray(integer arr[], integer size) : void
+  local
+    integer n;
+    integer i;
+  do
+
+  end
+
+LINEAR::evaluate(float x) : float
+  local
+    float result;
+  do
+    //result = 0.0;
+    //result = a * x + b;
+    //return (result);
+  end
+main
+
+    do
+
+    end

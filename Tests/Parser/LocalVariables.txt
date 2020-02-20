@@ -1,0 +1,7 @@
+main
+    local
+        integer arr[7];
+        float some_arr[2];
+    do
+
+    end
