@@ -80,5 +80,4 @@ void ASTBuilder::printStack() {
     }
 
     std::cout << std::endl;
-//    testStack = stack;
 }
