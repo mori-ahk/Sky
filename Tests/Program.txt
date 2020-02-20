@@ -8,5 +8,7 @@ class LINEAR {
 };
 
 main
+    local
+        integer arr[7];
     do
     end
