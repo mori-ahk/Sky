@@ -14,8 +14,10 @@ public:
     ASTNode(std::string&);
     ASTNode();
     ~ASTNode();
-    std::string& getName();
+    const std::string& getName();
     std::deque<ASTNode*>& getChildren();
+
+    int getUniqueID();
 
     void addChildToLeft(ASTNode*);
     void addChildToRight(ASTNode*);
@@ -24,7 +26,7 @@ public:
 private:
     std::string name;
     std::deque<ASTNode*> children;
-
+    int uniqueID;
 };
 
 

@@ -5,6 +5,8 @@
 #include "ASTBuilder.h"
 #include <iostream>
 
+
+
 ASTBuilder::ASTBuilder() {
     std::string program = "START";
     root = new ASTNode(program);
@@ -12,6 +14,10 @@ ASTBuilder::ASTBuilder() {
 }
 
 ASTBuilder::~ASTBuilder() {}
+
+ASTNode* ASTBuilder::getRoot() {
+    return root;
+}
 
 void ASTBuilder::createNode(std::string& rule) {
     ASTNode* node = new ASTNode(rule);
@@ -46,8 +52,8 @@ void ASTBuilder::adoptChild() {
 
 
 void ASTBuilder::handle(std::string& action, std::string& LHS) {
-    printStack();
-    std::cout << "LHS: " << LHS << " action: " << action << std::endl;
+//    printStack();
+//    std::cout << "LHS: " << LHS << " action: " << action << std::endl;
     std::string action_number = action.substr(0, 2);
     if (action_number == "@1") {
         if (action.size() > 2) {

@@ -17,6 +17,8 @@ public:
     void push(ASTNode*);
     bool isIgnoreModeOn;
     void printStack();
+    ASTNode* getRoot();
+
 private:
 
     void createNode(std::string&);

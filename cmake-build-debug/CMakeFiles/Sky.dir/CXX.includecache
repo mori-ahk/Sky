@@ -6,16 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/Users/mortezaahmadi/Dev/Clion/Sky/Compiler.cpp
-Compiler.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Compiler.h
-
-/Users/mortezaahmadi/Dev/Clion/Sky/Compiler.h
-Lexer/Lexer.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Lexer.h
-Parser/Parser.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Parser/Parser.h
-
 /Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Lexer.h
 stdio.h
 -
@@ -58,12 +48,6 @@ Token.h
 TokenType.h
 /Users/mortezaahmadi/Dev/Clion/Sky/Lexer/TokenType.h
 
-/Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/ASTBuilder.cpp
-ASTBuilder.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/ASTBuilder.h
-iostream
--
-
 /Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/ASTBuilder.h
 stack
 -
@@ -77,6 +61,20 @@ vector
 -
 deque
 -
+
+/Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/Visualizer.cpp
+Visualizer.h
+/Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/Visualizer.h
+iostream
+-
+fstream
+-
+
+/Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/Visualizer.h
+string
+-
+ASTNode.h
+/Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/ASTNode.h
 
 /Users/mortezaahmadi/Dev/Clion/Sky/Parser/Grammar.h
 Rule.h
@@ -109,6 +107,8 @@ Grammar.h
 /Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Lexer.h
 AST/ASTBuilder.h
 /Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/ASTBuilder.h
+AST/Visualizer.h
+/Users/mortezaahmadi/Dev/Clion/Sky/Parser/AST/Visualizer.h
 
 /Users/mortezaahmadi/Dev/Clion/Sky/Parser/Rule.h
 string
@@ -119,10 +119,4 @@ unordered_set
 -
 ../Lexer/Token.h
 /Users/mortezaahmadi/Dev/Clion/Sky/Lexer/Token.h
-
-/Users/mortezaahmadi/Dev/Clion/Sky/main.cpp
-iostream
--
-Compiler.h
-/Users/mortezaahmadi/Dev/Clion/Sky/Compiler.h
 

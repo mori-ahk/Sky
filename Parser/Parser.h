@@ -10,18 +10,20 @@
 #include "Grammar.h"
 #include "../Lexer/Lexer.h"
 #include "AST/ASTBuilder.h"
+#include "AST/Visualizer.h"
 
 class Parser {
 public:
     Parser(Lexer*);
     ~Parser();
     bool parse(std::string, bool isOnPanicMode = false);
+    ASTBuilder* AST_Builder;
+    Visualizer* visualizer;
 
 private:
     Lexer* lexer;
     Grammar* grammar;
     Token* currentToken;
-    ASTBuilder* AST_Builder;
 
     void next();
     void printError(Rule&);

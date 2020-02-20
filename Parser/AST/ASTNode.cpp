@@ -5,17 +5,20 @@
 #include "ASTNode.h"
 #include <iostream>
 
+static int counter = 0;
+
 ASTNode::ASTNode() {
     this->name = "";
 }
 
 ASTNode::ASTNode(std::string& name) {
     this->name = name;
+    uniqueID = counter++;
 }
 
 ASTNode::~ASTNode() {}
 
-std::string& ASTNode::getName() {
+const std::string& ASTNode::getName() {
     return name;
 }
 
@@ -55,4 +58,8 @@ void ASTNode::adoptChildren(std::deque<ASTNode*> _children) {
     }
 
     std::cout << std::endl;
+}
+
+int ASTNode::getUniqueID() {
+    return uniqueID;
 }
