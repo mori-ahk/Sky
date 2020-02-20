@@ -65,7 +65,7 @@ void Grammar::constructFirstSetHelper(Rule* rule) {
         if (production.front() == "#") continue;
         bool nullable = true;
         for (std::string& _rule: production) {
-
+            if (_rule.front() == '@') continue;
             Rule* toDiscover = RULES[_rule];
             if (!toDiscover->visited) constructFirstSetHelper(toDiscover);
 
@@ -108,6 +108,7 @@ void Grammar::constructFollowSetHelper(Rule* rule) {
         int lookAfter = rule->indexOf(rules, rule->getName());
         bool nullable = true;
         for (int i = lookAfter + 1; i < rules.size(); i++) {
+            if (rules.at(i).front() == '@') continue;
             auto firstSet = std::unordered_set<std::string>(RULES[rules.at(i)]->getFirst());
             firstSet.erase("#");
 

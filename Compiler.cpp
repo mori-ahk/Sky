@@ -17,4 +17,5 @@ Compiler::~Compiler() {
 
 void Compiler::compile() {
     parser->parse("START");
+    parser->visualizer->visualize(parser->AST_Builder->getRoot());
 }

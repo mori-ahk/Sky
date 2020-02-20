@@ -21,3 +21,16 @@ The lexer for Sky is written in C++ using regex matching, and it works as follow
 - STEP 5: head to `Tests` directory where you can find output files in `fileName_lex_tokens.txt` and `fileName_lex_errors.txt`.
 
     
+## Parser Actions
+
+Stack: A | B (B is on top of the stack).
+
+@1 could have a following `#optional_custom_name` which indicates a custom name for AST node.
+
+> @1_#optional_custom_name : create an AST node with the LHS, push the new created node
+>
+> @2 : pop A and B, set B as the right child of A, push A
+>
+> @3 : pop A and B, A adopts children of B, push A
+>
+> @4 : pop A and B, set A as the left child of B, push B
