@@ -4,11 +4,11 @@ class POLYNOMIAL {
 };
 
 class LINEAR {
-	public evaluate(float x) : float;
+  	public evaluate(float x) : float;
+  	private float a;
+  	public integer b;
 };
 
 main
-    local
-        integer arr[7];
     do
     end
