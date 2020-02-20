@@ -57,19 +57,23 @@ bool Parser::parse(std::string LHS, bool isOnPanicMode) {
     if (Rule::isTerminal(LHS)) {
         std::cout << currentToken->getValue() << std::endl;
         if (shouldTakeNext(LHS)) {
-            if (isKeyword(LHS)) AST_Builder->push(new ASTNode(LHS));
+            if (isKeyword(LHS)) {
+                std::string value = currentToken->getValue();
+                AST_Builder->push(new ASTNode(value));
+                AST_Builder->printStack();
+            }
             next();
             return true;
         } else return false;
     }
 
-
     Rule* currentRule = grammar->getRule(LHS);
     if (!currentRule->doesBelongToFirst(currentToken)) {
-        if (!((isOnPanicMode or currentRule->isNullable()) and currentRule->doesBelongToFollow(currentToken))) {
+        if ((isOnPanicMode or currentRule->isNullable()) and currentRule->doesBelongToFollow(currentToken)) {
             AST_Builder->push(new ASTNode(LHS));
-            return false;
-        } else return true;
+            AST_Builder->printStack();
+            return true;
+        } else return false;
     }
 
     std::vector<std::string> rulesToProcess;
@@ -88,11 +92,6 @@ bool Parser::parse(std::string LHS, bool isOnPanicMode) {
     }
 
     for(auto& rule: rulesToProcess) {
-        if (rule == "id") {
-            std::string currTokenValue = currentToken->getValue();
-            AST_Builder->push(new ASTNode(currTokenValue));
-        }
-        if (isKeyword(rule)) AST_Builder->push(new ASTNode(rule));
         if (rule.front() == '@') { // do action
             AST_Builder->handle(rule, LHS);
             continue;

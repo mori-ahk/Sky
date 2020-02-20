@@ -24,7 +24,7 @@ std::deque<ASTNode*>& ASTNode::getChildren() {
 }
 
 void ASTNode::addChildToLeft(ASTNode* node) {
-    children.push_back(node);
+    children.push_front(node);
     std::cout << "adding to left children of " << this->name << ": ";
     for (auto child : children) {
         std::cout << child->getName() << " ";
@@ -34,7 +34,7 @@ void ASTNode::addChildToLeft(ASTNode* node) {
 }
 
 void ASTNode::addChildToRight(ASTNode* node) {
-    children.push_front(node);
+    children.push_back(node);
     std::cout << "adding to right children of " << this->name << ": ";
     for (auto child : children) {
         std::cout << child->getName() << " ";
@@ -46,7 +46,7 @@ void ASTNode::addChildToRight(ASTNode* node) {
 void ASTNode::adoptChildren(std::deque<ASTNode*> _children) {
 
     for (auto it = _children.begin() ; it != _children.end(); it++) {
-        children.push_front(*it);
+        children.push_back(*it);
     }
     std::cout << "adopting to right children of " << this->name << ": ";
 

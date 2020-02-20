@@ -7,7 +7,6 @@
 
 #include <stack>
 #include "ASTNode.h"
-#include "SemanticActions.h"
 class ASTBuilder {
 public:
 
@@ -17,15 +16,16 @@ public:
     void handle(std::string&, std::string&);
     void push(ASTNode*);
     bool isIgnoreModeOn;
-
+    void printStack();
 private:
 
     void createNode(std::string&);
     void insertLeftChild();
     void insertRightChild();
     void adoptChild();
-    void printStack();
+
     std::stack<ASTNode*> stack;
+    std::stack<ASTNode*> testStack;
     ASTNode* root;
 };
 

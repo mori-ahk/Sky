@@ -46,19 +46,33 @@ void ASTBuilder::adoptChild() {
 
 
 void ASTBuilder::handle(std::string& action, std::string& LHS) {
+    printStack();
+    std::cout << "LHS: " << LHS << " action: " << action << std::endl;
     std::string action_number = action.substr(0, 2);
-    if (action_number == "@1") createNode(LHS);
+    if (action_number == "@1") {
+        if (action.size() > 2) {
+            std::string arg = action.substr(4);
+            createNode(arg);
+        } else createNode(LHS);
+    }
+
     else if (action_number == "@2") insertRightChild();
     else if (action_number == "@3") adoptChild();
     else insertLeftChild();
-    printStack();
 }
 
 void ASTBuilder::printStack() {
-    auto B = stack.top(); stack.pop();
-    std::cout << "B: " << B->getName() << std::endl;
-    auto A = stack.top(); stack.pop();
-    std::cout << "A: " << A->getName() << std::endl;
-    stack.push(A);
-    stack.push(B);
+    std::vector<ASTNode*> v;
+    testStack = stack;
+    while(!testStack.empty()) {
+        v.push_back(testStack.top());
+        testStack.pop();
+    }
+
+    for (int i = v.size() - 1; i > -1 ; i--) {
+        std::cout << v.at(i)->getName() << "| ";
+    }
+
+    std::cout << std::endl;
+//    testStack = stack;
 }

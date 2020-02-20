@@ -285,32 +285,32 @@ Parser/AST/ASTNode.cpp.s:
 	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/ASTNode.cpp.s
 .PHONY : Parser/AST/ASTNode.cpp.s
 
-Parser/AST/SemanticActions.o: Parser/AST/SemanticActions.cpp.o
+Parser/AST/Visualizer.o: Parser/AST/Visualizer.cpp.o
 
-.PHONY : Parser/AST/SemanticActions.o
+.PHONY : Parser/AST/Visualizer.o
 
 # target to build an object file
-Parser/AST/SemanticActions.cpp.o:
-	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.o
-.PHONY : Parser/AST/SemanticActions.cpp.o
+Parser/AST/Visualizer.cpp.o:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/Visualizer.cpp.o
+.PHONY : Parser/AST/Visualizer.cpp.o
 
-Parser/AST/SemanticActions.i: Parser/AST/SemanticActions.cpp.i
+Parser/AST/Visualizer.i: Parser/AST/Visualizer.cpp.i
 
-.PHONY : Parser/AST/SemanticActions.i
+.PHONY : Parser/AST/Visualizer.i
 
 # target to preprocess a source file
-Parser/AST/SemanticActions.cpp.i:
-	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.i
-.PHONY : Parser/AST/SemanticActions.cpp.i
+Parser/AST/Visualizer.cpp.i:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/Visualizer.cpp.i
+.PHONY : Parser/AST/Visualizer.cpp.i
 
-Parser/AST/SemanticActions.s: Parser/AST/SemanticActions.cpp.s
+Parser/AST/Visualizer.s: Parser/AST/Visualizer.cpp.s
 
-.PHONY : Parser/AST/SemanticActions.s
+.PHONY : Parser/AST/Visualizer.s
 
 # target to generate assembly for a file
-Parser/AST/SemanticActions.cpp.s:
-	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/SemanticActions.cpp.s
-.PHONY : Parser/AST/SemanticActions.cpp.s
+Parser/AST/Visualizer.cpp.s:
+	$(MAKE) -f CMakeFiles/Sky.dir/build.make CMakeFiles/Sky.dir/Parser/AST/Visualizer.cpp.s
+.PHONY : Parser/AST/Visualizer.cpp.s
 
 Parser/Grammar.o: Parser/Grammar.cpp.o
 
@@ -447,9 +447,9 @@ help:
 	@echo "... Parser/AST/ASTNode.o"
 	@echo "... Parser/AST/ASTNode.i"
 	@echo "... Parser/AST/ASTNode.s"
-	@echo "... Parser/AST/SemanticActions.o"
-	@echo "... Parser/AST/SemanticActions.i"
-	@echo "... Parser/AST/SemanticActions.s"
+	@echo "... Parser/AST/Visualizer.o"
+	@echo "... Parser/AST/Visualizer.i"
+	@echo "... Parser/AST/Visualizer.s"
 	@echo "... Parser/Grammar.o"
 	@echo "... Parser/Grammar.i"
 	@echo "... Parser/Grammar.s"
