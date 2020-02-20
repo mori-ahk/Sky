@@ -21,7 +21,7 @@ private:
     Lexer* lexer;
     Grammar* grammar;
     Token* currentToken;
-    ASTBuilder* ASTBuilder;
+    ASTBuilder* AST_Builder;
 
     void next();
     void printError(Rule&);
@@ -70,5 +70,6 @@ const std::unordered_set<std::string> KEYWORDS = {
         "inherits",
         "local",
         "void",
-}
+};
+
 #endif //SKY_PARSER_H

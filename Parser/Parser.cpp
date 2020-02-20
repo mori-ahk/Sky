@@ -7,6 +7,7 @@
 Parser::Parser(Lexer* lexer) {
     this->lexer = lexer;
     this->grammar = new Grammar();
+    this->AST_Builder = new ASTBuilder();
     currentToken = lexer->next();
 }
 
@@ -35,6 +36,7 @@ bool Parser::isKeyword(std::string& rule) {
 }
 
 void Parser::printError(Rule& rule) {
+    if (currentToken == nullptr) return;
     if (!rule.isNullable()) {
         std::cout << "ERROR: at line " << currentToken->getLineno() << " at position: " << currentToken->getPosition() << " expected one of these: ";
         for (auto _rule: rule.getFollow()) {
@@ -55,6 +57,7 @@ bool Parser::parse(std::string LHS, bool isOnPanicMode) {
     if (Rule::isTerminal(LHS)) {
         std::cout << currentToken->getValue() << std::endl;
         if (shouldTakeNext(LHS)) {
+            if (isKeyword(LHS)) AST_Builder->push(new ASTNode(LHS));
             next();
             return true;
         } else return false;
@@ -63,7 +66,10 @@ bool Parser::parse(std::string LHS, bool isOnPanicMode) {
 
     Rule* currentRule = grammar->getRule(LHS);
     if (!currentRule->doesBelongToFirst(currentToken)) {
-        return (isOnPanicMode or currentRule->isNullable()) and currentRule->doesBelongToFollow(currentToken);
+        if (!((isOnPanicMode or currentRule->isNullable()) and currentRule->doesBelongToFollow(currentToken))) {
+            AST_Builder->push(new ASTNode(LHS));
+            return false;
+        } else return true;
     }
 
     std::vector<std::string> rulesToProcess;
@@ -82,11 +88,13 @@ bool Parser::parse(std::string LHS, bool isOnPanicMode) {
     }
 
     for(auto& rule: rulesToProcess) {
-        if (isKeyword(rule)) {
-
+        if (rule == "id") {
+            std::string currTokenValue = currentToken->getValue();
+            AST_Builder->push(new ASTNode(currTokenValue));
         }
+        if (isKeyword(rule)) AST_Builder->push(new ASTNode(rule));
         if (rule.front() == '@') { // do action
-            ASTBuilder->handle(rule);
+            AST_Builder->handle(rule, LHS);
             continue;
         } else {
             bool result = parse(rule);
