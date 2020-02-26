@@ -46,8 +46,11 @@ std::string Lexer::extractErrorString(std::string& line) {
 }
 
 void Lexer::handleWord(std::string& line, int lineNumber, int& pos) {
+    //process the next line if the current line is empty.
     if (doesOnlyContainWhitespace(line)) return;
-    if (line.at(0) == '\n' || line.at(0) == '\t') {
+
+    //Ignoring tab, empty space, new line or carriage return characters.
+    if (line.at(0) == '\r' || line.at(0) == ' ' || line.at(0) == '\n' || line.at(0) == '\t') {
         pos++;
         linePosition += pos;
         return;
@@ -139,5 +142,5 @@ void Lexer::lex(std::string filePath) {
     totalMatches.clear();
     totalErrors.clear();
     read(filePath);
-//    write(filePath);
+    write(filePath);
 }
