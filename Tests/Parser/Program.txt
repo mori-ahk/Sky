@@ -21,5 +21,6 @@ main
     local
         integer arr[7];
     do
-
+        f1 = f1.build(2, 3.5);
+        f2 = f2.build(-2.0, 1.0, 0.0);
     end
