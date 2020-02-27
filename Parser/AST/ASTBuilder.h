@@ -7,6 +7,7 @@
 
 #include <stack>
 #include "ASTNode.h"
+#include "Visualizer.h"
 class ASTBuilder {
 public:
 
@@ -18,6 +19,7 @@ public:
     bool isIgnoreModeOn;
     void printStack();
     ASTNode* getRoot();
+    void visualize();
 
 private:
 
@@ -29,6 +31,7 @@ private:
     std::stack<ASTNode*> stack;
     std::stack<ASTNode*> testStack;
     ASTNode* root;
+    Visualizer* visualizer;
 };
 
 

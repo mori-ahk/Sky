@@ -9,9 +9,8 @@ Parser::Parser(Lexer* lexer) {
     this->grammar = new Grammar();
     this->AST_Builder = new ASTBuilder();
     this->currentToken = lexer->next();
-    this->visualizer = new Visualizer();
+//    this->visualizer = new Visualizer();
 }
-
 
 Parser::~Parser() {
     delete currentToken;
@@ -26,10 +25,6 @@ void Parser::next() {
 
 bool Parser::shouldTakeNext(std::string& LHS) {
     return currentToken->getTokenTypeMap().at(LHS) == currentToken->getType();
-}
-
-bool Parser::isUseless(std::string & rule) {
-    return USELESS.find(rule) != USELESS.end();
 }
 
 bool Parser::isKeyword(std::string& rule) {
@@ -59,7 +54,7 @@ bool Parser::parse(std::string LHS, bool isOnPanicMode) {
             if (isKeyword(LHS)) {
                 std::string value = currentToken->getValue();
                 AST_Builder->push(new ASTNode(value));
-//                AST_Builder->printStack();
+                AST_Builder->printStack();
             }
             next();
             return true;
@@ -70,7 +65,7 @@ bool Parser::parse(std::string LHS, bool isOnPanicMode) {
     if (!currentRule->doesBelongToFirst(currentToken)) {
         if ((isOnPanicMode or currentRule->isNullable()) and currentRule->doesBelongToFollow(currentToken)) {
             AST_Builder->push(new ASTNode(LHS));
-//            AST_Builder->printStack();
+            AST_Builder->printStack();
             return true;
         } else return false;
     }

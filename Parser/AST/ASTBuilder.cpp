@@ -9,8 +9,10 @@
 
 ASTBuilder::ASTBuilder() {
     std::string program = "START";
-    root = new ASTNode(program);
+    this->root = new ASTNode(program);
+    this->visualizer = new Visualizer();
     stack.push(root);
+
 }
 
 ASTBuilder::~ASTBuilder() {}
@@ -53,10 +55,11 @@ void ASTBuilder::adoptChild() {
 
 void ASTBuilder::handle(std::string& action, std::string& LHS) {
     if (isIgnoreModeOn) return;
-//    printStack();
-//    std::cout << "LHS: " << LHS << " action: " << action << std::endl;
+    printStack();
+    std::cout << "LHS: " << LHS << " action: " << action << std::endl;
     std::string action_number = action.substr(0, 2);
     if (action_number == "@1") {
+        //Extract #optiona_custom_name for the AST node.
         if (action.size() > 2) {
             std::string arg = action.substr(4);
             createNode(arg);
@@ -81,4 +84,9 @@ void ASTBuilder::printStack() {
     }
 
     std::cout << std::endl;
+}
+
+
+void ASTBuilder::visualize() {
+    visualizer->visualize(root);
 }
