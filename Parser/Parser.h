@@ -19,7 +19,6 @@ public:
     bool parse(std::string, bool isOnPanicMode = false);
     ASTBuilder* AST_Builder;
 
-
 private:
     Lexer* lexer;
     Grammar* grammar;

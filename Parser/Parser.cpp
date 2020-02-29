@@ -9,7 +9,6 @@ Parser::Parser(Lexer* lexer) {
     this->grammar = new Grammar();
     this->AST_Builder = new ASTBuilder();
     this->currentToken = lexer->next();
-//    this->visualizer = new Visualizer();
 }
 
 Parser::~Parser() {
@@ -49,7 +48,6 @@ bool Parser::parse(std::string LHS, bool isOnPanicMode) {
     if (currentToken == nullptr) return true;
 
     if (Rule::isTerminal(LHS)) {
-//        std::cout << currentToken->getValue() << std::endl;
         if (shouldTakeNext(LHS)) {
             if (isKeyword(LHS)) {
                 std::string value = currentToken->getValue();
