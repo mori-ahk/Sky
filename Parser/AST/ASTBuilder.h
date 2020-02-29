@@ -27,6 +27,7 @@ private:
     void insertLeftChild();
     void insertRightChild();
     void adoptChild();
+    void insertRightChildWithoutPop();
 
     std::stack<ASTNode*> stack;
     std::stack<ASTNode*> testStack;

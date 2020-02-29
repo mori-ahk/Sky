@@ -52,6 +52,12 @@ void ASTBuilder::adoptChild() {
     stack.push(A);
 }
 
+void ASTBuilder::insertRightChildWithoutPop() {
+    auto B = stack.top(); stack.pop();
+    auto A = stack.top();
+    A->addChildToRight(B);
+    stack.push(B);
+}
 
 void ASTBuilder::handle(std::string& action, std::string& LHS) {
     if (isIgnoreModeOn) return;
@@ -68,7 +74,9 @@ void ASTBuilder::handle(std::string& action, std::string& LHS) {
 
     else if (action_number == "@2") insertRightChild();
     else if (action_number == "@3") adoptChild();
-    else insertLeftChild();
+    else if (action_number == "@4") insertLeftChild();
+    else if (action_number == "@5") insertRightChildWithoutPop();
+    else stack.pop();
 }
 
 void ASTBuilder::printStack() {
