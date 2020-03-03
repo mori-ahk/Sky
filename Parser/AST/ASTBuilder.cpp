@@ -9,8 +9,10 @@
 
 ASTBuilder::ASTBuilder() {
     std::string program = "START";
-    root = new ASTNode(program);
+    this->root = new ASTNode(program);
+    this->visualizer = new Visualizer();
     stack.push(root);
+
 }
 
 ASTBuilder::~ASTBuilder() {}
@@ -50,13 +52,27 @@ void ASTBuilder::adoptChild() {
     stack.push(A);
 }
 
+void ASTBuilder::constructListAndInsertAsChild() {
+    auto B = stack.top(); stack.pop();
+    std::vector<ASTNode*> childrenToBeInserted;
+    childrenToBeInserted.push_back(B);
+    while(stack.top()->getName() == B->getName()) {
+        childrenToBeInserted.push_back(stack.top());
+        stack.pop();
+    }
+
+    auto A = new ASTNode("call_list");
+    A->addChildToLeft(childrenToBeInserted);
+    stack.push(A);
+}
 
 void ASTBuilder::handle(std::string& action, std::string& LHS) {
     if (isIgnoreModeOn) return;
-//    printStack();
-//    std::cout << "LHS: " << LHS << " action: " << action << std::endl;
+    printStack();
+    std::cout << "LHS: " << LHS << " action: " << action << std::endl;
     std::string action_number = action.substr(0, 2);
     if (action_number == "@1") {
+        //Extract #optiona_custom_name for the AST node.
         if (action.size() > 2) {
             std::string arg = action.substr(4);
             createNode(arg);
@@ -65,7 +81,9 @@ void ASTBuilder::handle(std::string& action, std::string& LHS) {
 
     else if (action_number == "@2") insertRightChild();
     else if (action_number == "@3") adoptChild();
-    else insertLeftChild();
+    else if (action_number == "@4") insertLeftChild();
+    else if (action_number == "@5") constructListAndInsertAsChild();
+    else stack.pop();
 }
 
 void ASTBuilder::printStack() {
@@ -81,4 +99,9 @@ void ASTBuilder::printStack() {
     }
 
     std::cout << std::endl;
+}
+
+
+void ASTBuilder::visualize() {
+    visualizer->visualize(root);
 }

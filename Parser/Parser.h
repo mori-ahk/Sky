@@ -18,7 +18,6 @@ public:
     ~Parser();
     bool parse(std::string, bool isOnPanicMode = false);
     ASTBuilder* AST_Builder;
-    Visualizer* visualizer;
 
 private:
     Lexer* lexer;
@@ -30,25 +29,9 @@ private:
     void panic(std::string&);
 
     bool shouldTakeNext(std::string&);
-    bool isUseless(std::string&);
     bool isKeyword(std::string&);
 
 };
-
-const std::unordered_set<std::string> USELESS = {
-        "lpar",
-        "rpar",
-        "lcurbr",
-        "rcurbr",
-        "lsqbr",
-        "rsqbr",
-        "semi",
-        "comma",
-        "dot",
-        "colon",
-        "coloncolon",
-};
-
 
 const std::unordered_set<std::string> KEYWORDS = {
         "id",
@@ -82,7 +65,6 @@ const std::unordered_set<std::string> KEYWORDS = {
         "return",
         "main",
         "inherits",
-        "local",
         "void",
 };
 

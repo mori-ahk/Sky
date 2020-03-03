@@ -94,6 +94,6 @@ std::unordered_map<TokenType, std::string>& Token::getReverseTokenTypeMap() {
 }
 
 std::ostream& operator<<(std::ostream& os, Token& t) {
-    os << "[" <<  "[t.getType()]" << ", " << t.getValue() << ", " << t.getLineno() << "]";
+    os << "[" <<  t.getReverseTokenTypeMap()[t.getType()] << ", " << t.getValue() << ", " << t.getLineno() << "]";
     return os;
 }
