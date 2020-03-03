@@ -65,7 +65,6 @@ const std::unordered_set<std::string> KEYWORDS = {
         "return",
         "main",
         "inherits",
-        "local",
         "void",
 };
 

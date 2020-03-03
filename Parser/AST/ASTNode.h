@@ -11,7 +11,7 @@
 
 class ASTNode {
 public:
-    ASTNode(std::string&);
+    ASTNode(std::string);
     ASTNode();
     ~ASTNode();
     const std::string& getName();

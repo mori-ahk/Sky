@@ -11,7 +11,7 @@ ASTNode::ASTNode() {
     this->name = "";
 }
 
-ASTNode::ASTNode(std::string& name) {
+ASTNode::ASTNode(std::string name) {
     this->name = name;
     uniqueID = counter++;
 }
