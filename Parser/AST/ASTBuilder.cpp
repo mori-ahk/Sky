@@ -52,11 +52,20 @@ void ASTBuilder::adoptChild() {
     stack.push(A);
 }
 
-void ASTBuilder::insertRightChildWithoutPop() {
+void ASTBuilder::constructListAndInsertAsChild() {
+    stack.pop();
     auto B = stack.top(); stack.pop();
-    auto A = stack.top();
-    A->addChildToRight(B);
-    stack.push(B);
+    std::vector<ASTNode*> childrenToBeInserted;
+    childrenToBeInserted.push_back(B);
+    while(stack.top()->getName() == B->getName()) {
+        childrenToBeInserted.push_back(stack.top());
+        stack.pop();
+        printStack();
+    }
+
+    auto A = stack.top(); stack.pop();
+    A->addChildToLeft(childrenToBeInserted);
+    stack.push(A);
 }
 
 void ASTBuilder::handle(std::string& action, std::string& LHS) {
@@ -75,8 +84,7 @@ void ASTBuilder::handle(std::string& action, std::string& LHS) {
     else if (action_number == "@2") insertRightChild();
     else if (action_number == "@3") adoptChild();
     else if (action_number == "@4") insertLeftChild();
-    else if (action_number == "@5") insertRightChildWithoutPop();
-    else stack.pop();
+    else constructListAndInsertAsChild();
 }
 
 void ASTBuilder::printStack() {

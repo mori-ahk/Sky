@@ -46,6 +46,12 @@ void ASTNode::addChildToRight(ASTNode* node) {
     std::cout << std::endl;
 }
 
+void ASTNode::addChildToLeft(std::vector<ASTNode *> & childrenToBeInserted) {
+    for (auto child : childrenToBeInserted) {
+        children.push_front(child);
+    }
+}
+
 void ASTNode::adoptChildren(std::deque<ASTNode*> _children) {
 
     for (auto it = _children.begin() ; it != _children.end(); it++) {

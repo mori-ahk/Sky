@@ -21,6 +21,7 @@ public:
 
     void addChildToLeft(ASTNode*);
     void addChildToRight(ASTNode*);
+    void addChildToLeft(std::vector<ASTNode*>&);
     void adoptChildren(std::deque<ASTNode*>);
 
 private:
