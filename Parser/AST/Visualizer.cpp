@@ -10,7 +10,7 @@ void Visualizer::visualize(ASTNode * root) {
     dotFileContent += "digraph AST {\n";
     generateDot(root);
     dotFileContent += "}";
-    std::ofstream stream("Parser/TreeContent.gv");
+    std::ofstream stream("TreeContent.gv");
     stream << dotFileContent;
 }
 
