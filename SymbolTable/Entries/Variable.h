@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include "SymbolKind.h"
+#include "Visibility.h"
 
 class Variable {
 public:
@@ -19,11 +20,14 @@ public:
 
     std::string& getType();
     std::vector<int>& getDimensions();
-
+    std::string& getName();
+    Visibility getVisibility();
 private:
 
     std::string type;
+    std::string name;
     std::vector<int> dimensions;
+    Visibility visibility;
 };
 
 

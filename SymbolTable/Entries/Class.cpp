@@ -4,18 +4,18 @@
 
 #include "Class.h"
 
-const std::string &Class::getName() const {
+std::string &Class::getName() {
     return name;
 }
 
-const std::string &Class::getType() const {
+std::string &Class::getType() {
     return type;
 }
 
-const std::unordered_map<std::string, Function *> &Class::getFunctions() const {
+std::unordered_map<std::string, Function *> &Class::getFunctions() {
     return functions;
 }
 
-const std::unordered_map<std::string, Variable *> &Class::getVariables() const {
+std::unordered_map<std::string, Variable *> &Class::getVariables() {
     return variables;
 }

@@ -11,3 +11,11 @@ std::vector<int>& Variable::getDimensions() {
 std::string& Variable::getType() {
     return type;
 }
+
+std::string& Variable::getName() {
+    return name;
+}
+
+Visibility Variable::getVisibility() {
+    return visibility;
+}

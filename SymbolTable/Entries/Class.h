@@ -12,13 +12,10 @@
 class Class {
 public:
 
-    const std::string &getName() const;
-
-    const std::string &getType() const;
-
-    const std::unordered_map<std::string, Function *> &getFunctions() const;
-
-    const std::unordered_map<std::string, Variable *> &getVariables() const;
+    std::string &getName();
+    std::string &getType();
+    std::unordered_map<std::string, Function *> &getFunctions();
+    std::unordered_map<std::string, Variable *> &getVariables();
 
 private:
     std::string name;
