@@ -21,7 +21,7 @@ ASTNode::ASTNode(std::string name) {
 
 ASTNode::~ASTNode() {}
 
-const std::string& ASTNode::getName() {
+std::string& ASTNode::getName() {
     return name;
 }
 
@@ -75,4 +75,8 @@ void ASTNode::adoptChildren(std::deque<ASTNode*> _children) {
 
 int ASTNode::getUniqueID() {
     return uniqueID;
+}
+
+void ASTNode::accept(Visitor &visitor) {
+    visitor.visit(*this)
 }

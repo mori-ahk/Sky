@@ -5,6 +5,7 @@
 #ifndef SKY_ASTNODE_H
 #define SKY_ASTNODE_H
 
+class Visitor;
 #include <string>
 #include <vector>
 #include <deque>
@@ -14,7 +15,7 @@ public:
     ASTNode(std::string);
     ASTNode();
     ~ASTNode();
-    const std::string& getName();
+    std::string& getName();
     std::deque<ASTNode*>& getChildren();
     ASTNode* getParent();
     int getUniqueID();
@@ -23,7 +24,7 @@ public:
     void addChildToRight(ASTNode*);
     void addChildToLeft(std::vector<ASTNode*>&);
     void adoptChildren(std::deque<ASTNode*>);
-
+    virtual void accept(Visitor& visitor);
 private:
 
     std::string name;
