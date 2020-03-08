@@ -2,14 +2,14 @@
 // Created by Morteza Ahmadi on 2020-03-05.
 //
 
-#ifndef SKY_CLASS_H
+#ifndef SKY_CLASSDECL_H
 #define SKY_CLASS_H
 
 #include <string>
 #include <unordered_map>
 #include "Function.h"
 #include "Variable.h"
-class Class {
+class ClassDecl {
 public:
 
     std::string &getName();
@@ -26,4 +26,4 @@ private:
 };
 
 
-#endif //SKY_CLASS_H
+#endif //SKY_CLASSDECL_H

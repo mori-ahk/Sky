@@ -11,9 +11,9 @@
 
 class SymbolTable {
 public:
-    std::unordered_map<std::string, Class*> classes;
-    std::unordered_map<std::string, Function*> freeFunctions;
-    std::unordered_map<std::string, Function*> main;
+    static std::unordered_map<std::string, ClassDecl*> classes;
+    static std::unordered_map<std::string, Function*> freeFunctions;
+    static std::unordered_map<std::string, Function*> main;
 };
 
 

@@ -22,12 +22,19 @@ ASTNode* ASTBuilder::getRoot() {
 }
 
 void ASTBuilder::createNode(std::string& rule) {
-    ASTNode* node = new ASTNode(rule);
-    stack.push(node);
+    if (NODES.find(rule) != NODES.end()) {
+        stack.push(NODES.at(rule));
+    } else {
+        stack.push(new ASTNode(rule));
+    }
 }
 
-void ASTBuilder::push(ASTNode* node) {
-    stack.push(node);
+void ASTBuilder::push(std::string& nodeName) {
+    if (NODES.find(nodeName) != NODES.end()) {
+        stack.push(NODES.at(nodeName));
+    } else {
+        stack.push(new ASTNode(nodeName));
+    }
 }
 
 void ASTBuilder::insertRightChild() {
