@@ -30,6 +30,8 @@
 *.exe
 *.out
 *.app
+*.png
+*.gv
 
 # CMake gitignore
 CMakeLists.txt.user
