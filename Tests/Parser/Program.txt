@@ -1,4 +1,6 @@
 main
+local
+   integer x;
   do
     print(2);
   end

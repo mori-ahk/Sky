@@ -11,6 +11,7 @@
 class FuncBody : public ASTNode {
 public:
     FuncBody(std::string name) : ASTNode(name) {}
+    void accept(Visitor& visitor) override;
 };
 
 

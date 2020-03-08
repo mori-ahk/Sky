@@ -40,24 +40,12 @@ private:
     void adoptChild();
     void constructListAndInsertAsChild();
     void removeSelfIfOnlyHasOneChild();
-
+    ASTNode* createCustomNode(std::string&);
     std::stack<ASTNode*> stack;
     std::stack<ASTNode*> testStack;
     ASTNode* root;
     Visualizer* visualizer;
 };
 
-const std::unordered_map<std::string, ASTNode*> NODES = {
-        {"CLASSDECLARATIONS", new ClassDecls("classes")},
-        {"class", new ClassDecl("class")},
-        {"FUNCTIONDECLARATION", new FuncDecl("func_decl")},
-        {"FUNCTIONBODY", new FuncBody("func_body")},
-        {"FUNCTIONPARAMS", new FuncParams("params")},
-        {"FUNCTIONDEFINITION", new FuncDef("func_def")},
-        {"ARRAYDIMENSIONS", new ArrayDim("Arr_dim")},
-        {"LOCALSCOPE", new Local("local_scope")},
-        {"PROGRAM", new Program("Program")},
-        {"VARIABLEDECLARATION", new VarDecl("var_decl")}
-};
 
 #endif //SKY_ASTBUILDER_H

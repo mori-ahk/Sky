@@ -3,3 +3,8 @@
 //
 
 #include "Local.h"
+#include "../../../Visitors/Visitor.h"
+
+void Local::accept(Visitor &visitor) {
+    visitor.visit(this);
+}

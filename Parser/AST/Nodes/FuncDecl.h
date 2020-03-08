@@ -11,6 +11,7 @@
 class FuncDecl: public ASTNode {
 public:
     FuncDecl(std::string name): ASTNode(name) {}
+    void accept(Visitor& visitor) override;
 };
 
 

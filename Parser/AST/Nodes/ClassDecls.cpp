@@ -3,3 +3,8 @@
 //
 
 #include "ClassDecls.h"
+#include "../../../Visitors/Visitor.h"
+
+void ClassDecls::accept(Visitor &visitor) {
+    visitor.visit(this);
+}

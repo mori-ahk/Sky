@@ -11,6 +11,7 @@
 class VarDecl : public ASTNode {
 public:
     VarDecl(std::string name): ASTNode(name) {}
+    void accept(Visitor& visitor) override;
 };
 
 

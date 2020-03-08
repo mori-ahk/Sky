@@ -3,3 +3,8 @@
 //
 
 #include "ArrayDim.h"
+#include "../../../Visitors/Visitor.h"
+
+void ArrayDim::accept(Visitor &visitor) {
+    visitor.visit(this);
+}

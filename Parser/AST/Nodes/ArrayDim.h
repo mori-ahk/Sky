@@ -11,6 +11,7 @@
 class ArrayDim : public ASTNode {
 public:
     ArrayDim(std::string name) : ASTNode(name) {}
+    void accept(Visitor& visitor) override;
 };
 
 

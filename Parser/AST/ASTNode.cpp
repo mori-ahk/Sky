@@ -4,7 +4,7 @@
 
 #include "ASTNode.h"
 #include <iostream>
-
+#include "../../Visitors/Visitor.h"
 static int counter = 0;
 static int level = 0;
 static int currNodeID = 0;
@@ -78,5 +78,5 @@ int ASTNode::getUniqueID() {
 }
 
 void ASTNode::accept(Visitor &visitor) {
-    visitor.visit(*this)
+    visitor.visit(this);
 }

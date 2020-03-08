@@ -11,6 +11,7 @@
 class FuncDef : public ASTNode {
 public:
     FuncDef(std::string name) : ASTNode(name) {}
+    void accept(Visitor& visitor) override;
 };
 
 

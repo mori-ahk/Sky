@@ -22,19 +22,11 @@ ASTNode* ASTBuilder::getRoot() {
 }
 
 void ASTBuilder::createNode(std::string& rule) {
-    if (NODES.find(rule) != NODES.end()) {
-        stack.push(NODES.at(rule));
-    } else {
-        stack.push(new ASTNode(rule));
-    }
+    stack.push(createCustomNode(rule));
 }
 
 void ASTBuilder::push(std::string& nodeName) {
-    if (NODES.find(nodeName) != NODES.end()) {
-        stack.push(NODES.at(nodeName));
-    } else {
-        stack.push(new ASTNode(nodeName));
-    }
+    stack.push(createCustomNode(nodeName));
 }
 
 void ASTBuilder::insertRightChild() {
@@ -118,4 +110,18 @@ void ASTBuilder::printStack() {
 
 void ASTBuilder::visualize() {
     visualizer->visualize(root);
+}
+
+
+ASTNode* ASTBuilder::createCustomNode(std::string& nodeName) {
+    if (nodeName == "CLASSDECLARATIONS") return new ClassDecls(nodeName);
+    else if (nodeName == "class") return new ClassDecl(nodeName);
+    else if (nodeName == "FUNCTIONDECLARATION") return new FuncDecl(nodeName);
+    else if (nodeName == "FUNCTIONPARAMS") return new FuncParams(nodeName);
+    else if (nodeName == "FUNCTIONDEFINITION") return new FuncDef(nodeName);
+    else if (nodeName == "ARRAYDIMENSIONS") return new ArrayDim(nodeName);
+    else if (nodeName == "LOCALSCOPE") return new Local(nodeName);
+    else if (nodeName == "PROGRAM") return new Program(nodeName);
+    else if (nodeName == "VARIABLEDECLARATION") return new VarDecl(nodeName);
+    else return new ASTNode(nodeName);
 }

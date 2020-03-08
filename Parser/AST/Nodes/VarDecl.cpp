@@ -3,3 +3,8 @@
 //
 
 #include "VarDecl.h"
+#include "../../../Visitors/Visitor.h"
+
+void VarDecl::accept(Visitor &visitor) {
+    visitor.visit(this);
+}

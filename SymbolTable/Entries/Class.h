@@ -3,7 +3,7 @@
 //
 
 #ifndef SKY_CLASSDECL_H
-#define SKY_CLASS_H
+#define SKY_CLASSDECL_H
 
 #include <string>
 #include <unordered_map>

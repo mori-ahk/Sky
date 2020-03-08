@@ -5,11 +5,12 @@
 #ifndef SKY_ASTNODE_H
 #define SKY_ASTNODE_H
 
-class Visitor;
+
 #include <string>
 #include <vector>
 #include <deque>
 
+class Visitor;
 class ASTNode {
 public:
     ASTNode(std::string);

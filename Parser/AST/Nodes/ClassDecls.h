@@ -11,6 +11,7 @@
 class ClassDecls : public ASTNode {
 public:
     ClassDecls(std::string name) : ASTNode(name) {}
+    void accept(Visitor& visitor) override;
 };
 
 

@@ -3,3 +3,8 @@
 //
 
 #include "FuncDecl.h"
+#include "../../../Visitors/Visitor.h"
+
+void FuncDecl::accept(Visitor &visitor) {
+    visitor.visit(this);
+}
