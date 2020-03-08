@@ -66,6 +66,12 @@ void ASTBuilder::constructListAndInsertAsChild() {
     stack.push(A);
 }
 
+void ASTBuilder::removeSelfIfOnlyHasOneChild() {
+    auto B = stack.top(); stack.pop();
+    if (B->getChildren().size() == 1) B = B->getChildren().at(0);
+    stack.push(B);
+}
+
 void ASTBuilder::handle(std::string& action, std::string& LHS) {
     if (isIgnoreModeOn) return;
     printStack();
@@ -83,7 +89,8 @@ void ASTBuilder::handle(std::string& action, std::string& LHS) {
     else if (action_number == "@3") adoptChild();
     else if (action_number == "@4") insertLeftChild();
     else if (action_number == "@5") constructListAndInsertAsChild();
-    else stack.pop();
+    else if (action_number == "@6") stack.pop();
+    else removeSelfIfOnlyHasOneChild();
 }
 
 void ASTBuilder::printStack() {

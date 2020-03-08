@@ -142,5 +142,5 @@ void Lexer::lex(std::string filePath) {
     totalMatches.clear();
     totalErrors.clear();
     read(filePath);
-    write(filePath);
+//    write(filePath);
 }

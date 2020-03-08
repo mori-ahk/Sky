@@ -28,6 +28,7 @@ private:
     void insertRightChild();
     void adoptChild();
     void constructListAndInsertAsChild();
+    void removeSelfIfOnlyHasOneChild();
 
     std::stack<ASTNode*> stack;
     std::stack<ASTNode*> testStack;

@@ -6,9 +6,12 @@
 #include <iostream>
 
 static int counter = 0;
+static int level = 0;
+static int currNodeID = 0;
 
 ASTNode::ASTNode() {
     this->name = "";
+    this->parent = nullptr;
 }
 
 ASTNode::ASTNode(std::string name) {
@@ -24,6 +27,10 @@ const std::string& ASTNode::getName() {
 
 std::deque<ASTNode*>& ASTNode::getChildren() {
     return children;
+}
+
+ASTNode* ASTNode::getParent() {
+    return parent;
 }
 
 void ASTNode::addChildToLeft(ASTNode* node) {

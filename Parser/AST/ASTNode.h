@@ -16,7 +16,7 @@ public:
     ~ASTNode();
     const std::string& getName();
     std::deque<ASTNode*>& getChildren();
-
+    ASTNode* getParent();
     int getUniqueID();
 
     void addChildToLeft(ASTNode*);
@@ -25,9 +25,12 @@ public:
     void adoptChildren(std::deque<ASTNode*>);
 
 private:
+
     std::string name;
     std::deque<ASTNode*> children;
+    ASTNode* parent;
     int uniqueID;
+
 };
 
 
