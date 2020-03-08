@@ -6,10 +6,12 @@
 #define SKY_FUNCTION_H
 
 
-#include "Symbol.h"
+
 #include <vector>
 #include "Variable.h"
-class Function : public Symbol {
+#include "SymbolKind.h"
+
+class Function {
 public:
 
     Function(std::string name, SymbolKind kind, std::string typeName);

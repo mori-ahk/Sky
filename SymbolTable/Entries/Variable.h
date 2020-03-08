@@ -5,15 +5,14 @@
 #ifndef SKY_VARIABLE_H
 #define SKY_VARIABLE_H
 
-
-#include "Symbol.h"
+#include <string>
 #include <vector>
+#include "SymbolKind.h"
 
-class Variable : public Symbol {
+class Variable {
 public:
 
-    Variable(std::string name, SymbolKind kind, std::string type, std::vector<int> dimensions)
-    : Symbol(name, SymbolKind::VARIABLE, nullptr) {
+    Variable(std::string name, SymbolKind kind, std::string type, std::vector<int> dimensions) {
         this->type = type;
         this->dimensions = std::move(dimensions);
     }

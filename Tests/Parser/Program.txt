@@ -1,16 +1,31 @@
 // ====== Class declarations ====== //
 class POLYNOMIAL {
-	public evaluate(float x) : float;
+	public evaluate(float x, integer y, float c) : float;
 	public float x;
 };
 
-
 // ====== Function Definitions ====== //
 POLYNOMIAL::evaluate(float x) : float
+local
+    integer n;
+    integer i;
   do
     return (0);
   end
 
+printArray(integer arr[], integer size) : void
+  local
+    integer n;
+    integer i;
+  do
+    n = size;
+    i = 0;
+    while (i<n)
+      do
+        write(arr[i]);
+        i = i+1;
+      end;
+  end
 
 main
   local

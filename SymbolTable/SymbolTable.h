@@ -5,10 +5,15 @@
 #ifndef SKY_SYMBOLTABLE_H
 #define SKY_SYMBOLTABLE_H
 
+#include "Entries/Class.h"
+#include "Entries/Function.h"
+#include <unordered_map>
 
 class SymbolTable {
 public:
-
+    std::unordered_map<std::string, Class*> classes;
+    std::unordered_map<std::string, Function*> freeFunctions;
+    std::unordered_map<std::string, Function*> main;
 };
 
 
