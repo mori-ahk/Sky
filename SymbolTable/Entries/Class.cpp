@@ -34,3 +34,13 @@ std::unordered_map<std::string, Variable *> &Class::getVariables() {
 void Class::addVariable(std::string& varName, Variable* variable) {
     variables[varName] = variable;
 }
+
+void Class::addFunction(std::string& funcName, Function* function) {
+    functions[funcName] = function;
+}
+
+std::ostream& operator<<(std::ostream& os, Class& c) {
+    os << "CLASS:\n";
+    os << "\t[" <<  "name: " << c.getName() << " | inherits: " << c.getInherits() << " | type: "  << c.getType() << "]" << std::endl;
+    return os;
+}

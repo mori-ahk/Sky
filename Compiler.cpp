@@ -19,6 +19,6 @@ Compiler::~Compiler() {
 void Compiler::compile() {
     parser->parse("START");
     parser->AST_Builder->visualize();
-//    symTabGenerator = new STGV(parser->AST_Builder->getRoot());
+    symTabGenerator = new STGV(parser->AST_Builder->getRoot());
 
 }

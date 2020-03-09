@@ -9,7 +9,7 @@
 #include <vector>
 #include "SymbolKind.h"
 #include "Visibility.h"
-
+#include <iostream>
 class Variable {
 public:
 
@@ -19,7 +19,7 @@ public:
     std::vector<int>& getDimensions();
     std::string& getName();
     Visibility getVisibility();
-
+    friend std::ostream& operator<<(std::ostream&, Variable&);
 private:
 
     std::string type;

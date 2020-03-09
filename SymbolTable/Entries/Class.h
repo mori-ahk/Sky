@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include "Function.h"
 #include "Variable.h"
+#include <iostream>
 class Class {
 public:
 
@@ -21,7 +22,9 @@ public:
     std::unordered_map<std::string, Variable *> &getVariables();
 
     void addVariable(std::string&, Variable*);
-    void addFunction(std::string&. Function*);
+    void addFunction(std::string&, Function*);
+    friend std::ostream& operator<<(std::ostream&, Class&);
+
 private:
     std::string name;
     std::string type;

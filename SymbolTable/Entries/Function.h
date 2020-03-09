@@ -10,7 +10,7 @@
 #include <vector>
 #include "Variable.h"
 #include "Visibility.h"
-
+#include <iostream>
 class Function {
 public:
 
@@ -19,6 +19,9 @@ public:
     std::string& getName();
     std::string& getReturnType();
     Visibility getVisibility();
+
+    void addParam(Variable*);
+    friend std::ostream& operator<<(std::ostream&, Function&);
 private:
 
     std::vector<Variable*> params;

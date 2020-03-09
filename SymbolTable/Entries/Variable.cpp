@@ -26,3 +26,10 @@ std::string& Variable::getName() {
 Visibility Variable::getVisibility() {
     return visibility;
 }
+
+std::ostream& operator<<(std::ostream& os, Variable& v) {
+    std::string dimension = "";
+    for(auto dim: v.getDimensions()) dimension += std::to_string(dim) + ", ";
+    os << "[" <<  "visibility: " << "private" << "| name: " << v.getName() << " | type: "  << v.getType() <<  "| dimensions: " << dimension << "]" << std::endl;
+    return os;
+}

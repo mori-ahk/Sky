@@ -27,3 +27,22 @@ Visibility Function::getVisibility() {
     return visibility;
 }
 
+void Function::addParam(Variable * variable) {
+    params.push_back(variable);
+}
+
+std::ostream& operator<<(std::ostream& os, Function& f) {
+    std::string visibility;
+    if (f.getVisibility() == Visibility::PUBLIC) visibility = "public";
+    else visibility = "private";
+    os << "FUNCTION:\n";
+    os << "\t[" <<  "visibility: " << visibility << "| name: " << f.getName() << " | returns: "  << f.getReturnType() << "]";
+    os << "\t\tParams:\n";
+    os << "\t\t\tVARIABLES:\n";
+    for (auto& var : f.getParams()) {
+        std::string dimension = "";
+        for(auto dim: var->getDimensions()) dimension += std::to_string(dim) + ", ";
+        os << "[" <<  "visibility: " << "private" << "| name: " << var->getName() << " | type: "  << var->getType() <<  "| dimensions: " << dimension << "]" << std::endl;
+    }
+    return os;
+}
