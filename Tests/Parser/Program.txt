@@ -1,6 +1,11 @@
+class LINEAR inherits POLYNOMIAL {
+	private float a[];
+	private float b;
+
+	public build(float A[1][2], float B) : LINEAR;
+	public evaluate(float x) : float;
+};
+
 main
-local
-   integer x;
   do
-    print(2);
   end

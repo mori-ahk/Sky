@@ -4,6 +4,13 @@
 
 #include "Variable.h"
 
+Variable::Variable(Visibility visibility, std::string name, std::string type, std::vector<int> dimensions) {
+    this->visibility = visibility;
+    this->name = name;
+    this->type = type;
+    this->dimensions = std::move(dimensions);
+}
+
 std::vector<int>& Variable::getDimensions() {
     return dimensions;
 }

@@ -30,8 +30,7 @@ public:
     virtual void visit(VarDecl* node) = 0;
     virtual void visit(ArrayDim* node) = 0;
     virtual void visit(ASTNode* node) = 0;
-    ~Visitor();
-
+    virtual ~Visitor() = 0;
 };
 
 

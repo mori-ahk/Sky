@@ -4,6 +4,13 @@
 
 #include "Function.h"
 
+Function::Function(Visibility visibility, std::string name, std::string returnType, std::vector<Variable *> params) {
+    this->visibility = visibility;
+    this->name = name;
+    this->returnType = returnType;
+    this->params = params;
+}
+
 std::string& Function::getName() {
     return name;
 }

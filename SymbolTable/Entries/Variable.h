@@ -13,15 +13,13 @@
 class Variable {
 public:
 
-    Variable(std::string name, SymbolKind kind, std::string type, std::vector<int> dimensions) {
-        this->type = type;
-        this->dimensions = std::move(dimensions);
-    }
+    Variable(Visibility visibility, std::string name, std::string type, std::vector<int> dimensions);
 
     std::string& getType();
     std::vector<int>& getDimensions();
     std::string& getName();
     Visibility getVisibility();
+
 private:
 
     std::string type;

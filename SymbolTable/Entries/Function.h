@@ -9,13 +9,12 @@
 
 #include <vector>
 #include "Variable.h"
-#include "SymbolKind.h"
 #include "Visibility.h"
 
 class Function {
 public:
 
-    Function(std::string name, SymbolKind kind, std::string typeName);
+    Function(Visibility visibility, std::string name, std::string returnType, std::vector<Variable*> params);
     std::vector<Variable*>& getParams();
     std::string& getName();
     std::string& getReturnType();

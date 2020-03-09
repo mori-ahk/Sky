@@ -116,12 +116,13 @@ void ASTBuilder::visualize() {
 ASTNode* ASTBuilder::createCustomNode(std::string& nodeName) {
     if (nodeName == "CLASSDECLARATIONS") return new ClassDecls(nodeName);
     else if (nodeName == "class") return new ClassDecl(nodeName);
-    else if (nodeName == "FUNCTIONDECLARATION") return new FuncDecl(nodeName);
-    else if (nodeName == "FUNCTIONPARAMS") return new FuncParams(nodeName);
-    else if (nodeName == "FUNCTIONDEFINITION") return new FuncDef(nodeName);
+    else if (nodeName == "func_decl") return new FuncDecl(nodeName);
+    else if (nodeName == "params") return new FuncParams(nodeName);
+    else if (nodeName == "func_def") return new FuncDef(nodeName);
     else if (nodeName == "ARRAYDIMENSIONS") return new ArrayDim(nodeName);
     else if (nodeName == "LOCALSCOPE") return new Local(nodeName);
     else if (nodeName == "PROGRAM") return new Program(nodeName);
-    else if (nodeName == "VARIABLEDECLARATION") return new VarDecl(nodeName);
+    else if (nodeName == "variable") return new VarDecl(nodeName);
+    else if (nodeName == "func_body") return new FuncBody(nodeName);
     else return new ASTNode(nodeName);
 }

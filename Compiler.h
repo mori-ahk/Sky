@@ -6,6 +6,8 @@
 #define SKY_COMPILER_H
 #include "Lexer/Lexer.h"
 #include "Parser/Parser.h"
+#include "Visitors/SymbolTable/STGV.h"
+
 class Compiler {
 public:
     Compiler(std::string);
@@ -14,6 +16,8 @@ public:
 private:
     Lexer* lexer;
     Parser* parser;
+    STGV* symTabGenerator;
+
 };
 
 

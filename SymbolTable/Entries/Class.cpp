@@ -4,18 +4,33 @@
 
 #include "Class.h"
 
-std::string &ClassDecl::getName() {
+Class::Class(std::string name, std::string type, std::string inherits) {
+    this->name = name;
+    this->type = type;
+    this->inherits = inherits;
+}
+
+std::string &Class::getName() {
     return name;
 }
 
-std::string &ClassDecl::getType() {
+std::string &Class::getType() {
     return type;
 }
 
-std::unordered_map<std::string, Function *> &ClassDecl::getFunctions() {
+std::string& Class::getInherits() {
+    return inherits;
+}
+
+std::unordered_map<std::string, Function *> &Class::getFunctions() {
     return functions;
 }
 
-std::unordered_map<std::string, Variable *> &ClassDecl::getVariables() {
+std::unordered_map<std::string, Variable *> &Class::getVariables() {
     return variables;
+}
+
+
+void Class::addVariable(std::string& varName, Variable* variable) {
+    variables[varName] = variable;
 }

@@ -8,6 +8,7 @@ Compiler::Compiler(std::string filePath) {
     this->lexer = new Lexer();
     lexer->lex(filePath);
     this->parser = new Parser(lexer);
+    this->symTabGenerator = nullptr;
 }
 
 Compiler::~Compiler() {
@@ -18,4 +19,6 @@ Compiler::~Compiler() {
 void Compiler::compile() {
     parser->parse("START");
     parser->AST_Builder->visualize();
+//    symTabGenerator = new STGV(parser->AST_Builder->getRoot());
+
 }

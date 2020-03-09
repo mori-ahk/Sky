@@ -33,6 +33,10 @@ ASTNode* ASTNode::getParent() {
     return parent;
 }
 
+void ASTNode::setParent(ASTNode * parent) {
+    this->parent = parent;
+}
+
 void ASTNode::addChildToLeft(ASTNode* node) {
     children.push_front(node);
     std::cout << "adding to left children of " << this->name << ": ";
