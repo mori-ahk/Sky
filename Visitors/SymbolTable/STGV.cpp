@@ -21,6 +21,61 @@ void STGV::visit(Local *node) {
 
 void STGV::visit(FuncDef *node) {
 
+    std::string namespaceName = "";
+    //iterating on signature node's children
+    auto signature = node->getChildren().at(0);
+
+    //if the function belongs to a class and has a namespace;
+    if (signature->getChildren().size() == 4) namespaceName = signature->getChildren().at(0)->getName();
+
+    std::string funcName = signature->getChildren().size() == 4 ? signature->getChildren().at(1)->getName() : signature->getChildren().at(1)->getName();
+    std::string returnType = signature->getChildren().at(2)->getName();
+    Function* function = new Function(Visibility::PUBLIC, funcName, returnType, {}, {});
+    if (signature->getChildren().size() == 3) symbolTable->freeFunctions[funcName] = function;
+    //iterating on params node's children
+    auto params = signature->getChildren().at(1);
+
+    for (auto param: params->getChildren()) {
+        std::string visibilityString = param->getChildren().at(0)->getName();
+        Visibility visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
+        std::string type = param->getChildren().at(1)->getName();
+        std::string varName = param->getChildren().at(2)->getName();
+        std::vector<int> dimensions;
+        for (auto arrayDimensionChild: param->getChildren().at(3)->getChildren()) {
+            if (isdigit(arrayDimensionChild->getChildren().at(0)->getName()[0])) {
+                int dimension = std::stoi(arrayDimensionChild->getChildren().at(0)->getName());
+                dimensions.push_back(dimension);
+            }
+        }
+
+        Variable *variable = new Variable(visibility, type, varName, dimensions);
+        function->addParam(variable);
+    }
+
+    auto funcBody = node->getChildren().at(1);
+
+    //iterating on func_body node's children
+    for (auto child : funcBody->getChildren().at(0)->getChildren()) {
+        std::string visibilityString = child->getChildren().at(0)->getName();
+        Visibility  visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
+        std::string type = child->getChildren().at(1)->getName();
+        std::string varName = child->getChildren().at(2)->getName();
+        std::vector<int> dimensions;
+
+        //iterating on dimension array
+        for (auto dim: child->getChildren().at(2)->getChildren()) {
+            if (isdigit(dim->getChildren().at(0)->getName()[0])) {
+                int dimension = std::stoi(dim->getChildren().at(0)->getName());
+                dimensions.push_back(dimension);
+            }
+        }
+
+        Variable* variable = new Variable(visibility, type, varName, dimensions);
+        function->addVariable(variable);
+
+        //fetching the class that this function corresponds to and add local variable to its scope
+        if (!namespaceName.empty()) symbolTable->classes.at(namespaceName)->getFunctions().at(funcName)->addVariable(variable);
+    }
 }
 
 void STGV::visit(VarDecl *node) {
@@ -54,7 +109,7 @@ void STGV::visit(FuncDecl *node) {
     Visibility  visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
     std::string funcName =  node->getChildren().at(1)->getName();
     std::string returnType = node->getChildren().at(3)->getName();
-    Function* function = new Function(visibility, funcName, returnType, {});
+    Function* function = new Function(visibility, funcName, returnType, {}, {});
     symbolTable->classes.at(node->getParent()->getName())->addFunction(funcName, function);
 
     //setting the parent of `funcName` node to `className` node
@@ -100,6 +155,7 @@ void STGV::visit(FuncParams *node) {
         std::string type = child->getChildren().at(1)->getName();
         std::string varName = child->getChildren().at(2)->getName();
         std::vector<int> dimensions;
+
         for (auto arrayDimensionChild: child->getChildren().at(3)->getChildren()) {
             if (isdigit(arrayDimensionChild->getChildren().at(0)->getName()[0])) {
                 int dimension = std::stoi(arrayDimensionChild->getChildren().at(0)->getName());

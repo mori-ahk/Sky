@@ -20,5 +20,13 @@ void Compiler::compile() {
     parser->parse("START");
     parser->AST_Builder->visualize();
     symTabGenerator = new STGV(parser->AST_Builder->getRoot());
+    for (auto c: symTabGenerator->symbolTable->classes) {
+        std::cout << *(c.second) << std::endl;
+    }
+
+    for (auto f : symTabGenerator->symbolTable->freeFunctions) {
+        std::cout << *(f.second) << std::endl;
+    }
+
 
 }

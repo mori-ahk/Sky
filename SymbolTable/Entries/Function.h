@@ -14,17 +14,20 @@
 class Function {
 public:
 
-    Function(Visibility visibility, std::string name, std::string returnType, std::vector<Variable*> params);
+    Function(Visibility visibility, std::string name, std::string returnType, std::vector<Variable*> params, std::vector<Variable*> localVars);
     std::vector<Variable*>& getParams();
+    std::vector<Variable*>& getLocalVars();
     std::string& getName();
     std::string& getReturnType();
     Visibility getVisibility();
 
     void addParam(Variable*);
+    void addVariable(Variable*);
     friend std::ostream& operator<<(std::ostream&, Function&);
 private:
 
     std::vector<Variable*> params;
+    std::vector<Variable*> localVars;
     std::string name;
     std::string returnType;
     Visibility visibility;

@@ -6,6 +6,22 @@ class LINEAR inherits POLYNOMIAL {
 	public evaluate(float x) : float;
 };
 
+LINEAR::evaluate(float x) : float
+  local
+    integer x;
+    float y;
+  do
+    return (0);
+  end
+
+evaluate(float x, integer z, LINEAR r) : float
+  local
+    integer x[];
+    float y;
+  do
+    return (0);
+  end
+
 main
   do
   end
