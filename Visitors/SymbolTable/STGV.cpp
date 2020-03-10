@@ -116,6 +116,16 @@ void STGV::visit(FuncParams *node) {
     }
 }
 
+void STGV::visit(MainFunc* node) {
+    auto funcBody = node->getChildren().at(0);
+    auto localVars = funcBody->getChildren().at(0);
+
+    for(auto var : localVars->getChildren()) {
+        Variable* variable = createVar(var);
+        symbolTable->main->addVariable(variable);
+    }
+}
+
 void STGV::visit(ASTNode *node) {
     for(auto child : node->getChildren()) {
         child->setParent(node->getParent());

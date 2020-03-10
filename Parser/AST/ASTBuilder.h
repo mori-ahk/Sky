@@ -19,6 +19,7 @@
 #include "Nodes/Program.h"
 #include "Nodes/VarDecl.h"
 #include "Nodes/ArrayDim.h"
+#include "Nodes/MainFunc.h"
 class ASTBuilder {
 public:
 

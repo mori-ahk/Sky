@@ -28,5 +28,7 @@ void Compiler::compile() {
         std::cout << *(f.second) << std::endl;
     }
 
+    std::cout << *(symTabGenerator->symbolTable->main) << std::endl;
+
 
 }

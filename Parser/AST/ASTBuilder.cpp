@@ -124,5 +124,6 @@ ASTNode* ASTBuilder::createCustomNode(std::string& nodeName) {
     else if (nodeName == "PROGRAM") return new Program(nodeName);
     else if (nodeName == "variable") return new VarDecl(nodeName);
     else if (nodeName == "func_body") return new FuncBody(nodeName);
+    else if (nodeName == "main") return new MainFunc(nodeName);
     else return new ASTNode(nodeName);
 }

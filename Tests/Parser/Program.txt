@@ -25,26 +25,10 @@ printArray(integer arr[], integer size) : void
   do
   end
 
-printAay() : void
-  local
-    integer n;
-    integer i;
-  do
-  end
-
 // main funtion to test above
 main
   local
     integer arr[7];
   do
     arr[0] = 64;
-    arr[1] = 34;
-    arr[2] = 25;
-    arr[3] = 12;
-    arr[4] = 22;
-    arr[5] = 11;
-    arr[6] = 90;
-    printarray(arr, 7);
-    bubbleSort(arr, 7);
-    printarray(arr, 7);
   end

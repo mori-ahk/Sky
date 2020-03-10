@@ -22,7 +22,9 @@ public:
     void visit(Program* node) override;
     void visit(VarDecl* node) override;
     void visit(ArrayDim* node) override;
+    void visit(MainFunc* node) override;
     void visit(ASTNode* node) override;
+
 
     SymbolTable* symbolTable;
 private:

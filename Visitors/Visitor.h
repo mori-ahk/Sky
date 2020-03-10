@@ -16,6 +16,7 @@
 #include "../Parser/AST/Nodes/VarDecl.h"
 #include "../Parser/AST/Nodes/ArrayDim.h"
 #include "../Parser/AST/ASTNode.h"
+#include "../Parser/AST/Nodes/MainFunc.h"
 
 class Visitor {
 public:
@@ -29,6 +30,7 @@ public:
     virtual void visit(Program* node) = 0;
     virtual void visit(VarDecl* node) = 0;
     virtual void visit(ArrayDim* node) = 0;
+    virtual void visit(MainFunc* node) = 0;
     virtual void visit(ASTNode* node) = 0;
     virtual ~Visitor() = 0;
 };

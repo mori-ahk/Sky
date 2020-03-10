@@ -15,7 +15,7 @@ public:
     ~SymbolTable();
     std::unordered_map<std::string, Class*> classes;
     std::unordered_map<std::string, Function*> freeFunctions;
-    std::unordered_map<std::string, Function*> main;
+    Function* main = new Function(Visibility::PUBLIC, "main", "void", {}, {});
 };
 
 
