@@ -22,78 +22,38 @@ void STGV::visit(Local *node) {
 void STGV::visit(FuncDef *node) {
 
     std::string namespaceName = "";
-    //iterating on signature node's children
-    auto signature = node->getChildren().at(0);
 
+    auto signature = node->getChildren().at(0);
+    auto funcBody = node->getChildren().at(1);
     //if the function belongs to a class and has a namespace;
     if (signature->getChildren().size() == 4) namespaceName = signature->getChildren().at(0)->getName();
 
-    std::string funcName = signature->getChildren().size() == 4 ? signature->getChildren().at(1)->getName() : signature->getChildren().at(1)->getName();
+    std::string funcName = signature->getChildren().size() == 4 ? signature->getChildren().at(1)->getName() : signature->getChildren().at(0)->getName();
     std::string returnType = signature->getChildren().at(2)->getName();
     Function* function = new Function(Visibility::PUBLIC, funcName, returnType, {}, {});
-    if (signature->getChildren().size() == 3) symbolTable->freeFunctions[funcName] = function;
-    //iterating on params node's children
+
+    //iterating on params
     auto params = signature->getChildren().at(1);
-
     for (auto param: params->getChildren()) {
-        std::string visibilityString = param->getChildren().at(0)->getName();
-        Visibility visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
-        std::string type = param->getChildren().at(1)->getName();
-        std::string varName = param->getChildren().at(2)->getName();
-        std::vector<int> dimensions;
-        for (auto arrayDimensionChild: param->getChildren().at(3)->getChildren()) {
-            if (isdigit(arrayDimensionChild->getChildren().at(0)->getName()[0])) {
-                int dimension = std::stoi(arrayDimensionChild->getChildren().at(0)->getName());
-                dimensions.push_back(dimension);
-            }
-        }
-
-        Variable *variable = new Variable(visibility, type, varName, dimensions);
+        Variable *variable = createVar(param);
         function->addParam(variable);
     }
 
-    auto funcBody = node->getChildren().at(1);
-
-    //iterating on func_body node's children
-    for (auto child : funcBody->getChildren().at(0)->getChildren()) {
-        std::string visibilityString = child->getChildren().at(0)->getName();
-        Visibility  visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
-        std::string type = child->getChildren().at(1)->getName();
-        std::string varName = child->getChildren().at(2)->getName();
-        std::vector<int> dimensions;
-
-        //iterating on dimension array
-        for (auto dim: child->getChildren().at(2)->getChildren()) {
-            if (isdigit(dim->getChildren().at(0)->getName()[0])) {
-                int dimension = std::stoi(dim->getChildren().at(0)->getName());
-                dimensions.push_back(dimension);
-            }
-        }
-
-        Variable* variable = new Variable(visibility, type, varName, dimensions);
+    //iterating on local vars
+    auto localVars = funcBody->getChildren().at(0);
+    for (auto localVar : localVars->getChildren()) {
+        Variable* variable = createVar(localVar);
         function->addVariable(variable);
-
         //fetching the class that this function corresponds to and add local variable to its scope
         if (!namespaceName.empty()) symbolTable->classes.at(namespaceName)->getFunctions().at(funcName)->addVariable(variable);
     }
+
+    if (signature->getChildren().size() == 3) symbolTable->freeFunctions[funcName] = function;
 }
 
 void STGV::visit(VarDecl *node) {
-    std::string visibilityString = node->getChildren().at(0)->getName();
-    Visibility  visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
-    std::string type = node->getChildren().at(1)->getName();
-    std::string varName = node->getChildren().at(2)->getName();
-    std::vector<int> dimensions;
-    for (auto child: node->getChildren().at(3)->getChildren()) {
-        if (isdigit(child->getChildren().at(0)->getName()[0])) {
-            int dimension = std::stoi(child->getChildren().at(0)->getName());
-            dimensions.push_back(dimension);
-        }
-    }
-
-    Variable* variable = new Variable(visibility, type, varName, dimensions);
-    symbolTable->classes.at(node->getParent()->getName())->addVariable(varName, variable);
-
+    Variable* variable = createVar(node);
+    symbolTable->classes.at(node->getParent()->getName())->addVariable(variable->getName(), variable);
 }
 
 void STGV::visit(ArrayDim *node) {
@@ -124,6 +84,7 @@ void STGV::visit(ClassDecl *node) {
     //Creating a class entry
     std::string className = node->getChildren().at(0)->getName();
     std::string inherits = "";
+    //constructing a string indicating all the parent class
     for(auto child : node->getChildren().at(1)->getChildren()) {
         inherits += child->getName() + " ";
     }
@@ -150,20 +111,7 @@ void STGV::visit(FuncParams *node) {
         //setting the parent of each `param` node to `funcName` node
         child->setParent(node->getParent());
 
-        std::string visibilityString = child->getChildren().at(0)->getName();
-        Visibility  visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
-        std::string type = child->getChildren().at(1)->getName();
-        std::string varName = child->getChildren().at(2)->getName();
-        std::vector<int> dimensions;
-
-        for (auto arrayDimensionChild: child->getChildren().at(3)->getChildren()) {
-            if (isdigit(arrayDimensionChild->getChildren().at(0)->getName()[0])) {
-                int dimension = std::stoi(arrayDimensionChild->getChildren().at(0)->getName());
-                dimensions.push_back(dimension);
-            }
-        }
-
-        Variable* variable = new Variable(visibility, type, varName, dimensions);
+        Variable* variable = createVar(child);
         symbolTable->classes.at(node->getParent()->getParent()->getName())->getFunctions().at(node->getParent()->getName())->addParam(variable);
     }
 }
@@ -174,4 +122,29 @@ void STGV::visit(ASTNode *node) {
         child->accept(*this);
 
     }
+}
+
+
+Variable* STGV::createVar(ASTNode* node) {
+    int startIndex = node->getChildren().size() == 4 ? 1 : 0;
+    Visibility  visibility = Visibility::PRIVATE;
+    if (node->getChildren().size() == 4) {
+        std::string visibilityString = node->getChildren().at(0)->getName();
+        Visibility visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
+    }
+    std::string varName = node->getChildren().at(startIndex++)->getName();
+    std::string type = node->getChildren().at(startIndex++)->getName();
+    std::vector<int> dimensions;
+
+    auto dimNodeToIterate = node->getChildren().size() == 4 ? node->getChildren().at(3) : node->getChildren().at(2);
+    for (auto arrayDimensionChild: dimNodeToIterate->getChildren()) {
+        if (isdigit(arrayDimensionChild->getChildren().at(0)->getName()[0])) {
+            int dimension = std::stoi(arrayDimensionChild->getChildren().at(0)->getName());
+            dimensions.push_back(dimension);
+        } else {
+            dimensions.push_back(-1);
+        }
+    }
+
+    return new Variable(visibility, type, varName, dimensions);
 }

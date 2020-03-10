@@ -41,9 +41,9 @@ void Class::addFunction(std::string& funcName, Function* function) {
 
 std::ostream& operator<<(std::ostream& os, Class& c) {
     os << "CLASS:\n";
-    os << "[" <<  "name: " << c.getName() << " | inherits: " << c.getInherits() << " | type: "  << c.getType() << "]" << std::endl;
+    os << "[ " <<  "name: " << c.getName() << " | inherits: " << c.getInherits() << " | type: "  << c.getType() << " ]" << std::endl;
     for(auto f : c.getFunctions()) {
-        os << "\t " << *(f.second) << std::endl;
+        os << "\t" << *(f.second) << std::endl;
     }
 
     for(auto v: c.getVariables()) {

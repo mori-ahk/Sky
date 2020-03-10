@@ -52,7 +52,7 @@ bool Parser::parse(std::string LHS, bool isOnPanicMode) {
             if (isKeyword(LHS)) {
                 std::string value = currentToken->getValue();
                 AST_Builder->push(value);
-                AST_Builder->printStack();
+//                AST_Builder->printStack();
             }
             next();
             return true;
@@ -63,7 +63,7 @@ bool Parser::parse(std::string LHS, bool isOnPanicMode) {
     if (!currentRule->doesBelongToFirst(currentToken)) {
         if ((isOnPanicMode or currentRule->isNullable()) and currentRule->doesBelongToFollow(currentToken)) {
             AST_Builder->push(LHS);
-            AST_Builder->printStack();
+//            AST_Builder->printStack();
             return true;
         } else return false;
     }

@@ -73,8 +73,8 @@ void ASTBuilder::removeSelfIfOnlyHasOneChild() {
 
 void ASTBuilder::handle(std::string& action, std::string& LHS) {
     if (isIgnoreModeOn) return;
-    printStack();
-    std::cout << "LHS: " << LHS << " action: " << action << std::endl;
+//    printStack();
+//    std::cout << "LHS: " << LHS << " action: " << action << std::endl;
     std::string action_number = action.substr(0, 2);
     if (action_number == "@1") {
         //Extract #optiona_custom_name for the AST node.

@@ -24,29 +24,33 @@ std::vector<Variable *> & Function::getParams() {
     return params;
 }
 
+std::vector<Variable *>& Function::getLocalVars() {
+    return localVars;
+}
+
 Visibility Function::getVisibility() {
     return visibility;
 }
 
 void Function::addParam(Variable * variable) {
     params.push_back(variable);
+    localVars.push_back(variable);
 }
 
 void Function::addVariable(Variable* variable) {
     localVars.push_back(variable);
 }
 
+
+
 std::ostream& operator<<(std::ostream& os, Function& f) {
     std::string visibility;
     if (f.getVisibility() == Visibility::PUBLIC) visibility = "public";
     else visibility = "private";
     os << "FUNCTION:\n";
-    os << "\t[" <<  "visibility: " << visibility << "| name: " << f.getName() << " | returns: "  << f.getReturnType() << "]" << std::endl;
-    os << "\t\tParams:\n";
-    for (auto& var : f.getParams()) {
-        std::string dimension = "";
-        for(auto dim: var->getDimensions()) dimension += std::to_string(dim) + " ";
-        os << "\t\t[" <<  "visibility: " << "private" << "| name: " << var->getName() << " | type: "  << var->getType() <<  "| dimensions: " << dimension << "]" << std::endl;
+    os << "\t[ " <<  "visibility: " << visibility << " | name: " << f.getName() << " | returns: "  << f.getReturnType() << " ]" << std::endl;
+    for (auto& var : f.getLocalVars()) {
+        os << "\t\t" << *var << std::endl;
     }
     return os;
 }

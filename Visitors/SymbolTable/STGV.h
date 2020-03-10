@@ -25,6 +25,9 @@ public:
     void visit(ASTNode* node) override;
 
     SymbolTable* symbolTable;
+private:
+    Variable* createVar(ASTNode*);
+
 };
 
 
