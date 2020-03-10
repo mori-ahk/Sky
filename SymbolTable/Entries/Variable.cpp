@@ -34,7 +34,7 @@ std::ostream& operator<<(std::ostream& os, Variable& v) {
     else visibility = "private";
     os << "VARIABLE\n";
     for(auto dim: v.getDimensions()) dimension += std::to_string(dim) + ", ";
-    if (v.getDimensions().empty() or v.getDimensions().at(0) == -1) dimension = "[]";
+    if (v.getDimensions().empty()) dimension = "[]";
     os << "\t[ " <<  "visibility: " << visibility << " | name: " << v.getName() << " | type: "  << v.getType() <<  " | dimensions: " << dimension << " ]" << std::endl;
     return os;
 }

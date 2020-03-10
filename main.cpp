@@ -5,7 +5,7 @@
 
 int main(int argc, const char * argv[]) {
 
-    const std::string basePath = "Tests/Parser/";
+    const std::string basePath = "Tests/";
 
     std::string fileName = argv[1];
 

@@ -146,12 +146,10 @@ Variable* STGV::createVar(ASTNode* node) {
 
     auto dimNodeToIterate = node->getChildren().size() == 4 ? node->getChildren().at(3) : node->getChildren().at(2);
     for (auto arrayDimensionChild: dimNodeToIterate->getChildren()) {
-        if (isdigit(arrayDimensionChild->getChildren().at(0)->getName()[0])) {
+        try {
             int dimension = std::stoi(arrayDimensionChild->getChildren().at(0)->getName());
             dimensions.push_back(dimension);
-        } else {
-            dimensions.push_back(-1);
-        }
+        } catch (const std::invalid_argument& invalid_argument) {}
     }
 
     return new Variable(visibility, type, varName, dimensions);
