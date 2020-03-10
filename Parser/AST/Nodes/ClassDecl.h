@@ -10,8 +10,8 @@
 
 class ClassDecl: public ASTNode {
 public:
-    ClassDecl(std::string name) : ASTNode(name) {}
-    ClassDecl(ASTNode*);
+    ClassDecl(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
+
     void accept(Visitor& visitor) override;
 };
 

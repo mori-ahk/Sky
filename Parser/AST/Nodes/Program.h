@@ -10,7 +10,7 @@
 
 class Program : public ASTNode {
 public:
-    Program(std::string name) : ASTNode(name) {}
+    Program(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
     void accept(Visitor& visitor) override;
 };
 

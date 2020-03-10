@@ -9,7 +9,7 @@
 
 ASTBuilder::ASTBuilder() {
     std::string program = "START";
-    this->root = new ASTNode(program);
+    this->root = new ASTNode(program, 0);
     this->visualizer = new Visualizer();
     stack.push(root);
 
@@ -25,8 +25,8 @@ void ASTBuilder::createNode(std::string& rule) {
     stack.push(createCustomNode(rule));
 }
 
-void ASTBuilder::push(std::string& nodeName) {
-    stack.push(createCustomNode(nodeName));
+void ASTBuilder::push(std::string& nodeName, int lineNumber) {
+    stack.push(createCustomNode(nodeName, lineNumber));
 }
 
 void ASTBuilder::insertRightChild() {
@@ -60,7 +60,7 @@ void ASTBuilder::constructListAndInsertAsChild() {
         stack.pop();
     }
 
-    auto A = new ASTNode("call_list");
+    auto A = new ASTNode("call_list", 0);
     A->addChildToLeft(childrenToBeInserted);
     stack.push(A);
 }
@@ -113,17 +113,17 @@ void ASTBuilder::visualize() {
 }
 
 
-ASTNode* ASTBuilder::createCustomNode(std::string& nodeName) {
-    if (nodeName == "CLASSDECLARATIONS") return new ClassDecls(nodeName);
-    else if (nodeName == "class") return new ClassDecl(nodeName);
-    else if (nodeName == "func_decl") return new FuncDecl(nodeName);
-    else if (nodeName == "params") return new FuncParams(nodeName);
-    else if (nodeName == "func_def") return new FuncDef(nodeName);
-    else if (nodeName == "ARRAYDIMENSIONS") return new ArrayDim(nodeName);
-    else if (nodeName == "LOCALSCOPE") return new Local(nodeName);
-    else if (nodeName == "PROGRAM") return new Program(nodeName);
-    else if (nodeName == "variable") return new VarDecl(nodeName);
-    else if (nodeName == "func_body") return new FuncBody(nodeName);
-    else if (nodeName == "main") return new MainFunc(nodeName);
-    else return new ASTNode(nodeName);
+ASTNode* ASTBuilder::createCustomNode(std::string& nodeName, int lineNumber) {
+    if (nodeName == "CLASSDECLARATIONS") return new ClassDecls(nodeName, lineNumber);
+    else if (nodeName == "class") return new ClassDecl(nodeName, lineNumber);
+    else if (nodeName == "func_decl") return new FuncDecl(nodeName, lineNumber);
+    else if (nodeName == "params") return new FuncParams(nodeName, lineNumber);
+    else if (nodeName == "func_def") return new FuncDef(nodeName,lineNumber);
+    else if (nodeName == "ARRAYDIMENSIONS") return new ArrayDim(nodeName, lineNumber);
+    else if (nodeName == "LOCALSCOPE") return new Local(nodeName, lineNumber);
+    else if (nodeName == "PROGRAM") return new Program(nodeName, lineNumber);
+    else if (nodeName == "variable") return new VarDecl(nodeName, lineNumber);
+    else if (nodeName == "func_body") return new FuncBody(nodeName, lineNumber);
+    else if (nodeName == "main") return new MainFunc(nodeName, lineNumber);
+    else return new ASTNode(nodeName, lineNumber);
 }

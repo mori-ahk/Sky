@@ -13,14 +13,16 @@
 class Visitor;
 class ASTNode {
 public:
-    ASTNode(std::string);
+    ASTNode(std::string, int);
     ASTNode();
     ~ASTNode();
     std::string& getName();
     std::deque<ASTNode*>& getChildren();
     ASTNode* getParent();
+    int& getLineNumber();
+    int& getUniqueID();
     void setParent(ASTNode*);
-    int getUniqueID();
+    void setLineNumber();
 
     void addChildToLeft(ASTNode*);
     void addChildToRight(ASTNode*);
@@ -33,6 +35,7 @@ private:
     std::deque<ASTNode*> children;
     ASTNode* parent;
     int uniqueID;
+    int lineNumber;
 
 };
 

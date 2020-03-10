@@ -10,7 +10,7 @@
 
 class MainFunc : public ASTNode {
 public:
-    MainFunc(std::string name): ASTNode(name) {}
+    MainFunc(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
     void accept(Visitor& visitor) override;
 };
 

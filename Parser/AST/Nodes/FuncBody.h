@@ -10,7 +10,7 @@
 
 class FuncBody : public ASTNode {
 public:
-    FuncBody(std::string name) : ASTNode(name) {}
+    FuncBody(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
     void accept(Visitor& visitor) override;
 };
 

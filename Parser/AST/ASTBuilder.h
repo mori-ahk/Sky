@@ -27,7 +27,7 @@ public:
     ~ASTBuilder();
 
     void handle(std::string&, std::string&);
-    void push(std::string&);
+    void push(std::string&, int);
     bool isIgnoreModeOn;
     void printStack();
     ASTNode* getRoot();
@@ -41,7 +41,7 @@ private:
     void adoptChild();
     void constructListAndInsertAsChild();
     void removeSelfIfOnlyHasOneChild();
-    ASTNode* createCustomNode(std::string&);
+    ASTNode* createCustomNode(std::string&, int lineNumber = 0);
     std::stack<ASTNode*> stack;
     std::stack<ASTNode*> testStack;
     ASTNode* root;

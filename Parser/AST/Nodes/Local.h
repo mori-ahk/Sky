@@ -10,7 +10,7 @@
 
 class Local : public ASTNode {
 public:
-    Local(std::string name): ASTNode(name) {}
+    Local(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
     void accept(Visitor& visitor) override;
 };
 

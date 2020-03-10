@@ -3,19 +3,18 @@
 //
 
 #include "ASTNode.h"
-#include <iostream>
 #include "../../Visitors/Visitor.h"
 static int counter = 0;
-static int level = 0;
-static int currNodeID = 0;
+
 
 ASTNode::ASTNode() {
     this->name = "";
     this->parent = nullptr;
 }
 
-ASTNode::ASTNode(std::string name) {
+ASTNode::ASTNode(std::string name, int lineNumber) {
     this->name = name;
+    this->lineNumber = lineNumber;
     uniqueID = counter++;
 }
 
@@ -31,6 +30,14 @@ std::deque<ASTNode*>& ASTNode::getChildren() {
 
 ASTNode* ASTNode::getParent() {
     return parent;
+}
+
+int& ASTNode::getUniqueID() {
+    return uniqueID;
+}
+
+int& ASTNode::getLineNumber() {
+    return lineNumber;
 }
 
 void ASTNode::setParent(ASTNode * parent) {
@@ -75,10 +82,6 @@ void ASTNode::adoptChildren(std::deque<ASTNode*> _children) {
 //    }
 //
 //    std::cout << std::endl;
-}
-
-int ASTNode::getUniqueID() {
-    return uniqueID;
 }
 
 void ASTNode::accept(Visitor &visitor) {

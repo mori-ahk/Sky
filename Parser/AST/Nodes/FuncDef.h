@@ -10,7 +10,7 @@
 
 class FuncDef : public ASTNode {
 public:
-    FuncDef(std::string name) : ASTNode(name) {}
+    FuncDef(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
     void accept(Visitor& visitor) override;
 };
 

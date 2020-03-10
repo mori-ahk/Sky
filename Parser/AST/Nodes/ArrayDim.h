@@ -10,7 +10,7 @@
 
 class ArrayDim : public ASTNode {
 public:
-    ArrayDim(std::string name) : ASTNode(name) {}
+    ArrayDim(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
     void accept(Visitor& visitor) override;
 };
 

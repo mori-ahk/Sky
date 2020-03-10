@@ -21,14 +21,16 @@ void STGV::visit(Local *node) {
 
 void STGV::visit(FuncDef *node) {
 
-    std::string namespaceName = "";
+    std::string namespaceName;
 
     auto signature = node->getChildren().at(0);
     auto funcBody = node->getChildren().at(1);
     //if the function belongs to a class and has a namespace;
     if (signature->getChildren().size() == 4) namespaceName = signature->getChildren().at(0)->getName();
 
-    std::string funcName = signature->getChildren().size() == 4 ? signature->getChildren().at(1)->getName() : signature->getChildren().at(0)->getName();
+    std::string funcName;
+    if (signature->getChildren().size() == 4) funcName = signature->getChildren().at(1)->getName();
+    else funcName = signature->getChildren().at(0)->getName();
     std::string returnType = signature->getChildren().at(2)->getName();
     Function* function = new Function(Visibility::PUBLIC, funcName, returnType, {}, {});
 
@@ -56,13 +58,9 @@ void STGV::visit(VarDecl *node) {
     symbolTable->classes.at(node->getParent()->getName())->addVariable(variable->getName(), variable);
 }
 
-void STGV::visit(ArrayDim *node) {
+void STGV::visit(ArrayDim *node) {}
 
-}
-
-void STGV::visit(FuncBody *node) {
-
-}
+void STGV::visit(FuncBody *node) {}
 
 void STGV::visit(FuncDecl *node) {
     std::string visibilityString = node->getChildren().at(0)->getName();
