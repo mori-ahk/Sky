@@ -7,7 +7,7 @@
 
 
 #include "../Visitor.h"
-#include "../../SymbolTable/SymbolTable.h"
+#include "../../Semantic/SymbolTable/SymbolTable.h"
 
 class STGV : public Visitor {
 public:
@@ -26,7 +26,7 @@ public:
     void visit(ASTNode* node) override;
 
 
-    SymbolTable* symbolTable;
+    Semantic::SymbolTable* symbolTable;
 private:
     Variable* createVar(ASTNode*);
 

@@ -4,4 +4,4 @@
 
 #include "SymbolTable.h"
 
-SymbolTable::SymbolTable() {}
+Semantic::SymbolTable::SymbolTable() {}

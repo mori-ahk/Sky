@@ -4,9 +4,9 @@
 
 #include "STGV.h"
 #include <iostream>
-#include "../../SymbolTable/Entries/Class.h"
+
 STGV::STGV(ASTNode* root) {
-    this->symbolTable = new SymbolTable();
+    this->symbolTable = new Semantic::SymbolTable();
     root->getChildren().at(0)->accept(*this);
 }
 void STGV::visit(Program *node) {
