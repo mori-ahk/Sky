@@ -5,6 +5,8 @@
 #include "STGV.h"
 #include "../../Semantic/Error/Error.h"
 #include <iostream>
+#include <vector>
+
 
 STGV::STGV(AST::ASTNode* root) {
     this->symbolTable = new Semantic::SymbolTable();
@@ -41,8 +43,10 @@ void STGV::visit(FuncDef *node) {
     if (!namespaceName.empty()) {
         try {
             symbolTable->classes.at(namespaceName)->getFunction(funcName);
-        } catch (Semantic::Error& DeclarationNotFound){
-            std::cerr << DeclarationNotFound.what() << " at line " << signature->getChild(0)->getLineNumber() << std::endl;
+        } catch (Semantic::Error& error){
+            int position = signature->getChild(0)->getLineNumber();
+            auto pair = std::make_pair(error, position);
+            symbolTable->errors.push_back(pair);
         }
     }
 
@@ -53,7 +57,9 @@ void STGV::visit(FuncDef *node) {
         try {
             function->addParam(variable);
         } catch (Semantic::Error& error) {
-            std::cerr << error.what() << " at line " << param->getChild(1)->getLineNumber() << std::endl;
+            int position = param->getChild(1)->getLineNumber();
+            auto pair = std::make_pair(error, position);
+            symbolTable->errors.push_back(pair);
         }
     }
 

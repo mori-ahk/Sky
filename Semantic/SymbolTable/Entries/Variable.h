@@ -7,7 +7,6 @@
 
 #include <string>
 #include <vector>
-#include "SymbolKind.h"
 #include "Visibility.h"
 #include <iostream>
 class Variable {

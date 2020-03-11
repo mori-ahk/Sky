@@ -7,7 +7,9 @@
 
 #include "Entries/Class.h"
 #include "Entries/Function.h"
+#include "../Error/Error.h"
 #include <unordered_map>
+#include <vector>
 
 namespace Semantic {
     class SymbolTable {
@@ -20,6 +22,7 @@ namespace Semantic {
         std::unordered_map<std::string, Function *> freeFunctions;
         Function *main = new Function(Visibility::PUBLIC, "main", "void", {}, {});
 
+        std::vector<std::pair<Semantic::Error, int>> errors;
     };
 }
 
