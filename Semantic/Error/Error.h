@@ -13,8 +13,8 @@ enum class Type {
     MULTDECLFUNCPARAM,
     MULTDECCLASS,
     SAMEFUNCTION,
-    DEFLESSFUNC,
-    DECLESSFUNC,
+    UNDEFINEDFUNC,
+    UNDECLAREDFUNC,
 };
 
 namespace Semantic {
@@ -36,13 +36,13 @@ namespace Semantic {
                     return "multi declared class";
                 case Type::SAMEFUNCTION:
                     return "same function with the same variable!";
-                case Type::DEFLESSFUNC: {
+                case Type::UNDEFINEDFUNC: {
                     std::string errorString =
                             "no definition for declared member function " + funcName + " for class " + className;
                     const char *_errorString = errorString.c_str();
                     return _errorString;
                 }
-                case Type::DECLESSFUNC:
+                case Type::UNDECLAREDFUNC:
                     return "definition provided for undeclared member function";
             }
         }

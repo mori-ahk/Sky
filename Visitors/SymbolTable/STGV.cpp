@@ -223,7 +223,7 @@ void STGV::surfaceUndefinedFunctions() {
     for (auto& _class : symbolTable->classes) {
         for (auto& _function: _class.second->getFunctions()) {
             if (!_function.second->isDefined)
-                throw Semantic::Error(Type::DEFLESSFUNC, _function.first, _class.first);
+                throw Semantic::Error(Type::UNDEFINEDFUNC, _function.first, _class.first);
         }
     }
 }
