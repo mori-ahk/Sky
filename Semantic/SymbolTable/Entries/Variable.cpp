@@ -23,18 +23,26 @@ std::string& Variable::getName() {
     return name;
 }
 
+std::string Variable::getVisibilityString() {
+    if (getVisibility() == Visibility::PUBLIC) return "public";
+    else return "private";
+}
+
+std::string Variable::getDimsString() {
+    std::string dimension = "";
+    for(auto dim: getDimensions()) dimension += std::to_string(dim) + ", ";
+    if (getDimensions().empty()) dimension = "[]";
+    return dimension;
+}
+
 Visibility Variable::getVisibility() {
     return visibility;
 }
 
 std::ostream& operator<<(std::ostream& os, Variable& v) {
-    std::string dimension = "";
-    std::string visibility;
-    if (v.getVisibility() == Visibility::PUBLIC) visibility = "public";
-    else visibility = "private";
+    std::string dimension = v.getDimsString();
+    std::string visibility = v.getVisibilityString();
     os << "VARIABLE\n";
-    for(auto dim: v.getDimensions()) dimension += std::to_string(dim) + ", ";
-    if (v.getDimensions().empty()) dimension = "[]";
     os << "\t[ " <<  "visibility: " << visibility << " | name: " << v.getName() << " | type: "  << v.getType() <<  " | dimensions: " << dimension << " ]" << std::endl;
     return os;
 }

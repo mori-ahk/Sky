@@ -3,6 +3,7 @@
 //
 
 #include "Class.h"
+#include "../../Error/SemanticError.h"
 
 Class::Class(std::string name, std::string type, std::string inherits) {
     this->name = name;
@@ -32,6 +33,9 @@ std::unordered_map<std::string, Variable *> &Class::getVariables() {
 
 
 void Class::addVariable(std::string& varName, Variable* variable) {
+    if (variables.find(varName) != variables.end())
+        throw Semantic::Error(Type::MULTDECLDATAMEMEBER);
+
     variables[varName] = variable;
 }
 

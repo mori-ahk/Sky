@@ -13,12 +13,13 @@ namespace Semantic {
     class SymbolTable {
     public:
         SymbolTable();
-
         ~SymbolTable();
 
+        void addClass(std::string& className, Class*);
         std::unordered_map<std::string, Class *> classes;
         std::unordered_map<std::string, Function *> freeFunctions;
         Function *main = new Function(Visibility::PUBLIC, "main", "void", {}, {});
+
     };
 }
 

@@ -10,6 +10,7 @@
 
 enum class Type {
     MULTDECLDATAMEMEBER,
+    MULTDECLFUNCPARAM,
     MULTDECCLASS,
     SAMEFUNCTION,
     DEFLESSFUNC,
@@ -27,6 +28,8 @@ namespace Semantic {
             switch (type) {
                 case Type::MULTDECLDATAMEMEBER:
                     return "multi declared data member";
+                case Type::MULTDECLFUNCPARAM:
+                    return "multi declared func param with the same name";
                 case Type::MULTDECCLASS:
                     return "multi declared class";
                 case Type::SAMEFUNCTION:

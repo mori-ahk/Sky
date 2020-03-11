@@ -18,6 +18,8 @@ public:
     std::string& getType();
     std::vector<int>& getDimensions();
     std::string& getName();
+    std::string getVisibilityString();
+    std::string getDimsString();
     Visibility getVisibility();
     friend std::ostream& operator<<(std::ostream&, Variable&);
 private:

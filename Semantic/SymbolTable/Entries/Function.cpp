@@ -3,6 +3,7 @@
 //
 
 #include "Function.h"
+#include "../../Error/SemanticError.h"
 
 Function::Function(Visibility visibility, std::string name, std::string returnType, std::vector<Variable *> params, std::vector<Variable*> localVars) {
     this->visibility = visibility;
@@ -20,6 +21,11 @@ std::string& Function::getReturnType() {
     return returnType;
 }
 
+std::string Function::getVisibilityString() {
+    if (getVisibility() == Visibility::PUBLIC) return "public";
+    else return "private";
+}
+
 std::vector<Variable *> & Function::getParams() {
     return params;
 }
@@ -33,20 +39,24 @@ Visibility Function::getVisibility() {
 }
 
 void Function::addParam(Variable * variable) {
+    for (auto param : params)
+        if (param->getName() == variable->getName())
+            throw Semantic::Error(Type::MULTDECLFUNCPARAM);
+
     params.push_back(variable);
-    localVars.push_back(variable);
+    addVariable(variable);
 }
 
 void Function::addVariable(Variable* variable) {
+    for (auto var: localVars)
+        if (var->getName() == variable->getName())
+            throw Semantic::Error(Type::MULTDECLDATAMEMEBER);
+
     localVars.push_back(variable);
 }
 
-
-
 std::ostream& operator<<(std::ostream& os, Function& f) {
-    std::string visibility;
-    if (f.getVisibility() == Visibility::PUBLIC) visibility = "public";
-    else visibility = "private";
+    std::string visibility = f.getVisibilityString();
     os << "FUNCTION:\n";
     os << "\t[ " <<  "visibility: " << visibility << " | name: " << f.getName() << " | returns: "  << f.getReturnType() << " ]" << std::endl;
     for (auto& var : f.getLocalVars()) {

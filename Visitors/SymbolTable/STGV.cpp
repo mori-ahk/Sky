@@ -88,7 +88,7 @@ void STGV::visit(ClassDecl *node) {
     }
 
     Class* classEntry = new Class(className, className, inherits);
-    symbolTable->classes[className] = classEntry;
+    symbolTable->addClass(className, classEntry);
 
     for(auto child : node->getChildren().at(2)->getChildren()) {
 

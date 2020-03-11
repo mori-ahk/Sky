@@ -19,6 +19,7 @@ public:
     std::vector<Variable*>& getLocalVars();
     std::string& getName();
     std::string& getReturnType();
+    std::string getVisibilityString();
     Visibility getVisibility();
 
     void addParam(Variable*);
