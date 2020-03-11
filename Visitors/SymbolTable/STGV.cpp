@@ -45,15 +45,16 @@ void STGV::visit(FuncDef *node) {
     if (isClassFunc()) {
         try {
             symbolTable->getClass(namespaceName)->getFunction(funcName);
-        } catch (Semantic::Error& undeclaredClass) {
+        } catch (Semantic::Err::UndeclaredClass& undeclaredClass) {
             int position = signature->getChild(0)->getLineNumber();
-            auto pair = std::make_pair(undeclaredClass, position);
+            auto pair = std::make_pair(undeclaredClass.what(), position);
             symbolTable->addError(pair);
             return;
-        } catch (Semantic::Error& undeclaredFunc) {
+        } catch (Semantic::Err::UndeclaredFunction& undeclaredFunc) {
             int position = signature->getChild(0)->getLineNumber();
-            auto pair = std::make_pair(undeclaredFunc, position);
+            auto pair = std::make_pair(undeclaredFunc.what(), position);
             symbolTable->addError(pair);
+            return;
         }
     }
 
@@ -67,9 +68,9 @@ void STGV::visit(FuncDef *node) {
         //throw a semantic error if `variable` is a duplicate param in the `function`
         try {
             function->addParam(variable);
-        } catch (Semantic::Error& duplicateParam) {
+        } catch (Semantic::Err::DuplicateFuncParam& duplicateParam) {
             int position = param->getChild(1)->getLineNumber();
-            auto pair = std::make_pair(duplicateParam, position);
+            auto pair = std::make_pair(duplicateParam.what(), position);
             symbolTable->addError(pair);
         }
     }
@@ -83,9 +84,9 @@ void STGV::visit(FuncDef *node) {
         //throw a semantic error if `variable` is a duplicate variable in the `function`'s local scope.
         try {
             function->addVariable(variable);
-        } catch (Semantic::Error& duplicateLocalVar){
+        } catch (Semantic::Err::DuplicateDataMember& duplicateLocalVar){
             int position = localVar->getChild(1)->getLineNumber();
-            auto pair = std::make_pair(duplicateLocalVar, position);
+            auto pair = std::make_pair(duplicateLocalVar.what(), position);
             symbolTable->addError(pair);
         }
 
@@ -99,7 +100,7 @@ void STGV::visit(FuncDef *node) {
     if (isClassFunc()) {
         auto classFunction = symbolTable->classes.at(namespaceName)->getFunction(funcName);
         classFunction->isDefined = true;
-    } else symbolTable->freeFunctions[funcName] = function;
+    } else symbolTable->freeFunctions[funcName].push_back(function);
 
 }
 
@@ -107,13 +108,13 @@ void STGV::visit(VarDecl *node) {
     Variable* variable = createVar(node);
     try {
         symbolTable->getClass(node->getParent()->getName())->addVariable(variable->getName(), variable);
-    } catch (Semantic::Error& undeclaredClass) {
+    } catch (Semantic::Err::UndeclaredClass& undeclaredClass) {
         int position = node->getParent()->getLineNumber();
-        auto pair = std::make_pair(undeclaredClass, position);
+        auto pair = std::make_pair(undeclaredClass.what(), position);
         symbolTable->addError(pair);
-    } catch (Semantic::Error& duplicateDataMember) {
+    } catch (Semantic::Err::DuplicateDataMember& duplicateDataMember) {
         int position = node->getChild(1)->getLineNumber();
-        auto pair = std::make_pair(duplicateDataMember, position);
+        auto pair = std::make_pair(duplicateDataMember.what(), position);
         symbolTable->addError(pair);
     }
 }
@@ -131,9 +132,9 @@ void STGV::visit(FuncDecl *node) {
 
     try {
         symbolTable->getClass(node->getParent()->getName())->addFunction(funcName, function);
-    } catch (Semantic::Error& undeclaredClass) {
+    } catch (Semantic::Err::UndeclaredClass& undeclaredClass) {
         int position = node->getChild(1)->getLineNumber();
-        auto pair = std::make_pair(undeclaredClass, position);
+        auto pair = std::make_pair(undeclaredClass.what(), position);
         symbolTable->addError(pair);
     }
 
@@ -157,9 +158,9 @@ void STGV::visit(ClassDecl *node) {
     Class* classEntry = new Class(className, className, inherits);
     try {
         symbolTable->addClass(className, classEntry);
-    } catch (Semantic::Error& duplicateClassDecl) {
+    } catch (Semantic::Err::DuplicateClassDecl& duplicateClassDecl) {
         int position = node->getChild(0)->getLineNumber();
-        auto pair = std::make_pair(duplicateClassDecl, position);
+        auto pair = std::make_pair(duplicateClassDecl.what(), position);
         symbolTable->addError(pair);
     }
 
@@ -185,9 +186,9 @@ void STGV::visit(FuncParams *node) {
         try {
             symbolTable->getClass(node->getParent()->getParent()->getName())->getFunction(
                     node->getParent()->getName())->addParam(variable);
-        } catch (Semantic::Error& undeclaredClass) {
+        } catch (Semantic::Err::UndeclaredClass& undeclaredClass) {
             int position = node->getParent()->getLineNumber();
-            auto pair = std::make_pair(undeclaredClass, position);
+            auto pair = std::make_pair(undeclaredClass.what(), position);
             symbolTable->addError(pair);
         }
     }
@@ -196,7 +197,7 @@ void STGV::visit(FuncParams *node) {
 void STGV::visit(MainFunc* node) {
     try { surfaceUndefinedFunctions(); }
     catch (Semantic::Error& funcNotDefined) {
-        auto pair = std::make_pair(funcNotDefined, 0);
+        auto pair = std::make_pair(funcNotDefined.what(), 0);
         symbolTable->addError(pair);
     }
 
@@ -207,9 +208,9 @@ void STGV::visit(MainFunc* node) {
         Variable* variable = createVar(var);
         try {
             symbolTable->main->addVariable(variable);
-        } catch (Semantic::Error& duplicateLocalVar) {
+        } catch (Semantic::Err::DuplicateDataMember& duplicateLocalVar) {
             int position = var->getChild(1)->getLineNumber();
-            auto pair = std::make_pair(duplicateLocalVar, position);
+            auto pair = std::make_pair(duplicateLocalVar.what(), position);
             symbolTable->addError(pair);
         }
     }
@@ -218,6 +219,7 @@ void STGV::visit(MainFunc* node) {
 void STGV::visit(AST::ASTNode *node) {
     for(auto child : node->getChildren()) {
         child->setParent(node->getParent());
+
         child->accept(*this);
     }
 }
@@ -250,8 +252,10 @@ Variable* STGV::createVar(AST::ASTNode* node) {
 void STGV::surfaceUndefinedFunctions() {
     for (auto& _class : symbolTable->classes) {
         for (auto& _function: _class.second->getFunctions()) {
-            if (!_function.second->isDefined)
-                throw Semantic::Error(Type::UNDEFINEDFUNC, _function.first, _class.first);
+            for (auto& _f : _function.second) {
+                if (!_f->isDefined)
+                    throw Semantic::Err::UndefinedFunction(_f->getName(), _class.first);
+            }
         }
     }
 }

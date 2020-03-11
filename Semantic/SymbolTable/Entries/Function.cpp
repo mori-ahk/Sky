@@ -42,7 +42,7 @@ Visibility Function::getVisibility() {
 void Function::addParam(Variable * variable) {
     for (auto param : params)
         if (param->getName() == variable->getName())
-            throw Semantic::Error(Type::MULTDECLFUNCPARAM);
+            throw Semantic::Err::DuplicateFuncParam();
 
     params.push_back(variable);
     addVariable(variable);
@@ -51,7 +51,7 @@ void Function::addParam(Variable * variable) {
 void Function::addVariable(Variable* variable) {
     for (auto var: localVars)
         if (var->getName() == variable->getName())
-            throw Semantic::Error(Type::MULTDECLDATAMEMEBER);
+            throw Semantic::Err::DuplicateDataMember();
 
     localVars.push_back(variable);
 }

@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <vector>
 
+
 namespace Semantic {
     class SymbolTable {
     public:
@@ -18,15 +19,15 @@ namespace Semantic {
         ~SymbolTable();
 
         void addClass(std::string&, Class*);
-        void addError(std::pair<Semantic::Error, int>&);
+        void addError(std::pair<const char*, int>&);
 
         Class* getClass(std::string&);
 
         std::unordered_map<std::string, Class *> classes;
-        std::unordered_map<std::string, Function *> freeFunctions;
+        std::unordered_map<std::string, std::vector<Function *> > freeFunctions;
         Function *main = new Function(Visibility::PUBLIC, "main", "void", {}, {});
 
-        std::vector<std::pair<Semantic::Error, int>> errors;
+        std::vector<std::pair<const char*, int>> errors;
     };
 }
 

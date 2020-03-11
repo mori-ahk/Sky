@@ -18,7 +18,7 @@ public:
     std::string &getName();
     std::string &getType();
     std::string& getInherits();
-    std::unordered_map<std::string, Function *> &getFunctions();
+    std::unordered_map<std::string, std::vector<Function *> > &getFunctions();
     std::unordered_map<std::string, Variable *> &getVariables();
 
     Function* getFunction(std::string&);
@@ -30,7 +30,7 @@ private:
     std::string name;
     std::string type;
     std::string inherits;
-    std::unordered_map<std::string, Function*> functions;
+    std::unordered_map<std::string, std::vector<Function*> > functions;
     std::unordered_map<std::string, Variable*> variables;
 
 };

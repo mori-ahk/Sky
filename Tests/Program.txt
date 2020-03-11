@@ -17,6 +17,8 @@ LINEAR::evaluate(float x) : float
     end
 
 LINEAR::x() : void
+    local
+        integer a;
     do
     end
 
@@ -42,7 +44,7 @@ printArray(integer arr[], integer size) : void
 // main funtion to test above
 main
   local
-    integer arr[7];
+    integer arr[][7];
   do
     arr[0] = 64;
   end

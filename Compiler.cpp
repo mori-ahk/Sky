@@ -4,6 +4,7 @@
 
 #include "Compiler.h"
 
+
 Compiler::Compiler(std::string filePath) {
     this->lexer = new Lexer();
     lexer->lex(filePath);
@@ -25,7 +26,8 @@ void Compiler::compile() {
     }
 
     for (auto f : symTabGenerator->symbolTable->freeFunctions) {
-        std::cout << *(f.second) << std::endl;
+        for (auto& _f : f.second)
+            std::cout << *(_f) << std::endl;
     }
 
     std::cout << *(symTabGenerator->symbolTable->main) << std::endl;
@@ -34,7 +36,6 @@ void Compiler::compile() {
         std::string p = "";
         if (e.second == 0) p = "";
         else p += " at line " + std::to_string(e.second);
-        std::cerr << e.first.what() << p << std::endl;
+        std::cerr << e.first << p << std::endl;
     }
-
 }
