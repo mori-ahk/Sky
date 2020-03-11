@@ -15,6 +15,7 @@ enum class Type {
     SAMEFUNCTION,
     UNDEFINEDFUNC,
     UNDECLAREDFUNC,
+    UNDECLAREDCLASS
 };
 
 namespace Semantic {
@@ -44,6 +45,11 @@ namespace Semantic {
                 }
                 case Type::UNDECLAREDFUNC:
                     return "definition provided for undeclared member function";
+                case Type::UNDECLAREDCLASS: {
+                    std::string errorString = "use of undeclared class " + className;
+                    const char *_errorString = errorString.c_str();
+                    return _errorString;
+                }
             }
         }
 

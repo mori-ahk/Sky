@@ -23,8 +23,6 @@ void STGV::visit(Local *node) {
 }
 
 void STGV::visit(FuncDef *node) {
-
-
     std::string namespaceName;
 
     auto signature = node->getChild(0);
@@ -44,12 +42,17 @@ void STGV::visit(FuncDef *node) {
     Function* function = new Function(Visibility::PUBLIC, funcName, returnType, {}, {});
 
     //check if the function has been declared in its class
-    if (!namespaceName.empty()) {
+    if (isClassFunc()) {
         try {
-            symbolTable->classes.at(namespaceName)->getFunction(funcName);
-        } catch (Semantic::Error& declLessFunc) {
+            symbolTable->getClass(namespaceName)->getFunction(funcName);
+        } catch (Semantic::Error& undeclaredClass) {
             int position = signature->getChild(0)->getLineNumber();
-            auto pair = std::make_pair(declLessFunc, position);
+            auto pair = std::make_pair(undeclaredClass, position);
+            symbolTable->addError(pair);
+            return;
+        } catch (Semantic::Error& undeclaredFunc) {
+            int position = signature->getChild(0)->getLineNumber();
+            auto pair = std::make_pair(undeclaredFunc, position);
             symbolTable->addError(pair);
         }
     }
@@ -103,7 +106,11 @@ void STGV::visit(FuncDef *node) {
 void STGV::visit(VarDecl *node) {
     Variable* variable = createVar(node);
     try {
-        symbolTable->classes.at(node->getParent()->getName())->addVariable(variable->getName(), variable);
+        symbolTable->getClass(node->getParent()->getName())->addVariable(variable->getName(), variable);
+    } catch (Semantic::Error& undeclaredClass) {
+        int position = node->getParent()->getLineNumber();
+        auto pair = std::make_pair(undeclaredClass, position);
+        symbolTable->addError(pair);
     } catch (Semantic::Error& duplicateDataMember) {
         int position = node->getChild(1)->getLineNumber();
         auto pair = std::make_pair(duplicateDataMember, position);
@@ -121,7 +128,14 @@ void STGV::visit(FuncDecl *node) {
     std::string funcName =  node->getChild(1)->getName();
     std::string returnType = node->getChild(3)->getName();
     Function* function = new Function(visibility, funcName, returnType, {}, {});
-    symbolTable->classes.at(node->getParent()->getName())->addFunction(funcName, function);
+
+    try {
+        symbolTable->getClass(node->getParent()->getName())->addFunction(funcName, function);
+    } catch (Semantic::Error& undeclaredClass) {
+        int position = node->getChild(1)->getLineNumber();
+        auto pair = std::make_pair(undeclaredClass, position);
+        symbolTable->addError(pair);
+    }
 
     //setting the parent of `funcName` node to `className` node
     node->getChild(1)->setParent(node->getParent());
@@ -136,21 +150,20 @@ void STGV::visit(ClassDecl *node) {
     std::string className = node->getChild(0)->getName();
     std::string inherits = "";
     //constructing a string indicating all the parent class
-    for(auto child : node->getChild(1)->getChildren()) {
+    for (auto child : node->getChild(1)->getChildren()) {
         inherits += child->getName() + " ";
     }
 
     Class* classEntry = new Class(className, className, inherits);
     try {
-    symbolTable->addClass(className, classEntry);
+        symbolTable->addClass(className, classEntry);
     } catch (Semantic::Error& duplicateClassDecl) {
         int position = node->getChild(0)->getLineNumber();
         auto pair = std::make_pair(duplicateClassDecl, position);
         symbolTable->addError(pair);
     }
 
-    for(auto child : node->getChild(2)->getChildren()) {
-
+    for (auto child : node->getChild(2)->getChildren()) {
        //setting the parent of each member in `MEMBERDECLARATIONS` to `className` node
        child->setParent(node->getChild(0));
        child->accept(*this);
@@ -169,7 +182,14 @@ void STGV::visit(FuncParams *node) {
         child->setParent(node->getParent());
 
         Variable* variable = createVar(child);
-        symbolTable->classes.at(node->getParent()->getParent()->getName())->getFunctions().at(node->getParent()->getName())->addParam(variable);
+        try {
+            symbolTable->getClass(node->getParent()->getParent()->getName())->getFunction(
+                    node->getParent()->getName())->addParam(variable);
+        } catch (Semantic::Error& undeclaredClass) {
+            int position = node->getParent()->getLineNumber();
+            auto pair = std::make_pair(undeclaredClass, position);
+            symbolTable->addError(pair);
+        }
     }
 }
 

@@ -17,8 +17,10 @@ namespace Semantic {
         SymbolTable();
         ~SymbolTable();
 
-        void addClass(std::string& className, Class*);
+        void addClass(std::string&, Class*);
         void addError(std::pair<Semantic::Error, int>&);
+
+        Class* getClass(std::string&);
 
         std::unordered_map<std::string, Class *> classes;
         std::unordered_map<std::string, Function *> freeFunctions;

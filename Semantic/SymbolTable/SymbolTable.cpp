@@ -17,3 +17,10 @@ void Semantic::SymbolTable::addClass(std::string &className, Class * _class) {
 void Semantic::SymbolTable::addError(std::pair<Semantic::Error, int> & error) {
     errors.push_back(error);
 }
+
+Class* Semantic::SymbolTable::getClass(std::string& className) {
+    if (classes.find(className) == classes.end())
+        throw Semantic::Error(Type::UNDECLAREDCLASS, "", className);
+
+    return classes.at(className);
+}

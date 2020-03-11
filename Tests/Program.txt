@@ -10,13 +10,18 @@ LINEAR::build(float A, float B) : LINEAR
     do
     end
 
-LINEAR::evaluate() : float
+LINEAR::evaluate(float x) : float
     local
         integer a;
     do
     end
+
+LINEAR::x() : void
+    do
+    end
+
 /* sort the array */
-bubbleSort(integer arr[1][4], integer size, integer size) : void
+bubbleSort(integer arr[1][4], integer size) : void
   local
     integer n;
     integer i;
