@@ -5,7 +5,7 @@
 #include "STGV.h"
 #include <iostream>
 
-STGV::STGV(ASTNode* root) {
+STGV::STGV(AST::ASTNode* root) {
     this->symbolTable = new Semantic::SymbolTable();
     root->getChildren().at(0)->accept(*this);
 }
@@ -124,7 +124,7 @@ void STGV::visit(MainFunc* node) {
     }
 }
 
-void STGV::visit(ASTNode *node) {
+void STGV::visit(AST::ASTNode *node) {
     for(auto child : node->getChildren()) {
         child->setParent(node->getParent());
         child->accept(*this);
@@ -133,7 +133,7 @@ void STGV::visit(ASTNode *node) {
 }
 
 
-Variable* STGV::createVar(ASTNode* node) {
+Variable* STGV::createVar(AST::ASTNode* node) {
     int startIndex = node->getChildren().size() == 4 ? 1 : 0;
     Visibility  visibility = Visibility::PRIVATE;
     if (node->getChildren().size() == 4) {

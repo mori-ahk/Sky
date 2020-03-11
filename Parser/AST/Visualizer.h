@@ -10,8 +10,8 @@
 
 class Visualizer {
 public:
-    void visualize(ASTNode*);
-    void generateDot(ASTNode*);
+    void visualize(AST::ASTNode*);
+    void generateDot(AST::ASTNode*);
 
     Visualizer();
 

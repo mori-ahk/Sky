@@ -7,7 +7,7 @@
 
 
 
-ASTBuilder::ASTBuilder() {
+AST::ASTBuilder::ASTBuilder() {
     std::string program = "START";
     this->root = new ASTNode(program, 0);
     this->visualizer = new Visualizer();
@@ -15,28 +15,28 @@ ASTBuilder::ASTBuilder() {
 
 }
 
-ASTBuilder::~ASTBuilder() {}
+AST::ASTBuilder::~ASTBuilder() {}
 
-ASTNode* ASTBuilder::getRoot() {
+AST::ASTNode* AST::ASTBuilder::getRoot() {
     return root;
 }
 
-void ASTBuilder::createNode(std::string& rule) {
+void AST::ASTBuilder::createNode(std::string& rule) {
     stack.push(createCustomNode(rule));
 }
 
-void ASTBuilder::push(std::string& nodeName, int lineNumber) {
+void AST::ASTBuilder::push(std::string& nodeName, int lineNumber) {
     stack.push(createCustomNode(nodeName, lineNumber));
 }
 
-void ASTBuilder::insertRightChild() {
+void AST::ASTBuilder::insertRightChild() {
     auto B = stack.top(); stack.pop();
     auto A = stack.top(); stack.pop();
     A->addChildToRight(B);
     stack.push(A);
 }
 
-void ASTBuilder::insertLeftChild() {
+void AST::ASTBuilder::insertLeftChild() {
     auto B = stack.top(); stack.pop();
     auto A = stack.top(); stack.pop();
     B->addChildToLeft(A);
@@ -44,14 +44,14 @@ void ASTBuilder::insertLeftChild() {
 
 }
 
-void ASTBuilder::adoptChild() {
+void AST::ASTBuilder::adoptChild() {
     auto B = stack.top(); stack.pop();
     auto A = stack.top(); stack.pop();
     A->adoptChildren(B->getChildren());
     stack.push(A);
 }
 
-void ASTBuilder::constructListAndInsertAsChild() {
+void AST::ASTBuilder::constructListAndInsertAsChild() {
     auto B = stack.top(); stack.pop();
     std::vector<ASTNode*> childrenToBeInserted;
     childrenToBeInserted.push_back(B);
@@ -65,13 +65,13 @@ void ASTBuilder::constructListAndInsertAsChild() {
     stack.push(A);
 }
 
-void ASTBuilder::removeSelfIfOnlyHasOneChild() {
+void AST::ASTBuilder::removeSelfIfOnlyHasOneChild() {
     auto B = stack.top(); stack.pop();
     if (B->getChildren().size() == 1) B = B->getChildren().at(0);
     stack.push(B);
 }
 
-void ASTBuilder::handle(std::string& action, std::string& LHS) {
+void AST::ASTBuilder::handle(std::string& action, std::string& LHS) {
     if (isIgnoreModeOn) return;
 //    printStack();
 //    std::cout << "LHS: " << LHS << " action: " << action << std::endl;
@@ -92,7 +92,7 @@ void ASTBuilder::handle(std::string& action, std::string& LHS) {
     else removeSelfIfOnlyHasOneChild();
 }
 
-void ASTBuilder::printStack() {
+void AST::ASTBuilder::printStack() {
     std::vector<ASTNode*> v;
     testStack = stack;
     while(!testStack.empty()) {
@@ -108,12 +108,12 @@ void ASTBuilder::printStack() {
 }
 
 
-void ASTBuilder::visualize() {
+void AST::ASTBuilder::visualize() {
     visualizer->visualize(root);
 }
 
 
-ASTNode* ASTBuilder::createCustomNode(std::string& nodeName, int lineNumber) {
+AST::ASTNode* AST::ASTBuilder::createCustomNode(std::string& nodeName, int lineNumber) {
     if (nodeName == "CLASSDECLARATIONS") return new ClassDecls(nodeName, lineNumber);
     else if (nodeName == "class") return new ClassDecl(nodeName, lineNumber);
     else if (nodeName == "func_decl") return new FuncDecl(nodeName, lineNumber);

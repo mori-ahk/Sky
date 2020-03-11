@@ -6,7 +6,7 @@
 #include <iostream>
 #include <fstream>
 
-void Visualizer::visualize(ASTNode * root) {
+void Visualizer::visualize(AST::ASTNode * root) {
     dotFileContent += "digraph AST {\n";
     generateDot(root);
     dotFileContent += "}";
@@ -14,7 +14,7 @@ void Visualizer::visualize(ASTNode * root) {
     stream << dotFileContent;
 }
 
-void Visualizer::generateDot(ASTNode* root) {
+void Visualizer::generateDot(AST::ASTNode* root) {
     dotFileContent += std::to_string(root->getUniqueID()) + " [label=\"" + root->getName() + "\"];\n";
     if (root->getChildren().size() == 0) return;
     for (auto& child: root->getChildren()) {

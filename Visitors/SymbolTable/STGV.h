@@ -11,7 +11,7 @@
 
 class STGV : public Visitor {
 public:
-    STGV(ASTNode* root);
+    STGV(AST::ASTNode* root);
     void visit(ClassDecls* node) override;
     void visit(ClassDecl* node) override;
     void visit(FuncDecl* node) override;
@@ -23,12 +23,12 @@ public:
     void visit(VarDecl* node) override;
     void visit(ArrayDim* node) override;
     void visit(MainFunc* node) override;
-    void visit(ASTNode* node) override;
+    void visit(AST::ASTNode* node) override;
 
 
     Semantic::SymbolTable* symbolTable;
 private:
-    Variable* createVar(ASTNode*);
+    Variable* createVar(AST::ASTNode*);
 
 };
 

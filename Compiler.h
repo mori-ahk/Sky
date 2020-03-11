@@ -15,7 +15,7 @@ public:
     void compile();
 private:
     Lexer* lexer;
-    Parser* parser;
+    Syntax::Parser* parser;
     STGV* symTabGenerator;
 
 };

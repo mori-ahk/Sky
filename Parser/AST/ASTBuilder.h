@@ -20,33 +20,47 @@
 #include "Nodes/VarDecl.h"
 #include "Nodes/ArrayDim.h"
 #include "Nodes/MainFunc.h"
-class ASTBuilder {
-public:
+namespace AST {
+    class ASTBuilder {
+    public:
 
-    ASTBuilder();
-    ~ASTBuilder();
+        ASTBuilder();
 
-    void handle(std::string&, std::string&);
-    void push(std::string&, int);
-    bool isIgnoreModeOn;
-    void printStack();
-    ASTNode* getRoot();
-    void visualize();
+        ~ASTBuilder();
 
-private:
+        void handle(std::string &, std::string &);
 
-    void createNode(std::string&);
-    void insertLeftChild();
-    void insertRightChild();
-    void adoptChild();
-    void constructListAndInsertAsChild();
-    void removeSelfIfOnlyHasOneChild();
-    ASTNode* createCustomNode(std::string&, int lineNumber = 0);
-    std::stack<ASTNode*> stack;
-    std::stack<ASTNode*> testStack;
-    ASTNode* root;
-    Visualizer* visualizer;
-};
+        void push(std::string &, int);
 
+        bool isIgnoreModeOn;
+
+        void printStack();
+
+        ASTNode *getRoot();
+
+        void visualize();
+
+    private:
+
+        void createNode(std::string &);
+
+        void insertLeftChild();
+
+        void insertRightChild();
+
+        void adoptChild();
+
+        void constructListAndInsertAsChild();
+
+        void removeSelfIfOnlyHasOneChild();
+
+        ASTNode *createCustomNode(std::string &, int lineNumber = 0);
+
+        std::stack<ASTNode *> stack;
+        std::stack<ASTNode *> testStack;
+        ASTNode *root;
+        Visualizer *visualizer;
+    };
+}
 
 #endif //SKY_ASTBUILDER_H

@@ -8,7 +8,7 @@
 
 #include "../ASTNode.h"
 
-class Local : public ASTNode {
+class Local : public AST::ASTNode {
 public:
     Local(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
     void accept(Visitor& visitor) override;

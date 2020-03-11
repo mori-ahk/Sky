@@ -8,7 +8,7 @@
 
 #include "../ASTNode.h"
 
-class VarDecl : public ASTNode {
+class VarDecl : public AST::ASTNode {
 public:
     VarDecl(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
     void accept(Visitor& visitor) override;

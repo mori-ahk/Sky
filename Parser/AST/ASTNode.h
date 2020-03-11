@@ -11,33 +11,48 @@
 #include <deque>
 
 class Visitor;
-class ASTNode {
-public:
-    ASTNode(std::string, int);
-    ASTNode();
-    ~ASTNode();
-    std::string& getName();
-    std::deque<ASTNode*>& getChildren();
-    ASTNode* getParent();
-    int& getLineNumber();
-    int& getUniqueID();
-    void setParent(ASTNode*);
-    void setLineNumber();
+namespace AST {
+    class ASTNode {
+    public:
+        ASTNode(std::string, int);
 
-    void addChildToLeft(ASTNode*);
-    void addChildToRight(ASTNode*);
-    void addChildToLeft(std::vector<ASTNode*>&);
-    void adoptChildren(std::deque<ASTNode*>);
-    virtual void accept(Visitor& visitor);
-private:
+        ASTNode();
 
-    std::string name;
-    std::deque<ASTNode*> children;
-    ASTNode* parent;
-    int uniqueID;
-    int lineNumber;
+        ~ASTNode();
 
-};
+        std::string &getName();
 
+        std::deque<ASTNode *> &getChildren();
+
+        ASTNode *getParent();
+
+        int &getLineNumber();
+
+        int &getUniqueID();
+
+        void setParent(ASTNode *);
+
+        void setLineNumber();
+
+        void addChildToLeft(ASTNode *);
+
+        void addChildToRight(ASTNode *);
+
+        void addChildToLeft(std::vector<ASTNode *> &);
+
+        void adoptChildren(std::deque<ASTNode *>);
+
+        virtual void accept(Visitor &visitor);
+
+    private:
+
+        std::string name;
+        std::deque<ASTNode *> children;
+        ASTNode *parent;
+        int uniqueID;
+        int lineNumber;
+
+    };
+}
 
 #endif //SKY_ASTNODE_H

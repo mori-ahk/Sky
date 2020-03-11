@@ -4,33 +4,33 @@
 
 #include "Parser.h"
 
-Parser::Parser(Lexer* lexer) {
+Syntax::Parser::Parser(Lexer* lexer) {
     this->lexer = lexer;
-    this->grammar = new Grammar();
-    this->AST_Builder = new ASTBuilder();
+    this->grammar = new Language::Grammar();
+    this->AST_Builder = new AST::ASTBuilder();
     this->currentToken = lexer->next();
 }
 
-Parser::~Parser() {
+Syntax::Parser::~Parser() {
     delete currentToken;
     delete lexer;
     delete grammar;
 }
 
-void Parser::next() {
+void Syntax::Parser::next() {
     while (currentToken->getType() == currentToken->getTokenTypeMap().at("error")) currentToken = lexer->next();
     currentToken = lexer->next();
 }
 
-bool Parser::shouldTakeNext(std::string& LHS) {
+bool Syntax::Parser::shouldTakeNext(std::string& LHS) {
     return currentToken->getTokenTypeMap().at(LHS) == currentToken->getType();
 }
 
-bool Parser::isKeyword(std::string& rule) {
+bool Syntax::Parser::isKeyword(std::string& rule) {
     return KEYWORDS.find(rule) != KEYWORDS.end();
 }
 
-void Parser::printError(Rule& rule) {
+void Syntax::Parser::printError(Language::Rule& rule) {
     if (currentToken == nullptr) return;
         std::cout << "ERROR: at line " << currentToken->getLineno() << " at position: " << currentToken->getPosition() << " expected one of these: ";
         for (auto _rule: rule.getFollow()) {
@@ -39,15 +39,15 @@ void Parser::printError(Rule& rule) {
         std::cout << std::endl;
 }
 
-void Parser::panic(std::string& rule) {
+void Syntax::Parser::panic(std::string& rule) {
     while (!parse(rule, true)) next();
 }
 
-bool Parser::parse(std::string LHS, bool isOnPanicMode) {
+bool Syntax::Parser::parse(std::string LHS, bool isOnPanicMode) {
     if (currentToken == nullptr and isOnPanicMode) return true;
     if (currentToken == nullptr) return true;
 
-    if (Rule::isTerminal(LHS)) {
+    if (Language::Rule::isTerminal(LHS)) {
         if (shouldTakeNext(LHS)) {
             if (isKeyword(LHS)) {
                 std::string value = currentToken->getValue();
@@ -59,7 +59,7 @@ bool Parser::parse(std::string LHS, bool isOnPanicMode) {
         } else return false;
     }
 
-    Rule* currentRule = grammar->getRule(LHS);
+    Language::Rule* currentRule = grammar->getRule(LHS);
     if (!currentRule->doesBelongToFirst(currentToken)) {
         if ((isOnPanicMode or currentRule->isNullable()) and currentRule->doesBelongToFollow(currentToken)) {
             AST_Builder->push(LHS, 0);

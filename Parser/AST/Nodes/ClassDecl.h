@@ -8,7 +8,7 @@
 
 #include "../ASTNode.h"
 
-class ClassDecl: public ASTNode {
+class ClassDecl: public AST::ASTNode {
 public:
     ClassDecl(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
 

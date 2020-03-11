@@ -7,7 +7,7 @@
 Compiler::Compiler(std::string filePath) {
     this->lexer = new Lexer();
     lexer->lex(filePath);
-    this->parser = new Parser(lexer);
+    this->parser = new Syntax::Parser(lexer);
     this->symTabGenerator = nullptr;
 }
 

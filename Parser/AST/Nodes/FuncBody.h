@@ -8,7 +8,7 @@
 
 #include "../ASTNode.h"
 
-class FuncBody : public ASTNode {
+class FuncBody : public AST::ASTNode {
 public:
     FuncBody(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
     void accept(Visitor& visitor) override;
