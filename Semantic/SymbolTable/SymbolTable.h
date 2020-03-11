@@ -18,6 +18,8 @@ namespace Semantic {
         ~SymbolTable();
 
         void addClass(std::string& className, Class*);
+        void addError(std::pair<Semantic::Error, int>&);
+
         std::unordered_map<std::string, Class *> classes;
         std::unordered_map<std::string, Function *> freeFunctions;
         Function *main = new Function(Visibility::PUBLIC, "main", "void", {}, {});

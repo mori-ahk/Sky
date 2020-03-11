@@ -29,6 +29,7 @@ public:
     Semantic::SymbolTable* symbolTable;
 private:
     Variable* createVar(AST::ASTNode*);
+    void surfaceUndefinedFunctions();
 
 };
 

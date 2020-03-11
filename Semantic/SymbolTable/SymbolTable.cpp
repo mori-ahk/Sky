@@ -13,3 +13,7 @@ void Semantic::SymbolTable::addClass(std::string &className, Class * _class) {
 
     classes[className] = _class;
 }
+
+void Semantic::SymbolTable::addError(std::pair<Semantic::Error, int> & error) {
+    errors.push_back(error);
+}

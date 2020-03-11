@@ -20,8 +20,10 @@ enum class Type {
 namespace Semantic {
     class Error : public std::exception {
     public:
-        Error(Type type) {
+        Error(Type type, std::string funcName = std::string(), std::string className = std::string()) {
             this->type = type;
+            this->funcName = funcName;
+            this->className = className;
         }
 
         const char *what() const throw() {
@@ -34,8 +36,12 @@ namespace Semantic {
                     return "multi declared class";
                 case Type::SAMEFUNCTION:
                     return "same function with the same variable!";
-                case Type::DEFLESSFUNC:
-                    return "no definition for declared member function";
+                case Type::DEFLESSFUNC: {
+                    std::string errorString =
+                            "no definition for declared member function " + funcName + " for class " + className;
+                    const char *_errorString = errorString.c_str();
+                    return _errorString;
+                }
                 case Type::DECLESSFUNC:
                     return "definition provided for undeclared member function";
             }
@@ -43,6 +49,8 @@ namespace Semantic {
 
     private:
         Type type;
+        std::string funcName;
+        std::string className;
     };
 }
 

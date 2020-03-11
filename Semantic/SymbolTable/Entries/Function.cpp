@@ -11,6 +11,7 @@ Function::Function(Visibility visibility, std::string name, std::string returnTy
     this->returnType = returnType;
     this->params = params;
     this->localVars = localVars;
+    this->isDefined = false;
 }
 
 std::string& Function::getName() {

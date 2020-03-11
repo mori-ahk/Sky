@@ -25,6 +25,8 @@ public:
     void addParam(Variable*);
     void addVariable(Variable*);
     friend std::ostream& operator<<(std::ostream&, Function&);
+
+    bool isDefined;
 private:
 
     std::vector<Variable*> params;
@@ -32,6 +34,7 @@ private:
     std::string name;
     std::string returnType;
     Visibility visibility;
+
 };
 
 

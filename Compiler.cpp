@@ -30,5 +30,11 @@ void Compiler::compile() {
 
     std::cout << *(symTabGenerator->symbolTable->main) << std::endl;
 
+    for (auto e : symTabGenerator->symbolTable->errors) {
+        std::string p = "";
+        if (e.second == 0) p = "";
+        else p += " at line " + std::to_string(e.second);
+        std::cerr << e.first.what() << p << std::endl;
+    }
 
 }

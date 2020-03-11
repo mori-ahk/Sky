@@ -5,9 +5,12 @@ class LINEAR {
 	public build(float A, float B) : LINEAR;
 	public evaluate(float x) : float;
 };
+
 LINEAR::build(float A, float B) : LINEAR
     do
     end
+
+
 /* sort the array */
 bubbleSort(integer arr[1][4], integer size, integer size) : void
   local
