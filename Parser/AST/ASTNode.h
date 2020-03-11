@@ -24,6 +24,8 @@ namespace AST {
 
         std::deque<ASTNode *> &getChildren();
 
+        ASTNode* getChild(int);
+
         ASTNode *getParent();
 
         int &getLineNumber();

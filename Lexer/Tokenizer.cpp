@@ -145,7 +145,7 @@ std::string Tokenizer::isLongOperator(std::string& word) {
 }
 
 std::string Tokenizer::isShortOperator(std::string& word) {
-    std::regex reg("^(\\[|\\]|\\(|\\)|\\{|\\}|\\+|-|=|>|<|\\*|:|;|,|/|\\.)");
+    std::regex reg(R"(^(\[|\]|\(|\)|\{|\}|\+|-|=|>|<|\*|:|;|,|/|\.))");
     std::smatch match;
     std::regex_search(word, match, reg);
     return !match.empty() ? match[0].str() : std::string();

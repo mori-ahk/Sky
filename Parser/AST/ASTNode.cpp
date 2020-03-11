@@ -32,6 +32,10 @@ AST::ASTNode* AST::ASTNode::getParent() {
     return parent;
 }
 
+AST::ASTNode* AST::ASTNode::getChild(int index) {
+    return getChildren().at(index);
+}
+
 int& AST::ASTNode::getUniqueID() {
     return uniqueID;
 }

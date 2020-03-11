@@ -21,6 +21,7 @@ public:
     std::unordered_map<std::string, Function *> &getFunctions();
     std::unordered_map<std::string, Variable *> &getVariables();
 
+    Function* getFunction(std::string&);
     void addVariable(std::string&, Variable*);
     void addFunction(std::string&, Function*);
     friend std::ostream& operator<<(std::ostream&, Class&);

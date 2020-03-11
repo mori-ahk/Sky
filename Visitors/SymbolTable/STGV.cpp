@@ -3,6 +3,7 @@
 //
 
 #include "STGV.h"
+#include "../../Semantic/Error/Error.h"
 #include <iostream>
 
 STGV::STGV(AST::ASTNode* root) {
@@ -23,32 +24,48 @@ void STGV::visit(FuncDef *node) {
 
     std::string namespaceName;
 
-    auto signature = node->getChildren().at(0);
-    auto funcBody = node->getChildren().at(1);
+    auto signature = node->getChild(0);
+    auto funcBody = node->getChild(1);
+
     //if the function belongs to a class and has a namespace;
-    if (signature->getChildren().size() == 4) namespaceName = signature->getChildren().at(0)->getName();
+    if (signature->getChildren().size() == 4) namespaceName = signature->getChild(0)->getName();
 
     std::string funcName;
-    if (signature->getChildren().size() == 4) funcName = signature->getChildren().at(1)->getName();
-    else funcName = signature->getChildren().at(0)->getName();
-    std::string returnType = signature->getChildren().at(2)->getName();
+    if (signature->getChildren().size() == 4) funcName = signature->getChild(1)->getName();
+    else funcName = signature->getChild(0)->getName();
+
+    std::string returnType = signature->getChild(2)->getName();
     Function* function = new Function(Visibility::PUBLIC, funcName, returnType, {}, {});
 
+    //check if the function has been declared in its class
+    if (!namespaceName.empty()) {
+        try {
+            symbolTable->classes.at(namespaceName)->getFunction(funcName);
+        } catch (Semantic::Error& DeclarationNotFound){
+            std::cerr << DeclarationNotFound.what() << " at line " << signature->getChild(0)->getLineNumber() << std::endl;
+        }
+    }
+
     //iterating on params
-    auto params = signature->getChildren().at(1);
+    auto params = signature->getChild(1);
     for (auto param: params->getChildren()) {
         Variable *variable = createVar(param);
-        function->addParam(variable);
+        try {
+            function->addParam(variable);
+        } catch (Semantic::Error& error) {
+            std::cerr << error.what() << " at line " << param->getChild(1)->getLineNumber() << std::endl;
+        }
     }
 
     //iterating on local vars
-    auto localVars = funcBody->getChildren().at(0);
+    auto localVars = funcBody->getChild(0);
     for (auto localVar : localVars->getChildren()) {
         Variable* variable = createVar(localVar);
         function->addVariable(variable);
         //fetching the class that this function corresponds to and add local variable to its scope
-        if (!namespaceName.empty()) symbolTable->classes.at(namespaceName)->getFunctions().at(funcName)->addVariable(variable);
+        if (!namespaceName.empty()) symbolTable->classes.at(namespaceName)->getFunction(funcName)->addVariable(variable);
     }
+
 
     if (signature->getChildren().size() == 3) symbolTable->freeFunctions[funcName] = function;
 }
@@ -63,37 +80,37 @@ void STGV::visit(ArrayDim *node) {}
 void STGV::visit(FuncBody *node) {}
 
 void STGV::visit(FuncDecl *node) {
-    std::string visibilityString = node->getChildren().at(0)->getName();
+    std::string visibilityString = node->getChild(0)->getName();
     Visibility  visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
-    std::string funcName =  node->getChildren().at(1)->getName();
-    std::string returnType = node->getChildren().at(3)->getName();
+    std::string funcName =  node->getChild(1)->getName();
+    std::string returnType = node->getChild(3)->getName();
     Function* function = new Function(visibility, funcName, returnType, {}, {});
     symbolTable->classes.at(node->getParent()->getName())->addFunction(funcName, function);
 
     //setting the parent of `funcName` node to `className` node
-    node->getChildren().at(1)->setParent(node->getParent());
+    node->getChild(1)->setParent(node->getParent());
     //setting the parent of `params` node to `funcName` node
-    node->getChildren().at(2)->setParent(node->getChildren().at(1));
+    node->getChild(2)->setParent(node->getChild(1));
 
-    node->getChildren().at(2)->accept(*this);
+    node->getChild(2)->accept(*this);
 }
 
 void STGV::visit(ClassDecl *node) {
     //Creating a class entry
-    std::string className = node->getChildren().at(0)->getName();
+    std::string className = node->getChild(0)->getName();
     std::string inherits = "";
     //constructing a string indicating all the parent class
-    for(auto child : node->getChildren().at(1)->getChildren()) {
+    for(auto child : node->getChild(1)->getChildren()) {
         inherits += child->getName() + " ";
     }
 
     Class* classEntry = new Class(className, className, inherits);
     symbolTable->addClass(className, classEntry);
 
-    for(auto child : node->getChildren().at(2)->getChildren()) {
+    for(auto child : node->getChild(2)->getChildren()) {
 
        //setting the parent of each member in `MEMBERDECLARATIONS` to `className` node
-       child->setParent(node->getChildren().at(0));
+       child->setParent(node->getChild(0));
        child->accept(*this);
     }
 }
@@ -115,8 +132,8 @@ void STGV::visit(FuncParams *node) {
 }
 
 void STGV::visit(MainFunc* node) {
-    auto funcBody = node->getChildren().at(0);
-    auto localVars = funcBody->getChildren().at(0);
+    auto funcBody = node->getChild(0);
+    auto localVars = funcBody->getChild(0);
 
     for(auto var : localVars->getChildren()) {
         Variable* variable = createVar(var);
@@ -136,18 +153,20 @@ void STGV::visit(AST::ASTNode *node) {
 Variable* STGV::createVar(AST::ASTNode* node) {
     int startIndex = node->getChildren().size() == 4 ? 1 : 0;
     Visibility  visibility = Visibility::PRIVATE;
+
     if (node->getChildren().size() == 4) {
         std::string visibilityString = node->getChildren().at(0)->getName();
         Visibility visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
     }
-    std::string varName = node->getChildren().at(startIndex++)->getName();
-    std::string type = node->getChildren().at(startIndex++)->getName();
+
+    std::string varName = node->getChild(startIndex++)->getName();
+    std::string type = node->getChild(startIndex++)->getName();
     std::vector<int> dimensions;
 
-    auto dimNodeToIterate = node->getChildren().size() == 4 ? node->getChildren().at(3) : node->getChildren().at(2);
+    auto dimNodeToIterate = node->getChildren().size() == 4 ? node->getChild(3) : node->getChild(2);
     for (auto arrayDimensionChild: dimNodeToIterate->getChildren()) {
         try {
-            int dimension = std::stoi(arrayDimensionChild->getChildren().at(0)->getName());
+            int dimension = std::stoi(arrayDimensionChild->getChild(0)->getName());
             dimensions.push_back(dimension);
         } catch (const std::invalid_argument& invalid_argument) {}
     }
