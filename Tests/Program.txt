@@ -1,0 +1,36 @@
+class LINEAR {
+	private float a;
+	private float b;
+
+	public build(float A, float B) : LINEAR;
+	public evaluate(float x) : float;
+};
+LINEAR::build(float A, float B) : LINEAR
+    do
+    end
+/* sort the array */
+bubbleSort(integer arr[1][4], integer size, integer size) : void
+  local
+    integer n;
+    integer i;
+    integer j;
+    integer temp;
+  do
+
+  end
+
+/* Print the array */
+printArray(integer arr[], integer size) : void
+  local
+    integer a;
+    integer i;
+  do
+  end
+
+// main funtion to test above
+main
+  local
+    integer arr[7];
+  do
+    arr[0] = 64;
+  end

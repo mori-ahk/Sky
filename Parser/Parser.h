@@ -12,27 +12,34 @@
 #include "AST/ASTBuilder.h"
 #include "AST/Visualizer.h"
 
-class Parser {
-public:
-    Parser(Lexer*);
-    ~Parser();
-    bool parse(std::string, bool isOnPanicMode = false);
-    ASTBuilder* AST_Builder;
+namespace Syntax {
+    class Parser {
+    public:
+        Parser(Lexer *);
 
-private:
-    Lexer* lexer;
-    Grammar* grammar;
-    Token* currentToken;
+        ~Parser();
 
-    void next();
-    void printError(Rule&);
-    void panic(std::string&);
+        bool parse(std::string, bool isOnPanicMode = false);
 
-    bool shouldTakeNext(std::string&);
-    bool isKeyword(std::string&);
+        AST::ASTBuilder *AST_Builder;
 
-};
+    private:
+        Lexer *lexer;
+        Language::Grammar *grammar;
+        Token *currentToken;
 
+        void next();
+
+        void printError(Language::Rule &);
+
+        void panic(std::string &);
+
+        bool shouldTakeNext(std::string &);
+
+        bool isKeyword(std::string &);
+
+    };
+}
 const std::unordered_set<std::string> KEYWORDS = {
         "id",
         "intnum",

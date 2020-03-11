@@ -5,14 +5,14 @@
 
 int main(int argc, const char * argv[]) {
 
-    const std::string basePath = "Tests/Parser/";
-    std::string fileName;
+    const std::string basePath = "Tests/";
 
-    std::cout << "Please enter a file name: " << std::endl;
-    std::cin >> fileName;
+    std::string fileName = argv[1];
+
     Compiler* compiler = new Compiler(basePath + fileName);
     compiler->compile();
 
+    system("dot -Tpng TreeContent.gv -o TreeContent.png");
 
     return 0;
 }

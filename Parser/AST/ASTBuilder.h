@@ -6,34 +6,61 @@
 #define SKY_ASTBUILDER_H
 
 #include <stack>
+#include <unordered_map>
 #include "ASTNode.h"
 #include "Visualizer.h"
-class ASTBuilder {
-public:
+#include "Nodes/ClassDecls.h"
+#include "Nodes/ClassDecl.h"
+#include "Nodes/FuncDecl.h"
+#include "Nodes/FuncDef.h"
+#include "Nodes/FuncBody.h"
+#include "Nodes/FuncParams.h"
+#include "Nodes/Local.h"
+#include "Nodes/Program.h"
+#include "Nodes/VarDecl.h"
+#include "Nodes/ArrayDim.h"
+#include "Nodes/MainFunc.h"
+namespace AST {
+    class ASTBuilder {
+    public:
 
-    ASTBuilder();
-    ~ASTBuilder();
+        ASTBuilder();
 
-    void handle(std::string&, std::string&);
-    void push(ASTNode*);
-    bool isIgnoreModeOn;
-    void printStack();
-    ASTNode* getRoot();
-    void visualize();
+        ~ASTBuilder();
 
-private:
+        void handle(std::string &, std::string &);
 
-    void createNode(std::string&);
-    void insertLeftChild();
-    void insertRightChild();
-    void adoptChild();
-    void constructListAndInsertAsChild();
+        void push(std::string &, int);
 
-    std::stack<ASTNode*> stack;
-    std::stack<ASTNode*> testStack;
-    ASTNode* root;
-    Visualizer* visualizer;
-};
+        bool isIgnoreModeOn;
 
+        void printStack();
+
+        ASTNode *getRoot();
+
+        void visualize();
+
+    private:
+
+        void createNode(std::string &);
+
+        void insertLeftChild();
+
+        void insertRightChild();
+
+        void adoptChild();
+
+        void constructListAndInsertAsChild();
+
+        void removeSelfIfOnlyHasOneChild();
+
+        ASTNode *createCustomNode(std::string &, int lineNumber = 0);
+
+        std::stack<ASTNode *> stack;
+        std::stack<ASTNode *> testStack;
+        ASTNode *root;
+        Visualizer *visualizer;
+    };
+}
 
 #endif //SKY_ASTBUILDER_H

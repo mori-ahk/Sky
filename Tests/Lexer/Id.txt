@@ -1,5 +1,0 @@
-// Valid Ids
-abc a_bc abc_ a1bc
-
-// Invalid Ids
-_abc

@@ -9,47 +9,59 @@
 #include <vector>
 #include <unordered_set>
 #include "../Lexer/Token.h"
+namespace Language {
+    class Rule {
+    public:
 
-class Rule {
-public:
+        Rule(std::string);
 
-    Rule(std::string);
-    ~Rule();
+        ~Rule();
 
-    std::unordered_set<std::string>& getFirst();
-    std::unordered_set<std::string>& getFollow();
-    std::vector<std::vector<std::string>>& getRHS();
-    std::string& getName();
+        std::unordered_set<std::string> &getFirst();
 
-    static const std::unordered_map<std::string, std::string>& getTerminals();
-    static bool isTerminal(std::string&);
+        std::unordered_set<std::string> &getFollow();
 
-    void addToRHS(std::vector<std::string>);
-    void addToFirst(std::string);
-    void addToFollow(std::string);
-    void addToWatchList(Rule*);
-    void clearWatchList();
+        std::vector<std::vector<std::string>> &getRHS();
 
-    int indexOf(std::vector<std::string>, std::string);
+        std::string &getName();
 
-    bool isTerminal();
-    bool isNullable();
-    bool doesBelongToFirst(Token*);
-    bool doesBelongToFollow(Token*);
+        static const std::unordered_map<std::string, std::string> &getTerminals();
 
-    bool visited;
+        static bool isTerminal(std::string &);
 
-private:
+        void addToRHS(std::vector<std::string>);
 
-    std::string name;
-    std::unordered_set<std::string> first;
-    std::unordered_set<std::string> follow;
-    std::vector<std::vector<std::string>> RHS;
-    std::vector<Rule*> watchlist;
+        void addToFirst(std::string);
 
-    void callWatchlist(bool);
-};
+        void addToFollow(std::string);
 
+        void addToWatchList(Rule *);
+
+        void clearWatchList();
+
+        int indexOf(std::vector<std::string>, std::string);
+
+        bool isTerminal();
+
+        bool isNullable();
+
+        bool doesBelongToFirst(Token *);
+
+        bool doesBelongToFollow(Token *);
+
+        bool visited;
+
+    private:
+
+        std::string name;
+        std::unordered_set<std::string> first;
+        std::unordered_set<std::string> follow;
+        std::vector<std::vector<std::string>> RHS;
+        std::vector<Rule *> watchlist;
+
+        void callWatchlist(bool);
+    };
+}
 static const std::unordered_map<std::string, std::string> TERMINALS = {
         {"id","id"},
         {"if","if"},

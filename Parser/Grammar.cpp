@@ -5,7 +5,7 @@
 #include "Grammar.h"
 
 
-Grammar::Grammar() {
+Language::Grammar::Grammar() {
     // Adding terminals to RULES map
     for (auto& _rule: Rule::getTerminals()) ruleNames.push_back(_rule.first);
     for (auto& _rule: Rule::getTerminals()) RULES[_rule.first] = new Rule(_rule.first);
@@ -14,9 +14,9 @@ Grammar::Grammar() {
     constructFollowSet();
 }
 
-Grammar::~Grammar() {}
+Language::Grammar::~Grammar() {}
 
-void Grammar::parseGrammar() {
+void Language::Grammar::parseGrammar() {
     std::string line;
     std::ifstream stream;
     std::string delimiter = " -> ";
@@ -42,7 +42,7 @@ void Grammar::parseGrammar() {
     }
 }
 
-void Grammar::constructFirstSet() {
+void Language::Grammar::constructFirstSet() {
     for (auto& rule: ruleNames)
         RULES[rule]->visited = false;
 
@@ -50,7 +50,7 @@ void Grammar::constructFirstSet() {
         if (!RULES[rule]->visited) constructFirstSetHelper(RULES[rule]);
 }
 
-void Grammar::constructFirstSetHelper(Rule* rule) {
+void Language::Grammar::constructFirstSetHelper(Rule* rule) {
     rule->visited = true;
     if (rule->isTerminal()) {
         rule->addToFirst(rule->getName());
@@ -84,7 +84,7 @@ void Grammar::constructFirstSetHelper(Rule* rule) {
     }
 }
 
-void Grammar::constructFollowSet()  {
+void Language::Grammar::constructFollowSet()  {
     for (auto& rule: ruleNames) {
         RULES[rule]->visited = false;
         RULES[rule]->clearWatchList();
@@ -95,7 +95,7 @@ void Grammar::constructFollowSet()  {
 
 }
 
-void Grammar::constructFollowSetHelper(Rule* rule) {
+void Language::Grammar::constructFollowSetHelper(Rule* rule) {
     rule->visited = true;
     if (rule->getName() == "START") {
         rule->addToFollow("$");
@@ -128,7 +128,7 @@ void Grammar::constructFollowSetHelper(Rule* rule) {
     }
 }
 
-longVector Grammar::findUsage(std::string name) {
+longVector Language::Grammar::findUsage(std::string name) {
     longVector toReturn;
     for (auto& rule : RULES) {
         for (auto& production : rule.second->getRHS()) {
@@ -145,11 +145,11 @@ longVector Grammar::findUsage(std::string name) {
     return toReturn;
 }
 
-Rule* Grammar::getRule(std::string& rule) {
+Language::Rule* Language::Grammar::getRule(std::string& rule) {
     return RULES.at(rule);
 }
 
-bool Grammar::shouldTake(std::string& production, Token* token) {
+bool Language::Grammar::shouldTake(std::string& production, Token* token) {
     if (Rule::isTerminal(production)) {
         return production == token->getReverseTokenTypeMap()[token->getType()];
     }
@@ -158,7 +158,7 @@ bool Grammar::shouldTake(std::string& production, Token* token) {
            (rule->isNullable() and rule->doesBelongToFollow(token));
 }
 
-std::vector<std::string> Grammar::split(std::string& production) {
+std::vector<std::string> Language::Grammar::split(std::string& production) {
     std::vector<std::string> toReturn;
     std::string splitted;
     for(int i = 0; i < production.size(); i++) {
@@ -174,7 +174,7 @@ std::vector<std::string> Grammar::split(std::string& production) {
     return toReturn;
 }
 
-bool Grammar::doesContainRuleName(std::string& rule) {
+bool Language::Grammar::doesContainRuleName(std::string& rule) {
     for (auto& _rule : ruleNames) {
         if (_rule == rule) return true;
     }

@@ -34,3 +34,9 @@ Stack: A | B (B is on top of the stack).
 > @3 : pop A and B, A adopts children of B, push A
 >
 > @4 : pop A and B, set A as the left child of B, push B
+>
+> @5 : pop all the items as long as they have the same type, then make a list and adopt them all under `call_list` parent node. 
+>
+> @6 : pop the top of the stack, for cases that top of the stack is null due to the right recursion.
+>
+> @7 : Remove top of the stack if it only has one child and replace the child with self. 

@@ -15,28 +15,38 @@
 
 typedef std::vector<std::pair<std::string, std::vector<std::string>>> longVector;
 
-class Grammar {
-public:
-    Grammar();
-    ~Grammar();
-    Rule* getRule(std::string&);
+namespace Language {
+    class Grammar {
+    public:
+        Grammar();
 
-    bool shouldTake(std::string&, Token*);
-private:
+        ~Grammar();
 
-    void constructFirstSet();
-    void constructFirstSetHelper(Rule*);
-    void constructFollowSetHelper(Rule*);
-    void constructFollowSet();
-    void parseGrammar();
+        Rule *getRule(std::string &);
 
-    bool doesContainRuleName(std::string&);
+        bool shouldTake(std::string &, Token *);
 
-    longVector findUsage(std::string);
-    std::vector<std::string> split(std::string&);
-    std::unordered_map<std::string, Rule*> RULES;
-    std::vector<std::string> ruleNames;
-};
+    private:
 
+        void constructFirstSet();
+
+        void constructFirstSetHelper(Rule *);
+
+        void constructFollowSetHelper(Rule *);
+
+        void constructFollowSet();
+
+        void parseGrammar();
+
+        bool doesContainRuleName(std::string &);
+
+        longVector findUsage(std::string);
+
+        std::vector<std::string> split(std::string &);
+
+        std::unordered_map<std::string, Rule *> RULES;
+        std::vector<std::string> ruleNames;
+    };
+}
 
 #endif //SKY_GRAMMAR_H
