@@ -87,19 +87,28 @@ void STGV::visit(FuncDef *node) {
         }
 
         //fetching the class that this function corresponds to and add local variable to its scope
-        if (!namespaceName.empty()) {
+        if (isClassFunc()) {
             auto classFunction = symbolTable->classes.at(namespaceName)->getFunction(funcName);
-            classFunction->isDefined = true;
             classFunction->addVariable(variable);
         }
     }
 
-    if (!isClassFunc()) symbolTable->freeFunctions[funcName] = function;
+    if (isClassFunc()) {
+        auto classFunction = symbolTable->classes.at(namespaceName)->getFunction(funcName);
+        classFunction->isDefined = true;
+    } else symbolTable->freeFunctions[funcName] = function;
+
 }
 
 void STGV::visit(VarDecl *node) {
     Variable* variable = createVar(node);
-    symbolTable->classes.at(node->getParent()->getName())->addVariable(variable->getName(), variable);
+    try {
+        symbolTable->classes.at(node->getParent()->getName())->addVariable(variable->getName(), variable);
+    } catch (Semantic::Error& duplicateDataMember) {
+        int position = node->getChild(1)->getLineNumber();
+        auto pair = std::make_pair(duplicateDataMember, position);
+        symbolTable->addError(pair);
+    }
 }
 
 void STGV::visit(ArrayDim *node) {}
@@ -190,7 +199,6 @@ void STGV::visit(AST::ASTNode *node) {
     for(auto child : node->getChildren()) {
         child->setParent(node->getParent());
         child->accept(*this);
-
     }
 }
 
