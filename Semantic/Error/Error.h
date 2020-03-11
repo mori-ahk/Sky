@@ -2,8 +2,8 @@
 // Created by Morteza Ahmadi on 2020-03-10.
 //
 
-#ifndef SKY_SEMANTICERROR_H
-#define SKY_SEMANTICERROR_H
+#ifndef SKY_ERROR_H
+#define SKY_ERROR_H
 
 #include <exception>
 #include <iostream>
@@ -46,4 +46,4 @@ namespace Semantic {
     };
 }
 
-#endif //SKY_SEMANTICERROR_H
+#endif //SKY_ERROR_H

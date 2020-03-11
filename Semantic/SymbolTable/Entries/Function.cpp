@@ -3,7 +3,7 @@
 //
 
 #include "Function.h"
-#include "../../Error/SemanticError.h"
+#include "../../Error/Error.h"
 
 Function::Function(Visibility visibility, std::string name, std::string returnType, std::vector<Variable *> params, std::vector<Variable*> localVars) {
     this->visibility = visibility;

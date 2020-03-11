@@ -3,7 +3,7 @@
 //
 
 #include "SymbolTable.h"
-#include "../Error/SemanticError.h"
+#include "../Error/Error.h"
 
 Semantic::SymbolTable::SymbolTable() {}
 

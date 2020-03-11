@@ -20,7 +20,7 @@ bubbleSort(integer arr[1][4], integer size) : void
 /* Print the array */
 printArray(integer arr[], integer size) : void
   local
-    integer arr;
+    integer a;
     integer i;
   do
   end

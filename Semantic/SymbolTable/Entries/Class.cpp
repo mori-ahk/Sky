@@ -3,7 +3,7 @@
 //
 
 #include "Class.h"
-#include "../../Error/SemanticError.h"
+#include "../../Error/Error.h"
 
 Class::Class(std::string name, std::string type, std::string inherits) {
     this->name = name;
