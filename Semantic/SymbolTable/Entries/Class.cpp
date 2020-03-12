@@ -5,7 +5,7 @@
 #include "Class.h"
 #include "../../Error/Error.h"
 
-Class::Class(std::string name, std::string type, std::string inherits) {
+Class::Class(std::string name, std::string type, std::vector<std::string> inherits) {
     this->name = name;
     this->type = type;
     this->inherits = inherits;
@@ -19,7 +19,7 @@ std::string &Class::getType() {
     return type;
 }
 
-std::string& Class::getInherits() {
+std::vector<std::string>& Class::getInherits() {
     return inherits;
 }
 
@@ -31,10 +31,13 @@ std::unordered_map<std::string, Variable *> &Class::getVariables() {
     return variables;
 }
 
-Function* Class::getFunction(std::string& funcName) {
+Function* Class::getFunction(std::string& funcName, Function* function) {
     if (functions.find(funcName) == functions.end())
         throw Semantic::Err::UndeclaredFunction(funcName);
-    return functions.at(funcName).size() < 2 ? functions.at(funcName).at(0) : functions.at(funcName).at(1);
+    for (auto& f : functions[funcName]) {
+        if ( *f == *function) return f;
+    }
+    throw Semantic::Err::UndeclaredFunction(funcName);
 }
 
 void Class::addVariable(std::string& varName, Variable* variable) {
@@ -49,8 +52,13 @@ void Class::addFunction(std::string& funcName, Function* function) {
 }
 
 std::ostream& operator<<(std::ostream& os, Class& c) {
+    std::string inherits = "";
+    for (auto& s : c.getInherits()) {
+        inherits += s + ",";
+    }
+    if (inherits.size() > 0) inherits.pop_back();
     os << "CLASS:\n";
-    os << "[ " <<  "name: " << c.getName() << " | inherits: " << c.getInherits() << " | type: "  << c.getType() << " ]" << std::endl;
+    os << "[ " <<  "name: " << c.getName() << " | inherits: " << inherits << " | type: "  << c.getType() << " ]" << std::endl;
     for(auto f : c.getFunctions()) {
         for (auto& _f : f.second)
             os << "\t" << *(_f) << std::endl;

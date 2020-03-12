@@ -19,6 +19,7 @@ namespace Semantic {
         NamePair detectClassOverloadedFunctions(Semantic::SymbolTable*);
         std::vector<std::string> detectFreeDuplicateFunctions(Semantic::SymbolTable*);
         std::vector<std::string> detectFreeOverloadedFunctions(Semantic::SymbolTable*);
+
     };
 }
 

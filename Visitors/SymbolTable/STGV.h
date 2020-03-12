@@ -32,8 +32,10 @@ private:
     Variable* createVar(AST::ASTNode*);
     void handleClassDuplicate(NamePair&);
     void handleClassOverloaded(NamePair&);
+    void handleUndefinedClassFunctions(NamePair&);
     void handleFreeDuplicate(std::vector<std::string>&);
     void handleFreeOverloaded(std::vector<std::string>&);
+
 };
 
 

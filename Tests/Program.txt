@@ -1,19 +1,22 @@
-class LINEAR {
+class LINEAR inherits POLYNOMIAL, M, N {
 	private float a;
 	private float b;
 
 	public build(float A, float B) : LINEAR;
 	public evaluate(float x) : float;
-	public evaluate(float x) : float;
+	public evaluate(integer y) : float;
 };
 
 LINEAR::build(float A, float B) : LINEAR
     do
     end
 
-LINEAR::evaluate(integer x) : float
+LINEAR::evaluate(float x) : float
     local
         integer a;
+    do
+    end
+LINEAR::evaluate(integer y) : float
     do
     end
 
@@ -28,7 +31,7 @@ do
 end
 
 /* sort the array */
-bubbleSort(integer arr[1][4], integer size) : void
+bubbleSort(integer arr, integer size) : void
   local
     integer n;
     integer i;
@@ -44,13 +47,7 @@ printArray(integer arr[], integer size) : void
     integer a;
     integer i;
   do
-  end
-
-printArray(integer arr[], integer size) : void
-  local
-    integer a;
-    integer i;
-  do
+   bubbleSort(a, size);
   end
 
 // main funtion to test above

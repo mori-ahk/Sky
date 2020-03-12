@@ -18,8 +18,6 @@ void STGV::visit(Program *node) {
     }
 }
 
-void STGV::visit(Local *node) {}
-
 void STGV::visit(FuncDef *node) {
     std::string namespaceName;
 
@@ -58,8 +56,7 @@ void STGV::visit(FuncDef *node) {
     //check if the class function signature and defined function signature match.
     if (isClassFunc()) {
         try {
-            auto classFunction = symbolTable->getClass(namespaceName)->getFunction(funcName);
-            symbolTable->doesMatch(*classFunction, *function);
+            auto classFunction = symbolTable->getClass(namespaceName)->getFunction(funcName, function);
             classFunction->isDefined = true;
         } catch (Semantic::Err::UndeclaredClass& undeclaredClass) {
             int position = signature->getChild(0)->getLineNumber();
@@ -90,7 +87,7 @@ void STGV::visit(FuncDef *node) {
 
         //fetching the class that this function corresponds to and add local variable to its scope
         if (isClassFunc()) {
-            auto classFunction = symbolTable->classes.at(namespaceName)->getFunction(funcName);
+            auto classFunction = symbolTable->classes.at(namespaceName)->getFunction(funcName, function);
             classFunction->addVariable(variable);
         }
     }
@@ -114,10 +111,6 @@ void STGV::visit(VarDecl *node) {
     }
 }
 
-void STGV::visit(ArrayDim *node) {}
-
-void STGV::visit(FuncBody *node) {}
-
 void STGV::visit(FuncDecl *node) {
     std::string visibilityString = node->getChild(0)->getName();
     Visibility  visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
@@ -125,13 +118,7 @@ void STGV::visit(FuncDecl *node) {
     std::string returnType = node->getChild(3)->getName();
     Function* function = new Function(visibility, funcName, returnType, {}, {});
 
-    try {
-        symbolTable->getClass(node->getParent()->getName())->addFunction(funcName, function);
-    } catch (Semantic::Err::UndeclaredClass& undeclaredClass) {
-        int position = node->getChild(1)->getLineNumber();
-        auto pair = std::make_pair(std::string(undeclaredClass.what()), position);
-        symbolTable->addError(pair);
-    }
+    symbolTable->getClass(node->getParent()->getName())->addFunction(funcName, function);
 
     //setting the parent of `funcName` node to `className` node
     node->getChild(1)->setParent(node->getParent());
@@ -144,10 +131,10 @@ void STGV::visit(FuncDecl *node) {
 void STGV::visit(ClassDecl *node) {
     //Creating a class entry
     std::string className = node->getChild(0)->getName();
-    std::string inherits = "";
+    std::vector<std::string> inherits;
     //constructing a string indicating all the parent class
     for (auto child : node->getChild(1)->getChildren()) {
-        inherits += child->getName() + " ";
+        inherits.push_back(child->getName());
     }
 
     Class* classEntry = new Class(className, className, inherits);
@@ -183,22 +170,19 @@ void STGV::visit(FuncParams *node) {
         child->setParent(node->getParent());
 
         Variable* variable = createVar(child);
-        try {
-            symbolTable->getClass(node->getParent()->getParent()->getName())->getFunction(
-                    node->getParent()->getName())->addParam(variable);
-        } catch (Semantic::Err::UndeclaredClass& undeclaredClass) {
-            int position = node->getParent()->getLineNumber();
-            auto pair = std::make_pair(std::string(undeclaredClass.what()), position);
-            symbolTable->addError(pair);
-        }
+        auto className = node->getParent()->getParent()->getName();
+        auto funcName = node->getParent()->getName();
+        symbolTable->classes.at(className)->getFunctions().at(funcName).back()->addParam(variable);
     }
 }
 
 void STGV::visit(MainFunc* node) {
     auto duplicateFreeFunctions = detector->detectFreeDuplicateFunctions(symbolTable);
     auto overloadedFreeFunctions = detector->detectFreeOverloadedFunctions(symbolTable);
+    auto undefinedClassFunctions = detector->detectUndefinedClassFunctions(symbolTable);
     handleFreeDuplicate(duplicateFreeFunctions);
     handleFreeOverloaded(overloadedFreeFunctions);
+    handleUndefinedClassFunctions(undefinedClassFunctions);
     auto funcBody = node->getChild(0);
     auto localVars = funcBody->getChild(0);
 
@@ -263,6 +247,14 @@ void STGV::handleClassOverloaded(NamePair& duplicates) {
     }
 }
 
+void STGV::handleUndefinedClassFunctions(NamePair& undefined) {
+    for (auto& e : undefined) {
+        std::string errorString = "Undefined class functions " + e.first + " on class " + e.second;
+        auto pair = std::make_pair(errorString, 0);
+        symbolTable->addError(pair);
+    }
+}
+
 void STGV::handleFreeDuplicate(std::vector<std::string>& duplicates) {
     for (auto& e : duplicates) {
         std::string errorString = "Duplciate free function " + e;
@@ -278,3 +270,10 @@ void STGV::handleFreeOverloaded(std::vector<std::string> & duplicates) {
         symbolTable->addError(pair);
     }
 }
+
+
+void STGV::visit(ArrayDim *node) {}
+
+void STGV::visit(FuncBody *node) {}
+
+void STGV::visit(Local *node) {}

@@ -23,7 +23,6 @@ namespace Semantic {
         void addError(std::pair<std::string, int>&);
 
         Class* getClass(std::string&);
-        bool doesMatch(Function&, Function&);
         std::unordered_map<std::string, Class *> classes;
         std::unordered_map<std::string, std::vector<Function *> > freeFunctions;
         Function *main = new Function(Visibility::PUBLIC, "main", "void", {}, {});

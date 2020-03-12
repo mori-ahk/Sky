@@ -30,7 +30,3 @@ Class* Semantic::SymbolTable::getClass(std::string& className) {
 
     return classes.at(className);
 }
-
-bool Semantic::SymbolTable::doesMatch(Function& lhs, Function& rhs) {
-    return lhs == rhs ? true : throw Semantic::Err::UndeclaredFunction(lhs.getName());
-}
