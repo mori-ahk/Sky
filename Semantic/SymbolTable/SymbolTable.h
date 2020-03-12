@@ -19,15 +19,15 @@ namespace Semantic {
         ~SymbolTable();
 
         void addClass(std::string&, Class*);
-        void addError(std::pair<const char*, int>&);
+        void addError(std::pair<std::string, int>&);
 
         Class* getClass(std::string&);
-
+        bool isMatched(Function&, Function&);
         std::unordered_map<std::string, Class *> classes;
         std::unordered_map<std::string, std::vector<Function *> > freeFunctions;
         Function *main = new Function(Visibility::PUBLIC, "main", "void", {}, {});
 
-        std::vector<std::pair<const char*, int>> errors;
+        std::vector<std::pair<std::string, int>> errors;
     };
 }
 

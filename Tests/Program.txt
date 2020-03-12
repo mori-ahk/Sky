@@ -10,7 +10,7 @@ LINEAR::build(float A, float B) : LINEAR
     do
     end
 
-LINEAR::evaluate(float x) : float
+LINEAR::evaluate(integer x) : float
     local
         integer a;
     do

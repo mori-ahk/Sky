@@ -65,3 +65,16 @@ std::ostream& operator<<(std::ostream& os, Function& f) {
     }
     return os;
 }
+
+bool Function::isParamsEqual(Function &lhs, Function &rhs) {
+    if (lhs.getParams().size() != rhs.getParams().size()) return false;
+    for (int i = 0; i < lhs.getParams().size(); i++) {
+        auto lParam = *lhs.getParams().at(i);
+        auto rParam = *rhs.getParams().at(i);
+        if (lParam == rParam) continue;
+        else return false;
+    }
+
+    return true;
+}
+

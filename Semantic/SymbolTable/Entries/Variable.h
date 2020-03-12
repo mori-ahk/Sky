@@ -21,6 +21,13 @@ public:
     std::string getDimsString();
     Visibility getVisibility();
     friend std::ostream& operator<<(std::ostream&, Variable&);
+    friend inline bool operator==(Variable& lhs, Variable& rhs) {
+        return lhs.getType() == rhs.getType() &&
+               lhs.getName() == rhs.getName() &&
+               lhs.getDimsString() == rhs.getDimsString() &&
+               lhs.getVisibilityString() == rhs.getVisibilityString();
+    }
+
 private:
 
     std::string type;

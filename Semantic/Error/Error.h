@@ -51,9 +51,8 @@ namespace Semantic {
             }
 
             const char *what() const throw() {
-                std::string errorString =
-                        "no definition for declared member function " + funcName + " for class " + className;
-                const char *_errorString = errorString.c_str();
+                std::string errorString = "no definition for declared member function " + funcName + " for class " + className;
+                const char* _errorString = errorString.c_str();
                 return _errorString;
             }
 
@@ -64,11 +63,17 @@ namespace Semantic {
 
         class UndeclaredFunction : public Error {
         public:
-            UndeclaredFunction() : Error() {}
+            UndeclaredFunction(std::string funcName) : Error() {
+                this->funcName = funcName;
+            }
 
             const char *what() const throw() {
-                return "definition provided for undeclared member function";
+                std::string errorString = "definition provided for undeclared member function " + funcName;
+                const char* _errorString = errorString.c_str();
+                return _errorString;
             }
+        private:
+            std::string funcName;
         };
 
         class UndeclaredClass : public Error {
@@ -79,13 +84,14 @@ namespace Semantic {
 
             const char *what() const throw() {
                 std::string errorString = "use of undeclared class " + className;
-                const char *_errorString = errorString.c_str();
-                return _errorString;
+                const char* _errorString = errorString.c_str();
+                return  _errorString;
             }
 
         private:
             std::string className;
         };
+
     }
 }
 

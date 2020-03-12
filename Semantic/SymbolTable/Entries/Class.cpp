@@ -33,7 +33,7 @@ std::unordered_map<std::string, Variable *> &Class::getVariables() {
 
 Function* Class::getFunction(std::string& funcName) {
     if (functions.find(funcName) == functions.end())
-        throw Semantic::Err::UndeclaredFunction();
+        throw Semantic::Err::UndeclaredFunction(funcName);
     return functions.at(funcName).size() < 2 ? functions.at(funcName).at(0) : functions.at(funcName).at(1);
 }
 

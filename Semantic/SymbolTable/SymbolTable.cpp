@@ -16,7 +16,7 @@ void Semantic::SymbolTable::addClass(std::string &className, Class * _class) {
     classes[className] = _class;
 }
 
-void Semantic::SymbolTable::addError(std::pair<const char*, int> & error) {
+void Semantic::SymbolTable::addError(std::pair<std::string, int> & error) {
         errors.push_back(error);
 }
 
@@ -25,4 +25,8 @@ Class* Semantic::SymbolTable::getClass(std::string& className) {
         throw Semantic::Err::UndeclaredClass(className);
 
     return classes.at(className);
+}
+
+bool Semantic::SymbolTable::isMatched(Function & lhs, Function & rhs) {
+    return lhs == rhs ? true : throw Semantic::Err::UndeclaredFunction(lhs.getName());
 }
