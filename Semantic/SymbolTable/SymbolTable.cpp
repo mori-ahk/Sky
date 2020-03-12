@@ -9,11 +9,15 @@
 Semantic::SymbolTable::SymbolTable() {}
 
 
-void Semantic::SymbolTable::addClass(std::string &className, Class * _class) {
+void Semantic::SymbolTable::addClass(std::string& className, Class* _class) {
     if (classes.find(className) != classes.end())
         throw Semantic::Err::DuplicateClassDecl();
 
     classes[className] = _class;
+}
+
+void Semantic::SymbolTable::addFunction(std::string& funcName, Function* function) {
+    freeFunctions[funcName].push_back(function);
 }
 
 void Semantic::SymbolTable::addError(std::pair<std::string, int> & error) {
@@ -27,6 +31,6 @@ Class* Semantic::SymbolTable::getClass(std::string& className) {
     return classes.at(className);
 }
 
-bool Semantic::SymbolTable::isMatched(Function & lhs, Function & rhs) {
+bool Semantic::SymbolTable::doesMatch(Function& lhs, Function& rhs) {
     return lhs == rhs ? true : throw Semantic::Err::UndeclaredFunction(lhs.getName());
 }

@@ -92,6 +92,22 @@ namespace Semantic {
             std::string className;
         };
 
+        class DuplicateFunction : public Error {
+        public:
+            DuplicateFunction(std::string funcName) : Error() {
+                this->funcName = funcName;
+            }
+
+            const char *what() const throw() {
+                std::string errorString = "Found duplicate function declaration of " + funcName;
+                const char* _errorString = errorString.c_str();
+                return _errorString;
+            }
+
+        private:
+            std::string funcName;
+        };
+
     }
 }
 

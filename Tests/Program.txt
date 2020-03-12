@@ -4,6 +4,7 @@ class LINEAR {
 
 	public build(float A, float B) : LINEAR;
 	public evaluate(float x) : float;
+	public evaluate(float x) : float;
 };
 
 LINEAR::build(float A, float B) : LINEAR
@@ -22,6 +23,10 @@ LINEAR::x() : void
     do
     end
 
+A::b() : void
+do
+end
+
 /* sort the array */
 bubbleSort(integer arr[1][4], integer size) : void
   local
@@ -34,6 +39,13 @@ bubbleSort(integer arr[1][4], integer size) : void
   end
 
 /* Print the array */
+printArray(integer arr[], integer size) : void
+  local
+    integer a;
+    integer i;
+  do
+  end
+
 printArray(integer arr[], integer size) : void
   local
     integer a;
