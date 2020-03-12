@@ -8,6 +8,7 @@
 
 #include "../Visitor.h"
 #include "../../Semantic/SymbolTable/SymbolTable.h"
+#include "../../Semantic/Error/Detector.h"
 
 class STGV : public Visitor {
 public:
@@ -25,12 +26,14 @@ public:
     void visit(MainFunc* node) override;
     void visit(AST::ASTNode* node) override;
 
-
     Semantic::SymbolTable* symbolTable;
+    Semantic::Detector* detector;
 private:
     Variable* createVar(AST::ASTNode*);
-    void surfaceUndefinedFunctions();
-
+    void handleClassDuplicate(NamePair&);
+    void handleClassOverloaded(NamePair&);
+    void handleFreeDuplicate(std::vector<std::string>&);
+    void handleFreeOverloaded(std::vector<std::string>&);
 };
 
 

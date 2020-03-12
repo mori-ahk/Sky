@@ -9,6 +9,7 @@
 
 STGV::STGV(AST::ASTNode* root) {
     this->symbolTable = new Semantic::SymbolTable();
+    this->detector = new Semantic::Detector();
     root->getChildren().at(0)->accept(*this);
 }
 void STGV::visit(Program *node) {
@@ -59,6 +60,7 @@ void STGV::visit(FuncDef *node) {
         try {
             auto classFunction = symbolTable->getClass(namespaceName)->getFunction(funcName);
             symbolTable->doesMatch(*classFunction, *function);
+            classFunction->isDefined = true;
         } catch (Semantic::Err::UndeclaredClass& undeclaredClass) {
             int position = signature->getChild(0)->getLineNumber();
             auto pair = std::make_pair(std::string(undeclaredClass.what()), position);
@@ -163,7 +165,10 @@ void STGV::visit(ClassDecl *node) {
        child->accept(*this);
     }
 
-
+    auto duplicateClassFunctions = detector->detectClassDuplicateFunctions(symbolTable);
+    auto overloadedClassFunctions = detector->detectClassOverloadedFunctions(symbolTable);
+    handleClassDuplicate(duplicateClassFunctions);
+    handleClassOverloaded(overloadedClassFunctions);
 }
 
 void STGV::visit(ClassDecls *node) {
@@ -190,12 +195,10 @@ void STGV::visit(FuncParams *node) {
 }
 
 void STGV::visit(MainFunc* node) {
-    try { surfaceUndefinedFunctions(); }
-    catch (Semantic::Error& funcNotDefined) {
-        auto pair = std::make_pair(std::string(funcNotDefined.what()), 0);
-        symbolTable->addError(pair);
-    }
-
+    auto duplicateFreeFunctions = detector->detectFreeDuplicateFunctions(symbolTable);
+    auto overloadedFreeFunctions = detector->detectFreeOverloadedFunctions(symbolTable);
+    handleFreeDuplicate(duplicateFreeFunctions);
+    handleFreeOverloaded(overloadedFreeFunctions);
     auto funcBody = node->getChild(0);
     auto localVars = funcBody->getChild(0);
 
@@ -243,13 +246,35 @@ Variable* STGV::createVar(AST::ASTNode* node) {
     return new Variable(visibility, type, varName, dimensions);
 }
 
-void STGV::surfaceUndefinedFunctions() {
-    for (auto& _class : symbolTable->classes) {
-        for (auto& _function: _class.second->getFunctions()) {
-            for (auto& _f : _function.second) {
-                if (!_f->isDefined)
-                    throw Semantic::Err::UndefinedFunction(_f->getName(), _class.first);
-            }
-        }
+
+void STGV::handleClassDuplicate(NamePair& duplicates) {
+    for (auto& e : duplicates) {
+        std::string errorString = "Duplicate class function " + e.first + " on class " + e.second;
+        auto pair = std::make_pair(errorString, 0);
+        symbolTable->addError(pair);
+    }
+}
+
+void STGV::handleClassOverloaded(NamePair& duplicates) {
+    for (auto& e : duplicates) {
+        std::string errorString = "Overloaded class function " + e.first + " on class " + e.second;
+        auto pair = std::make_pair(errorString, 0);
+        symbolTable->addError(pair);
+    }
+}
+
+void STGV::handleFreeDuplicate(std::vector<std::string>& duplicates) {
+    for (auto& e : duplicates) {
+        std::string errorString = "Duplciate free function " + e;
+        auto pair = std::make_pair(errorString, 0);
+        symbolTable->addError(pair);
+    }
+}
+
+void STGV::handleFreeOverloaded(std::vector<std::string> & duplicates) {
+    for (auto& e : duplicates) {
+        std::string errorString = "Overloaded free function " + e;
+        auto pair = std::make_pair(errorString, 0);
+        symbolTable->addError(pair);
     }
 }
