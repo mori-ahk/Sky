@@ -16,6 +16,8 @@ void STGV::visit(Program *node) {
     for(auto child : node->getChildren()) {
         child->accept(*this);
     }
+    //detect for errors
+    detector->detect(symbolTable);
 }
 
 void STGV::visit(FuncDef *node) {
@@ -49,7 +51,7 @@ void STGV::visit(FuncDef *node) {
         } catch (Semantic::Err::DuplicateFuncParam& duplicateParam) {
             int position = param->getChild(1)->getLineNumber();
             auto pair = std::make_pair(std::string(duplicateParam.what()), position);
-            symbolTable->addError(pair);
+            detector->addError(pair);
         }
     }
 
@@ -61,12 +63,12 @@ void STGV::visit(FuncDef *node) {
         } catch (Semantic::Err::UndeclaredClass& undeclaredClass) {
             int position = signature->getChild(0)->getLineNumber();
             auto pair = std::make_pair(std::string(undeclaredClass.what()), position);
-            symbolTable->addError(pair);
+            detector->addError(pair);
             return;
         } catch (Semantic::Err::UndeclaredFunction& undeclaredFunc) {
             int position = signature->getChild(0)->getLineNumber();
             auto pair = std::make_pair(std::string(undeclaredFunc.what()), position);
-            symbolTable->addError(pair);
+            detector->addError(pair);
             return;
         }
     }
@@ -82,7 +84,7 @@ void STGV::visit(FuncDef *node) {
         } catch (Semantic::Err::DuplicateDataMember& duplicateLocalVar) {
             int position = localVar->getChild(1)->getLineNumber();
             auto pair = std::make_pair(std::string(duplicateLocalVar.what()), position);
-            symbolTable->addError(pair);
+            detector->addError(pair);
         }
 
         //fetching the class that this function corresponds to and add local variable to its scope
@@ -103,11 +105,11 @@ void STGV::visit(VarDecl *node) {
     } catch (Semantic::Err::UndeclaredClass& undeclaredClass) {
         int position = node->getParent()->getLineNumber();
         auto pair = std::make_pair(std::string(undeclaredClass.what()), position);
-        symbolTable->addError(pair);
+        detector->addError(pair);
     } catch (Semantic::Err::DuplicateDataMember& duplicateDataMember) {
         int position = node->getChild(1)->getLineNumber();
         auto pair = std::make_pair(std::string(duplicateDataMember.what()), position);
-        symbolTable->addError(pair);
+        detector->addError(pair);
     }
 }
 
@@ -143,7 +145,7 @@ void STGV::visit(ClassDecl *node) {
     } catch (Semantic::Err::DuplicateClassDecl& duplicateClassDecl) {
         int position = node->getChild(0)->getLineNumber();
         auto pair = std::make_pair(std::string(duplicateClassDecl.what()), position);
-        symbolTable->addError(pair);
+        detector->addError(pair);
     }
 
     for (auto child : node->getChild(2)->getChildren()) {
@@ -151,11 +153,6 @@ void STGV::visit(ClassDecl *node) {
        child->setParent(node->getChild(0));
        child->accept(*this);
     }
-
-    auto duplicateClassFunctions = detector->detectClassDuplicateFunctions(symbolTable);
-    auto overloadedClassFunctions = detector->detectClassOverloadedFunctions(symbolTable);
-    handleClassDuplicate(duplicateClassFunctions);
-    handleClassOverloaded(overloadedClassFunctions);
 }
 
 void STGV::visit(ClassDecls *node) {
@@ -177,12 +174,6 @@ void STGV::visit(FuncParams *node) {
 }
 
 void STGV::visit(MainFunc* node) {
-    auto duplicateFreeFunctions = detector->detectFreeDuplicateFunctions(symbolTable);
-    auto overloadedFreeFunctions = detector->detectFreeOverloadedFunctions(symbolTable);
-    auto undefinedClassFunctions = detector->detectUndefinedClassFunctions(symbolTable);
-    handleFreeDuplicate(duplicateFreeFunctions);
-    handleFreeOverloaded(overloadedFreeFunctions);
-    handleUndefinedClassFunctions(undefinedClassFunctions);
     auto funcBody = node->getChild(0);
     auto localVars = funcBody->getChild(0);
 
@@ -193,7 +184,7 @@ void STGV::visit(MainFunc* node) {
         } catch (Semantic::Err::DuplicateDataMember& duplicateLocalVar) {
             int position = var->getChild(1)->getLineNumber();
             auto pair = std::make_pair(std::string(duplicateLocalVar.what()), position);
-            symbolTable->addError(pair);
+            detector->addError(pair);
         }
     }
 }
@@ -228,47 +219,6 @@ Variable* STGV::createVar(AST::ASTNode* node) {
     }
 
     return new Variable(visibility, type, varName, dimensions);
-}
-
-
-void STGV::handleClassDuplicate(NamePair& duplicates) {
-    for (auto& e : duplicates) {
-        std::string errorString = "Duplicate class function " + e.first + " on class " + e.second;
-        auto pair = std::make_pair(errorString, 0);
-        symbolTable->addError(pair);
-    }
-}
-
-void STGV::handleClassOverloaded(NamePair& duplicates) {
-    for (auto& e : duplicates) {
-        std::string errorString = "Overloaded class function " + e.first + " on class " + e.second;
-        auto pair = std::make_pair(errorString, 0);
-        symbolTable->addError(pair);
-    }
-}
-
-void STGV::handleUndefinedClassFunctions(NamePair& undefined) {
-    for (auto& e : undefined) {
-        std::string errorString = "Undefined class functions " + e.first + " on class " + e.second;
-        auto pair = std::make_pair(errorString, 0);
-        symbolTable->addError(pair);
-    }
-}
-
-void STGV::handleFreeDuplicate(std::vector<std::string>& duplicates) {
-    for (auto& e : duplicates) {
-        std::string errorString = "Duplciate free function " + e;
-        auto pair = std::make_pair(errorString, 0);
-        symbolTable->addError(pair);
-    }
-}
-
-void STGV::handleFreeOverloaded(std::vector<std::string> & duplicates) {
-    for (auto& e : duplicates) {
-        std::string errorString = "Overloaded free function " + e;
-        auto pair = std::make_pair(errorString, 0);
-        symbolTable->addError(pair);
-    }
 }
 
 

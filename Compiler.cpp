@@ -32,7 +32,7 @@ void Compiler::compile() {
 
     std::cout << *(symTabGenerator->symbolTable->main) << std::endl;
 
-    for (auto e : symTabGenerator->symbolTable->errors) {
+    for (auto e : symTabGenerator->detector->getErrors()) {
         std::string p = "";
         if (e.second == 0) p = "";
         else p += " at line " + std::to_string(e.second);

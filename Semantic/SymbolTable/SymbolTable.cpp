@@ -20,10 +20,6 @@ void Semantic::SymbolTable::addFunction(std::string& funcName, Function* functio
     freeFunctions[funcName].push_back(function);
 }
 
-void Semantic::SymbolTable::addError(std::pair<std::string, int> & error) {
-        errors.push_back(error);
-}
-
 Class* Semantic::SymbolTable::getClass(std::string& className) {
     if (classes.find(className) == classes.end())
         throw Semantic::Err::UndeclaredClass(className);
