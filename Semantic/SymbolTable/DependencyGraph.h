@@ -15,12 +15,6 @@ public:
     ~DependencyNode() = default;
     inline void addToList(const std::string& _name) { adjList.push_back(_name); }
     inline std::string& getName() { return name; }
-    inline bool doesExistInList(std::string& _name) {
-         for (std::string& s : adjList) {
-             if (_name == s) return true;
-         }
-         return false;
-    }
 private:
     std::string name;
     std::vector<std::string> adjList;
