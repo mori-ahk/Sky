@@ -34,6 +34,10 @@ public:
                lhs.getVisibilityString() == rhs.getVisibilityString() &&
                lhs.getReturnType() == rhs.getReturnType();
     }
+
+    friend inline bool operator!=(Function& lhs, Function& rhs) {
+        return !(lhs == rhs);
+    }
 private:
 
     std::vector<Variable*> params;
