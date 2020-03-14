@@ -23,8 +23,8 @@ void STGV::visit(Program *node) {
 void STGV::visit(FuncDef *node) {
     std::string namespaceName;
 
-    auto signature = node->getChild(0);
-    auto funcBody = node->getChild(1);
+    AST::ASTNode* signature = node->getChild(0);
+    AST::ASTNode* funcBody = node->getChild(1);
     auto isClassFunc = [&signature]() {
         return signature->getChildren().size() == 4;
     };
@@ -40,7 +40,7 @@ void STGV::visit(FuncDef *node) {
     Function* function = new Function(Visibility::PUBLIC, funcName, returnType, {}, {});
 
     //iterating on params
-    auto params = isClassFunc() ? signature->getChild(2) : signature->getChild(1);
+    AST::ASTNode* params = isClassFunc() ? signature->getChild(2) : signature->getChild(1);
 
     for (auto param: params->getChildren()) {
         Variable *variable = createVar(param);
@@ -74,7 +74,7 @@ void STGV::visit(FuncDef *node) {
     }
 
     //iterating on local vars
-    auto localVars = funcBody->getChild(0);
+    AST::ASTNode* localVars = funcBody->getChild(0);
     for (auto localVar : localVars->getChildren()) {
         Variable* variable = createVar(localVar);
 
@@ -135,7 +135,7 @@ void STGV::visit(ClassDecl *node) {
     std::string className = node->getChild(0)->getName();
     std::vector<std::string> inherits;
     //constructing a string indicating all the parent class
-    for (auto child : node->getChild(1)->getChildren()) {
+    for (auto& child : node->getChild(1)->getChildren()) {
         inherits.push_back(child->getName());
     }
 
@@ -148,7 +148,7 @@ void STGV::visit(ClassDecl *node) {
         detector->addError(pair);
     }
 
-    for (auto child : node->getChild(2)->getChildren()) {
+    for (auto& child : node->getChild(2)->getChildren()) {
        //setting the parent of each member in `MEMBERDECLARATIONS` to `className` node
        child->setParent(node->getChild(0));
        child->accept(*this);
@@ -156,28 +156,28 @@ void STGV::visit(ClassDecl *node) {
 }
 
 void STGV::visit(ClassDecls *node) {
-    for(auto child : node->getChildren()) {
+    for(auto& child : node->getChildren()) {
         child->accept(*this);
     }
 }
 
 void STGV::visit(FuncParams *node) {
-    for(auto child: node->getChildren()) {
+    for(auto& child: node->getChildren()) {
         //setting the parent of each `param` node to `funcName` node
         child->setParent(node->getParent());
 
         Variable* variable = createVar(child);
-        auto className = node->getParent()->getParent()->getName();
-        auto funcName = node->getParent()->getName();
+        std::string className = node->getParent()->getParent()->getName();
+        std::string funcName = node->getParent()->getName();
         symbolTable->classes.at(className)->getFunctions().at(funcName).back()->addParam(variable);
     }
 }
 
 void STGV::visit(MainFunc* node) {
-    auto funcBody = node->getChild(0);
-    auto localVars = funcBody->getChild(0);
+    AST::ASTNode* funcBody = node->getChild(0);
+    AST::ASTNode* localVars = funcBody->getChild(0);
 
-    for(auto var : localVars->getChildren()) {
+    for(auto& var : localVars->getChildren()) {
         Variable* variable = createVar(var);
         try {
             symbolTable->main->addVariable(variable);
@@ -190,7 +190,7 @@ void STGV::visit(MainFunc* node) {
 }
 
 void STGV::visit(AST::ASTNode *node) {
-    for(auto child : node->getChildren()) {
+    for(auto& child : node->getChildren()) {
         child->setParent(node->getParent());
         child->accept(*this);
     }
@@ -209,7 +209,7 @@ Variable* STGV::createVar(AST::ASTNode* node) {
     std::string type = node->getChild(startIndex)->getName();
     std::vector<int> dimensions;
 
-    auto dimNodeToIterate = node->getChildren().size() == 4 ? node->getChild(3) : node->getChild(2);
+    AST::ASTNode* dimNodeToIterate = node->getChildren().size() == 4 ? node->getChild(3) : node->getChild(2);
     for (auto& arrayDimensionChild: dimNodeToIterate->getChildren()) {
         try {
             int dimension = std::stoi(arrayDimensionChild->getChild(0)->getName());
