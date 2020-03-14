@@ -15,7 +15,7 @@ typedef std::pair<std::string, int> error;
 namespace Semantic {
     class Detector {
     public:
-        Detector() {}
+        Detector() = default;
 
         void detectUndefinedClassFunctions(Semantic::SymbolTable*);
         void detectClassDuplicateFunctions(Semantic::SymbolTable*);
@@ -23,7 +23,7 @@ namespace Semantic {
         void detectFreeDuplicateFunctions(Semantic::SymbolTable*);
         void detectFreeOverloadedFunctions(Semantic::SymbolTable*);
         void detect(SymbolTable*);
-        void addError(error);
+        void addError(const error&);
 
         std::vector<error>& getErrors();
 

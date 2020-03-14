@@ -3,12 +3,14 @@
 //
 
 #include "Class.h"
+
+#include <utility>
 #include "../../Error/Error.h"
 
 Class::Class(std::string name, std::string type, std::vector<std::string> inherits) {
-    this->name = name;
-    this->type = type;
-    this->inherits = inherits;
+    this->name = std::move(name);
+    this->type = std::move(type);
+    this->inherits = std::move(inherits);
 }
 
 std::string &Class::getName() {
@@ -52,19 +54,19 @@ void Class::addFunction(std::string& funcName, Function* function) {
 }
 
 std::ostream& operator<<(std::ostream& os, Class& c) {
-    std::string inherits = "";
+    std::string inherits;
     for (auto& s : c.getInherits()) {
         inherits += s + ",";
     }
-    if (inherits.size() > 0) inherits.pop_back();
+    if (!inherits.empty()) inherits.pop_back();
     os << "CLASS:\n";
     os << "[ " <<  "name: " << c.getName() << " | inherits: " << inherits << " | type: "  << c.getType() << " ]" << std::endl;
-    for(auto f : c.getFunctions()) {
+    for(auto& f : c.getFunctions()) {
         for (auto& _f : f.second)
             os << "\t" << *(_f) << std::endl;
     }
 
-    for(auto v: c.getVariables()) {
+    for(auto& v: c.getVariables()) {
         os << "\t" << *(v.second) << std::endl;
     }
 

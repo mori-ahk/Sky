@@ -14,7 +14,7 @@ class Class {
 public:
 
     Class(std::string, std::string, std::vector<std::string>);
-    ~Class();
+    ~Class() = default;
     std::string &getName();
     std::string &getType();
     std::vector<std::string>& getInherits();

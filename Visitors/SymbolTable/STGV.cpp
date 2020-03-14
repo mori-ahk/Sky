@@ -196,18 +196,17 @@ void STGV::visit(AST::ASTNode *node) {
     }
 }
 
-
 Variable* STGV::createVar(AST::ASTNode* node) {
     int startIndex = node->getChildren().size() == 4 ? 1 : 0;
-    Visibility  visibility = Visibility::PRIVATE;
+    Visibility visibility = Visibility::PRIVATE;
 
     if (node->getChildren().size() == 4) {
         std::string visibilityString = node->getChildren().at(0)->getName();
-        Visibility visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
+        visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
     }
 
     std::string varName = node->getChild(startIndex++)->getName();
-    std::string type = node->getChild(startIndex++)->getName();
+    std::string type = node->getChild(startIndex)->getName();
     std::vector<int> dimensions;
 
     auto dimNodeToIterate = node->getChildren().size() == 4 ? node->getChild(3) : node->getChild(2);
@@ -221,9 +220,6 @@ Variable* STGV::createVar(AST::ASTNode* node) {
     return new Variable(visibility, type, varName, dimensions);
 }
 
-
 void STGV::visit(ArrayDim *node) {}
-
 void STGV::visit(FuncBody *node) {}
-
 void STGV::visit(Local *node) {}

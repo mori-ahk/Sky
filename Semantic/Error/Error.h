@@ -12,7 +12,7 @@ namespace Semantic {
 
     class Error : public std::exception {
     public:
-        Error() {}
+        Error() = default;
     };
 
     namespace Err {
