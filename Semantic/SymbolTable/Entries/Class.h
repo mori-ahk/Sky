@@ -13,15 +13,15 @@
 class Class {
 public:
 
-    Class(std::string, std::string, std::string);
-    ~Class();
+    Class(std::string, std::string, std::vector<std::string>);
+    ~Class() = default;
     std::string &getName();
     std::string &getType();
-    std::string& getInherits();
-    std::unordered_map<std::string, Function *> &getFunctions();
+    std::vector<std::string>& getInherits();
+    std::unordered_map<std::string, std::vector<Function *> > &getFunctions();
     std::unordered_map<std::string, Variable *> &getVariables();
 
-    Function* getFunction(std::string&);
+    Function* getFunction(std::string&, Function*);
     void addVariable(std::string&, Variable*);
     void addFunction(std::string&, Function*);
     friend std::ostream& operator<<(std::ostream&, Class&);
@@ -29,8 +29,8 @@ public:
 private:
     std::string name;
     std::string type;
-    std::string inherits;
-    std::unordered_map<std::string, Function*> functions;
+    std::vector<std::string> inherits;
+    std::unordered_map<std::string, std::vector<Function*> > functions;
     std::unordered_map<std::string, Variable*> variables;
 
 };

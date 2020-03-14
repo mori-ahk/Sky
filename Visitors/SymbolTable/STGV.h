@@ -8,10 +8,11 @@
 
 #include "../Visitor.h"
 #include "../../Semantic/SymbolTable/SymbolTable.h"
+#include "../../Semantic/Error/Detector.h"
 
 class STGV : public Visitor {
 public:
-    STGV(AST::ASTNode* root);
+    explicit STGV(AST::ASTNode* root);
     void visit(ClassDecls* node) override;
     void visit(ClassDecl* node) override;
     void visit(FuncDecl* node) override;
@@ -25,10 +26,10 @@ public:
     void visit(MainFunc* node) override;
     void visit(AST::ASTNode* node) override;
 
-
     Semantic::SymbolTable* symbolTable;
+    Semantic::Detector* detector;
 private:
-    Variable* createVar(AST::ASTNode*);
+    static Variable* createVar(AST::ASTNode*);
 
 };
 

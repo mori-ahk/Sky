@@ -24,7 +24,16 @@ public:
 
     void addParam(Variable*);
     void addVariable(Variable*);
+    static bool isParamsEqual(Function&, Function&);
     friend std::ostream& operator<<(std::ostream&, Function&);
+    bool isDefined;
+
+    friend inline bool operator==(Function& lhs, Function& rhs)  {
+        return lhs.getName() == rhs.getName() &&
+               isParamsEqual(lhs,rhs) &&
+               lhs.getVisibilityString() == rhs.getVisibilityString() &&
+               lhs.getReturnType() == rhs.getReturnType();
+    }
 private:
 
     std::vector<Variable*> params;

@@ -4,10 +4,12 @@
 
 #include "Variable.h"
 
+#include <utility>
+
 Variable::Variable(Visibility visibility, std::string name, std::string type, std::vector<int> dimensions) {
     this->visibility = visibility;
-    this->name = name;
-    this->type = type;
+    this->name = std::move(name);
+    this->type = std::move(type);
     this->dimensions = std::move(dimensions);
 }
 
@@ -29,7 +31,7 @@ std::string Variable::getVisibilityString() {
 }
 
 std::string Variable::getDimsString() {
-    std::string dimension = "";
+    std::string dimension;
     for(auto dim: getDimensions()) dimension += std::to_string(dim) + ", ";
     if (getDimensions().empty()) dimension = "[]";
     return dimension;

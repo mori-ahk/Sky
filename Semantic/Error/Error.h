@@ -8,42 +8,107 @@
 #include <exception>
 #include <iostream>
 
-enum class Type {
-    MULTDECLDATAMEMEBER,
-    MULTDECLFUNCPARAM,
-    MULTDECCLASS,
-    SAMEFUNCTION,
-    DEFLESSFUNC,
-    DECLESSFUNC,
-};
-
 namespace Semantic {
+
     class Error : public std::exception {
     public:
-        Error(Type type) {
-            this->type = type;
-        }
-
-        const char *what() const throw() {
-            switch (type) {
-                case Type::MULTDECLDATAMEMEBER:
-                    return "multi declared data member";
-                case Type::MULTDECLFUNCPARAM:
-                    return "multi declared func param with the same name";
-                case Type::MULTDECCLASS:
-                    return "multi declared class";
-                case Type::SAMEFUNCTION:
-                    return "same function with the same variable!";
-                case Type::DEFLESSFUNC:
-                    return "no definition for declared member function";
-                case Type::DECLESSFUNC:
-                    return "definition provided for undeclared member function";
-            }
-        }
-
-    private:
-        Type type;
+        Error() = default;
     };
+
+    namespace Err {
+        class DuplicateDataMember : public Error {
+        public:
+            DuplicateDataMember() : Error() {}
+
+            const char *what() const throw() {
+                return "multi declared data member";
+            }
+        };
+
+        class DuplicateFuncParam : public Error {
+        public:
+            DuplicateFuncParam() : Error() {}
+
+            const char *what() const throw() {
+                return "multi declared func param with the same name";
+            }
+        };
+
+        class DuplicateClassDecl : public Error {
+        public:
+            DuplicateClassDecl() : Error() {}
+
+            const char *what() const throw() {
+                return "multi declared class";
+            }
+        };
+
+        class UndefinedFunction : public Error {
+        public:
+            UndefinedFunction(std::string funcName, std::string className) : Error() {
+                this->funcName = funcName;
+                this->className = className;
+            }
+
+            const char *what() const throw() {
+                std::string errorString = "no definition for declared member function " + funcName + " for class " + className;
+                const char* _errorString = errorString.c_str();
+                return _errorString;
+            }
+
+        private:
+            std::string funcName;
+            std::string className;
+        };
+
+        class UndeclaredFunction : public Error {
+        public:
+            UndeclaredFunction(std::string funcName) : Error() {
+                this->funcName = funcName;
+            }
+
+            const char *what() const throw() {
+                std::string errorString = "definition provided for undeclared member function " + funcName;
+                const char* _errorString = errorString.c_str();
+                return _errorString;
+            }
+        private:
+            std::string funcName;
+        };
+
+        class UndeclaredClass : public Error {
+        public:
+            UndeclaredClass(std::string className) : Error() {
+                this->className = className;
+            }
+
+            const char *what() const throw() {
+                std::string errorString = "use of undeclared class " + className;
+                const char* _errorString = errorString.c_str();
+                return  _errorString;
+            }
+
+        private:
+            std::string className;
+        };
+
+        class DuplicateFunction : public Error {
+        public:
+            DuplicateFunction(std::string funcName) : Error() {
+                this->funcName = funcName;
+            }
+
+            const char *what() const throw() {
+                std::string errorString = "Found duplicate function declaration of " + funcName;
+                const char* _errorString = errorString.c_str();
+                return _errorString;
+            }
+
+        private:
+            std::string funcName;
+        };
+
+    }
 }
 
 #endif //SKY_ERROR_H
