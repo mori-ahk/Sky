@@ -18,10 +18,8 @@ namespace Semantic {
         Detector() = default;
 
         void detectUndefinedClassFunctions(Semantic::SymbolTable*);
-        void detectClassDuplicateFunctions(Semantic::SymbolTable*);
-        void detectClassOverloadedFunctions(Semantic::SymbolTable*);
-        void detectFreeDuplicateFunctions(Semantic::SymbolTable*);
-        void detectFreeOverloadedFunctions(Semantic::SymbolTable*);
+        void detectFreeFunctionsErrors(Semantic::SymbolTable*);
+        void detectClassFunctionsErrors(Semantic::SymbolTable*);
         void detect(SymbolTable*);
         void addError(const error&);
 
@@ -29,11 +27,9 @@ namespace Semantic {
 
     private:
         std::vector<error> errors;
-        void handleClassDuplicate(NamePair&);
-        void handleClassOverloaded(NamePair&);
         void handleUndefinedClassFunctions(NamePair&);
-        void handleFreeDuplicate(std::vector<std::string>&);
-        void handleFreeOverloaded(std::vector<std::string>&);
+        void handleErrors(NamePair&, bool);
+        void handleErrors(std::vector<std::string>&, bool);
     };
 }
 

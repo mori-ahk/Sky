@@ -20,92 +20,43 @@ void Semantic::Detector::detectUndefinedClassFunctions(Semantic::SymbolTable* sy
     handleUndefinedClassFunctions(undefinedFunctions);
 }
 
-void Semantic::Detector::detectClassDuplicateFunctions(Semantic::SymbolTable* symbolTable) {
-    NamePair classDuplicateFunctions;
+void Semantic::Detector::detectFreeFunctionsErrors(Semantic::SymbolTable* symbolTable) {
+    std::vector<std::string> overloadedErrors;
+    std::vector<std::string> duplicateErrors;
+    for (auto& _functions : symbolTable->freeFunctions) {
+        auto functions = _functions.second;
+        for (int i = 0; i < functions.size(); i++) {
+            for (int j = 0; j < functions.size() && i != j; j++) {
+                auto funcName = functions.at(i)->getName();
+                if (*functions.at(i) != *functions.at(j)) overloadedErrors.push_back(funcName);
+                else duplicateErrors.push_back(funcName);
+            }
+        }
+    }
+
+    handleErrors(overloadedErrors, true);
+    handleErrors(duplicateErrors, false);
+}
+
+void Semantic::Detector::detectClassFunctionsErrors(Semantic::SymbolTable* symbolTable) {
+    NamePair overloadedErrors;
+    NamePair duplicateErrors;
     for (auto& _class : symbolTable->classes) {
         for (auto& _functions : _class.second->getFunctions()) {
             auto functions = _functions.second;
             for (int i = 0; i < functions.size(); i++) {
                 for (int j = 0; j < functions.size() && i != j; j++) {
-                    if (*functions.at(i) == *functions.at(j)) {
-                        auto pair = std::make_pair(functions.at(i)->getName(), _class.first);
-                        classDuplicateFunctions.push_back(pair);
-                    }
+                    auto pair = std::make_pair(functions.at(i)->getName(), _class.first);
+                    if (*functions.at(i) != *functions.at(j)) overloadedErrors.push_back(pair);
+                    else duplicateErrors.push_back(pair);
                 }
             }
         }
     }
 
-    handleClassDuplicate(classDuplicateFunctions);
+    handleErrors(overloadedErrors, true);
+    handleErrors(duplicateErrors, false);
 }
-
-void Semantic::Detector::detectClassOverloadedFunctions(Semantic::SymbolTable* symbolTable) {
-    NamePair classOverloadedFunctions;
-    for (auto& _class : symbolTable->classes) {
-        for (auto& _functions : _class.second->getFunctions()) {
-            auto functions = _functions.second;
-            for (int i = 0; i < functions.size(); i++) {
-                for (int j = 0; j < functions.size() && i != j; j++) {
-                    if (*functions.at(i) == *functions.at(j)) continue;
-                    else {
-                        auto pair = std::make_pair(functions.at(i)->getName(), _class.first);
-                        classOverloadedFunctions.push_back(pair);
-                    }
-                }
-            }
-        }
-    }
-
-    handleClassOverloaded(classOverloadedFunctions);
-}
-
-void Semantic::Detector::detectFreeDuplicateFunctions(Semantic::SymbolTable* symbolTable) {
-    std::vector<std::string> freeDuplicateFunctions;
-    for (auto& _functions : symbolTable->freeFunctions) {
-        auto functions = _functions.second;
-        for (int i = 0; i < functions.size(); i++) {
-            for (int j = 0; j < functions.size() && i != j; j++) {
-                if (*functions.at(i) == *functions.at(j))  {
-                    freeDuplicateFunctions.push_back(functions.at(i)->getName());
-                }
-            }
-        }
-    }
-
-    handleFreeDuplicate(freeDuplicateFunctions);
-}
-
-void Semantic::Detector::detectFreeOverloadedFunctions(Semantic::SymbolTable* symbolTable) {
-    std::vector<std::string> freeDuplicateFunctions;
-    for (auto& _functions : symbolTable->freeFunctions) {
-        auto functions = _functions.second;
-        for (int i = 0; i < functions.size(); i++) {
-            for (int j = 0; j < functions.size() && i != j; j++) {
-                if (*functions.at(i) == *functions.at(j)) continue;
-                else freeDuplicateFunctions.push_back(functions.at(i)->getName());
-            }
-        }
-    }
-
-    handleFreeOverloaded(freeDuplicateFunctions);
-}
-
-void Semantic::Detector::handleClassDuplicate(NamePair& duplicates) {
-    for (auto& e : duplicates) {
-        std::string errorString = "Duplicate class function " + e.first + " on class " + e.second;
-        auto pair = std::make_pair(errorString, 0);
-        addError(pair);
-    }
-}
-
-void Semantic::Detector::handleClassOverloaded(NamePair& duplicates) {
-    for (auto& e : duplicates) {
-        std::string errorString = "Overloaded class function " + e.first + " on class " + e.second;
-        auto pair = std::make_pair(errorString, 0);
-        addError(pair);
-    }
-}
-
 void Semantic::Detector::handleUndefinedClassFunctions(NamePair& undefined) {
     for (auto& e : undefined) {
         std::string errorString = "Undefined class functions " + e.first + " on class " + e.second;
@@ -114,22 +65,23 @@ void Semantic::Detector::handleUndefinedClassFunctions(NamePair& undefined) {
     }
 }
 
-void Semantic::Detector::handleFreeDuplicate(std::vector<std::string>& duplicates) {
-    for (auto& e : duplicates) {
-        std::string errorString = "Duplicate free function " + e;
+void Semantic::Detector::handleErrors(NamePair& _errors, bool isOverloaded) {
+    for (auto& e : _errors) {
+        std::string errorString = isOverloaded ? "Overloaded" : "Duplicate";
+        errorString += " class function " + e.first + " on class " + e.second;
         auto pair = std::make_pair(errorString, 0);
         addError(pair);
     }
 }
 
-void Semantic::Detector::handleFreeOverloaded(std::vector<std::string> & duplicates) {
-    for (auto& e : duplicates) {
-        std::string errorString = "Overloaded free function " + e;
+void Semantic::Detector::handleErrors(std::vector<std::string>& _errors, bool isOverloaded) {
+    for (auto& e : _errors) {
+        std::string errorString = isOverloaded ? "Overloaded" : "Duplicate";
+        errorString += " free function " + e;
         auto pair = std::make_pair(errorString, 0);
         addError(pair);
     }
 }
-
 
 void Semantic::Detector::addError(const error& _error) {
     errors.push_back(_error);
@@ -137,10 +89,8 @@ void Semantic::Detector::addError(const error& _error) {
 
 void Semantic::Detector::detect(SymbolTable * symbolTable) {
     detectUndefinedClassFunctions(symbolTable);
-    detectClassOverloadedFunctions(symbolTable);
-    detectFreeOverloadedFunctions(symbolTable);
-    detectFreeDuplicateFunctions(symbolTable);
-    detectClassDuplicateFunctions(symbolTable);
+    detectFreeFunctionsErrors(symbolTable);
+    detectClassFunctionsErrors(symbolTable);
 }
 
 std::vector<error>& Semantic::Detector::getErrors() {
