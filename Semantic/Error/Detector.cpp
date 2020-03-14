@@ -88,6 +88,7 @@ void Semantic::Detector::addError(const error& _error) {
 }
 
 void Semantic::Detector::detect(SymbolTable * symbolTable) {
+    symbolTable->buildDependencyGraph();
     detectUndefinedClassFunctions(symbolTable);
     detectFreeFunctionsErrors(symbolTable);
     detectClassFunctionsErrors(symbolTable);

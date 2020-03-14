@@ -18,7 +18,17 @@ void Semantic::SymbolTable::addFunction(std::string& funcName, Function* functio
 
 void Semantic::SymbolTable::buildDependencyGraph() {
     for (auto& _class : classes) {
-        
+        auto node = new DependencyNode(_class.first);
+        for (std::string& inherit : _class.second->getInherits()) {
+            try { getClass(inherit); }
+            catch (Semantic::Err::UndeclaredClass &undeclaredClass) { throw; }
+            node->addToList(inherit);
+        }
+        for (auto& _variable : _class.second->getVariables()) {
+            std::string localVarType = _variable.second->getType();
+            if (classes.find(localVarType) != classes.end()) node->addToList(localVarType);
+        }
+        dependencyGraph->nodes.push_back(node);
     }
 }
 
