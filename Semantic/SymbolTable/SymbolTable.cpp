@@ -5,10 +5,6 @@
 #include "SymbolTable.h"
 #include "../Error/Error.h"
 
-
-Semantic::SymbolTable::SymbolTable() = default;
-Semantic::SymbolTable::~SymbolTable() = default;
-
 void Semantic::SymbolTable::addClass(std::string& className, Class* _class) {
     if (classes.find(className) != classes.end())
         throw Semantic::Err::DuplicateClassDecl();
@@ -18,6 +14,12 @@ void Semantic::SymbolTable::addClass(std::string& className, Class* _class) {
 
 void Semantic::SymbolTable::addFunction(std::string& funcName, Function* function) {
     freeFunctions[funcName].push_back(function);
+}
+
+void Semantic::SymbolTable::buildDependencyGraph() {
+    for (auto& _class : classes) {
+        
+    }
 }
 
 Class* Semantic::SymbolTable::getClass(std::string& className) {
