@@ -12,10 +12,6 @@ class POLYNOMIAL {
     private float x;
 };
 
-class A {
-    private integer v;
-};
-
 LINEAR::build(float A, float B) : LINEAR
     do
     end

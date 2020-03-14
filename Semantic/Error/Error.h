@@ -21,7 +21,7 @@ namespace Semantic {
             DuplicateDataMember() : Error() {}
 
             const char *what() const throw() {
-                return "multi declared data member";
+                return "duplicate data member";
             }
         };
 
@@ -30,7 +30,7 @@ namespace Semantic {
             DuplicateFuncParam() : Error() {}
 
             const char *what() const throw() {
-                return "multi declared func param with the same name";
+                return "duplicate func param with the same name";
             }
         };
 
