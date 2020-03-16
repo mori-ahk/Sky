@@ -6,8 +6,10 @@
 #define SKY_DETECTOR_H
 
 #include "../SymbolTable/SymbolTable.h"
+#include "../SymbolTable/DependencyGraph.h"
 #include <vector>
 #include <string>
+#include <unordered_set>
 
 typedef std::vector<std::pair<std::string, std::string> > NamePair;
 typedef std::pair<std::string, int> error;
@@ -16,12 +18,14 @@ namespace Semantic {
     class Detector {
     public:
         Detector() = default;
-
-        void detectUndefinedClassFunctions(Semantic::SymbolTable*);
-        void detectFreeFunctionsErrors(Semantic::SymbolTable*);
-        void detectClassFunctionsErrors(Semantic::SymbolTable*);
-        void detect(SymbolTable*);
+        explicit Detector(Semantic::SymbolTable* _symbolTable) { this->symbolTable = _symbolTable; }
+        void detectUndefinedClassFunctions();
+        void detectFreeFunctionsErrors();
+        void detectClassFunctionsErrors();
+        void detectCircularDependency();
+        void detect();
         void addError(const error&);
+        void initDependencyGraph(Semantic::SymbolTable*);
 
         std::vector<error>& getErrors();
 
@@ -30,6 +34,8 @@ namespace Semantic {
         void handleUndefinedClassFunctions(NamePair&);
         void handleErrors(NamePair&, bool);
         void handleErrors(std::vector<std::string>&, bool);
+        Semantic::SymbolTable* symbolTable;
+        DependencyGraph* dependencyGraph;
     };
 }
 

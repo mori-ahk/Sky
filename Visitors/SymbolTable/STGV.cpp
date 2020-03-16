@@ -9,15 +9,16 @@
 
 STGV::STGV(AST::ASTNode* root) {
     this->symbolTable = new Semantic::SymbolTable();
-    this->detector = new Semantic::Detector();
+    this->detector = new Semantic::Detector(this->symbolTable);
     root->getChildren().at(0)->accept(*this);
 }
 void STGV::visit(Program *node) {
     for(auto child : node->getChildren()) {
         child->accept(*this);
     }
+
     //detect for errors
-    detector->detect(symbolTable);
+    detector->detect();
 }
 
 void STGV::visit(FuncDef *node) {

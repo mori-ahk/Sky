@@ -7,7 +7,10 @@
 
 #include <vector>
 #include <string>
+#include <unordered_set>
+#include "SymbolTable.h"
 
+typedef std::unordered_set<std::string>& StringSet;
 class DependencyNode {
 public:
     DependencyNode() = default;
@@ -15,6 +18,8 @@ public:
     ~DependencyNode() = default;
     inline void addToList(const std::string& _name) { adjList.push_back(_name); }
     inline std::string& getName() { return name; }
+    inline std::vector<std::string>& getAdjList() { return adjList; }
+    bool isVisited = false;
 private:
     std::string name;
     std::vector<std::string> adjList;
@@ -23,8 +28,13 @@ private:
 class DependencyGraph {
 public:
     DependencyGraph() = default;
+    explicit DependencyGraph(Semantic::SymbolTable* symbolTable) { build(symbolTable); }
     ~DependencyGraph() = default;
     std::vector<DependencyNode*> nodes = {};
+    std::pair<std::string, std::string> dfs(std::string&, StringSet, StringSet);
+private:
+    void build(Semantic::SymbolTable*);
+    std::vector<std::string>& getAdjList(const std::string&);
 };
 
 

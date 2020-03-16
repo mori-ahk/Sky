@@ -8,7 +8,6 @@
 #include "Entries/Class.h"
 #include "Entries/Function.h"
 #include "../Error/Error.h"
-#include "DependencyGraph.h"
 #include <unordered_map>
 #include <vector>
 
@@ -27,7 +26,6 @@ namespace Semantic {
         std::unordered_map<std::string, Class *> classes;
         std::unordered_map<std::string, std::vector<Function *> > freeFunctions;
         Function *main = new Function(Visibility::PUBLIC, "main", "void", {}, {});
-        DependencyGraph* dependencyGraph = new DependencyGraph();
     };
 }
 
