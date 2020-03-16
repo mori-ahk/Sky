@@ -44,7 +44,7 @@ void Syntax::Parser::panic(std::string& rule) {
 }
 
 bool Syntax::Parser::parse(std::string LHS, bool isOnPanicMode) {
-    if (currentToken == nullptr and isOnPanicMode) return true;
+    if (currentToken == nullptr && isOnPanicMode) return true;
     if (currentToken == nullptr) return true;
 
     if (Language::Rule::isTerminal(LHS)) {
@@ -61,7 +61,7 @@ bool Syntax::Parser::parse(std::string LHS, bool isOnPanicMode) {
 
     Language::Rule* currentRule = grammar->getRule(LHS);
     if (!currentRule->doesBelongToFirst(currentToken)) {
-        if ((isOnPanicMode or currentRule->isNullable()) and currentRule->doesBelongToFollow(currentToken)) {
+        if ((isOnPanicMode || currentRule->isNullable()) && currentRule->doesBelongToFollow(currentToken)) {
             AST_Builder->push(LHS, 0);
 //            AST_Builder->printStack();
             return true;
@@ -73,7 +73,7 @@ bool Syntax::Parser::parse(std::string LHS, bool isOnPanicMode) {
     for(auto& production : currentRule->getRHS()) {
         if (found) break;
         for (auto& _rule: production) {
-            if (_rule != "#" and _rule.front() != '@') {
+            if (_rule != "#" && _rule.front() != '@') {
                 if (grammar->shouldTake(_rule, currentToken)) {
                     rulesToProcess = production;
                     found = true;

@@ -154,8 +154,8 @@ bool Language::Grammar::shouldTake(std::string& production, Token* token) {
         return production == token->getReverseTokenTypeMap()[token->getType()];
     }
     Rule* rule = getRule(production);
-    return rule->doesBelongToFirst(token) or
-           (rule->isNullable() and rule->doesBelongToFollow(token));
+    return rule->doesBelongToFirst(token) ||
+           (rule->isNullable() && rule->doesBelongToFollow(token));
 }
 
 std::vector<std::string> Language::Grammar::split(std::string& production) {
