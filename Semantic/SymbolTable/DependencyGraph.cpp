@@ -17,7 +17,12 @@ void DependencyGraph::build(Semantic::SymbolTable* symbolTable) {
         }
         for (auto& _variable : _class.second->getVariables()) {
             std::string localVarType = _variable.second->getType();
-            if (symbolTable->classes.find(localVarType) != symbolTable->classes.end()) node->addToList(localVarType);
+            if (localVarType != "float" && localVarType != "integer") {
+                try {
+                    symbolTable->getClass(localVarType);
+                    node->addToList(localVarType);
+                } catch (Semantic::Err::UndeclaredClass& undeclaredClass) { throw; }
+            }
         }
         nodes.push_back(node);
     }
