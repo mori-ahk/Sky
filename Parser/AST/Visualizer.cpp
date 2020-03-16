@@ -16,8 +16,8 @@ void Visualizer::visualize(AST::ASTNode * root) {
 
 void Visualizer::generateDot(AST::ASTNode* root) {
     dotFileContent += std::to_string(root->getUniqueID()) + " [label=\"" + root->getName() + "\"];\n";
-    if (root->getChildren().size() == 0) return;
-    for (auto& child: root->getChildren()) {
+    if (root->getChildren().empty()) return;
+    for (const auto& child: root->getChildren()) {
         dotFileContent += std::to_string(root->getUniqueID()) + " -> " + std::to_string(child->getUniqueID()) + ";\n";
         generateDot(child);
     }

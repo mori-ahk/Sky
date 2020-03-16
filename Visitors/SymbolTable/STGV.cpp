@@ -43,7 +43,7 @@ void STGV::visit(FuncDef *node) {
     //iterating on params
     AST::ASTNode* params = isClassFunc() ? signature->getChild(2) : signature->getChild(1);
 
-    for (auto param: params->getChildren()) {
+    for (auto& param: params->getChildren()) {
         Variable *variable = createVar(param);
 
         //throw a semantic error if `variable` is a duplicate param in the `function`
@@ -76,7 +76,7 @@ void STGV::visit(FuncDef *node) {
 
     //iterating on local vars
     AST::ASTNode* localVars = funcBody->getChild(0);
-    for (auto localVar : localVars->getChildren()) {
+    for (auto& localVar : localVars->getChildren()) {
         Variable* variable = createVar(localVar);
 
         //throw a semantic error if `variable` is a duplicate variable in the `function`'s local scope.

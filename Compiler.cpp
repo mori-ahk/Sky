@@ -21,19 +21,19 @@ void Compiler::compile() {
     parser->parse("START");
     parser->AST_Builder->visualize();
     symTabGenerator = new STGV(parser->AST_Builder->getRoot());
-    for (auto c: symTabGenerator->symbolTable->classes) {
+    for (const auto& c: symTabGenerator->symbolTable->classes) {
         std::cout << *(c.second) << std::endl;
     }
 
-    for (auto f : symTabGenerator->symbolTable->freeFunctions) {
-        for (auto& _f : f.second)
+    for (const auto& f : symTabGenerator->symbolTable->freeFunctions) {
+        for (const auto& _f : f.second)
             std::cout << *(_f) << std::endl;
     }
 
     std::cout << *(symTabGenerator->symbolTable->main) << std::endl;
 
-    for (auto e : symTabGenerator->detector->getErrors()) {
-        std::string p = "";
+    for (const auto& e : symTabGenerator->detector->getErrors()) {
+        std::string p;
         if (e.second == 0) p = "";
         else p += " at line " + std::to_string(e.second);
         std::cerr << e.first << p << std::endl;

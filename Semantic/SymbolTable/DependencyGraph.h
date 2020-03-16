@@ -19,7 +19,6 @@ public:
     inline void addToList(const std::string& _name) { adjList.push_back(_name); }
     inline std::string& getName() { return name; }
     inline std::vector<std::string>& getAdjList() { return adjList; }
-    bool isVisited = false;
 private:
     std::string name;
     std::vector<std::string> adjList;

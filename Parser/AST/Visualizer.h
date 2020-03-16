@@ -14,7 +14,7 @@ public:
     void generateDot(AST::ASTNode*);
 
     Visualizer();
-
+    ~Visualizer() = default;
 private:
     std::string dotFileContent;
 };

@@ -33,7 +33,7 @@ bool Syntax::Parser::isKeyword(std::string& rule) {
 void Syntax::Parser::printError(Language::Rule& rule) {
     if (currentToken == nullptr) return;
         std::cout << "ERROR: at line " << currentToken->getLineno() << " at position: " << currentToken->getPosition() << " expected one of these: ";
-        for (auto _rule: rule.getFollow()) {
+        for (const auto& _rule: rule.getFollow()) {
             std::cout << _rule << ", ";
         }
         std::cout << std::endl;
@@ -44,7 +44,7 @@ void Syntax::Parser::panic(std::string& rule) {
 }
 
 bool Syntax::Parser::parse(std::string LHS, bool isOnPanicMode) {
-    if (currentToken == nullptr and isOnPanicMode) return true;
+    if (currentToken == nullptr && isOnPanicMode) return true;
     if (currentToken == nullptr) return true;
 
     if (Language::Rule::isTerminal(LHS)) {
@@ -52,7 +52,6 @@ bool Syntax::Parser::parse(std::string LHS, bool isOnPanicMode) {
             if (isKeyword(LHS)) {
                 std::string value = currentToken->getValue();
                 AST_Builder->push(value, currentToken->getLineno());
-//                AST_Builder->printStack();
             }
             next();
             return true;
@@ -61,9 +60,8 @@ bool Syntax::Parser::parse(std::string LHS, bool isOnPanicMode) {
 
     Language::Rule* currentRule = grammar->getRule(LHS);
     if (!currentRule->doesBelongToFirst(currentToken)) {
-        if ((isOnPanicMode or currentRule->isNullable()) and currentRule->doesBelongToFollow(currentToken)) {
+        if ((isOnPanicMode || currentRule->isNullable()) && currentRule->doesBelongToFollow(currentToken)) {
             AST_Builder->push(LHS, 0);
-//            AST_Builder->printStack();
             return true;
         } else return false;
     }
@@ -73,7 +71,7 @@ bool Syntax::Parser::parse(std::string LHS, bool isOnPanicMode) {
     for(auto& production : currentRule->getRHS()) {
         if (found) break;
         for (auto& _rule: production) {
-            if (_rule != "#" and _rule.front() != '@') {
+            if (_rule != "#" && _rule.front() != '@') {
                 if (grammar->shouldTake(_rule, currentToken)) {
                     rulesToProcess = production;
                     found = true;

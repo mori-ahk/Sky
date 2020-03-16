@@ -22,7 +22,7 @@ public:
     std::string getValue();
     int getPosition();
     void setPosition(int&);
-    std::unordered_map<std::string, TokenType>& getTokenTypeMap();
+    static std::unordered_map<std::string, TokenType>& getTokenTypeMap();
     std::unordered_map<TokenType, std::string>& getReverseTokenTypeMap();
     friend std::ostream& operator<<(std::ostream&, Token&);
 private:

@@ -19,33 +19,25 @@ namespace Language {
     class Grammar {
     public:
         Grammar();
-
-        ~Grammar();
+        ~Grammar() = default;
 
         Rule *getRule(std::string &);
-
         bool shouldTake(std::string &, Token *);
 
     private:
-
         void constructFirstSet();
-
         void constructFirstSetHelper(Rule *);
-
         void constructFollowSetHelper(Rule *);
-
         void constructFollowSet();
-
         void parseGrammar();
 
         bool doesContainRuleName(std::string &);
 
-        longVector findUsage(std::string);
+        longVector findUsage(const std::string&);
 
         std::vector<std::string> split(std::string &);
-
-        std::unordered_map<std::string, Rule *> RULES;
         std::vector<std::string> ruleNames;
+        std::unordered_map<std::string, Rule *> RULES;
     };
 }
 

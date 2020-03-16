@@ -12,9 +12,9 @@ void Semantic::Detector::initDependencyGraph(Semantic::SymbolTable * _symbolTabl
 
 void Semantic::Detector::detectUndefinedClassFunctions() {
     NamePair undefinedFunctions;
-    for (auto& _class : symbolTable->classes) {
-        for (auto& _function: _class.second->getFunctions()) {
-            for (auto& _f : _function.second) {
+    for (const auto& _class : symbolTable->classes) {
+        for (const auto& _function: _class.second->getFunctions()) {
+            for (const auto& _f : _function.second) {
                 if (!_f->isDefined) {
                     auto pair = std::make_pair(_f->getName(), _class.first);
                     undefinedFunctions.push_back(pair);
@@ -28,7 +28,7 @@ void Semantic::Detector::detectUndefinedClassFunctions() {
 void Semantic::Detector::detectFreeFunctionsErrors() {
     std::vector<std::string> overloadedErrors;
     std::vector<std::string> duplicateErrors;
-    for (auto& _functions : symbolTable->freeFunctions) {
+    for (const auto& _functions : symbolTable->freeFunctions) {
         auto functions = _functions.second;
         for (int i = 0; i < functions.size(); i++) {
             for (int j = 0; j < functions.size() && i != j; j++) {
@@ -46,8 +46,8 @@ void Semantic::Detector::detectFreeFunctionsErrors() {
 void Semantic::Detector::detectClassFunctionsErrors() {
     NamePair overloadedErrors;
     NamePair duplicateErrors;
-    for (auto& _class : symbolTable->classes) {
-        for (auto& _functions : _class.second->getFunctions()) {
+    for (const auto& _class : symbolTable->classes) {
+        for (const auto& _functions : _class.second->getFunctions()) {
             auto functions = _functions.second;
             for (int i = 0; i < functions.size(); i++) {
                 for (int j = 0; j < functions.size() && i != j; j++) {
@@ -85,7 +85,7 @@ void Semantic::Detector::detectCircularDependency() {
 }
 
 void Semantic::Detector::handleUndefinedClassFunctions(NamePair& undefined) {
-    for (auto& e : undefined) {
+    for (const auto& e : undefined) {
         std::string errorString = "Undefined class functions " + e.first + " on class " + e.second;
         auto pair = std::make_pair(errorString, 0);
         addError(pair);
@@ -93,7 +93,7 @@ void Semantic::Detector::handleUndefinedClassFunctions(NamePair& undefined) {
 }
 
 void Semantic::Detector::handleErrors(NamePair& _errors, bool isOverloaded) {
-    for (auto& e : _errors) {
+    for (const auto& e : _errors) {
         std::string errorString = isOverloaded ? "Overloaded" : "Duplicate";
         errorString += " class function " + e.first + " on class " + e.second;
         auto pair = std::make_pair(errorString, 0);
@@ -102,7 +102,7 @@ void Semantic::Detector::handleErrors(NamePair& _errors, bool isOverloaded) {
 }
 
 void Semantic::Detector::handleErrors(std::vector<std::string>& _errors, bool isOverloaded) {
-    for (auto& e : _errors) {
+    for (const auto& e : _errors) {
         std::string errorString = isOverloaded ? "Overloaded" : "Duplicate";
         errorString += " free function " + e;
         auto pair = std::make_pair(errorString, 0);

@@ -28,12 +28,11 @@ Lexer::~Lexer() {
 }
 
 bool Lexer::isComment(Token* matchedToken) {
-    if (matchedToken->getType() == TokenType::InlineCmt || matchedToken->getType() == TokenType::BlockCmt) return true;
-    else return false;
+    return matchedToken->getType() == TokenType::InlineCmt || matchedToken->getType() == TokenType::BlockCmt;
 }
 
 bool Lexer::doesOnlyContainWhitespace(std::string& line) {
-    for (char c: line) {
+    for (const char& c: line) {
         if (c != ' ') return false;
     }
     return true;
@@ -109,7 +108,7 @@ void Lexer::read(std::string& filePath) {
 void Lexer::write(std::string& filePath) {
     std::string fileName;
 
-    for (auto& c : filePath) {
+    for (const auto& c : filePath) {
         if (c == '.') break;
         fileName += c;
     }
