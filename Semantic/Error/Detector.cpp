@@ -85,10 +85,10 @@ bool Semantic::Detector::detectCircularDependency() {
     return false;
 }
 
-void Semantic::Detector::detectShadowMembers(Class* parent, Class* child) {
+void Semantic::Detector::detectShadowMembers(Class *parent) {
     if (parent->getInherits().empty()) return;
     for (const auto& c : parent->getInherits()) {
-        detectShadowMembers(symbolTable->classes.at(c), parent);
+        detectShadowMembers(symbolTable->classes.at(c));
         auto shadowMessages = symbolTable->classes.at(c)->findShadowMembers(*parent);
         if (!shadowMessages.empty()) {
             for (const auto& s : shadowMessages) {
@@ -144,7 +144,7 @@ void Semantic::Detector::detect() {
     //If contains circular dependency, shadow member function gets stuck in an infinite loop.
     if (!containsCircularDependency) {
         for (const auto &c : symbolTable->classes) {
-            detectShadowMembers(c.second, c.second);
+            detectShadowMembers(c.second);
         }
     }
 

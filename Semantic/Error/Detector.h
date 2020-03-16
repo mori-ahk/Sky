@@ -26,7 +26,7 @@ namespace Semantic {
         void detectFreeFunctionsErrors();
         void detectClassFunctionsErrors();
         bool detectCircularDependency();
-        void detectShadowMembers(Class*, Class*);
+        void detectShadowMembers(Class*);
         void detect();
         void addError(const error&);
         void initDependencyGraph(Semantic::SymbolTable*);
