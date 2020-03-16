@@ -15,34 +15,23 @@ namespace AST {
     class ASTNode {
     public:
         ASTNode(std::string, int);
-
         ASTNode();
-
-        ~ASTNode();
+        ~ASTNode() = default;
 
         std::string &getName();
-
         std::deque<ASTNode *> &getChildren();
 
         ASTNode* getChild(int);
+        ASTNode* getParent();
 
-        ASTNode *getParent();
-
-        int &getLineNumber();
-
-        int &getUniqueID();
+        int& getLineNumber();
+        int& getUniqueID();
 
         void setParent(ASTNode *);
-
-        void setLineNumber();
-
         void addChildToLeft(ASTNode *);
-
         void addChildToRight(ASTNode *);
-
-        void addChildToLeft(std::vector<ASTNode *> &);
-
-        void adoptChildren(std::deque<ASTNode *>);
+        void addChildToLeft(const std::vector<ASTNode*>&);
+        void adoptChildren(const std::deque<ASTNode*>&);
 
         virtual void accept(Visitor &visitor);
 
@@ -53,7 +42,6 @@ namespace AST {
         ASTNode *parent;
         int uniqueID;
         int lineNumber;
-
     };
 }
 
