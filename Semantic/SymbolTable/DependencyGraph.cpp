@@ -6,7 +6,7 @@
 
 
 void DependencyGraph::build(Semantic::SymbolTable* symbolTable) {
-    for (auto& _class : symbolTable->classes) {
+    for (const auto& _class : symbolTable->classes) {
         auto node = new DependencyNode(_class.first);
         for (std::string& inherit : _class.second->getInherits()) {
             try {
@@ -15,7 +15,7 @@ void DependencyGraph::build(Semantic::SymbolTable* symbolTable) {
             }
             catch (Semantic::Err::UndeclaredClass &undeclaredClass) { throw; }
         }
-        for (auto& _variable : _class.second->getVariables()) {
+        for (const auto& _variable : _class.second->getVariables()) {
             std::string localVarType = _variable.second->getType();
             if (localVarType != "float" && localVarType != "integer") {
                 try {
@@ -29,7 +29,7 @@ void DependencyGraph::build(Semantic::SymbolTable* symbolTable) {
 }
 
 std::vector<std::string>& DependencyGraph::getAdjList(const std::string& className) {
-    for (auto& node : nodes) {
+    for (const auto& node : nodes) {
         if (node->getName() == className) return node->getAdjList();
     }
 }

@@ -12,43 +12,29 @@
 namespace Language {
     class Rule {
     public:
-
-        Rule(std::string);
-
-        ~Rule();
+        explicit Rule(std::string);
+        ~Rule() = default ;
 
         std::unordered_set<std::string> &getFirst();
-
         std::unordered_set<std::string> &getFollow();
-
         std::vector<std::vector<std::string>> &getRHS();
-
         std::string &getName();
 
         static const std::unordered_map<std::string, std::string> &getTerminals();
-
         static bool isTerminal(std::string &);
 
         void addToRHS(std::vector<std::string>);
-
         void addToFirst(std::string);
-
         void addToFollow(std::string);
-
         void addToWatchList(Rule *);
-
         void clearWatchList();
 
         int indexOf(std::vector<std::string>, std::string);
 
         bool isTerminal();
-
         bool isNullable();
-
         bool doesBelongToFirst(Token *);
-
         bool doesBelongToFollow(Token *);
-
         bool visited;
 
     private:

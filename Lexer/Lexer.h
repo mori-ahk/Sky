@@ -25,9 +25,9 @@ private:
     void handleWord(std::string&, int, int&);
     void read(std::string&);
     void write(std::string&);
-    bool doesOnlyContainWhitespace(std::string&);
-    bool isComment(Token*);
-    std::string extractErrorString(std::string&);
+    static bool doesOnlyContainWhitespace(std::string&);
+    static bool isComment(Token*);
+    static std::string extractErrorString(std::string&);
     int currentToken;
     std::vector<Token*> totalMatches;
     std::vector<Token*> totalErrors;

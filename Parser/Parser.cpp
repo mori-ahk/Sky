@@ -33,7 +33,7 @@ bool Syntax::Parser::isKeyword(std::string& rule) {
 void Syntax::Parser::printError(Language::Rule& rule) {
     if (currentToken == nullptr) return;
         std::cout << "ERROR: at line " << currentToken->getLineno() << " at position: " << currentToken->getPosition() << " expected one of these: ";
-        for (auto _rule: rule.getFollow()) {
+        for (const auto& _rule: rule.getFollow()) {
             std::cout << _rule << ", ";
         }
         std::cout << std::endl;
@@ -52,7 +52,6 @@ bool Syntax::Parser::parse(std::string LHS, bool isOnPanicMode) {
             if (isKeyword(LHS)) {
                 std::string value = currentToken->getValue();
                 AST_Builder->push(value, currentToken->getLineno());
-//                AST_Builder->printStack();
             }
             next();
             return true;
@@ -63,7 +62,6 @@ bool Syntax::Parser::parse(std::string LHS, bool isOnPanicMode) {
     if (!currentRule->doesBelongToFirst(currentToken)) {
         if ((isOnPanicMode || currentRule->isNullable()) && currentRule->doesBelongToFollow(currentToken)) {
             AST_Builder->push(LHS, 0);
-//            AST_Builder->printStack();
             return true;
         } else return false;
     }

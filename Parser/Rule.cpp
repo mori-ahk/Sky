@@ -86,13 +86,13 @@ void Language::Rule::clearWatchList() {
 
 void Language::Rule::callWatchlist(bool isFirst) {
     if (isFirst) {
-        for (auto &s: first) {
+        for (const auto& s: first) {
             for (Rule* r: watchlist) {
                 r->addToFirst(s);
             }
         }
     } else {
-        for (auto &s: follow) {
+        for (const auto& s: follow) {
             for (Rule* r: watchlist) {
                 r->addToFollow(s);
             }

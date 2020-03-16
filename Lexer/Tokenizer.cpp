@@ -55,10 +55,6 @@ const std::unordered_map<std::string, TokenType> RESERVED_WORDS = {
         { "void", TokenType::Void },
 };
 
-Tokenizer::Tokenizer() {}
-
-Tokenizer::~Tokenizer() {}
-
 Token* Tokenizer::Tokenize(std::string& word, int& lineno, int& pos) {
 
     if (!isID(word).empty()) {

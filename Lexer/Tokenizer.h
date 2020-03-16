@@ -16,8 +16,8 @@
 class Tokenizer {
 public:
 
-    Tokenizer();
-    ~Tokenizer();
+    Tokenizer() = default;
+    ~Tokenizer() = default;
     Token* Tokenize(std::string&, int&, int&);
 
 private:
