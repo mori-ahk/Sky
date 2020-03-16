@@ -5,10 +5,6 @@
 #include "SymbolTable.h"
 #include "../Error/Error.h"
 
-
-Semantic::SymbolTable::SymbolTable() = default;
-Semantic::SymbolTable::~SymbolTable() = default;
-
 void Semantic::SymbolTable::addClass(std::string& className, Class* _class) {
     if (classes.find(className) != classes.end())
         throw Semantic::Err::DuplicateClassDecl();

@@ -1,10 +1,23 @@
-class LINEAR inherits POLYNOMIAL, M, N {
+class LINEAR inherits POLYNOMIAL {
 	private float a;
 	private float b;
+    private A z;
 
 	public build(float A, float B) : LINEAR;
 	public evaluate(float x) : float;
 	public evaluate(integer y) : float;
+};
+
+class POLYNOMIAL inherits A {
+    private float x;
+};
+
+class A inherits B, LINEAR {
+    private float v;
+};
+
+class B inherits A, LINEAR {
+  public float a;
 };
 
 LINEAR::build(float A, float B) : LINEAR
@@ -17,19 +30,6 @@ LINEAR::evaluate(float x) : float
     do
     end
 
-LINEAR::evaluate(integer y) : float
-    do
-    end
-
-LINEAR::x() : void
-    local
-        integer a;
-    do
-    end
-
-A::b() : void
-do
-end
 
 /* sort the array */
 bubbleSort(integer arr, integer size) : void
@@ -51,13 +51,6 @@ printArray(integer arr[], integer size) : void
    bubbleSort(a, size);
   end
 
-printArray(integer arr[], integer size) : void
-  local
-    integer a;
-    integer i;
-  do
-   bubbleSort(a, size);
-  end
 // main funtion to test above
 main
   local

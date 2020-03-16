@@ -15,11 +15,12 @@
 namespace Semantic {
     class SymbolTable {
     public:
-        SymbolTable();
-        ~SymbolTable();
+        SymbolTable() = default;
+        ~SymbolTable() = default;
 
         void addClass(std::string&, Class*);
         void addFunction(std::string&, Function*);
+        void buildDependencyGraph();
 
         Class* getClass(std::string&);
         std::unordered_map<std::string, Class *> classes;

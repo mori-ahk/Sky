@@ -5,7 +5,12 @@
 #include "Detector.h"
 #include <string>
 
-void Semantic::Detector::detectUndefinedClassFunctions(Semantic::SymbolTable* symbolTable) {
+void Semantic::Detector::initDependencyGraph(Semantic::SymbolTable * _symbolTable) {
+    try { this->dependencyGraph = new DependencyGraph(_symbolTable); }
+    catch (Semantic::Err::UndeclaredClass& undeclaredClass) { throw; }
+}
+
+void Semantic::Detector::detectUndefinedClassFunctions() {
     NamePair undefinedFunctions;
     for (auto& _class : symbolTable->classes) {
         for (auto& _function: _class.second->getFunctions()) {
@@ -20,7 +25,7 @@ void Semantic::Detector::detectUndefinedClassFunctions(Semantic::SymbolTable* sy
     handleUndefinedClassFunctions(undefinedFunctions);
 }
 
-void Semantic::Detector::detectFreeFunctionsErrors(Semantic::SymbolTable* symbolTable) {
+void Semantic::Detector::detectFreeFunctionsErrors() {
     std::vector<std::string> overloadedErrors;
     std::vector<std::string> duplicateErrors;
     for (auto& _functions : symbolTable->freeFunctions) {
@@ -38,7 +43,7 @@ void Semantic::Detector::detectFreeFunctionsErrors(Semantic::SymbolTable* symbol
     handleErrors(duplicateErrors, false);
 }
 
-void Semantic::Detector::detectClassFunctionsErrors(Semantic::SymbolTable* symbolTable) {
+void Semantic::Detector::detectClassFunctionsErrors() {
     NamePair overloadedErrors;
     NamePair duplicateErrors;
     for (auto& _class : symbolTable->classes) {
@@ -57,6 +62,28 @@ void Semantic::Detector::detectClassFunctionsErrors(Semantic::SymbolTable* symbo
     handleErrors(overloadedErrors, true);
     handleErrors(duplicateErrors, false);
 }
+
+void Semantic::Detector::detectCircularDependency() {
+    std::unordered_set<std::string> visited;
+    for (auto& node : dependencyGraph->nodes) {
+        std::string className = node->getName();
+        if (visited.find(className) == visited.end()) {
+            std::unordered_set<std::string> visiting;
+            auto pair = dependencyGraph->dfs(className, visiting, visited);
+            if (!pair.first.empty() && !pair.second.empty()) {
+                std::string errorString =  "Circular dependencies between " + pair.first + " and " + pair.second;
+                auto errorPair = std::make_pair(errorString, 0);
+                addError(errorPair);
+                return;
+            }
+
+            //union the visiting and visited set
+            auto _visiting = std::unordered_set<std::string>(visiting);
+            visited.insert(_visiting.begin(), _visiting.end());
+        }
+    }
+}
+
 void Semantic::Detector::handleUndefinedClassFunctions(NamePair& undefined) {
     for (auto& e : undefined) {
         std::string errorString = "Undefined class functions " + e.first + " on class " + e.second;
@@ -87,10 +114,18 @@ void Semantic::Detector::addError(const error& _error) {
     errors.push_back(_error);
 }
 
-void Semantic::Detector::detect(SymbolTable * symbolTable) {
-    detectUndefinedClassFunctions(symbolTable);
-    detectFreeFunctionsErrors(symbolTable);
-    detectClassFunctionsErrors(symbolTable);
+void Semantic::Detector::detect() {
+    try { initDependencyGraph(symbolTable); }
+    catch (Semantic::Err::UndeclaredClass& undeclaredClass) {
+        auto pair = std::make_pair(std::string(undeclaredClass.what()), 0);
+        addError(pair);
+        return;
+    }
+
+    detectCircularDependency();
+    detectUndefinedClassFunctions();
+    detectFreeFunctionsErrors();
+    detectClassFunctionsErrors();
 }
 
 std::vector<error>& Semantic::Detector::getErrors() {
