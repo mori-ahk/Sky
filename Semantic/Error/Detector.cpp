@@ -63,7 +63,7 @@ void Semantic::Detector::detectClassFunctionsErrors() {
     handleErrors(duplicateErrors, false);
 }
 
-void Semantic::Detector::detectCircularDependency() {
+bool Semantic::Detector::detectCircularDependency() {
     std::unordered_set<std::string> visited;
     for (auto& node : dependencyGraph->nodes) {
         std::string className = node->getName();
@@ -74,7 +74,7 @@ void Semantic::Detector::detectCircularDependency() {
                 std::string errorString =  "Circular dependencies between " + pair.first + " and " + pair.second;
                 auto errorPair = std::make_pair(errorString, 0);
                 addError(errorPair);
-                return;
+                return true;
             }
 
             //union the visiting and visited set
@@ -82,8 +82,23 @@ void Semantic::Detector::detectCircularDependency() {
             visited.insert(_visiting.begin(), _visiting.end());
         }
     }
+    return false;
 }
 
+void Semantic::Detector::detectShadowMembers(Class *parent) {
+    if (parent->getInherits().empty()) return;
+    for (const auto& c : parent->getInherits()) {
+        detectShadowMembers(symbolTable->classes.at(c));
+        auto shadowMessages = symbolTable->classes.at(c)->findShadowMembers(*parent);
+        if (!shadowMessages.empty()) {
+            for (const auto& s : shadowMessages) {
+                auto pair = std::make_pair(s,0);
+                addError(pair);
+            }
+        }
+    }
+
+}
 void Semantic::Detector::handleUndefinedClassFunctions(NamePair& undefined) {
     for (const auto& e : undefined) {
         std::string errorString = "Undefined class functions " + e.first + " on class " + e.second;
@@ -115,6 +130,8 @@ void Semantic::Detector::addError(const error& _error) {
 }
 
 void Semantic::Detector::detect() {
+    //If an undeclared class found while building the dependency graph, the detect function returns
+    //and will not proceed with other detections.
     try { initDependencyGraph(symbolTable); }
     catch (Semantic::Err::UndeclaredClass& undeclaredClass) {
         auto pair = std::make_pair(std::string(undeclaredClass.what()), 0);
@@ -122,7 +139,15 @@ void Semantic::Detector::detect() {
         return;
     }
 
-    detectCircularDependency();
+    bool containsCircularDependency = detectCircularDependency();
+
+    //If contains circular dependency, shadow member function gets stuck in an infinite loop.
+    if (!containsCircularDependency) {
+        for (const auto &c : symbolTable->classes) {
+            detectShadowMembers(c.second);
+        }
+    }
+
     detectUndefinedClassFunctions();
     detectFreeFunctionsErrors();
     detectClassFunctionsErrors();

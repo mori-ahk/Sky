@@ -24,6 +24,7 @@ public:
     Function* getFunction(std::string&, Function*);
     void addVariable(std::string&, Variable*);
     void addFunction(std::string&, Function*);
+    std::vector<std::string> findShadowMembers(Class&);
     friend std::ostream& operator<<(std::ostream&, Class&);
 
 private:

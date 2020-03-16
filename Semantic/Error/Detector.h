@@ -18,11 +18,15 @@ namespace Semantic {
     class Detector {
     public:
         Detector() = default;
-        explicit Detector(Semantic::SymbolTable* _symbolTable) { this->symbolTable = _symbolTable; }
+        explicit Detector(Semantic::SymbolTable* _symbolTable) {
+            this->symbolTable = _symbolTable;
+            this->dependencyGraph = nullptr;
+        }
         void detectUndefinedClassFunctions();
         void detectFreeFunctionsErrors();
         void detectClassFunctionsErrors();
-        void detectCircularDependency();
+        bool detectCircularDependency();
+        void detectShadowMembers(Class*);
         void detect();
         void addError(const error&);
         void initDependencyGraph(Semantic::SymbolTable*);

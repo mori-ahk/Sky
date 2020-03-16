@@ -53,6 +53,37 @@ void Class::addFunction(std::string& funcName, Function* function) {
     functions[funcName].push_back(function);
 }
 
+std::vector<std::string> Class::findShadowMembers(Class& _class1) {
+    std::vector<std::string> shadowMessages;
+    for (const auto& v1: _class1.getVariables()) {
+        if (getVariables().find(v1.first) != getVariables().end()) {
+            auto v2 = getVariables().at(v1.first);
+            if (*v1.second == *v2) {
+                std::string shadowMessage =
+                        "Shadow variable " + v1.first + " between " + _class1.getName() + " and " + getName();
+                shadowMessages.push_back(shadowMessage);
+            }
+        }
+    }
+
+    for (const auto& c1: _class1.getFunctions()) {
+        for (const auto& f1 : c1.second) {
+            if (getFunctions().find(c1.first) != getFunctions().end()) {
+                for (const auto &f2 : getFunctions().at(c1.first)) {
+                    if (*f1 == *f2) {
+                        std::string shadowMessage =
+                                "Shadow function " + f1->getName() + " between " + _class1.getName() + " and " +
+                                getName();
+                        shadowMessages.push_back(shadowMessage);
+                    }
+                }
+            }
+        }
+    }
+
+    return shadowMessages;
+}
+
 std::ostream& operator<<(std::ostream& os, Class& c) {
     std::string inherits;
     for (auto& s : c.getInherits()) {
