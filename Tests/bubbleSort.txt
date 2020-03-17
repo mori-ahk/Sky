@@ -15,7 +15,21 @@ bubbleSort(integer arr[], integer size) : void
         i = i+1;
         n = n * n;
         n = i / n;
+        n = -1;
       end;
+    write(2+3);
+    read(a.size().g);
+    if (arr[j] > arr[j+1])
+                  then
+                    do
+                      // swap temp and arr[i]
+                      temp = arr[j];
+                      arr[j] = arr[j+1];
+                      arr[j+1] = temp;
+                    end
+                  else
+    	        ;
+    return (2+3);
   end
 
 

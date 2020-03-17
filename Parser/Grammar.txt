@@ -31,7 +31,7 @@ STATEMENT -> write lpar EXPRESSION @2 rpar semi  .
 STATEMENT -> return lpar EXPRESSION @2 rpar semi  .
 STATEMENT -> ASSIGNSTATEMENTORFUNCTIONCALL  .
 
-STATEMENTVARIABLE -> @1_#var_call id @2 STATEMENTVARIABLEORFUNCTIONCALL  .
+STATEMENTVARIABLE -> @1_#call id @2 STATEMENTVARIABLEORFUNCTIONCALL  .
 
 STATEMENTVARIABLEORFUNCTIONCALL -> INDICES @2 STATEMENTVARIABLEEXT  .
 STATEMENTVARIABLEORFUNCTIONCALL -> lpar FUNCTIONCALLPARAMS @2 rpar STATEMENTFUNCTIONCALL  .
@@ -55,9 +55,9 @@ FUNCTIONCALLEXT -> dot ASSIGNSTATEMENTORFUNCTIONCALL  .
 FUNCTIONPARAMS -> @1_#params @1_#param @1_#private @2 TYPE @2 id @2 ARRAYDIMENSIONS @2 @2 FUNCTIONPARAMSTAILS @3  .
 FUNCTIONPARAMS ->   .
 
-ADDOP -> plus  .
-ADDOP -> minus  .
-ADDOP -> or  .
+ADDOP -> @1_#add plus @2  .
+ADDOP -> @1_#add minus @2  .
+ADDOP -> @1_#add or @2  .
 
 OPTIONALINHERITS -> inherits id @2 INHERITEDCLASSES @3  .
 OPTIONALINHERITS ->   .
@@ -104,12 +104,12 @@ INHERITEDCLASSES ->   .
 SIGN -> plus  .
 SIGN -> minus  .
 
-COMPAREOP -> eq  .
-COMPAREOP -> noteq  .
-COMPAREOP -> less  .
-COMPAREOP -> greater  .
-COMPAREOP -> lesseq  .
-COMPAREOP -> greatereq  .
+COMPAREOP -> @1_#cmp eq @2  .
+COMPAREOP -> @1_#cmp noteq @2  .
+COMPAREOP -> @1_#cmp less @2  .
+COMPAREOP -> @1_#cmp greater @2  .
+COMPAREOP -> @1_#cmp lesseq @2  .
+COMPAREOP -> @1_#cmp greatereq @2  .
 
 INDEX -> @1 lsqbr ARITHEXPRESSION @2 rsqbr  .
 
@@ -136,9 +136,9 @@ FACTORFUNCTIONCALL ->   .
 
 TERM -> FACTOR RIGHTRECTERM @6  .
 
-MULTOP -> mult  .
-MULTOP -> div  .
-MULTOP -> and  .
+MULTOP -> @1_#mult mult @2  .
+MULTOP -> @1_#mult div @2  .
+MULTOP -> @1_#mult and @2  .
 
 RIGHTRECTERM ->   .
 RIGHTRECTERM -> MULTOP @4 FACTOR @2 RIGHTRECTERM  .

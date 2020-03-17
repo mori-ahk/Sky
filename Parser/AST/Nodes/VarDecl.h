@@ -10,7 +10,7 @@
 
 class VarDecl : public AST::ASTNode {
 public:
-    VarDecl(std::string name, Token* token) : ASTNode(std::move(name), token) {}
+    VarDecl(std::string name, Token *token) : ASTNode(std::move(name), token) {}
 
     void accept(Visitor &visitor) override;
 };

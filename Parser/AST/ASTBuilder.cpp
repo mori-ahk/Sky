@@ -123,7 +123,19 @@ AST::ASTNode *AST::ASTBuilder::createCustomNode(std::string &nodeName, Token *to
     else if (nodeName == "PROGRAM") return new Program(nodeName, token);
     else if (nodeName == "variable") return new VarDecl(nodeName, token);
     else if (nodeName == "func_body") return new FuncBody(nodeName, token);
+    else if (nodeName == "func_call") return new FuncCall(nodeName, token);
     else if (nodeName == "main") return new MainFunc(nodeName, token);
-
+    else if (nodeName == "sign") return new Sign(nodeName, token);
+    else if (nodeName == "add") return new AddOp(nodeName, token);
+    else if (nodeName == "cmp") return new CompareOp(nodeName, token);
+    else if (nodeName == "mult") return new MultOp(nodeName, token);
+    else if (nodeName == "=") return new AssignOp(nodeName, token);
+    else if (nodeName == "if") return new If(nodeName, token);
+    else if (nodeName == "while") return new While(nodeName, token);
+    else if (nodeName == "read") return new Read(nodeName, token);
+    else if (nodeName == "write") return new Write(nodeName, token);
+    else if (nodeName == "STATEMENTS" || nodeName == "STATEMENTBLOCK") return new Statements(nodeName, token);
+    else if (nodeName == "calls") return new Calls(nodeName, token);
+    else if (nodeName == "call") return new Call(nodeName, token);
     else return new ASTNode(nodeName, token);
 }
