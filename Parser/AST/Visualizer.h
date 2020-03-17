@@ -10,11 +10,14 @@
 
 class Visualizer {
 public:
-    void visualize(AST::ASTNode*);
-    void generateDot(AST::ASTNode*);
+    void visualize(AST::ASTNode *);
+
+    void generateDot(AST::ASTNode *);
 
     Visualizer();
+
     ~Visualizer() = default;
+
 private:
     std::string dotFileContent;
 };

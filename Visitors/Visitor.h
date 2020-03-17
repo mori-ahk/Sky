@@ -32,7 +32,7 @@ public:
     virtual void visit(ArrayDim* node) = 0;
     virtual void visit(MainFunc* node) = 0;
     virtual void visit(AST::ASTNode* node) = 0;
-    virtual ~Visitor() = 0;
+    virtual ~Visitor() = default;
 };
 
 

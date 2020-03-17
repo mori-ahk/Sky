@@ -4,7 +4,7 @@
 
 #include "Parser.h"
 
-Syntax::Parser::Parser(Lexer* lexer) {
+Syntax::Parser::Parser(Lexer *lexer) {
     this->lexer = lexer;
     this->grammar = new Language::Grammar();
     this->AST_Builder = new AST::ASTBuilder();
@@ -22,24 +22,25 @@ void Syntax::Parser::next() {
     currentToken = lexer->next();
 }
 
-bool Syntax::Parser::shouldTakeNext(std::string& LHS) {
+bool Syntax::Parser::shouldTakeNext(std::string &LHS) {
     return currentToken->getTokenTypeMap().at(LHS) == currentToken->getType();
 }
 
-bool Syntax::Parser::isKeyword(std::string& rule) {
+bool Syntax::Parser::isKeyword(std::string &rule) {
     return KEYWORDS.find(rule) != KEYWORDS.end();
 }
 
-void Syntax::Parser::printError(Language::Rule& rule) {
+void Syntax::Parser::printError(Language::Rule &rule) {
     if (currentToken == nullptr) return;
-        std::cout << "ERROR: at line " << currentToken->getLineno() << " at position: " << currentToken->getPosition() << " expected one of these: ";
-        for (const auto& _rule: rule.getFollow()) {
-            std::cout << _rule << ", ";
-        }
-        std::cout << std::endl;
+    std::cout << "ERROR: at line " << currentToken->getLineno() << " at position: " << currentToken->getPosition()
+              << " expected one of these: ";
+    for (const auto &_rule: rule.getFollow()) {
+        std::cout << _rule << ", ";
+    }
+    std::cout << std::endl;
 }
 
-void Syntax::Parser::panic(std::string& rule) {
+void Syntax::Parser::panic(std::string &rule) {
     while (!parse(rule, true)) next();
 }
 
@@ -58,7 +59,7 @@ bool Syntax::Parser::parse(std::string LHS, bool isOnPanicMode) {
         } else return false;
     }
 
-    Language::Rule* currentRule = grammar->getRule(LHS);
+    Language::Rule *currentRule = grammar->getRule(LHS);
     if (!currentRule->doesBelongToFirst(currentToken)) {
         if ((isOnPanicMode || currentRule->isNullable()) && currentRule->doesBelongToFollow(currentToken)) {
             AST_Builder->push(LHS, 0);
@@ -68,9 +69,9 @@ bool Syntax::Parser::parse(std::string LHS, bool isOnPanicMode) {
 
     std::vector<std::string> rulesToProcess;
     bool found = false;
-    for(auto& production : currentRule->getRHS()) {
+    for (auto &production : currentRule->getRHS()) {
         if (found) break;
-        for (auto& _rule: production) {
+        for (auto &_rule: production) {
             if (_rule != "#" && _rule.front() != '@') {
                 if (grammar->shouldTake(_rule, currentToken)) {
                     rulesToProcess = production;
@@ -81,7 +82,7 @@ bool Syntax::Parser::parse(std::string LHS, bool isOnPanicMode) {
         }
     }
 
-    for(auto& rule: rulesToProcess) {
+    for (auto &rule: rulesToProcess) {
         if (rule.front() == '@') { // do action
             AST_Builder->handle(rule, LHS);
             continue;

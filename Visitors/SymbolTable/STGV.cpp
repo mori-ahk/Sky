@@ -7,13 +7,14 @@
 #include <vector>
 
 
-STGV::STGV(AST::ASTNode* root) {
+STGV::STGV(AST::ASTNode *root) {
     this->symbolTable = new Semantic::SymbolTable();
     this->detector = new Semantic::Detector(this->symbolTable);
     root->getChildren().at(0)->accept(*this);
 }
+
 void STGV::visit(Program *node) {
-    for(auto child : node->getChildren()) {
+    for (auto child : node->getChildren()) {
         child->accept(*this);
     }
 
@@ -24,8 +25,8 @@ void STGV::visit(Program *node) {
 void STGV::visit(FuncDef *node) {
     std::string namespaceName;
 
-    AST::ASTNode* signature = node->getChild(0);
-    AST::ASTNode* funcBody = node->getChild(1);
+    AST::ASTNode *signature = node->getChild(0);
+    AST::ASTNode *funcBody = node->getChild(1);
     auto isClassFunc = [&signature]() {
         return signature->getChildren().size() == 4;
     };
@@ -38,18 +39,18 @@ void STGV::visit(FuncDef *node) {
     else funcName = signature->getChild(0)->getName();
 
     std::string returnType = isClassFunc() ? signature->getChild(3)->getName() : signature->getChild(2)->getName();
-    Function* function = new Function(Visibility::PUBLIC, funcName, returnType, {}, {});
+    Function *function = new Function(Visibility::PUBLIC, funcName, returnType, {}, {});
 
     //iterating on params
-    AST::ASTNode* params = isClassFunc() ? signature->getChild(2) : signature->getChild(1);
+    AST::ASTNode *params = isClassFunc() ? signature->getChild(2) : signature->getChild(1);
 
-    for (auto& param: params->getChildren()) {
+    for (auto &param: params->getChildren()) {
         Variable *variable = createVar(param);
 
         //throw a semantic error if `variable` is a duplicate param in the `function`
         try {
             function->addParam(variable);
-        } catch (Semantic::Err::DuplicateFuncParam& duplicateParam) {
+        } catch (Semantic::Err::DuplicateFuncParam &duplicateParam) {
             int position = param->getChild(1)->getLineNumber();
             auto pair = std::make_pair(std::string(duplicateParam.what()), position);
             detector->addError(pair);
@@ -61,12 +62,12 @@ void STGV::visit(FuncDef *node) {
         try {
             auto classFunction = symbolTable->getClass(namespaceName)->getFunction(funcName, function);
             classFunction->isDefined = true;
-        } catch (Semantic::Err::UndeclaredClass& undeclaredClass) {
+        } catch (Semantic::Err::UndeclaredClass &undeclaredClass) {
             int position = signature->getChild(0)->getLineNumber();
             auto pair = std::make_pair(std::string(undeclaredClass.what()), position);
             detector->addError(pair);
             return;
-        } catch (Semantic::Err::UndeclaredFunction& undeclaredFunc) {
+        } catch (Semantic::Err::UndeclaredFunction &undeclaredFunc) {
             int position = signature->getChild(0)->getLineNumber();
             auto pair = std::make_pair(std::string(undeclaredFunc.what()), position);
             detector->addError(pair);
@@ -75,14 +76,14 @@ void STGV::visit(FuncDef *node) {
     }
 
     //iterating on local vars
-    AST::ASTNode* localVars = funcBody->getChild(0);
-    for (auto& localVar : localVars->getChildren()) {
-        Variable* variable = createVar(localVar);
+    AST::ASTNode *localVars = funcBody->getChild(0);
+    for (auto &localVar : localVars->getChildren()) {
+        Variable *variable = createVar(localVar);
 
         //throw a semantic error if `variable` is a duplicate variable in the `function`'s local scope.
         try {
             function->addVariable(variable);
-        } catch (Semantic::Err::DuplicateDataMember& duplicateLocalVar) {
+        } catch (Semantic::Err::DuplicateDataMember &duplicateLocalVar) {
             int position = localVar->getChild(1)->getLineNumber();
             auto pair = std::make_pair(std::string(duplicateLocalVar.what()), position);
             detector->addError(pair);
@@ -100,10 +101,10 @@ void STGV::visit(FuncDef *node) {
 }
 
 void STGV::visit(VarDecl *node) {
-    Variable* variable = createVar(node);
+    Variable *variable = createVar(node);
     try {
         symbolTable->classes.at(node->getParent()->getName())->addVariable(variable->getName(), variable);
-    } catch (Semantic::Err::DuplicateDataMember& duplicateDataMember) {
+    } catch (Semantic::Err::DuplicateDataMember &duplicateDataMember) {
         int position = node->getChild(1)->getLineNumber();
         auto pair = std::make_pair(std::string(duplicateDataMember.what()), position);
         detector->addError(pair);
@@ -113,10 +114,10 @@ void STGV::visit(VarDecl *node) {
 
 void STGV::visit(FuncDecl *node) {
     std::string visibilityString = node->getChild(0)->getName();
-    Visibility  visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
-    std::string funcName =  node->getChild(1)->getName();
+    Visibility visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
+    std::string funcName = node->getChild(1)->getName();
     std::string returnType = node->getChild(3)->getName();
-    Function* function = new Function(visibility, funcName, returnType, {}, {});
+    Function *function = new Function(visibility, funcName, returnType, {}, {});
 
     symbolTable->getClass(node->getParent()->getName())->addFunction(funcName, function);
 
@@ -133,43 +134,43 @@ void STGV::visit(ClassDecl *node) {
     std::string className = node->getChild(0)->getName();
     std::vector<std::string> inherits;
     //constructing a string indicating all the parent class
-    for (auto& child : node->getChild(1)->getChildren()) {
+    for (auto &child : node->getChild(1)->getChildren()) {
         inherits.push_back(child->getName());
     }
 
-    Class* classEntry = new Class(className, className, inherits);
+    Class *classEntry = new Class(className, className, inherits);
     try {
         symbolTable->addClass(className, classEntry);
-    } catch (Semantic::Err::DuplicateClassDecl& duplicateClassDecl) {
+    } catch (Semantic::Err::DuplicateClassDecl &duplicateClassDecl) {
         int position = node->getChild(0)->getLineNumber();
         auto pair = std::make_pair(std::string(duplicateClassDecl.what()), position);
         detector->addError(pair);
     }
 
-    for (auto& child : node->getChild(2)->getChildren()) {
-       //setting the parent of each member in `MEMBERDECLARATIONS` to `className` node
-       child->setParent(node->getChild(0));
-       child->accept(*this);
+    for (auto &child : node->getChild(2)->getChildren()) {
+        //setting the parent of each member in `MEMBERDECLARATIONS` to `className` node
+        child->setParent(node->getChild(0));
+        child->accept(*this);
     }
 }
 
 void STGV::visit(ClassDecls *node) {
-    for(auto& child : node->getChildren()) {
+    for (auto &child : node->getChildren()) {
         child->accept(*this);
     }
 }
 
 void STGV::visit(FuncParams *node) {
-    for(auto& child: node->getChildren()) {
+    for (auto &child: node->getChildren()) {
         //setting the parent of each `param` node to `funcName` node
         child->setParent(node->getParent());
 
-        Variable* variable = createVar(child);
+        Variable *variable = createVar(child);
         std::string className = node->getParent()->getParent()->getName();
         std::string funcName = node->getParent()->getName();
         try {
             symbolTable->classes.at(className)->getFunctions().at(funcName).back()->addParam(variable);
-        } catch (Semantic::Err::DuplicateFuncParam& duplicateFuncParam) {
+        } catch (Semantic::Err::DuplicateFuncParam &duplicateFuncParam) {
             int position = node->getParent()->getLineNumber();
             auto pair = std::make_pair(std::string(duplicateFuncParam.what()), position);
             detector->addError(pair);
@@ -177,15 +178,15 @@ void STGV::visit(FuncParams *node) {
     }
 }
 
-void STGV::visit(MainFunc* node) {
-    AST::ASTNode* funcBody = node->getChild(0);
-    AST::ASTNode* localVars = funcBody->getChild(0);
+void STGV::visit(MainFunc *node) {
+    AST::ASTNode *funcBody = node->getChild(0);
+    AST::ASTNode *localVars = funcBody->getChild(0);
 
-    for(auto& var : localVars->getChildren()) {
-        Variable* variable = createVar(var);
+    for (auto &var : localVars->getChildren()) {
+        Variable *variable = createVar(var);
         try {
             symbolTable->main->addVariable(variable);
-        } catch (Semantic::Err::DuplicateDataMember& duplicateLocalVar) {
+        } catch (Semantic::Err::DuplicateDataMember &duplicateLocalVar) {
             int position = var->getChild(1)->getLineNumber();
             auto pair = std::make_pair(std::string(duplicateLocalVar.what()), position);
             detector->addError(pair);
@@ -194,13 +195,13 @@ void STGV::visit(MainFunc* node) {
 }
 
 void STGV::visit(AST::ASTNode *node) {
-    for(auto& child : node->getChildren()) {
+    for (auto &child : node->getChildren()) {
         child->setParent(node->getParent());
         child->accept(*this);
     }
 }
 
-Variable* STGV::createVar(AST::ASTNode* node) {
+Variable *STGV::createVar(AST::ASTNode *node) {
     int startIndex = node->getChildren().size() == 4 ? 1 : 0;
     Visibility visibility = Visibility::PRIVATE;
 
@@ -213,17 +214,19 @@ Variable* STGV::createVar(AST::ASTNode* node) {
     std::string varName = node->getChild(startIndex)->getName();
     std::vector<int> dimensions;
 
-    AST::ASTNode* dimNodeToIterate = node->getChildren().size() == 4 ? node->getChild(3) : node->getChild(2);
-    for (auto& arrayDimensionChild: dimNodeToIterate->getChildren()) {
+    AST::ASTNode *dimNodeToIterate = node->getChildren().size() == 4 ? node->getChild(3) : node->getChild(2);
+    for (auto &arrayDimensionChild: dimNodeToIterate->getChildren()) {
         try {
             int dimension = std::stoi(arrayDimensionChild->getChild(0)->getName());
             dimensions.push_back(dimension);
-        } catch (const std::invalid_argument& invalid_argument) {}
+        } catch (const std::invalid_argument &invalid_argument) {}
     }
 
     return new Variable(visibility, varName, type, dimensions);
 }
 
 void STGV::visit(ArrayDim *node) {}
+
 void STGV::visit(FuncBody *node) {}
+
 void STGV::visit(Local *node) {}

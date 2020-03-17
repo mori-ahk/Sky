@@ -16,22 +16,33 @@
 class Lexer {
 public:
     Lexer();
+
     ~Lexer();
+
     void lex(std::string);
-    Token* next();
+
+    Token *next();
+
     int linePosition;
 private:
-    Tokenizer* tokenizer;
-    void handleWord(std::string&, int, int&);
-    void read(std::string&);
-    void write(std::string&);
-    static bool doesOnlyContainWhitespace(std::string&);
-    static bool isComment(Token*);
-    static std::string extractErrorString(std::string&);
+    Tokenizer *tokenizer;
+
+    void handleWord(std::string &, int, int &);
+
+    void read(std::string &);
+
+    void write(std::string &);
+
+    static bool doesOnlyContainWhitespace(std::string &);
+
+    static bool isComment(Token *);
+
+    static std::string extractErrorString(std::string &);
+
     int currentToken;
-    std::vector<Token*> totalMatches;
-    std::vector<Token*> totalErrors;
-    std::vector<Token*> totalTokens;
+    std::vector<Token *> totalMatches;
+    std::vector<Token *> totalErrors;
+    std::vector<Token *> totalTokens;
 };
 
 #endif //SKY_LEXER_H

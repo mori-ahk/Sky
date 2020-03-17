@@ -3,22 +3,25 @@
 //
 
 #include "Function.h"
+
+#include <utility>
 #include "../../Error/Error.h"
 
-Function::Function(Visibility visibility, std::string name, std::string returnType, std::vector<Variable *> params, std::vector<Variable*> localVars) {
+Function::Function(Visibility visibility, std::string name, std::string returnType, std::vector<Variable *> params,
+                   std::vector<Variable *> localVars) {
     this->visibility = visibility;
-    this->name = name;
-    this->returnType = returnType;
-    this->params = params;
-    this->localVars = localVars;
+    this->name = std::move(name);
+    this->returnType = std::move(returnType);
+    this->params = std::move(params);
+    this->localVars = std::move(localVars);
     this->isDefined = false;
 }
 
-std::string& Function::getName() {
+std::string &Function::getName() {
     return name;
 }
 
-std::string& Function::getReturnType() {
+std::string &Function::getReturnType() {
     return returnType;
 }
 
@@ -27,11 +30,11 @@ std::string Function::getVisibilityString() {
     else return "private";
 }
 
-std::vector<Variable *> & Function::getParams() {
+std::vector<Variable *> &Function::getParams() {
     return params;
 }
 
-std::vector<Variable *>& Function::getLocalVars() {
+std::vector<Variable *> &Function::getLocalVars() {
     return localVars;
 }
 
@@ -39,7 +42,7 @@ Visibility Function::getVisibility() {
     return visibility;
 }
 
-void Function::addParam(Variable * variable) {
+void Function::addParam(Variable *variable) {
     for (auto param : params)
         if (param->getName() == variable->getName())
             throw Semantic::Err::DuplicateFuncParam();
@@ -48,7 +51,7 @@ void Function::addParam(Variable * variable) {
     addVariable(variable);
 }
 
-void Function::addVariable(Variable* variable) {
+void Function::addVariable(Variable *variable) {
     for (auto var: localVars)
         if (var->getName() == variable->getName())
             throw Semantic::Err::DuplicateDataMember();
@@ -56,11 +59,12 @@ void Function::addVariable(Variable* variable) {
     localVars.push_back(variable);
 }
 
-std::ostream& operator<<(std::ostream& os, Function& f) {
+std::ostream &operator<<(std::ostream &os, Function &f) {
     std::string visibility = f.getVisibilityString();
     os << "FUNCTION:\n";
-    os << "\t[ " <<  "visibility: " << visibility << " | name: " << f.getName() << " | returns: "  << f.getReturnType() << " ]" << std::endl;
-    for (auto& var : f.getLocalVars()) {
+    os << "\t[ " << "visibility: " << visibility << " | name: " << f.getName() << " | returns: " << f.getReturnType()
+       << " ]" << std::endl;
+    for (auto &var : f.getLocalVars()) {
         os << "\t\t" << *var << std::endl;
     }
     return os;

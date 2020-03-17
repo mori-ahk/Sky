@@ -8,10 +8,11 @@
 
 #include "../ASTNode.h"
 
-class FuncDecl: public AST::ASTNode {
+class FuncDecl : public AST::ASTNode {
 public:
     FuncDecl(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
-    void accept(Visitor& visitor) override;
+
+    void accept(Visitor &visitor) override;
 };
 
 

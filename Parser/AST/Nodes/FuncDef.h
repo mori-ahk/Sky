@@ -11,7 +11,8 @@
 class FuncDef : public AST::ASTNode {
 public:
     FuncDef(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
-    void accept(Visitor& visitor) override;
+
+    void accept(Visitor &visitor) override;
 };
 
 

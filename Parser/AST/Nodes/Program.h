@@ -11,7 +11,8 @@
 class Program : public AST::ASTNode {
 public:
     Program(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
-    void accept(Visitor& visitor) override;
+
+    void accept(Visitor &visitor) override;
 };
 
 

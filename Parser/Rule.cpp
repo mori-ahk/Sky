@@ -10,27 +10,27 @@ Language::Rule::Rule(std::string name) {
     this->name = name;
 }
 
-bool Language::Rule::doesBelongToFirst(Token* token) {
+bool Language::Rule::doesBelongToFirst(Token *token) {
     return first.find(token->getReverseTokenTypeMap()[token->getType()]) != first.end();
 }
 
-bool Language::Rule::doesBelongToFollow(Token* token) {
+bool Language::Rule::doesBelongToFollow(Token *token) {
     return follow.find(token->getReverseTokenTypeMap()[token->getType()]) != follow.end();
 }
 
-std::unordered_set<std::string>& Language::Rule::getFirst() {
+std::unordered_set<std::string> &Language::Rule::getFirst() {
     return first;
 }
 
-std::unordered_set<std::string>& Language::Rule::getFollow() {
+std::unordered_set<std::string> &Language::Rule::getFollow() {
     return follow;
 }
 
-std::string& Language::Rule::getName() {
+std::string &Language::Rule::getName() {
     return name;
 }
 
-std::vector<std::vector<std::string>>& Language::Rule::getRHS() {
+std::vector<std::vector<std::string>> &Language::Rule::getRHS() {
     return RHS;
 }
 
@@ -67,11 +67,11 @@ bool Language::Rule::isTerminal() {
     return TERMINALS.find(this->name) != TERMINALS.end();
 }
 
-bool Language::Rule::isTerminal(std::string & rule) {
+bool Language::Rule::isTerminal(std::string &rule) {
     return TERMINALS.find(rule) != TERMINALS.end();
 }
 
-const std::unordered_map<std::string, std::string>& Language::Rule::getTerminals() {
+const std::unordered_map<std::string, std::string> &Language::Rule::getTerminals() {
     return TERMINALS;
 }
 
@@ -86,14 +86,14 @@ void Language::Rule::clearWatchList() {
 
 void Language::Rule::callWatchlist(bool isFirst) {
     if (isFirst) {
-        for (const auto& s: first) {
-            for (Rule* r: watchlist) {
+        for (const auto &s: first) {
+            for (Rule *r: watchlist) {
                 r->addToFirst(s);
             }
         }
     } else {
-        for (const auto& s: follow) {
-            for (Rule* r: watchlist) {
+        for (const auto &s: follow) {
+            for (Rule *r: watchlist) {
                 r->addToFollow(s);
             }
         }
