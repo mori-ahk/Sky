@@ -10,7 +10,7 @@
 
 class FuncBody : public AST::ASTNode {
 public:
-    FuncBody(std::string name, Token* token) : ASTNode(std::move(name), token) {}
+    FuncBody(std::string name, Token *token) : ASTNode(std::move(name), token) {}
 
     void accept(Visitor &visitor) override;
 };

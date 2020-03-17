@@ -10,7 +10,7 @@
 
 class MainFunc : public AST::ASTNode {
 public:
-    MainFunc(std::string name, Token* token) : ASTNode(std::move(name), token) {}
+    MainFunc(std::string name, Token *token) : ASTNode(std::move(name), token) {}
 
     void accept(Visitor &visitor) override;
 };

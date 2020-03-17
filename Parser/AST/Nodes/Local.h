@@ -10,7 +10,7 @@
 
 class Local : public AST::ASTNode {
 public:
-    Local(std::string name, Token* token) : ASTNode(std::move(name), token) {}
+    Local(std::string name, Token *token) : ASTNode(std::move(name), token) {}
 
     void accept(Visitor &visitor) override;
 };

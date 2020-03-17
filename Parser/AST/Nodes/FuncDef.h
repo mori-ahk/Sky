@@ -10,7 +10,7 @@
 
 class FuncDef : public AST::ASTNode {
 public:
-    FuncDef(std::string name, Token* token) : ASTNode(std::move(name), token) {}
+    FuncDef(std::string name, Token *token) : ASTNode(std::move(name), token) {}
 
     void accept(Visitor &visitor) override;
 };
