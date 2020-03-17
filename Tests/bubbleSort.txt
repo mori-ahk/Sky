@@ -1,0 +1,30 @@
+/* sort the array */
+bubbleSort(integer arr[], integer size) : void
+  local
+    integer n;
+    integer i;
+    integer j;
+    integer temp;
+  do
+    n = size.getSize().a;
+    i = 0;
+    j = 0;
+    temp = 0;
+    while (i < n.size-1)
+      do
+        i = i+1;
+        n = n * n;
+        n = i / n;
+      end;
+  end
+
+
+// main funtion to test above
+main
+  local
+    integer arr[7];
+  do
+    arr[0] = 64;
+    a = 1 and 2 and 2 + 4;
+    printarray(arr, 7);
+  end

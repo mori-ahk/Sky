@@ -63,7 +63,7 @@ void AST::ASTBuilder::constructListAndInsertAsChild() {
         stack.pop();
     }
 
-    auto A = new ASTNode("call_list", 0);
+    auto A = new ASTNode("calls", nullptr);
     A->addChildToLeft(childrenToBeInserted);
     stack.push(A);
 }
@@ -113,7 +113,7 @@ void AST::ASTBuilder::visualize() {
 }
 
 AST::ASTNode *AST::ASTBuilder::createCustomNode(std::string &nodeName, Token *token) {
-    if (nodeName == "CLASSDECLARATIONS") return new ClassDecls(nodeName, token);
+    if (nodeName == "classes") return new ClassDecls(nodeName, token);
     else if (nodeName == "class") return new ClassDecl(nodeName, token);
     else if (nodeName == "func_decl") return new FuncDecl(nodeName, token);
     else if (nodeName == "params") return new FuncParams(nodeName, token);
@@ -124,5 +124,6 @@ AST::ASTNode *AST::ASTBuilder::createCustomNode(std::string &nodeName, Token *to
     else if (nodeName == "variable") return new VarDecl(nodeName, token);
     else if (nodeName == "func_body") return new FuncBody(nodeName, token);
     else if (nodeName == "main") return new MainFunc(nodeName, token);
+
     else return new ASTNode(nodeName, token);
 }
