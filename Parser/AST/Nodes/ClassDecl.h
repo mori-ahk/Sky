@@ -6,11 +6,13 @@
 #define SKY_CLASSDECL_H
 
 
+#include <utility>
+
 #include "../ASTNode.h"
 
 class ClassDecl : public AST::ASTNode {
 public:
-    ClassDecl(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
+    ClassDecl(std::string name, Token* token) : ASTNode(std::move(name), token) {}
 
     void accept(Visitor &visitor) override;
 };

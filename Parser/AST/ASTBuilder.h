@@ -20,6 +20,7 @@
 #include "Nodes/VarDecl.h"
 #include "Nodes/ArrayDim.h"
 #include "Nodes/MainFunc.h"
+
 namespace AST {
     class ASTBuilder {
     public:
@@ -30,7 +31,7 @@ namespace AST {
 
         void handle(std::string &, std::string &);
 
-        void push(std::string &, int);
+        void push(std::string &, Token *);
 
         bool isIgnoreModeOn;
 
@@ -54,7 +55,7 @@ namespace AST {
 
         void removeSelfIfOnlyHasOneChild();
 
-        static ASTNode *createCustomNode(std::string &, int lineNumber = 0);
+        static ASTNode *createCustomNode(std::string &, Token *token = nullptr);
 
         std::stack<ASTNode *> stack;
         std::stack<ASTNode *> testStack;

@@ -6,54 +6,59 @@
 #include <iostream>
 
 
-
 AST::ASTBuilder::ASTBuilder() {
     std::string program = "START";
-    this->root = new ASTNode(program, 0);
+    this->root = new ASTNode(program, nullptr);
     this->visualizer = new Visualizer();
     stack.push(root);
-
 }
 
-AST::ASTNode* AST::ASTBuilder::getRoot() {
+AST::ASTNode *AST::ASTBuilder::getRoot() {
     return root;
 }
 
-void AST::ASTBuilder::createNode(std::string& rule) {
+void AST::ASTBuilder::createNode(std::string &rule) {
     stack.push(createCustomNode(rule));
 }
 
-void AST::ASTBuilder::push(std::string& nodeName, int lineNumber) {
-    stack.push(createCustomNode(nodeName, lineNumber));
+void AST::ASTBuilder::push(std::string &nodeName, Token *token) {
+    stack.push(createCustomNode(nodeName, token));
 }
 
 void AST::ASTBuilder::insertRightChild() {
-    auto B = stack.top(); stack.pop();
-    auto A = stack.top(); stack.pop();
+    auto B = stack.top();
+    stack.pop();
+    auto A = stack.top();
+    stack.pop();
     A->addChildToRight(B);
     stack.push(A);
 }
 
 void AST::ASTBuilder::insertLeftChild() {
-    auto B = stack.top(); stack.pop();
-    auto A = stack.top(); stack.pop();
+    auto B = stack.top();
+    stack.pop();
+    auto A = stack.top();
+    stack.pop();
     B->addChildToLeft(A);
     stack.push(B);
 
 }
 
 void AST::ASTBuilder::adoptChild() {
-    auto B = stack.top(); stack.pop();
-    auto A = stack.top(); stack.pop();
+    auto B = stack.top();
+    stack.pop();
+    auto A = stack.top();
+    stack.pop();
     A->adoptChildren(B->getChildren());
     stack.push(A);
 }
 
 void AST::ASTBuilder::constructListAndInsertAsChild() {
-    auto B = stack.top(); stack.pop();
-    std::vector<ASTNode*> childrenToBeInserted;
+    auto B = stack.top();
+    stack.pop();
+    std::vector<ASTNode *> childrenToBeInserted;
     childrenToBeInserted.push_back(B);
-    while(stack.top()->getName() == B->getName()) {
+    while (stack.top()->getName() == B->getName()) {
         childrenToBeInserted.push_back(stack.top());
         stack.pop();
     }
@@ -64,12 +69,13 @@ void AST::ASTBuilder::constructListAndInsertAsChild() {
 }
 
 void AST::ASTBuilder::removeSelfIfOnlyHasOneChild() {
-    auto B = stack.top(); stack.pop();
+    auto B = stack.top();
+    stack.pop();
     if (B->getChildren().size() == 1) B = B->getChildren().at(0);
     stack.push(B);
 }
 
-void AST::ASTBuilder::handle(std::string& action, std::string& LHS) {
+void AST::ASTBuilder::handle(std::string &action, std::string &LHS) {
     if (isIgnoreModeOn) return;
     std::string action_number = action.substr(0, 2);
     if (action_number == "@1") {
@@ -78,9 +84,7 @@ void AST::ASTBuilder::handle(std::string& action, std::string& LHS) {
             std::string arg = action.substr(4);
             createNode(arg);
         } else createNode(LHS);
-    }
-
-    else if (action_number == "@2") insertRightChild();
+    } else if (action_number == "@2") insertRightChild();
     else if (action_number == "@3") adoptChild();
     else if (action_number == "@4") insertLeftChild();
     else if (action_number == "@5") constructListAndInsertAsChild();
@@ -89,14 +93,14 @@ void AST::ASTBuilder::handle(std::string& action, std::string& LHS) {
 }
 
 void AST::ASTBuilder::printStack() {
-    std::vector<ASTNode*> v;
+    std::vector<ASTNode *> v;
     testStack = stack;
-    while(!testStack.empty()) {
+    while (!testStack.empty()) {
         v.push_back(testStack.top());
         testStack.pop();
     }
 
-    for (int i = v.size() - 1; i > -1 ; i--) {
+    for (int i = v.size() - 1; i > -1; i--) {
         std::cout << v.at(i)->getName() << "| ";
     }
 
@@ -108,18 +112,17 @@ void AST::ASTBuilder::visualize() {
     visualizer->visualize(root);
 }
 
-
-AST::ASTNode* AST::ASTBuilder::createCustomNode(std::string& nodeName, int lineNumber) {
-    if (nodeName == "CLASSDECLARATIONS") return new ClassDecls(nodeName, lineNumber);
-    else if (nodeName == "class") return new ClassDecl(nodeName, lineNumber);
-    else if (nodeName == "func_decl") return new FuncDecl(nodeName, lineNumber);
-    else if (nodeName == "params") return new FuncParams(nodeName, lineNumber);
-    else if (nodeName == "func_def") return new FuncDef(nodeName,lineNumber);
-    else if (nodeName == "ARRAYDIMENSIONS") return new ArrayDim(nodeName, lineNumber);
-    else if (nodeName == "LOCALSCOPE") return new Local(nodeName, lineNumber);
-    else if (nodeName == "PROGRAM") return new Program(nodeName, lineNumber);
-    else if (nodeName == "variable") return new VarDecl(nodeName, lineNumber);
-    else if (nodeName == "func_body") return new FuncBody(nodeName, lineNumber);
-    else if (nodeName == "main") return new MainFunc(nodeName, lineNumber);
-    else return new ASTNode(nodeName, lineNumber);
+AST::ASTNode *AST::ASTBuilder::createCustomNode(std::string &nodeName, Token *token) {
+    if (nodeName == "CLASSDECLARATIONS") return new ClassDecls(nodeName, token);
+    else if (nodeName == "class") return new ClassDecl(nodeName, token);
+    else if (nodeName == "func_decl") return new FuncDecl(nodeName, token);
+    else if (nodeName == "params") return new FuncParams(nodeName, token);
+    else if (nodeName == "func_def") return new FuncDef(nodeName, token);
+    else if (nodeName == "ARRAYDIMENSIONS") return new ArrayDim(nodeName, token);
+    else if (nodeName == "LOCALSCOPE") return new Local(nodeName, token);
+    else if (nodeName == "PROGRAM") return new Program(nodeName, token);
+    else if (nodeName == "variable") return new VarDecl(nodeName, token);
+    else if (nodeName == "func_body") return new FuncBody(nodeName, token);
+    else if (nodeName == "main") return new MainFunc(nodeName, token);
+    else return new ASTNode(nodeName, token);
 }

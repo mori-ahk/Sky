@@ -9,12 +9,13 @@
 #include <string>
 #include <vector>
 #include <deque>
+#include "../../Lexer/Token.h"
 
 class Visitor;
 namespace AST {
     class ASTNode {
     public:
-        ASTNode(std::string, int);
+        ASTNode(std::string, Token *);
 
         ASTNode();
 
@@ -31,6 +32,8 @@ namespace AST {
         int &getLineNumber();
 
         int &getUniqueID();
+
+        std::string &getType();
 
         void setParent(ASTNode *);
 
@@ -51,6 +54,7 @@ namespace AST {
         ASTNode *parent;
         int uniqueID;
         int lineNumber;
+        std::string type;
     };
 }
 

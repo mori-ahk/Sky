@@ -6,11 +6,12 @@
 #include "TokenType.h"
 #include <iostream>
 #include <unordered_map>
+#include <utility>
 
 Token::Token(TokenType type, int lineno, std::string value) {
     this->type = type;
     this->lineno = lineno;
-    this->value = value;
+    this->value = std::move(value);
 }
 
 TokenType Token::getType() { return this->type; }
@@ -18,6 +19,8 @@ TokenType Token::getType() { return this->type; }
 int Token::getLineno() { return this->lineno; }
 
 std::string Token::getValue() { return this->value; }
+
+std::string Token::getTypeString() { return reverseTokenTypeMap[type]; }
 
 int Token::getPosition() { return position; }
 

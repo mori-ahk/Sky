@@ -18,12 +18,12 @@ Syntax::Parser::~Parser() {
 }
 
 void Syntax::Parser::next() {
-    while (currentToken->getType() == currentToken->getTokenTypeMap().at("error")) currentToken = lexer->next();
+    while (currentToken->getType() == Token::getTokenTypeMap().at("error")) currentToken = lexer->next();
     currentToken = lexer->next();
 }
 
 bool Syntax::Parser::shouldTakeNext(std::string &LHS) {
-    return currentToken->getTokenTypeMap().at(LHS) == currentToken->getType();
+    return Token::getTokenTypeMap().at(LHS) == currentToken->getType();
 }
 
 bool Syntax::Parser::isKeyword(std::string &rule) {
@@ -52,7 +52,7 @@ bool Syntax::Parser::parse(std::string LHS, bool isOnPanicMode) {
         if (shouldTakeNext(LHS)) {
             if (isKeyword(LHS)) {
                 std::string value = currentToken->getValue();
-                AST_Builder->push(value, currentToken->getLineno());
+                AST_Builder->push(value, currentToken);
             }
             next();
             return true;
