@@ -102,11 +102,7 @@ void STGV::visit(FuncDef *node) {
 void STGV::visit(VarDecl *node) {
     Variable* variable = createVar(node);
     try {
-        symbolTable->getClass(node->getParent()->getName())->addVariable(variable->getName(), variable);
-    } catch (Semantic::Err::UndeclaredClass& undeclaredClass) {
-        int position = node->getParent()->getLineNumber();
-        auto pair = std::make_pair(std::string(undeclaredClass.what()), position);
-        detector->addError(pair);
+        symbolTable->classes.at(node->getParent()->getName())->addVariable(variable->getName(), variable);
     } catch (Semantic::Err::DuplicateDataMember& duplicateDataMember) {
         int position = node->getChild(1)->getLineNumber();
         auto pair = std::make_pair(std::string(duplicateDataMember.what()), position);
@@ -213,8 +209,8 @@ Variable* STGV::createVar(AST::ASTNode* node) {
         visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
     }
 
-    std::string varName = node->getChild(startIndex++)->getName();
-    std::string type = node->getChild(startIndex)->getName();
+    std::string type = node->getChild(startIndex++)->getName();
+    std::string varName = node->getChild(startIndex)->getName();
     std::vector<int> dimensions;
 
     AST::ASTNode* dimNodeToIterate = node->getChildren().size() == 4 ? node->getChild(3) : node->getChild(2);
@@ -225,7 +221,7 @@ Variable* STGV::createVar(AST::ASTNode* node) {
         } catch (const std::invalid_argument& invalid_argument) {}
     }
 
-    return new Variable(visibility, type, varName, dimensions);
+    return new Variable(visibility, varName, type, dimensions);
 }
 
 void STGV::visit(ArrayDim *node) {}
