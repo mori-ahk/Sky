@@ -26,7 +26,7 @@ namespace AST {
 
         ASTBuilder();
 
-        ~ASTBuilder();
+        ~ASTBuilder() = default;
 
         void handle(std::string &, std::string &);
 
@@ -54,7 +54,7 @@ namespace AST {
 
         void removeSelfIfOnlyHasOneChild();
 
-        ASTNode *createCustomNode(std::string &, int lineNumber = 0);
+        static ASTNode *createCustomNode(std::string &, int lineNumber = 0);
 
         std::stack<ASTNode *> stack;
         std::stack<ASTNode *> testStack;

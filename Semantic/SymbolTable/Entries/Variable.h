@@ -9,19 +9,27 @@
 #include <vector>
 #include "Visibility.h"
 #include <iostream>
+
 class Variable {
 public:
 
     Variable(Visibility visibility, std::string name, std::string type, std::vector<int> dimensions);
 
-    std::string& getType();
-    std::vector<int>& getDimensions();
-    std::string& getName();
+    std::string &getType();
+
+    std::vector<int> &getDimensions();
+
+    std::string &getName();
+
     std::string getVisibilityString();
+
     std::string getDimsString();
+
     Visibility getVisibility();
-    friend std::ostream& operator<<(std::ostream&, Variable&);
-    friend inline bool operator==(Variable& lhs, Variable& rhs) {
+
+    friend std::ostream &operator<<(std::ostream &, Variable &);
+
+    friend inline bool operator==(Variable &lhs, Variable &rhs) {
         return lhs.getType() == rhs.getType() &&
                lhs.getName() == rhs.getName() &&
                lhs.getDimsString() == rhs.getDimsString() &&

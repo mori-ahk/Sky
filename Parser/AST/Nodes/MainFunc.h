@@ -11,7 +11,8 @@
 class MainFunc : public AST::ASTNode {
 public:
     MainFunc(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
-    void accept(Visitor& visitor) override;
+
+    void accept(Visitor &visitor) override;
 };
 
 

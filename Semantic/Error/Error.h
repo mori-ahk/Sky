@@ -51,8 +51,9 @@ namespace Semantic {
             }
 
             const char *what() const throw() {
-                std::string errorString = "no definition for declared member function " + funcName + " for class " + className;
-                const char* _errorString = errorString.c_str();
+                std::string errorString =
+                        "no definition for declared member function " + funcName + " for class " + className;
+                const char *_errorString = errorString.c_str();
                 return _errorString;
             }
 
@@ -69,9 +70,10 @@ namespace Semantic {
 
             const char *what() const throw() {
                 std::string errorString = "definition provided for undeclared member function " + funcName;
-                const char* _errorString = errorString.c_str();
+                const char *_errorString = errorString.c_str();
                 return _errorString;
             }
+
         private:
             std::string funcName;
         };
@@ -84,8 +86,8 @@ namespace Semantic {
 
             const char *what() const throw() {
                 std::string errorString = "use of undeclared class " + className;
-                const char* _errorString = errorString.c_str();
-                return  _errorString;
+                const char *_errorString = errorString.c_str();
+                return _errorString;
             }
 
         private:
@@ -100,7 +102,7 @@ namespace Semantic {
 
             const char *what() const throw() {
                 std::string errorString = "Found duplicate function declaration of " + funcName;
-                const char* _errorString = errorString.c_str();
+                const char *_errorString = errorString.c_str();
                 return _errorString;
             }
 

@@ -27,24 +27,24 @@ Lexer::~Lexer() {
     }
 }
 
-bool Lexer::isComment(Token* matchedToken) {
+bool Lexer::isComment(Token *matchedToken) {
     return matchedToken->getType() == TokenType::InlineCmt || matchedToken->getType() == TokenType::BlockCmt;
 }
 
-bool Lexer::doesOnlyContainWhitespace(std::string& line) {
-    for (const char& c: line) {
+bool Lexer::doesOnlyContainWhitespace(std::string &line) {
+    for (const char &c: line) {
         if (c != ' ') return false;
     }
     return true;
 }
 
-std::string Lexer::extractErrorString(std::string& line) {
+std::string Lexer::extractErrorString(std::string &line) {
     int counter = 0;
     while (line.size() > counter && line.at(counter) != ' ' && line.at(counter) != '\n') counter++;
     return line.substr(0, counter);
 }
 
-void Lexer::handleWord(std::string& line, int lineNumber, int& pos) {
+void Lexer::handleWord(std::string &line, int lineNumber, int &pos) {
     //process the next line if the current line is empty.
     if (doesOnlyContainWhitespace(line)) return;
 
@@ -55,10 +55,10 @@ void Lexer::handleWord(std::string& line, int lineNumber, int& pos) {
         return;
     }
 
-    Token* matchedToken = tokenizer->Tokenize(line, lineNumber, pos);
+    Token *matchedToken = tokenizer->Tokenize(line, lineNumber, pos);
     if (matchedToken == nullptr) {
         std::string errorTokenString = extractErrorString(line);
-        Token* errorToken = new Token(TokenType::Error, lineNumber, errorTokenString);
+        Token *errorToken = new Token(TokenType::Error, lineNumber, errorTokenString);
         totalErrors.push_back(errorToken);
         totalTokens.push_back(errorToken);
         pos += errorTokenString.size();
@@ -77,13 +77,13 @@ void Lexer::handleWord(std::string& line, int lineNumber, int& pos) {
     }
 }
 
-void Lexer::read(std::string& filePath) {
+void Lexer::read(std::string &filePath) {
     std::string fileContent;
     std::string line;
     std::ifstream stream;
     int pos = 0;
     int lineNumber = 1;
-    stream.open (filePath, std::ios::in);
+    stream.open(filePath, std::ios::in);
 
     while (!stream.eof()) {
         std::getline(stream, line);
@@ -105,17 +105,17 @@ void Lexer::read(std::string& filePath) {
 }
 
 
-void Lexer::write(std::string& filePath) {
+void Lexer::write(std::string &filePath) {
     std::string fileName;
 
-    for (const auto& c : filePath) {
+    for (const auto &c : filePath) {
         if (c == '.') break;
         fileName += c;
     }
 
     std::ofstream stream(fileName + "_lex_tokens.txt");
     for (int i = 0; i < totalMatches.size(); i++) {
-        if (i+1 < totalMatches.size() && totalMatches.at(i)->getLineno() < totalMatches.at(i+1)->getLineno()) {
+        if (i + 1 < totalMatches.size() && totalMatches.at(i)->getLineno() < totalMatches.at(i + 1)->getLineno()) {
             stream << *(totalMatches.at(i)) << std::endl;
         } else stream << *(totalMatches.at(i)) << " ";
     }
@@ -124,7 +124,7 @@ void Lexer::write(std::string& filePath) {
 
     stream.open(fileName + "_lex_errors.txt");
     for (int i = 0; i < totalErrors.size(); i++) {
-        if (i+1 < totalErrors.size() && totalErrors.at(i)->getLineno() < totalErrors.at(i+1)->getLineno()) {
+        if (i + 1 < totalErrors.size() && totalErrors.at(i)->getLineno() < totalErrors.at(i + 1)->getLineno()) {
             stream << *(totalErrors.at(i)) << std::endl;
         } else stream << *(totalErrors.at(i)) << " ";
     }
@@ -132,7 +132,7 @@ void Lexer::write(std::string& filePath) {
     stream.close();
 }
 
-Token* Lexer::next() {
+Token *Lexer::next() {
     return currentToken > totalTokens.size() - 1 ? nullptr : totalTokens.at(currentToken++);
 }
 

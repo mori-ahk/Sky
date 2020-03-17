@@ -12,24 +12,36 @@
 
 class STGV : public Visitor {
 public:
-    explicit STGV(AST::ASTNode* root);
-    void visit(ClassDecls* node) override;
-    void visit(ClassDecl* node) override;
-    void visit(FuncDecl* node) override;
-    void visit(FuncDef* node) override;
-    void visit(FuncBody* node) override;
-    void visit(FuncParams* node) override;
-    void visit(Local* node) override;
-    void visit(Program* node) override;
-    void visit(VarDecl* node) override;
-    void visit(ArrayDim* node) override;
-    void visit(MainFunc* node) override;
-    void visit(AST::ASTNode* node) override;
+    explicit STGV(AST::ASTNode *root);
 
-    Semantic::SymbolTable* symbolTable;
-    Semantic::Detector* detector;
+    void visit(ClassDecls *node) override;
+
+    void visit(ClassDecl *node) override;
+
+    void visit(FuncDecl *node) override;
+
+    void visit(FuncDef *node) override;
+
+    void visit(FuncBody *node) override;
+
+    void visit(FuncParams *node) override;
+
+    void visit(Local *node) override;
+
+    void visit(Program *node) override;
+
+    void visit(VarDecl *node) override;
+
+    void visit(ArrayDim *node) override;
+
+    void visit(MainFunc *node) override;
+
+    void visit(AST::ASTNode *node) override;
+
+    Semantic::SymbolTable *symbolTable;
+    Semantic::Detector *detector;
 private:
-    static Variable* createVar(AST::ASTNode*);
+    static Variable *createVar(AST::ASTNode *);
 
 };
 

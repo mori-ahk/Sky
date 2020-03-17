@@ -5,38 +5,39 @@
 #include "DependencyGraph.h"
 
 
-void DependencyGraph::build(Semantic::SymbolTable* symbolTable) {
-    for (const auto& _class : symbolTable->classes) {
+void DependencyGraph::build(Semantic::SymbolTable *symbolTable) {
+    for (const auto &_class : symbolTable->classes) {
         auto node = new DependencyNode(_class.first);
-        for (std::string& inherit : _class.second->getInherits()) {
+        for (std::string &inherit : _class.second->getInherits()) {
             try {
                 symbolTable->getClass(inherit);
                 node->addToList(inherit);
             }
             catch (Semantic::Err::UndeclaredClass &undeclaredClass) { throw; }
         }
-        for (const auto& _variable : _class.second->getVariables()) {
+        for (const auto &_variable : _class.second->getVariables()) {
             std::string localVarType = _variable.second->getType();
             if (localVarType != "float" && localVarType != "integer") {
                 try {
                     symbolTable->getClass(localVarType);
                     node->addToList(localVarType);
-                } catch (Semantic::Err::UndeclaredClass& undeclaredClass) { throw; }
+                } catch (Semantic::Err::UndeclaredClass &undeclaredClass) { throw; }
             }
         }
         nodes.push_back(node);
     }
 }
 
-std::vector<std::string>& DependencyGraph::getAdjList(const std::string& className) {
-    for (const auto& node : nodes) {
+std::vector<std::string> &DependencyGraph::getAdjList(const std::string &className) {
+    for (const auto &node : nodes) {
         if (node->getName() == className) return node->getAdjList();
     }
 }
 
-std::pair<std::string, std::string> DependencyGraph::dfs(std::string& className, StringSet visiting, StringSet visited) {
+std::pair<std::string, std::string>
+DependencyGraph::dfs(std::string &className, StringSet visiting, StringSet visited) {
     visiting.insert(className);
-    for (auto& dependency : getAdjList(className)) {
+    for (auto &dependency : getAdjList(className)) {
         if (visited.find(dependency) != visited.end()) continue;
         if (visiting.find(dependency) != visiting.end()) return std::make_pair(className, dependency);
         else {
@@ -44,5 +45,5 @@ std::pair<std::string, std::string> DependencyGraph::dfs(std::string& className,
             if (!pair.first.empty() && !pair.second.empty()) return pair;
         }
     }
-    return std::make_pair("","");
+    return std::make_pair("", "");
 }

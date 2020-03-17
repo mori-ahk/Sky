@@ -16,8 +16,11 @@ namespace Syntax {
     class Parser {
     public:
         explicit Parser(Lexer *);
+
         ~Parser();
+
         bool parse(std::string, bool isOnPanicMode = false);
+
         AST::ASTBuilder *AST_Builder;
 
     private:
@@ -26,11 +29,14 @@ namespace Syntax {
         Token *currentToken;
 
         void next();
-        void printError(Language::Rule&);
-        void panic(std::string&);
 
-        bool shouldTakeNext(std::string&);
-        static bool isKeyword(std::string&);
+        void printError(Language::Rule &);
+
+        void panic(std::string &);
+
+        bool shouldTakeNext(std::string &);
+
+        static bool isKeyword(std::string &);
     };
 }
 const std::unordered_set<std::string> KEYWORDS = {

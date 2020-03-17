@@ -11,7 +11,8 @@
 class ArrayDim : public AST::ASTNode {
 public:
     ArrayDim(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
-    void accept(Visitor& visitor) override;
+
+    void accept(Visitor &visitor) override;
 };
 
 
