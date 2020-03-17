@@ -225,3 +225,30 @@ void STGV::visit(FuncBody *node) {}
 
 void STGV::visit(Local *node) {}
 
+void STGV::visit(AddOp *node) {}
+
+void STGV::visit(AssignOp *node) {}
+
+void STGV::visit(Calls *node) {}
+
+void STGV::visit(Call *node) {}
+
+void STGV::visit(CompareOp *node) {}
+
+void STGV::visit(FuncCall *node) {}
+
+void STGV::visit(If *node) {}
+
+void STGV::visit(MultOp *node) {}
+
+void STGV::visit(Read *node) {}
+
+void STGV::visit(Sign *node) {}
+
+void STGV::visit(Statements *node) {}
+
+void STGV::visit(While *node) {}
+
+void STGV::visit(Write *node) {}
+
+

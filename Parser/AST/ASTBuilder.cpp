@@ -113,29 +113,29 @@ void AST::ASTBuilder::visualize() {
 }
 
 AST::ASTNode *AST::ASTBuilder::createCustomNode(std::string &nodeName, Token *token) {
-    if (nodeName == "classes") return new ClassDecls(nodeName, token);
-    else if (nodeName == "class") return new ClassDecl(nodeName, token);
-    else if (nodeName == "func_decl") return new FuncDecl(nodeName, token);
-    else if (nodeName == "params") return new FuncParams(nodeName, token);
-    else if (nodeName == "func_def") return new FuncDef(nodeName, token);
+    if (nodeName == "add") return new AddOp(nodeName, token);
     else if (nodeName == "ARRAYDIMENSIONS") return new ArrayDim(nodeName, token);
-    else if (nodeName == "LOCALSCOPE") return new Local(nodeName, token);
-    else if (nodeName == "PROGRAM") return new Program(nodeName, token);
-    else if (nodeName == "variable") return new VarDecl(nodeName, token);
-    else if (nodeName == "func_body") return new FuncBody(nodeName, token);
-    else if (nodeName == "func_call") return new FuncCall(nodeName, token);
-    else if (nodeName == "main") return new MainFunc(nodeName, token);
-    else if (nodeName == "sign") return new Sign(nodeName, token);
-    else if (nodeName == "add") return new AddOp(nodeName, token);
-    else if (nodeName == "cmp") return new CompareOp(nodeName, token);
-    else if (nodeName == "mult") return new MultOp(nodeName, token);
     else if (nodeName == "=") return new AssignOp(nodeName, token);
-    else if (nodeName == "if") return new If(nodeName, token);
-    else if (nodeName == "while") return new While(nodeName, token);
-    else if (nodeName == "read") return new Read(nodeName, token);
-    else if (nodeName == "write") return new Write(nodeName, token);
-    else if (nodeName == "STATEMENTS" || nodeName == "STATEMENTBLOCK") return new Statements(nodeName, token);
     else if (nodeName == "calls") return new Calls(nodeName, token);
     else if (nodeName == "call") return new Call(nodeName, token);
+    else if (nodeName == "classes") return new ClassDecls(nodeName, token);
+    else if (nodeName == "class") return new ClassDecl(nodeName, token);
+    else if (nodeName == "cmp") return new CompareOp(nodeName, token);
+    else if (nodeName == "func_body") return new FuncBody(nodeName, token);
+    else if (nodeName == "func_call") return new FuncCall(nodeName, token);
+    else if (nodeName == "func_def") return new FuncDef(nodeName, token);
+    else if (nodeName == "func_decl") return new FuncDecl(nodeName, token);
+    else if (nodeName == "params") return new FuncParams(nodeName, token);
+    else if (nodeName == "if") return new If(nodeName, token);
+    else if (nodeName == "LOCALSCOPE") return new Local(nodeName, token);
+    else if (nodeName == "main") return new MainFunc(nodeName, token);
+    else if (nodeName == "mult") return new MultOp(nodeName, token);
+    else if (nodeName == "PROGRAM") return new Program(nodeName, token);
+    else if (nodeName == "read") return new Read(nodeName, token);
+    else if (nodeName == "sign") return new Sign(nodeName, token);
+    else if (nodeName == "STATEMENTS" || nodeName == "STATEMENTBLOCK") return new Statements(nodeName, token);
+    else if (nodeName == "variable") return new VarDecl(nodeName, token);
+    else if (nodeName == "while") return new While(nodeName, token);
+    else if (nodeName == "write") return new Write(nodeName, token);
     else return new ASTNode(nodeName, token);
 }
