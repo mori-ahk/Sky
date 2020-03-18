@@ -21,6 +21,8 @@ public:
 
     std::vector<Variable *> &getLocalVars();
 
+    Variable *getVariable(std::string &);
+
     std::string &getName();
 
     std::string &getReturnType();

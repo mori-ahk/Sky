@@ -16,6 +16,15 @@ void Semantic::SymbolTable::addFunction(std::string &funcName, Function *functio
     freeFunctions[funcName].push_back(function);
 }
 
+Function* Semantic::SymbolTable::getFreeFunction(std::string &funcName, Function *function) {
+    if (freeFunctions.find(funcName) == freeFunctions.end())
+        throw Semantic::Err::UndeclaredFunction(funcName);
+    for (auto &f : freeFunctions.at(funcName)) {
+        if (*f == *function) return f;
+    }
+    throw Semantic::Err::UndeclaredFunction(funcName);
+}
+
 Class *Semantic::SymbolTable::getClass(std::string &className) {
     if (classes.find(className) == classes.end())
         throw Semantic::Err::UndeclaredClass(className);

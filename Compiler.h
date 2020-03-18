@@ -8,6 +8,7 @@
 #include "Lexer/Lexer.h"
 #include "Parser/Parser.h"
 #include "Visitors/SymbolTable/STGV.h"
+#include "Visitors/TypeChecking/TCV.h"
 
 class Compiler {
 public:
@@ -21,6 +22,7 @@ private:
     Lexer *lexer;
     Syntax::Parser *parser;
     STGV *symTabGenerator;
+    TCV *typeChecker;
 
 };
 

@@ -1,7 +1,7 @@
 /* sort the array */
 bubbleSort(integer arr[], integer size) : void
   local
-    integer n;
+    LINEAR n;
     integer i;
     integer j;
     integer temp;

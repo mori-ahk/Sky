@@ -39,6 +39,13 @@ std::vector<Variable *> &Function::getLocalVars() {
     return localVars;
 }
 
+Variable *Function::getVariable(std::string &varName) {
+    for (const auto& var : localVars) {
+        if (var->getName() == varName) return var;
+    }
+    throw Semantic::Err::UndeclaredLocalVariable(varName);
+}
+
 Visibility Function::getVisibility() {
     return visibility;
 }

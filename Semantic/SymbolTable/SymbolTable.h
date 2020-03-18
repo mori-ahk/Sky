@@ -23,6 +23,8 @@ namespace Semantic {
 
         void addFunction(std::string &, Function *);
 
+        Function *getFreeFunction(std::string &, Function *);
+
         Class *getClass(std::string &);
 
         std::unordered_map<std::string, Class *> classes;

@@ -10,7 +10,7 @@
 STGV::STGV(AST::ASTNode *root) {
     this->symbolTable = new Semantic::SymbolTable();
     this->detector = new Semantic::Detector(this->symbolTable);
-    root->getChildren().at(0)->accept(*this);
+    root->getChild(0)->accept(*this);
 }
 
 void STGV::visit(Program *node) {
@@ -181,7 +181,17 @@ Variable *STGV::createVar(AST::ASTNode *node) {
         visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
     }
 
-    std::string type = node->getChild(startIndex++)->getName();
+    std::string type = node->getChild(startIndex)->getName();
+    if (node->getChild(startIndex++)->getType() == "id") {
+        try {
+            symbolTable->getClass(type);
+        } catch (Semantic::Err::UndeclaredClass& undeclaredClass) {
+            int position = node->getChild(0)->getLineNumber();
+            auto pair = std::make_pair(std::string(undeclaredClass.what()), position);
+            detector->addError(pair);
+        }
+    }
+
     std::string varName = node->getChild(startIndex)->getName();
     std::vector<int> dimensions;
 
@@ -219,6 +229,10 @@ Function *STGV::createTempFunction(AST::ASTNode *node, std::string &funcName, st
 
     return function;
 }
+
+//Symbol table visitors do not need to implement these functions
+//but they have to have an implementation to make the compiler happy
+
 void STGV::visit(ArrayDim *node) {}
 
 void STGV::visit(FuncBody *node) {}

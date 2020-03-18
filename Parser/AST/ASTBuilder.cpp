@@ -63,7 +63,7 @@ void AST::ASTBuilder::constructListAndInsertAsChild() {
         stack.pop();
     }
 
-    auto A = new ASTNode("calls", nullptr);
+    auto A = new Calls("calls", nullptr);
     A->addChildToLeft(childrenToBeInserted);
     stack.push(A);
 }

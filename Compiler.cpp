@@ -23,10 +23,6 @@ void Compiler::compile() {
     parser->parse("START");
     parser->AST_Builder->visualize();
     symTabGenerator = new STGV(parser->AST_Builder->getRoot());
-    for (const auto &c: symTabGenerator->symbolTable->classes) {
-        std::cout << *(c.second) << std::endl;
-    }
-
     for (const auto &f : symTabGenerator->symbolTable->freeFunctions) {
         for (const auto &_f : f.second)
             std::cout << *(_f) << std::endl;
@@ -37,4 +33,8 @@ void Compiler::compile() {
     for (const auto &e : symTabGenerator->detector->getErrors()) {
         std::cerr << e << std::endl;
     }
+
+    if (!symTabGenerator->detector->getErrors().empty()) return;
+
+    typeChecker = new TCV(parser->AST_Builder->getRoot(), symTabGenerator->symbolTable);
 }
