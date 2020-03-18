@@ -192,7 +192,6 @@ Variable *STGV::createVar(AST::ASTNode *node) {
             dimensions.push_back(dimension);
         } catch (const std::invalid_argument &invalid_argument) {}
     }
-
     return new Variable(visibility, varName, type, dimensions, node->getChild(startIndex)->getLineNumber());
 }
 
@@ -225,3 +224,4 @@ void STGV::visit(ArrayDim *node) {}
 void STGV::visit(FuncBody *node) {}
 
 void STGV::visit(Local *node) {}
+

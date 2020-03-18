@@ -40,6 +40,7 @@ public:
 
     Semantic::SymbolTable *symbolTable;
     Semantic::Detector *detector;
+
 private:
     static Variable *createVar(AST::ASTNode *);
     Function *createTempFunction(AST::ASTNode *, std::string &, std::string &);
