@@ -13,7 +13,7 @@
 class Variable {
 public:
 
-    Variable(Visibility visibility, std::string name, std::string type, std::vector<int> dimensions);
+    Variable(Visibility, std::string, std::string, std::vector<int>, int);
 
     std::string &getType();
 
@@ -36,12 +36,17 @@ public:
                lhs.getVisibilityString() == rhs.getVisibilityString();
     }
 
+    inline void setPosition(int _position) { this->position = _position; }
+
+    inline int getPosition() { return position; }
+
 private:
 
     std::string type;
     std::string name;
     std::vector<int> dimensions;
     Visibility visibility;
+    int position;
 };
 
 

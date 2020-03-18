@@ -14,7 +14,7 @@
 class Class {
 public:
 
-    Class(std::string, std::string, std::vector<std::string>);
+    Class(std::string, std::string, std::vector<std::string>, int);
 
     ~Class() = default;
 
@@ -38,13 +38,17 @@ public:
 
     friend std::ostream &operator<<(std::ostream &, Class &);
 
+    inline void setPosition(int _position) { this->position = _position; }
+
+    inline int getPosition() { return position; }
+
 private:
     std::string name;
     std::string type;
     std::vector<std::string> inherits;
     std::unordered_map<std::string, std::vector<Function *> > functions;
     std::unordered_map<std::string, Variable *> variables;
-
+    int position;
 };
 
 

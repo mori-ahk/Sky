@@ -7,7 +7,7 @@
 
 void Semantic::SymbolTable::addClass(std::string &className, Class *_class) {
     if (classes.find(className) != classes.end())
-        throw Semantic::Err::DuplicateClassDecl();
+        throw Semantic::Err::DuplicateClassDecl(className);
 
     classes[className] = _class;
 }

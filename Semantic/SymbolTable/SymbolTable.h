@@ -27,7 +27,7 @@ namespace Semantic {
 
         std::unordered_map<std::string, Class *> classes;
         std::unordered_map<std::string, std::vector<Function *> > freeFunctions;
-        Function *main = new Function(Visibility::PUBLIC, "main", "void", {}, {});
+        Function *main = new Function(Visibility::PUBLIC, "main", "void", {}, {}, 0);
     };
 }
 

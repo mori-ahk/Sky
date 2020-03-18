@@ -12,7 +12,7 @@
 #include <unordered_set>
 
 typedef std::vector<std::pair<std::string, std::string> > NamePair;
-typedef std::pair<std::string, int> error;
+//typedef std::pair<std::string> error;
 
 namespace Semantic {
     class Detector {
@@ -33,14 +33,14 @@ namespace Semantic {
 
         void detect();
 
-        void addError(const error &);
+        void addError(const std::string &);
 
         void initDependencyGraph(Semantic::SymbolTable *);
 
-        std::vector<error> &getErrors();
+        std::vector<std::string> &getErrors();
 
     private:
-        std::vector<error> errors;
+        std::vector<std::string> errors;
 
         void handleUndefinedClassFunctions(NamePair &);
 
