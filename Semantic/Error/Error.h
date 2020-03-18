@@ -18,29 +18,49 @@ namespace Semantic {
     namespace Err {
         class DuplicateDataMember : public Error {
         public:
-            DuplicateDataMember() : Error() {}
+            DuplicateDataMember(std::string varName, int position) : Error() {
+                this->varName = varName;
+                this->position = position;
+            }
 
             const char *what() const throw() {
-                return "duplicate data member";
+                std::string errorString = "duplicate data member " + varName + " at line " + std::to_string(position);
+                const char *_errorString = errorString.c_str();
+                return _errorString;
             }
+        private:
+            std::string varName;
+            int position;
         };
 
         class DuplicateFuncParam : public Error {
         public:
-            DuplicateFuncParam() : Error() {}
+            DuplicateFuncParam(int position) : Error() {
+                this->position = position;
+            }
 
             const char *what() const throw() {
-                return "duplicate func param with the same name";
+                std::string errorString = "duplicate func param with the same name at line " + std::to_string(position);
+                const char *_errorString = errorString.c_str();
+                return _errorString;
             }
+        private:
+            int position;
         };
 
         class DuplicateClassDecl : public Error {
         public:
-            DuplicateClassDecl() : Error() {}
+            DuplicateClassDecl(std::string className) : Error() {
+                this->className = className;
+            }
 
             const char *what() const throw() {
-                return "multi declared class";
+                std::string errorString = "multi declared class name " + className;
+                const char *_errorString = errorString.c_str();
+                return _errorString;
             }
+        private:
+            std::string className;
         };
 
         class UndefinedFunction : public Error {
@@ -64,18 +84,20 @@ namespace Semantic {
 
         class UndeclaredFunction : public Error {
         public:
-            UndeclaredFunction(std::string funcName) : Error() {
+            UndeclaredFunction(std::string funcName, int position) : Error() {
                 this->funcName = funcName;
+                this->position = position;
             }
 
             const char *what() const throw() {
-                std::string errorString = "definition provided for undeclared member function " + funcName;
+                std::string errorString = "definition provided for undeclared member function " + funcName + " at line " + std::to_string(position);
                 const char *_errorString = errorString.c_str();
                 return _errorString;
             }
 
         private:
             std::string funcName;
+            int position;
         };
 
         class UndeclaredClass : public Error {
@@ -96,18 +118,20 @@ namespace Semantic {
 
         class DuplicateFunction : public Error {
         public:
-            DuplicateFunction(std::string funcName) : Error() {
+            DuplicateFunction(std::string funcName, int position) : Error() {
                 this->funcName = funcName;
+                this->position = position;
             }
 
             const char *what() const throw() {
-                std::string errorString = "Found duplicate function declaration of " + funcName;
+                std::string errorString = "Found duplicate function declaration of " + funcName + " at line " + std::to_string(position);
                 const char *_errorString = errorString.c_str();
                 return _errorString;
             }
 
         private:
             std::string funcName;
+            int position;
         };
 
     }

@@ -6,11 +6,12 @@
 
 #include <utility>
 
-Variable::Variable(Visibility visibility, std::string name, std::string type, std::vector<int> dimensions) {
+Variable::Variable(Visibility visibility, std::string name, std::string type, std::vector<int> dimensions, int position) {
     this->visibility = visibility;
     this->name = std::move(name);
     this->type = std::move(type);
     this->dimensions = std::move(dimensions);
+    this->position = position;
 }
 
 std::vector<int> &Variable::getDimensions() {

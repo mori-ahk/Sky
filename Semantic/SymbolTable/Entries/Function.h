@@ -14,8 +14,8 @@
 class Function {
 public:
 
-    Function(Visibility visibility, std::string name, std::string returnType, std::vector<Variable *> params,
-             std::vector<Variable *> localVars);
+    Function(Visibility , std::string, std::string, std::vector<Variable *>,
+             std::vector<Variable *>, int);
 
     std::vector<Variable *> &getParams();
 
@@ -50,13 +50,17 @@ public:
         return !(lhs == rhs);
     }
 
-private:
+    inline void setPosition(int _position) { this->position = _position; }
+
+    inline int getPosition() { return position; }
+    private:
 
     std::vector<Variable *> params;
     std::vector<Variable *> localVars;
     std::string name;
     std::string returnType;
     Visibility visibility;
+    int position;
 };
 
 

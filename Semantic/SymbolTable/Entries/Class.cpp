@@ -7,10 +7,11 @@
 #include <utility>
 #include "../../Error/Error.h"
 
-Class::Class(std::string name, std::string type, std::vector<std::string> inherits) {
+Class::Class(std::string name, std::string type, std::vector<std::string> inherits, int position) {
     this->name = std::move(name);
     this->type = std::move(type);
     this->inherits = std::move(inherits);
+    this->position = position;
 }
 
 std::string &Class::getName() {
@@ -35,16 +36,16 @@ std::unordered_map<std::string, Variable *> &Class::getVariables() {
 
 Function *Class::getFunction(std::string &funcName, Function *function) {
     if (functions.find(funcName) == functions.end())
-        throw Semantic::Err::UndeclaredFunction(funcName);
+        throw Semantic::Err::UndeclaredFunction(funcName, function->getPosition());
     for (auto &f : functions[funcName]) {
         if (*f == *function) return f;
     }
-    throw Semantic::Err::UndeclaredFunction(funcName);
+    throw Semantic::Err::UndeclaredFunction(funcName, function->getPosition());
 }
 
 void Class::addVariable(std::string &varName, Variable *variable) {
     if (variables.find(varName) != variables.end())
-        throw Semantic::Err::DuplicateDataMember();
+        throw Semantic::Err::DuplicateDataMember(varName, variable->getPosition());
 
     variables[varName] = variable;
 }

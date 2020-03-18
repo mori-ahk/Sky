@@ -72,8 +72,7 @@ bool Semantic::Detector::detectCircularDependency() {
             auto pair = dependencyGraph->dfs(className, visiting, visited);
             if (!pair.first.empty() && !pair.second.empty()) {
                 std::string errorString = "Circular dependencies between " + pair.first + " and " + pair.second;
-                auto errorPair = std::make_pair(errorString, 0);
-                addError(errorPair);
+                addError(errorString);
                 return true;
             }
 
@@ -92,19 +91,16 @@ void Semantic::Detector::detectShadowMembers(Class *parent) {
         auto shadowMessages = symbolTable->classes.at(c)->findShadowMembers(*parent);
         if (!shadowMessages.empty()) {
             for (const auto& s : shadowMessages) {
-                auto pair = std::make_pair(s,0);
-                addError(pair);
+                addError(s);
             }
         }
     }
-
 }
 
 void Semantic::Detector::handleUndefinedClassFunctions(NamePair &undefined) {
     for (const auto &e : undefined) {
         std::string errorString = "Undefined class functions " + e.first + " on class " + e.second;
-        auto pair = std::make_pair(errorString, 0);
-        addError(pair);
+        addError(errorString);
     }
 }
 
@@ -112,8 +108,7 @@ void Semantic::Detector::handleErrors(NamePair &_errors, bool isOverloaded) {
     for (const auto &e : _errors) {
         std::string errorString = isOverloaded ? "Overloaded" : "Duplicate";
         errorString += " class function " + e.first + " on class " + e.second;
-        auto pair = std::make_pair(errorString, 0);
-        addError(pair);
+        addError(errorString);
     }
 }
 
@@ -121,12 +116,11 @@ void Semantic::Detector::handleErrors(std::vector<std::string> &_errors, bool is
     for (const auto &e : _errors) {
         std::string errorString = isOverloaded ? "Overloaded" : "Duplicate";
         errorString += " free function " + e;
-        auto pair = std::make_pair(errorString, 0);
-        addError(pair);
+        addError(errorString);
     }
 }
 
-void Semantic::Detector::addError(const error &_error) {
+void Semantic::Detector::addError(const std::string &_error) {
     errors.push_back(_error);
 }
 
@@ -135,8 +129,7 @@ void Semantic::Detector::detect() {
     //and will not proceed with other detections.
     try { initDependencyGraph(symbolTable); }
     catch (Semantic::Err::UndeclaredClass &undeclaredClass) {
-        auto pair = std::make_pair(std::string(undeclaredClass.what()), 0);
-        addError(pair);
+        addError(std::string(undeclaredClass.what()));
         return;
     }
 
@@ -154,6 +147,6 @@ void Semantic::Detector::detect() {
     detectClassFunctionsErrors();
 }
 
-std::vector<error> &Semantic::Detector::getErrors() {
+std::vector<std::string> &Semantic::Detector::getErrors() {
     return errors;
 }
