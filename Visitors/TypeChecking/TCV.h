@@ -8,10 +8,11 @@
 
 #include "../Visitor.h"
 #include "../../Semantic/SymbolTable/SymbolTable.h"
+#include "../SymbolTable/STGV.h"
 
 class TCV : public Visitor {
 public:
-    TCV(AST::ASTNode *, Semantic::SymbolTable *);
+    TCV(AST::ASTNode *, STGV *);
 
     void visit(AddOp *node) override;
 
@@ -62,16 +63,29 @@ public:
     void visit(Write *node) override;
 
     void visit(AST::ASTNode *node) override;
+
+    inline std::vector<std::string> getErrors() { return detector->getErrors(); }
+
 private:
-    bool isMatchType(std::string &, std::string &);
-    Semantic::SymbolTable *symbolTable;
-    Variable *createVar(AST::ASTNode *);
+    static bool isMatchType(std::string &, std::string &);
+    static bool isCalledOnObject(AST::ASTNode *);
+    std::vector<std::string> getParamsType(AST::ASTNode *);
+
+    void checkIfFreeFunctionCalledWithRightArgument(std::string &, AST::ASTNode *);
+    STGV *stgv;
+    Function *tempFunction;
+    Semantic::Detector *detector;
+
     bool isGoodToGo = true;
+
     std::string returnType;
     std::string currentFuncName;
     std::string currentNamespace;
+
     int position;
-    Function* tempFunction;
+
+
+
 };
 
 

@@ -186,9 +186,7 @@ Variable *STGV::createVar(AST::ASTNode *node) {
         try {
             symbolTable->getClass(type);
         } catch (Semantic::Err::UndeclaredClass& undeclaredClass) {
-            int position = node->getChild(0)->getLineNumber();
-            auto pair = std::make_pair(std::string(undeclaredClass.what()), position);
-            detector->addError(pair);
+            detector->addError(std::string(undeclaredClass.what()));
         }
     }
 

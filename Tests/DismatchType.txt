@@ -1,8 +1,19 @@
+class A {};
+class B {};
+
+size(integer a, float b) : A
+    do
+    end
+
+ad(integer x) : integer
+    do
+    end
+
 main
     local
-        integer n;
-        float b;
+        A n;
+        B b;
     do
-        n = 1;
-        b = 1;
+        n = size(1, 1.0);
+        b = ad(1);
     end

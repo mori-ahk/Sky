@@ -64,13 +64,16 @@ public:
 
     void visit(AST::ASTNode *node) override;
 
-    Semantic::SymbolTable *symbolTable;
-    Semantic::Detector *detector;
-private:
-
     Function *createTempFunction(AST::ASTNode *, std::string &, std::string &);
 
     Variable *createVar(AST::ASTNode *);
+
+    inline std::vector<std::string> getErrors() { return detector->getErrors(); }
+
+    Semantic::SymbolTable *symbolTable;
+private:
+
+    Semantic::Detector *detector;
 };
 
 
