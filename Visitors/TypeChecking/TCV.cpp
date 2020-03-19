@@ -40,6 +40,7 @@ void TCV::visit(AssignOp *node) {
         std::string errorString = "Unmatched type at line " + std::to_string(position);
         detector->addError(errorString);
     }
+    returnType = "";
 }
 
 
@@ -67,13 +68,28 @@ void TCV::visit(Call *node) {
         if (currentNamespace.empty()) {
             if (isFuncCall()) {
                 if (isCalledOnObject(node)) {
-
-                }
-                else {
+                    //get the object
+                    auto object = node->getParent()->getChild(lastProcessedNode)->getChild(0);
+                    std::string objectType;
+                    if (currentFuncName == "main") objectType = stgv->symbolTable->main->getVariable(object->getName())->getType();
+                    else objectType = tempFunction->getVariable(object->getName())->getType();
+                    auto functions = stgv->symbolTable->getClass(objectType)->getFunctions().at(nodeName);
+                    auto function = getRightFunction(functions, node);
+                    if (function != nullptr && function->getVisibility() == Visibility::PRIVATE) {
+                        std::cerr << "Accessing private function name " <<  nodeName << std::endl;
+                        return;
+                    }
+                    else if (function == nullptr) {
+                        std::cerr << "no matching function name " << nodeName << std::endl;
+                        return;
+                    } else {
+                        returnType = function->getReturnType();
+                        return;
+                    }
+                } else {
                     checkIfFreeFunctionCalledWithRightArgument(nodeName, node);
                     return;
                 }
-
             }
 
             if (currentFuncName == "main")
@@ -177,13 +193,13 @@ bool TCV::isMatchType(std::string &lhs, std::string &rhs) {
 
 bool TCV::isCalledOnObject(AST::ASTNode *node) {
     if (lastProcessedNode == -1) return false;
-    if (node->getParent()->getChild(lastProcessedNode)->getType() == "id") return true;
+    if (node->getParent()->getChild(lastProcessedNode)->getChild(0)->getType() == "id") return true;
     else return false;
 }
 
 std::vector<std::string> TCV::getParamsType(AST::ASTNode *_node) {
     std::vector<std::string> types;
-    for (const auto& child : _node->getChildren()) {
+    for (const auto &child : _node->getChildren()) {
         types.push_back(child->getType());
     }
     return types;
@@ -191,8 +207,16 @@ std::vector<std::string> TCV::getParamsType(AST::ASTNode *_node) {
 
 void TCV::checkIfFreeFunctionCalledWithRightArgument(std::string &nodeName, AST::ASTNode *_node) {
     auto functions = stgv->symbolTable->getFreeFunction(nodeName);
-    auto callParams = getParamsType(_node->getChild(1));
     bool isRightFunctionCall = false;
+    auto function = getRightFunction(functions, _node);
+    if (function != nullptr) isRightFunctionCall = true;
+    if (!isRightFunctionCall) {
+        std::cerr << "Wrong number of arguments were passed to function name " << nodeName << std::endl;
+    }
+}
+
+Function *TCV::getRightFunction(std::vector<Function *> functions, AST::ASTNode *_node) {
+    auto callParams = getParamsType(_node->getChild(1));
     for (const auto &_function : functions) {
         if (_function->getParams().size() != callParams.size()) continue;
         int matchedParams = 0;
@@ -202,14 +226,13 @@ void TCV::checkIfFreeFunctionCalledWithRightArgument(std::string &nodeName, AST:
             else matchedParams++;
         }
         if (matchedParams == callParams.size()) {
-            isRightFunctionCall = true;
-            returnType = _function->getReturnType();
-            break;
+            return _function;
         }
     }
 
-    if (!isRightFunctionCall) { std::cerr << "Wrong number of arguments were passed to function name " << nodeName << std::endl;}
+    return nullptr;
 }
+
 //Type checking visitors do not need to implement these functions
 //but they have to have an implementation to make the compiler happy
 void TCV::visit(ArrayDim *node) {}

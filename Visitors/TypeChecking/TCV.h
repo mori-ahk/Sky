@@ -74,6 +74,7 @@ private:
     void checkIfFreeFunctionCalledWithRightArgument(std::string &, AST::ASTNode *);
     STGV *stgv;
     Function *tempFunction;
+    Function *getRightFunction(std::vector<Function *>, AST::ASTNode *);
     Semantic::Detector *detector;
 
     bool isGoodToGo = true;

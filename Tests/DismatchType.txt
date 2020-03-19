@@ -1,19 +1,15 @@
-class A {};
+class A {
+    public b() : float;
+};
 class B {};
 
-size(integer a, float b) : A
-    do
-    end
-
-ad(integer x) : integer
-    do
-    end
-
+A::b() : float
+do
+end
 main
     local
         A n;
-        B b;
+        float x;
     do
-        n = size(1, 1.0);
-        b = ad(1);
+        x = n.b();
     end

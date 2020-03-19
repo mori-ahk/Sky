@@ -44,7 +44,6 @@ public:
     friend inline bool operator==(Function &lhs, Function &rhs) {
         return lhs.getName() == rhs.getName() &&
                isParamsEqual(lhs, rhs) &&
-               lhs.getVisibilityString() == rhs.getVisibilityString() &&
                lhs.getReturnType() == rhs.getReturnType();
     }
 
