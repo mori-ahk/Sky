@@ -23,10 +23,21 @@ void TCV::visit(FuncDef *node) {
     currentFuncName = isClassFunc() ? signature->getChild(1)->getName() : signature->getChild(0)->getName();
     currentNamespace = isClassFunc() ? signature->getChild(0)->getName() : std::string();
     tempFunction = stgv->createTempFunction(node, currentFuncName, _returnType);
+    node->getChild(1)->accept(*this);
 }
 
 void TCV::visit(AddOp *node) {
-
+    node->getChild(0)->accept(*this);
+    if (!isGoodToGo) return;
+    std::string lhsType = returnType;
+    node->getChild(2)->accept(*this);
+    if (!isGoodToGo) return;
+    std::string rhsType = returnType;
+    if (!isMatchType(lhsType, rhsType)) {
+        isGoodToGo = false;
+        std::string errorString = "Unmatched type at line " + std::to_string(position);
+        detector->addError(errorString);
+    }
 }
 
 void TCV::visit(AssignOp *node) {
@@ -123,11 +134,13 @@ void TCV::visit(CompareOp *node) {
 }
 
 void TCV::visit(FuncCall *node) {
-
+    for (const auto &child : node->getChildren())
+        child->accept(*this);
 }
 
 void TCV::visit(If *node) {
-
+    for (const auto &child : node->getChildren())
+        child->accept(*this);
 }
 
 void TCV::visit(MainFunc *node) {
@@ -137,7 +150,17 @@ void TCV::visit(MainFunc *node) {
 }
 
 void TCV::visit(MultOp *node) {
-
+    node->getChild(0)->accept(*this);
+    if (!isGoodToGo) return;
+    std::string lhsType = returnType;
+    node->getChild(2)->accept(*this);
+    if (!isGoodToGo) return;
+    std::string rhsType = returnType;
+    if (!isMatchType(lhsType, rhsType)) {
+        isGoodToGo = false;
+        std::string errorString = "Unmatched type at line " + std::to_string(position);
+        detector->addError(errorString);
+    }
 }
 
 void TCV::visit(Program *node) {
@@ -148,7 +171,8 @@ void TCV::visit(Program *node) {
 }
 
 void TCV::visit(Read *node) {
-
+    for (const auto &child : node->getChildren())
+        child->accept(*this);
 }
 
 void TCV::visit(Sign *node) {
@@ -168,11 +192,13 @@ void TCV::visit(While *node) {
 }
 
 void TCV::visit(Write *node) {
-
+    for (const auto &child: node->getChildren())
+        child->accept(*this);
 }
 
 void TCV::visit(AST::ASTNode *node) {
     returnType = node->getType();
+    position = node->getLineNumber();
     for (const auto &child: node->getChildren())
         child->accept(*this);
 }
@@ -223,7 +249,6 @@ void TCV::checkIfFreeFunctionCalledWithRightArgument(std::string &nodeName, AST:
         std::string errorString = "Wrong number of arguments were passed to function name " + nodeName;
         detector->addError(errorString);
     }
-
 }
 
 void
