@@ -17,7 +17,7 @@ bubbleSort(integer arr[], integer size) : void
         n = i / n;
         n = -1;
       end;
-    write(2+3.0);
+    write(2+3);
     read(n);
     if (arr[j] > arr[j+1])
                   then
@@ -29,7 +29,7 @@ bubbleSort(integer arr[], integer size) : void
                     end
                   else
     	        ;
-    return (2+3);
+    return (n);
   end
 
 

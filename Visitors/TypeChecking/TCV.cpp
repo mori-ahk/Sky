@@ -181,7 +181,24 @@ void TCV::visit(Read *node) {
 }
 
 void TCV::visit(Return *node) {
+    for (const auto &child : node->getChildren())
+        child->accept(*this);
 
+    Function *currentFunction;
+    if (currentNamespace.empty())
+        currentFunction = stgv->symbolTable->getFreeFunction(currentFuncName, tempFunction);
+    else
+        currentFunction = stgv->symbolTable->getClass(currentNamespace)->getFunction(currentFuncName, tempFunction);
+
+
+    if (!isMatchType(currentFunction->getReturnType(), returnType)) {
+        std::string errorString = "Expected to return " + currentFunction->getReturnType() +
+                                  " but return " + returnType + " instead, at line " +
+                                  std::to_string(node->getLineNumber());
+        isGoodToGo = false;
+        detector->addError(errorString);
+        return;
+    }
 }
 
 void TCV::visit(Sign *node) {}
