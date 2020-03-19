@@ -43,6 +43,12 @@ Function *Class::getFunction(std::string &funcName, Function *function) {
     throw Semantic::Err::UndeclaredFunction(funcName, function->getPosition());
 }
 
+Variable *Class::getVariable(std::string &varName) {
+    if (variables.find(varName) == variables.end())
+        throw Semantic::Err::UndeclaredClassVariable(varName);
+    return variables.at(varName);
+}
+
 void Class::addVariable(std::string &varName, Variable *variable) {
     if (variables.find(varName) != variables.end())
         throw Semantic::Err::DuplicateDataMember(varName, variable->getPosition());

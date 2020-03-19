@@ -1,16 +1,17 @@
 class A {
+    private float r;
     public b() : B;
 };
 
 class B {
-    public c(integer a) : integer;
+    public c(integer a) : A;
 };
 
 A::b() : B
 do
 end
 
-B::c(integer a) : integer
+B::c(integer a) : A
 do
 end
 
@@ -19,5 +20,5 @@ main
         A n;
         float x;
     do
-        x = n.b().c(1);
+        x = n.b().c(1).r;
     end

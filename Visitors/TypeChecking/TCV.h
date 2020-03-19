@@ -81,6 +81,8 @@ private:
 
     void checkIfClassFunctionCalledWithRightAccess(std::string &, AST::ASTNode *, bool isCalledOnFunction = false);
 
+    void checkIfClassVariableCalledWithRightAccess(std::string &, AST::ASTNode *);
+
     STGV *stgv;
     Function *tempFunction;
 
