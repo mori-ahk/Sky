@@ -4,21 +4,24 @@ class A {
 };
 
 class B {
-    public c(integer a) : A;
+    public integer w;
+    public float y;
+    public c(integer a) : float;
 };
 
 A::b() : B
 do
 end
 
-B::c(integer a) : A
+B::c(integer a) : float
 do
 end
 
 main
     local
         A n;
-        float x;
+        B x;
     do
-        x = n.b().c(1).r;
+        x.y = n.b().w;
+
     end

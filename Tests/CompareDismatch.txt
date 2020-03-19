@@ -1,0 +1,13 @@
+s() : float
+do
+end
+
+main
+local
+    integer n;
+    integer i;
+do
+    while (i < s(1))
+    do
+    end;
+end

@@ -1,16 +1,16 @@
 /* sort the array */
 bubbleSort(integer arr[], integer size) : void
   local
-    LINEAR n;
+    integer n;
     integer i;
     integer j;
     integer temp;
   do
-    n = size.getSize().a;
+    n = 0;
     i = 0;
     j = 0;
     temp = 0;
-    while (i < n.size-1)
+    while (i < 1)
       do
         i = i+1;
         n = n * n;
@@ -18,7 +18,7 @@ bubbleSort(integer arr[], integer size) : void
         n = -1;
       end;
     write(2+3);
-    read(a.size().g);
+    read(n);
     if (arr[j] > arr[j+1])
                   then
                     do
@@ -39,6 +39,5 @@ main
     integer arr[7];
   do
     arr[0] = 64;
-    a = 1 and 2 and 2 + 4;
     printarray(arr, 7);
   end
