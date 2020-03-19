@@ -29,6 +29,7 @@
 #include "Nodes/If.h"
 #include "Nodes/While.h"
 #include "Nodes/Read.h"
+#include "Nodes/Return.h"
 #include "Nodes/Write.h"
 #include "Nodes/Statements.h"
 #include "Nodes/Calls.h"

@@ -138,6 +138,11 @@ void TCV::visit(FuncCall *node) {
         child->accept(*this);
 }
 
+void TCV::visit(FuncBody *node) {
+    //Call statements node because variable declarations node has been taken care of in symbol table generation phase.
+    node->getChild(1)->accept(*this);
+}
+
 void TCV::visit(If *node) {
     for (const auto &child : node->getChildren())
         child->accept(*this);
@@ -175,9 +180,11 @@ void TCV::visit(Read *node) {
         child->accept(*this);
 }
 
-void TCV::visit(Sign *node) {
+void TCV::visit(Return *node) {
 
 }
+
+void TCV::visit(Sign *node) {}
 
 void TCV::visit(Statements *node) {
     for (const auto &child : node->getChildren()) {
@@ -326,11 +333,6 @@ void TCV::visit(ArrayDim *node) {}
 void TCV::visit(ClassDecls *node) {}
 
 void TCV::visit(ClassDecl *node) {}
-
-void TCV::visit(FuncBody *node) {
-    //Call statements node because variable declarations node has been taken care of in symbol table generation phase.
-    node->getChild(1)->accept(*this);
-}
 
 void TCV::visit(FuncDecl *node) {}
 

@@ -52,6 +52,8 @@ public:
 
     void visit(Read *node) override;
 
+    void visit(Return *node) override;
+
     void visit(Sign *node) override;
 
     void visit(Statements *node) override;

@@ -132,6 +132,7 @@ AST::ASTNode *AST::ASTBuilder::createCustomNode(std::string &nodeName, Token *to
     else if (nodeName == "mult") return new MultOp(nodeName, token);
     else if (nodeName == "PROGRAM") return new Program(nodeName, token);
     else if (nodeName == "read") return new Read(nodeName, token);
+    else if (nodeName == "return") return new Return(nodeName, token);
     else if (nodeName == "sign") return new Sign(nodeName, token);
     else if (nodeName == "STATEMENTS" || nodeName == "STATEMENTBLOCK") return new Statements(nodeName, token);
     else if (nodeName == "variable") return new VarDecl(nodeName, token);

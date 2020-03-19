@@ -255,6 +255,8 @@ void STGV::visit(MultOp *node) {}
 
 void STGV::visit(Read *node) {}
 
+void STGV::visit(Return *node) {}
+
 void STGV::visit(Sign *node) {}
 
 void STGV::visit(Statements *node) {}

@@ -48,6 +48,8 @@ public:
 
     virtual void visit(Read *node) = 0;
 
+    virtual void visit(Return *node) = 0;
+
     virtual void visit(Sign *node) = 0;
 
     virtual void visit(Statements *node) = 0;
