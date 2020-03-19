@@ -35,6 +35,7 @@ void TCV::visit(AssignOp *node) {
     std::string lhsType = returnType;
     node->getChild(1)->accept(*this);
     std::string rhsType = returnType;
+    if (!isGoodToGo) return;
     if (!isMatchType(lhsType, rhsType)) {
         isGoodToGo = false;
         std::string errorString = "Unmatched type at line " + std::to_string(position);
@@ -57,53 +58,32 @@ void TCV::visit(Calls *node) {
 void TCV::visit(Call *node) {
     auto _node = node->getChild(0);
     auto nodeName = _node->getName();
-    auto isFuncCall = [&node]() {
-        if (node->getChildren().size() > 1)
-            return node->getChild(1)->getName().front() == 'F';
-        else return false;
-    };
 
     try {
         Variable *variable;
-        if (currentNamespace.empty()) {
-            if (isFuncCall()) {
-                if (isCalledOnObject(node)) {
-                    //get the object
-                    auto object = node->getParent()->getChild(lastProcessedNode)->getChild(0);
-                    std::string objectType;
-                    if (currentFuncName == "main") objectType = stgv->symbolTable->main->getVariable(object->getName())->getType();
-                    else objectType = tempFunction->getVariable(object->getName())->getType();
-                    auto functions = stgv->symbolTable->getClass(objectType)->getFunctions().at(nodeName);
-                    auto function = getRightFunction(functions, node);
-                    if (function != nullptr && function->getVisibility() == Visibility::PRIVATE) {
-                        std::cerr << "Accessing private function name " <<  nodeName << std::endl;
-                        return;
-                    }
-                    else if (function == nullptr) {
-                        std::cerr << "no matching function name " << nodeName << std::endl;
-                        return;
-                    } else {
-                        returnType = function->getReturnType();
-                        return;
-                    }
-                } else {
-                    checkIfFreeFunctionCalledWithRightArgument(nodeName, node);
+        if (isFuncCall(node)) {
+            if (isCalledOnObject(node)) {
+                checkIfClassFunctionCalledWithRightAccess(nodeName, node);
+                return;
+            } else if (isCalledOnFunction(node)) {
+                if (returnType != "integer" && returnType != "float") {
+                    checkIfClassFunctionCalledWithRightAccess(nodeName, node, true);
                     return;
                 }
+            } else {
+                checkIfFreeFunctionCalledWithRightArgument(nodeName, node);
+                return;
             }
+        }
 
+        if (currentNamespace.empty()) {
             if (currentFuncName == "main")
                 variable = stgv->symbolTable->main->getVariable(nodeName);
             else
                 variable = stgv->symbolTable->getFreeFunction(currentFuncName, tempFunction)->getVariable(nodeName);
         } else {
-            if (isFuncCall()) {
-
-            }
-            variable = stgv->symbolTable->classes.at(currentNamespace)->getFunction(currentFuncName,
-                                                                                    tempFunction)->getVariable(
-                    nodeName);
-
+            auto _class = stgv->symbolTable->classes.at(currentNamespace);
+            variable = _class->getFunction(currentFuncName, tempFunction)->getVariable(nodeName);
         }
         returnType = variable->getType();
         position = _node->getLineNumber();
@@ -191,10 +171,22 @@ bool TCV::isMatchType(std::string &lhs, std::string &rhs) {
     else return false;
 }
 
+bool TCV::isFuncCall(AST::ASTNode *node) {
+    if (node->getChildren().size() > 1)
+        return node->getChild(1)->getName().front() == 'F';
+    else return false;
+}
+
 bool TCV::isCalledOnObject(AST::ASTNode *node) {
     if (lastProcessedNode == -1) return false;
-    if (node->getParent()->getChild(lastProcessedNode)->getChild(0)->getType() == "id") return true;
-    else return false;
+    auto callNode = node->getParent()->getChild(lastProcessedNode);
+    return callNode->getChild(0)->getType() == "id" && !isFuncCall(callNode);
+}
+
+bool TCV::isCalledOnFunction(AST::ASTNode *node) {
+    if (lastProcessedNode == -1) return false;
+    auto callNode = node->getParent()->getChild(lastProcessedNode);
+    return callNode->getChild(1)->getName().front() == 'F';
 }
 
 std::vector<std::string> TCV::getParamsType(AST::ASTNode *_node) {
@@ -211,7 +203,42 @@ void TCV::checkIfFreeFunctionCalledWithRightArgument(std::string &nodeName, AST:
     auto function = getRightFunction(functions, _node);
     if (function != nullptr) isRightFunctionCall = true;
     if (!isRightFunctionCall) {
-        std::cerr << "Wrong number of arguments were passed to function name " << nodeName << std::endl;
+        isGoodToGo = false;
+        std::string errorString = "Wrong number of arguments were passed to function name " + nodeName;
+        detector->addError(errorString);
+    }
+}
+
+void
+TCV::checkIfClassFunctionCalledWithRightAccess(std::string &nodeName, AST::ASTNode *_node, bool isCalledOnFunction) {
+    auto object = _node->getParent()->getChild(lastProcessedNode)->getChild(0);
+
+    //if there is a chain of function calls, the return type
+    //of the last processed function is the object type that
+    //next function should be called on.
+    std::string objectType = isCalledOnFunction ? returnType : "";
+
+    //if in main function scope, we need to fetch main function local variable
+    if (objectType.empty()) {
+        if (currentFuncName == "main") objectType = stgv->symbolTable->main->getVariable(object->getName())->getType();
+        else objectType = tempFunction->getVariable(object->getName())->getType();
+    }
+    auto functions = stgv->symbolTable->getClass(objectType)->getFunctions().at(nodeName);
+
+    auto function = getRightFunction(functions, _node);
+    if (function != nullptr && function->getVisibility() == Visibility::PRIVATE) {
+        isGoodToGo = false;
+        std::string errorString = "Accessing private function name " + nodeName;
+        detector->addError(errorString);
+        return;
+    } else if (function == nullptr) {
+        isGoodToGo = false;
+        std::string errorString = "no matching function name " + nodeName;
+        detector->addError(errorString);
+        return;
+    } else {
+        returnType = function->getReturnType();
+        return;
     }
 }
 
@@ -229,9 +256,9 @@ Function *TCV::getRightFunction(std::vector<Function *> functions, AST::ASTNode 
             return _function;
         }
     }
-
     return nullptr;
 }
+
 
 //Type checking visitors do not need to implement these functions
 //but they have to have an implementation to make the compiler happy

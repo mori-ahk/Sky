@@ -68,13 +68,24 @@ public:
 
 private:
     static bool isMatchType(std::string &, std::string &);
+
     static bool isCalledOnObject(AST::ASTNode *);
+
+    static bool isFuncCall(AST::ASTNode *);
+
+    static bool isCalledOnFunction(AST::ASTNode *);
+
     std::vector<std::string> getParamsType(AST::ASTNode *);
 
     void checkIfFreeFunctionCalledWithRightArgument(std::string &, AST::ASTNode *);
+
+    void checkIfClassFunctionCalledWithRightAccess(std::string &, AST::ASTNode *, bool isCalledOnFunction = false);
+
     STGV *stgv;
     Function *tempFunction;
+
     Function *getRightFunction(std::vector<Function *>, AST::ASTNode *);
+
     Semantic::Detector *detector;
 
     bool isGoodToGo = true;
@@ -84,7 +95,6 @@ private:
     std::string currentNamespace;
 
     int position;
-
 
 
 };

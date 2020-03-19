@@ -1,15 +1,23 @@
 class A {
-    public b() : float;
+    public b() : B;
 };
-class B {};
 
-A::b() : float
+class B {
+    public c(integer a) : integer;
+};
+
+A::b() : B
 do
 end
+
+B::c(integer a) : integer
+do
+end
+
 main
     local
         A n;
         float x;
     do
-        x = n.b();
+        x = n.b().c(1);
     end
