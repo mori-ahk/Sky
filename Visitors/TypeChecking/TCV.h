@@ -85,6 +85,8 @@ private:
 
     void checkIfClassVariableCalledWithRightAccess(std::string &, AST::ASTNode *);
 
+    void checkIfArrayCalledWithRightDimensions(Variable *, std::string &, AST::ASTNode *);
+
     STGV *stgv;
     Function *tempFunction;
 

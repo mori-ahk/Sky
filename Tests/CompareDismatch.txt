@@ -1,13 +1,14 @@
-s() : float
+s() : integer
 do
 end
 
 main
 local
-    integer n;
-    integer i;
+    integer n[1][1];
+    integer i[][];
 do
-    while (i < s(1))
+    n[1][2] = i[1][2];
+    while (i[2][2] < s())
     do
     end;
 end

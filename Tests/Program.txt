@@ -1,5 +1,5 @@
 class LINEAR inherits POLYNOMIAL {
-	private float a;
+	private float a[][];
 	private float b;
 
 	public build(float A, float B) : LINEAR;
@@ -7,7 +7,7 @@ class LINEAR inherits POLYNOMIAL {
 };
 
 class POLYNOMIAL {
-    private float b;
+    private float b[];
     public evaluate(float x) : float;
 };
 

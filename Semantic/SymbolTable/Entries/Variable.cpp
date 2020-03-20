@@ -6,15 +6,15 @@
 
 #include <utility>
 
-Variable::Variable(Visibility visibility, std::string name, std::string type, std::vector<int> dimensions, int position) {
+Variable::Variable(Visibility visibility, std::string name, std::string type, int dimensions, int position) {
     this->visibility = visibility;
     this->name = std::move(name);
     this->type = std::move(type);
-    this->dimensions = std::move(dimensions);
+    this->dimensions = dimensions;
     this->position = position;
 }
 
-std::vector<int> &Variable::getDimensions() {
+int &Variable::getDimensions() {
     return dimensions;
 }
 
@@ -31,20 +31,14 @@ std::string Variable::getVisibilityString() {
     else return "private";
 }
 
-std::string Variable::getDimsString() {
-    std::string dimension;
-    for (auto dim: getDimensions()) dimension += std::to_string(dim) + ", ";
-    if (getDimensions().empty()) dimension = "[]";
-    return dimension;
-}
-
 Visibility Variable::getVisibility() {
     return visibility;
 }
 
 std::ostream &operator<<(std::ostream &os, Variable &v) {
-    std::string dimension = v.getDimsString();
+    std::string dimension = std::to_string(v.getDimensions());
     std::string visibility = v.getVisibilityString();
+    for (int i = 0; i < v.getDimensions(); i++) v.getType() += "[]";
     os << "VARIABLE\n";
     os << "\t[ " << "visibility: " << visibility << " | name: " << v.getName() << " | type: " << v.getType()
        << " | dimensions: " << dimension << " ]" << std::endl;

@@ -25,6 +25,9 @@ void Compiler::compile() {
     AST::ASTNode *root = parser->AST_Builder->getRoot();
     symTabGenerator = new STGV(root);
 
+    for (const auto &c : symTabGenerator->symbolTable->classes)
+        std::cout << *(c.second) << std::endl;
+
     for (const auto &e : symTabGenerator->getErrors()) {
         std::cerr << e << std::endl;
     }
