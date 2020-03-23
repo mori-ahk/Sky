@@ -38,7 +38,7 @@ Visibility Variable::getVisibility() {
 std::ostream &operator<<(std::ostream &os, Variable &v) {
     std::string dimension = std::to_string(v.getDimensions());
     std::string visibility = v.getVisibilityString();
-    for (int i = 0; i < v.getDimensions(); i++) v.getType() += "[]";
+//    for (int i = 0; i < v.getDimensions(); i++) v.getType() += "[]";
     os << "VARIABLE\n";
     os << "\t[ " << "visibility: " << visibility << " | name: " << v.getName() << " | type: " << v.getType()
        << " | dimensions: " << dimension << " ]" << std::endl;

@@ -54,6 +54,9 @@ public:
     inline void setPosition(int _position) { this->position = _position; }
 
     inline int getPosition() { return position; }
+
+    inline bool isPrivate() { return visibility == Visibility::PRIVATE; }
+
     private:
 
     std::vector<Variable *> params;

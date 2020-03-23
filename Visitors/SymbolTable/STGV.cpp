@@ -194,7 +194,10 @@ Variable *STGV::createVar(AST::ASTNode *node) {
     int dimensions = 0;
 
     AST::ASTNode *dimNodeToIterate = node->getChildren().size() == 4 ? node->getChild(3) : node->getChild(2);
-    for (auto &arrayDimensionChild: dimNodeToIterate->getChildren()) dimensions++;
+    for (auto &arrayDimensionChild: dimNodeToIterate->getChildren()) {
+        type += "[]";
+        dimensions++;
+    }
     return new Variable(visibility, varName, type, dimensions, node->getChild(startIndex)->getLineNumber());
 }
 

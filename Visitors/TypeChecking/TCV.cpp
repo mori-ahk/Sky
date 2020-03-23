@@ -101,8 +101,11 @@ void TCV::visit(Call *node) {
             variable = _class->getFunction(currentFuncName, tempFunction)->getVariable(nodeName);
         }
 
-        checkIfArrayCalledWithRightDimensions(variable, nodeName, node);
-        if (!isGoodToGo) return;
+        if (isCalledWithDimension(node)) {
+            checkIfArrayCalledWithRightDimensions(variable, nodeName, node);
+            return;
+        }
+
         returnType = variable->getType();
         position = _node->getLineNumber();
     } catch (Semantic::Err::UndeclaredLocalVariable &undeclaredLocalVariable) {
@@ -254,13 +257,21 @@ bool TCV::isCalledOnFunction(AST::ASTNode *node) {
     return callNode->getChild(1)->getName().front() == 'F';
 }
 
+bool TCV::isCalledWithDimension(AST::ASTNode *node) {
+    if (node->getChildren().size() < 2) return false;
+    else
+        return !node->getChild(1)->getChildren().empty();
+}
+
 std::vector<std::string> TCV::getParamsType(AST::ASTNode *_node) {
     std::vector<std::string> types;
     for (const auto &child : _node->getChildren()) {
-        types.push_back(child->getType());
+        child->accept(*this);
+        types.push_back(returnType);
     }
     return types;
 }
+
 
 void TCV::checkIfFreeFunctionCalledWithRightArgument(std::string &nodeName, AST::ASTNode *_node) {
     auto functions = stgv->symbolTable->getFreeFunction(nodeName);
@@ -272,7 +283,7 @@ void TCV::checkIfFreeFunctionCalledWithRightArgument(std::string &nodeName, AST:
     }
     if (!isRightFunctionCall) {
         isGoodToGo = false;
-        std::string errorString = "Wrong number of arguments were passed to function name " + nodeName;
+        std::string errorString = "Wrong arguments were passed to function name " + nodeName;
         detector->addError(errorString);
     }
 }
@@ -294,7 +305,7 @@ TCV::checkIfClassFunctionCalledWithRightAccess(std::string &nodeName, AST::ASTNo
     auto functions = stgv->symbolTable->getClass(objectType)->getFunctions().at(nodeName);
 
     auto function = getRightFunction(functions, _node);
-    if (function != nullptr && function->getVisibility() == Visibility::PRIVATE) {
+    if (function != nullptr && function->isPrivate()) {
         isGoodToGo = false;
         std::string errorString = "Accessing private function name " + nodeName;
         detector->addError(errorString);
@@ -311,38 +322,29 @@ TCV::checkIfClassFunctionCalledWithRightAccess(std::string &nodeName, AST::ASTNo
 }
 
 void TCV::checkIfArrayCalledWithRightDimensions(Variable *variable, std::string &nodeName, AST::ASTNode *node) {
-    auto doesHaveIndices = [&node]() {
-        if (node->getChildren().size() < 2) return false;
-        else return node->getChild(1)->getName().front() == 'I';
-    };
-
     std::string lineNumber = std::to_string(node->getChild(0)->getLineNumber());
     if (variable->isArray()) {
-        if (doesHaveIndices()) {
-            int indices = node->getChild(1)->getChildren().size();
-            if (variable->getDimensions() != indices) {
-                std::string errorString = "Too many dimensions for variable " + nodeName + " at line " + lineNumber;
-                detector->addError(errorString);
-                isGoodToGo = false;
-                return;
-            } else {
-                for (const auto& index : node->getChild(1)->getChildren()) {
-                    if (index->getChild(0)->getType() != "intnum") {
-                        std::string errorString = "Array dimensions should be of type integer at line " + lineNumber;
-                        detector->addError(errorString);
-                        isGoodToGo = false;
-                        return;
-                    }
-                }
-            }
-        } else {
-            std::string errorString = "Expect indices for variable " + nodeName + " at line " + lineNumber;
+        int indices = node->getChild(1)->getChildren().size();
+        if (variable->getDimensions() != indices) {
+            std::string errorString = "missing dimensions for variable " + nodeName + " at line " + lineNumber;
             detector->addError(errorString);
             isGoodToGo = false;
             return;
+        } else {
+            for (const auto &index : node->getChild(1)->getChildren()) {
+                index->accept(*this);
+                if (returnType != "intnum" && returnType != "integer") {
+                    std::string errorString = "Array dimensions should be of type integer at line " + lineNumber;
+                    detector->addError(errorString);
+                    isGoodToGo = false;
+                    return;
+                }
+            }
+            returnType = variable->getType() == "float[][]" ? "float" : "integer";
         }
     }
 }
+
 void TCV::checkIfClassVariableCalledWithRightAccess(std::string &nodeName, AST::ASTNode *node) {
     if (returnType != "integer" && returnType != "float") {
         std::string lineNumber = std::to_string(node->getChild(0)->getLineNumber());
@@ -362,7 +364,7 @@ void TCV::checkIfClassVariableCalledWithRightAccess(std::string &nodeName, AST::
 }
 
 
-Function *TCV::getRightFunction(std::vector<Function *> __functions, AST::ASTNode *_node) {
+Function *TCV::getRightFunction(const std::vector<Function *> &__functions, AST::ASTNode *_node) {
     auto callParams = getParamsType(_node->getChild(1));
     for (const auto &_function : __functions) {
         if (_function->getParams().size() != callParams.size()) continue;

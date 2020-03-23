@@ -1,14 +1,30 @@
-s() : integer
+class A {
+    public integer a;
+};
+
+s(integer a, integer b) : integer
+do
+end
+
+f() : integer
+do
+end
+
+c() : integer
 do
 end
 
 main
 local
-    integer n[1][1];
-    integer i[][];
+    integer n[][];
+    integer i;
+    integer m;
+    integer a[][];
+    float j;
+    A f;
 do
-    n[1][2] = i[1][2];
-    while (i[2][2] < s())
+    n = a;
+    while ( m < s(a[i][i], c()))
     do
     end;
 end

@@ -28,6 +28,10 @@ void Compiler::compile() {
     for (const auto &c : symTabGenerator->symbolTable->classes)
         std::cout << *(c.second) << std::endl;
 
+    for (const auto &c : symTabGenerator->symbolTable->freeFunctions) {
+        for (const auto &f : c.second)
+            std::cout << *f << std::endl;
+    }
     for (const auto &e : symTabGenerator->getErrors()) {
         std::cerr << e << std::endl;
     }

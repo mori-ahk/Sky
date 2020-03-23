@@ -77,7 +77,9 @@ private:
 
     static bool isCalledOnFunction(AST::ASTNode *);
 
-    static std::vector<std::string> getParamsType(AST::ASTNode *);
+    static bool isCalledWithDimension(AST::ASTNode *);
+
+    std::vector<std::string> getParamsType(AST::ASTNode *);
 
     void checkIfFreeFunctionCalledWithRightArgument(std::string &, AST::ASTNode *);
 
@@ -90,7 +92,7 @@ private:
     STGV *stgv;
     Function *tempFunction;
 
-    static Function *getRightFunction(std::vector<Function *>, AST::ASTNode *);
+    Function *getRightFunction(const std::vector<Function *>&, AST::ASTNode *);
 
     Semantic::Detector *detector;
 
