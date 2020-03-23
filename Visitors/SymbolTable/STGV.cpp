@@ -47,7 +47,7 @@ void STGV::visit(FuncDef *node) {
             auto classFunction = symbolTable->getClass(namespaceName)->getFunction(funcName, function);
             classFunction->isDefined = true;
         } catch (Semantic::Err::UndeclaredClass &undeclaredClass) {
-            detector->addError(std::string(undeclaredClass.what()));
+            detector->addError(undeclaredClass.what());
             return;
         } catch (Semantic::Err::UndeclaredFunction &undeclaredFunc) {
             detector->addError(undeclaredFunc.what());
@@ -64,7 +64,6 @@ void STGV::visit(FuncDef *node) {
         try {
             function->addVariable(variable);
         } catch (Semantic::Err::DuplicateDataMember &duplicateLocalVar) {
-            int position = localVar->getChild(1)->getLineNumber();
             detector->addError(duplicateLocalVar.what());
         }
 
@@ -129,9 +128,7 @@ void STGV::visit(ClassDecl *node) {
 }
 
 void STGV::visit(ClassDecls *node) {
-    for (auto &child : node->getChildren()) {
-        child->accept(*this);
-    }
+    for (auto &child : node->getChildren()) child->accept(*this);
 }
 
 void STGV::visit(FuncParams *node) {
@@ -185,7 +182,7 @@ Variable *STGV::createVar(AST::ASTNode *node) {
     if (node->getChild(startIndex++)->getType() == "id") {
         try {
             symbolTable->getClass(type);
-        } catch (Semantic::Err::UndeclaredClass& undeclaredClass) {
+        } catch (Semantic::Err::UndeclaredClass &undeclaredClass) {
             detector->addError(undeclaredClass.what());
         }
     }
@@ -207,7 +204,8 @@ Function *STGV::createTempFunction(AST::ASTNode *node, std::string &funcName, st
         return signature->getChildren().size() == 4;
     };
 
-    Function *function = new Function(Visibility::PUBLIC, funcName, returnType, {}, {}, signature->getChild(0)->getLineNumber());
+    Function *function = new Function(Visibility::PUBLIC, funcName, returnType, {}, {},
+                                      signature->getChild(0)->getLineNumber());
 
     //iterating on params
     AST::ASTNode *params = isClassFunc() ? signature->getChild(2) : signature->getChild(1);

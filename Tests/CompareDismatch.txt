@@ -1,17 +1,21 @@
 class A {
     public integer a;
+    public integer b[][];
 };
 
 s(integer a, integer b) : integer
 do
 end
 
-f() : integer
+f() : float
 do
 end
 
 c() : integer
+local
+A a;
 do
+    return(a.b);
 end
 
 main
@@ -24,7 +28,7 @@ local
     A f;
 do
     n = a;
-    while ( m < s(a[i], c()))
+    while ( m < s(a[i][i], c()))
     do
     end;
 end
