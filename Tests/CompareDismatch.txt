@@ -1,17 +1,21 @@
 class A {
     public integer a;
+    public integer b[][];
 };
 
 s(integer a, integer b) : integer
 do
 end
 
-f() : integer
+f() : float
 do
 end
 
 c() : integer
+local
+A a;
 do
+    return(a.b);
 end
 
 main

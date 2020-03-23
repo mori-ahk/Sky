@@ -23,7 +23,14 @@ private:
     Syntax::Parser *parser;
     STGV *symTabGenerator;
     TCV *typeChecker;
+    std::string filePath;
 
+    void writeSymTab();
+    void writeSymTabErrors(const std::vector<std::string> &errors);
+    void writeSymTabWarnings(const std::vector<std::string> &warnings);
+    void writeTypeCheckingErrors(const std::vector<std::string> &errors);
+
+    std::string extractFileName();
 };
 
 

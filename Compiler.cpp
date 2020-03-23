@@ -4,19 +4,71 @@
 
 #include "Compiler.h"
 
-#include <utility>
+#include <fstream>
 
-
-Compiler::Compiler(std::string filePath) {
+Compiler::Compiler(std::string _filePath) {
+    this->filePath = std::move(_filePath);
     this->lexer = new Lexer();
-    lexer->lex(std::move(filePath));
+    lexer->lex(filePath);
     this->parser = new Syntax::Parser(lexer);
     this->symTabGenerator = nullptr;
+    this->typeChecker = nullptr;
+}
+std::string Compiler::extractFileName() {
+    std::string fileName;
+
+    for (const auto &c : filePath) {
+        if (c == '.') break;
+        fileName += c;
+    }
+
+    return fileName;
 }
 
 Compiler::~Compiler() {
     delete lexer;
     delete parser;
+    delete symTabGenerator;
+    delete typeChecker;
+}
+
+void Compiler::writeSymTab() {
+    std::string fileName = extractFileName();
+    std::ofstream stream(fileName + "_symtab.txt");
+    for (const auto &c : symTabGenerator->symbolTable->classes) stream << *c.second;
+
+    for (const auto &functions : symTabGenerator->symbolTable->freeFunctions) {
+        for (const auto &f : functions.second) stream << *f;
+    }
+
+    stream << *(symTabGenerator->symbolTable->main);
+
+    stream.close();
+}
+
+void Compiler::writeSymTabErrors(const std::vector<std::string> &errors) {
+    std::string fileName = extractFileName();
+    std::ofstream stream(fileName + "_symtab_errors.txt");
+    stream << "============================ SYMBOL TABLE ERRORS ========================= \n";
+    for (const auto & error : errors) stream << error;
+
+    stream.close();
+}
+
+void Compiler::writeSymTabWarnings(const std::vector<std::string> &warnings) {
+    std::string fileName = extractFileName();
+    std::ofstream stream(fileName + "_symtab_warnings.txt");
+    stream << "============================ SYMBOL TABLE WARNINGS ========================= \n";
+    for (const auto & warning : warnings) stream << warning;
+    stream.close();
+}
+
+void Compiler::writeTypeCheckingErrors(const std::vector<std::string> &errors) {
+    std::string fileName = extractFileName();
+    std::ofstream stream(fileName + "_typecheck_warnings.txt");
+    stream << "============================ TYPE CHECKING ERRORS ========================= \n";
+    for (const auto & error : errors) stream << error;
+    stream.close();
 }
 
 void Compiler::compile() {
@@ -24,23 +76,11 @@ void Compiler::compile() {
     parser->AST_Builder->visualize();
     AST::ASTNode *root = parser->AST_Builder->getRoot();
     symTabGenerator = new STGV(root);
-
-    for (const auto &c : symTabGenerator->symbolTable->classes)
-        std::cout << *(c.second) << std::endl;
-
-    for (const auto &c : symTabGenerator->symbolTable->freeFunctions) {
-        for (const auto &f : c.second)
-            std::cout << *f << std::endl;
-    }
-    for (const auto &e : symTabGenerator->getErrors()) {
-        std::cerr << e << std::endl;
-    }
-
+    writeSymTabErrors(symTabGenerator->getErrors());
+    writeSymTabWarnings(symTabGenerator->getWarnings());
+    writeSymTab();
     if (!symTabGenerator->getErrors().empty()) return;
 
     typeChecker = new TCV(root, symTabGenerator);
-
-    for (const auto &e : typeChecker->getErrors()) {
-        std::cerr << e << std::endl;
-    }
+    writeTypeCheckingErrors(typeChecker->getErrors());
 }

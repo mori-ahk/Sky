@@ -206,8 +206,6 @@ void TCV::visit(Return *node) {
     }
 }
 
-void TCV::visit(Sign *node) {}
-
 void TCV::visit(Statements *node) {
     for (const auto &child : node->getChildren()) {
         if (!isGoodToGo) return;
@@ -275,13 +273,9 @@ std::vector<std::string> TCV::getParamsType(AST::ASTNode *_node) {
 
 void TCV::checkIfFreeFunctionCalledWithRightArgument(std::string &nodeName, AST::ASTNode *_node) {
     auto functions = stgv->symbolTable->getFreeFunction(nodeName);
-    bool isRightFunctionCall = false;
     auto function = getRightFunction(functions, _node);
-    if (function != nullptr) {
-        isRightFunctionCall = true;
-        returnType = function->getReturnType();
-    }
-    if (!isRightFunctionCall) {
+    if (function != nullptr) returnType = function->getReturnType();
+    else {
         isGoodToGo = false;
         std::string errorString = "Wrong arguments were passed to function name " + nodeName;
         detector->addError(errorString);
@@ -349,7 +343,7 @@ void TCV::checkIfClassVariableCalledWithRightAccess(std::string &nodeName, AST::
     if (returnType != "integer" && returnType != "float") {
         std::string lineNumber = std::to_string(node->getChild(0)->getLineNumber());
         auto _variable = stgv->symbolTable->getClass(returnType)->getVariable(nodeName);
-        checkIfArrayCalledWithRightDimensions(_variable, nodeName, node);
+        if (isCalledWithDimension(node)) checkIfArrayCalledWithRightDimensions(_variable, nodeName, node);
         if (_variable->getVisibility() == Visibility::PRIVATE) {
             std::string errorString =
                     "Use of private member " + nodeName + " of class " + returnType + " at line " + lineNumber;
@@ -362,7 +356,6 @@ void TCV::checkIfClassVariableCalledWithRightAccess(std::string &nodeName, AST::
         }
     }
 }
-
 
 Function *TCV::getRightFunction(const std::vector<Function *> &__functions, AST::ASTNode *_node) {
     auto callParams = getParamsType(_node->getChild(1));
@@ -397,3 +390,5 @@ void TCV::visit(FuncParams *node) {}
 void TCV::visit(VarDecl *node) {}
 
 void TCV::visit(Local *node) {}
+
+void TCV::visit(Sign *node) {}

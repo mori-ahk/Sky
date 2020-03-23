@@ -72,6 +72,7 @@ public:
 
     inline std::vector<std::string> getErrors() { return detector->getErrors(); }
 
+    inline std::vector<std::string> getWarnings() { return detector->getWarnings(); }
     Semantic::SymbolTable *symbolTable;
 private:
 
