@@ -89,11 +89,7 @@ void Semantic::Detector::detectShadowMembers(Class *parent) {
     for (const auto& c : parent->getInherits()) {
         detectShadowMembers(symbolTable->classes.at(c));
         auto shadowMessages = symbolTable->classes.at(c)->findShadowMembers(*parent);
-        if (!shadowMessages.empty()) {
-            for (const auto& s : shadowMessages) {
-                addError(s);
-            }
-        }
+        if (!shadowMessages.empty()) for (const auto& s : shadowMessages) addWarning(s);
     }
 }
 
@@ -106,17 +102,17 @@ void Semantic::Detector::handleUndefinedClassFunctions(NamePair &undefined) {
 
 void Semantic::Detector::handleErrors(NamePair &_errors, bool isOverloaded) {
     for (const auto &e : _errors) {
-        std::string errorString = isOverloaded ? "Overloaded" : "Duplicate";
-        errorString += " class function " + e.first + " on class " + e.second;
-        addError(errorString);
+        std::string warningString = isOverloaded ? "Overloaded" : "Duplicate";
+        warningString += " class function " + e.first + " on class " + e.second;
+        addWarning(warningString);
     }
 }
 
 void Semantic::Detector::handleErrors(std::vector<std::string> &_errors, bool isOverloaded) {
     for (const auto &e : _errors) {
-        std::string errorString = isOverloaded ? "Overloaded" : "Duplicate";
-        errorString += " free function " + e;
-        addError(errorString);
+        std::string warningString = isOverloaded ? "Overloaded" : "Duplicate";
+        warningString += " free function " + e;
+        addWarning(warningString);
     }
 }
 
@@ -124,12 +120,16 @@ void Semantic::Detector::addError(const std::string &_error) {
     errors.push_back(_error);
 }
 
+void Semantic::Detector::addWarning(const std::string &_warning) {
+    warnings.push_back(_warning);
+}
+
 void Semantic::Detector::detect() {
     //If an undeclared class found while building the dependency graph, the detect function returns
     //and will not proceed with other detections.
     try { initDependencyGraph(symbolTable); }
     catch (Semantic::Err::UndeclaredClass &undeclaredClass) {
-        addError(std::string(undeclaredClass.what()));
+        addError(undeclaredClass.what());
         return;
     }
 

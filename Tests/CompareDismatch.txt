@@ -24,7 +24,7 @@ local
     A f;
 do
     n = a;
-    while ( m < s(a[i][i], c()))
+    while ( m < s(a[i], c()))
     do
     end;
 end

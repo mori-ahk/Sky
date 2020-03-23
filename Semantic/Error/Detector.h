@@ -29,18 +29,19 @@ namespace Semantic {
 
         bool detectCircularDependency();
 
-        void detectShadowMembers(Class*);
+        void detectShadowMembers(Class *);
 
         void detect();
 
         void addError(const std::string &);
+
+        void addWarning(const std::string &);
 
         void initDependencyGraph(Semantic::SymbolTable *);
 
         std::vector<std::string> &getErrors();
 
     private:
-        std::vector<std::string> errors;
 
         void handleUndefinedClassFunctions(NamePair &);
 
@@ -50,6 +51,8 @@ namespace Semantic {
 
         Semantic::SymbolTable *symbolTable;
         DependencyGraph *dependencyGraph;
+        std::vector<std::string> errors;
+        std::vector<std::string> warnings;
     };
 }
 
