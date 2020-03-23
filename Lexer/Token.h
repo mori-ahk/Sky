@@ -19,6 +19,8 @@ public:
 
     TokenType getType();
 
+    std::string getTypeString();
+
     int getLineno();
 
     std::string getValue();

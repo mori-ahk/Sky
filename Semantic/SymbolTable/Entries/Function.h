@@ -21,6 +21,8 @@ public:
 
     std::vector<Variable *> &getLocalVars();
 
+    Variable *getVariable(std::string &);
+
     std::string &getName();
 
     std::string &getReturnType();
@@ -42,7 +44,6 @@ public:
     friend inline bool operator==(Function &lhs, Function &rhs) {
         return lhs.getName() == rhs.getName() &&
                isParamsEqual(lhs, rhs) &&
-               lhs.getVisibilityString() == rhs.getVisibilityString() &&
                lhs.getReturnType() == rhs.getReturnType();
     }
 
@@ -53,6 +54,9 @@ public:
     inline void setPosition(int _position) { this->position = _position; }
 
     inline int getPosition() { return position; }
+
+    inline bool isPrivate() { return visibility == Visibility::PRIVATE; }
+
     private:
 
     std::vector<Variable *> params;

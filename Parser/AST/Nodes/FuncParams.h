@@ -10,7 +10,7 @@
 
 class FuncParams : public AST::ASTNode {
 public:
-    FuncParams(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
+    FuncParams(std::string name, Token *token) : ASTNode(std::move(name), token) {}
 
     void accept(Visitor &visitor) override;
 };

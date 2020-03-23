@@ -134,6 +134,39 @@ namespace Semantic {
             int position;
         };
 
+        class UndeclaredLocalVariable : public Error {
+        public:
+            UndeclaredLocalVariable(std::string varName) : Error() {
+                this->varName = varName;
+            }
+
+            const char *what() const throw() {
+                std::string errorString = "Use of undeclared local variable " + varName;
+                const char *_errorString = errorString.c_str();
+                return _errorString;
+            }
+
+        private:
+            std::string varName;
+        };
+
+        class UndeclaredClassVariable : public Error {
+        public:
+            UndeclaredClassVariable(std::string varName) : Error() {
+                this->varName = varName;
+            }
+
+            const char *what() const throw() {
+                std::string errorString = "Use of undeclared class variable " + varName;
+                const char* _errorString = errorString.c_str();
+                return _errorString;
+            }
+
+        private:
+            std::string varName;
+
+        };
+
     }
 }
 

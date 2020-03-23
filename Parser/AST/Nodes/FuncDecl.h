@@ -10,7 +10,7 @@
 
 class FuncDecl : public AST::ASTNode {
 public:
-    FuncDecl(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
+    FuncDecl(std::string name, Token *token) : ASTNode(std::move(name), token) {}
 
     void accept(Visitor &visitor) override;
 };

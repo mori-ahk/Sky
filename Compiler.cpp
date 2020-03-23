@@ -22,19 +22,25 @@ Compiler::~Compiler() {
 void Compiler::compile() {
     parser->parse("START");
     parser->AST_Builder->visualize();
-    symTabGenerator = new STGV(parser->AST_Builder->getRoot());
-    for (const auto &c: symTabGenerator->symbolTable->classes) {
+    AST::ASTNode *root = parser->AST_Builder->getRoot();
+    symTabGenerator = new STGV(root);
+
+    for (const auto &c : symTabGenerator->symbolTable->classes)
         std::cout << *(c.second) << std::endl;
+
+    for (const auto &c : symTabGenerator->symbolTable->freeFunctions) {
+        for (const auto &f : c.second)
+            std::cout << *f << std::endl;
+    }
+    for (const auto &e : symTabGenerator->getErrors()) {
+        std::cerr << e << std::endl;
     }
 
-    for (const auto &f : symTabGenerator->symbolTable->freeFunctions) {
-        for (const auto &_f : f.second)
-            std::cout << *(_f) << std::endl;
-    }
+    if (!symTabGenerator->getErrors().empty()) return;
 
-    std::cout << *(symTabGenerator->symbolTable->main) << std::endl;
+    typeChecker = new TCV(root, symTabGenerator);
 
-    for (const auto &e : symTabGenerator->detector->getErrors()) {
+    for (const auto &e : typeChecker->getErrors()) {
         std::cerr << e << std::endl;
     }
 }

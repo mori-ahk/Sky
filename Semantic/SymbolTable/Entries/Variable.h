@@ -13,17 +13,15 @@
 class Variable {
 public:
 
-    Variable(Visibility, std::string, std::string, std::vector<int>, int);
+    Variable(Visibility, std::string, std::string, int, int);
 
     std::string &getType();
 
-    std::vector<int> &getDimensions();
+    int &getDimensions();
 
     std::string &getName();
 
     std::string getVisibilityString();
-
-    std::string getDimsString();
 
     Visibility getVisibility();
 
@@ -32,7 +30,7 @@ public:
     friend inline bool operator==(Variable &lhs, Variable &rhs) {
         return lhs.getType() == rhs.getType() &&
                lhs.getName() == rhs.getName() &&
-               lhs.getDimsString() == rhs.getDimsString() &&
+               lhs.getDimensions() == rhs.getDimensions() &&
                lhs.getVisibilityString() == rhs.getVisibilityString();
     }
 
@@ -40,11 +38,13 @@ public:
 
     inline int getPosition() { return position; }
 
+    inline bool isArray() { return dimensions != 0; }
+
 private:
 
     std::string type;
     std::string name;
-    std::vector<int> dimensions;
+    int dimensions;
     Visibility visibility;
     int position;
 };

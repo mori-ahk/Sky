@@ -1,0 +1,27 @@
+class A {
+    private float r;
+    public b() : B;
+};
+
+class B {
+    public integer w;
+    public float y;
+    public c(integer a) : float;
+};
+
+A::b() : B
+do
+end
+
+B::c(integer a) : float
+do
+end
+
+main
+    local
+        A n;
+        B x;
+    do
+        x.y = n.b().w;
+
+    end

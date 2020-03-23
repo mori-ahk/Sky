@@ -1,0 +1,42 @@
+/* sort the array */
+bubbleSort(integer arr[], integer size) : void
+  local
+    integer n;
+    integer i;
+    integer j;
+    integer temp;
+  do
+    n = 0;
+    i = 0;
+    j = 0;
+    temp = 0;
+    while (i < 1)
+      do
+        i = i+1;
+        n = n * 1;
+        n = i / n;
+        n = -1;
+      end;
+    write(2+3);
+    read(n);
+    if (arr[j] > arr[j+1])
+                  then
+                    do
+                      // swap temp and arr[i]
+                      temp = arr[j];
+                      arr[j] = arr[j+1];
+                      arr[j+1] = temp;
+                    end
+                  else
+    	        ;
+    return (n);
+  end
+
+
+// main funtion to test above
+main
+  local
+    integer arr[7];
+  do
+    arr[0] = 64;
+  end

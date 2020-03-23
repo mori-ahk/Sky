@@ -32,6 +32,8 @@ public:
 
     Function *getFunction(std::string &, Function *);
 
+    Variable *getVariable(std::string &);
+
     void addVariable(std::string &, Variable *);
 
     void addFunction(std::string &, Function *);

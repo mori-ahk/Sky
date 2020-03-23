@@ -10,7 +10,7 @@
 
 class ClassDecls : public AST::ASTNode {
 public:
-    ClassDecls(std::string name, int lineNumber) : ASTNode(name, lineNumber) {}
+    ClassDecls(std::string name, Token *token) : ASTNode(std::move(name), token) {}
 
     void accept(Visitor &visitor) override;
 };

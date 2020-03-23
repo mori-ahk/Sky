@@ -6,6 +6,7 @@
 
 #include <utility>
 #include "../../Visitors/Visitor.h"
+#include "../../Lexer/Token.h"
 
 static int counter = 0;
 
@@ -14,9 +15,12 @@ AST::ASTNode::ASTNode() {
     this->parent = nullptr;
 }
 
-AST::ASTNode::ASTNode(std::string name, int lineNumber) {
+AST::ASTNode::ASTNode(std::string name, Token *token) {
     this->name = std::move(name);
-    this->lineNumber = lineNumber;
+    if (token != nullptr) {
+        this->lineNumber = token->getLineno();
+        this->type = token->getTypeString();
+    }
     uniqueID = counter++;
 }
 
@@ -44,8 +48,12 @@ int &AST::ASTNode::getLineNumber() {
     return lineNumber;
 }
 
-void AST::ASTNode::setParent(ASTNode *parent) {
-    this->parent = parent;
+std::string &AST::ASTNode::getType() {
+    return type;
+}
+
+void AST::ASTNode::setParent(ASTNode *_parent) {
+    this->parent = _parent;
 }
 
 void AST::ASTNode::addChildToLeft(ASTNode *node) {
