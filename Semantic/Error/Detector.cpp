@@ -71,7 +71,7 @@ bool Semantic::Detector::detectCircularDependency() {
             std::unordered_set<std::string> visiting;
             auto pair = dependencyGraph->dfs(className, visiting, visited);
             if (!pair.first.empty() && !pair.second.empty()) {
-                std::string errorString = "Circular dependencies between " + pair.first + " and " + pair.second;
+                std::string errorString = "Circular dependencies between " + pair.first + " and " + pair.second + "\n";
                 addError(errorString);
                 return true;
             }
@@ -95,15 +95,15 @@ void Semantic::Detector::detectShadowMembers(Class *parent) {
 
 void Semantic::Detector::handleUndefinedClassFunctions(NamePair &undefined) {
     for (const auto &e : undefined) {
-        std::string errorString = "Undefined class functions " + e.first + " on class " + e.second;
-        addError(errorString);
+        std::string warningString = "Undefined class functions " + e.first + " on class " + e.second + "\n";
+        addWarning(warningString);
     }
 }
 
 void Semantic::Detector::handleErrors(NamePair &_errors, bool isOverloaded) {
     for (const auto &e : _errors) {
         std::string warningString = isOverloaded ? "Overloaded" : "Duplicate";
-        warningString += " class function " + e.first + " on class " + e.second;
+        warningString += " class function " + e.first + " on class " + e.second + "\n";
         addWarning(warningString);
     }
 }
@@ -111,7 +111,7 @@ void Semantic::Detector::handleErrors(NamePair &_errors, bool isOverloaded) {
 void Semantic::Detector::handleErrors(std::vector<std::string> &_errors, bool isOverloaded) {
     for (const auto &e : _errors) {
         std::string warningString = isOverloaded ? "Overloaded" : "Duplicate";
-        warningString += " free function " + e;
+        warningString += " free function " + e + "\n";
         addWarning(warningString);
     }
 }
@@ -145,8 +145,4 @@ void Semantic::Detector::detect() {
     detectUndefinedClassFunctions();
     detectFreeFunctionsErrors();
     detectClassFunctionsErrors();
-}
-
-std::vector<std::string> &Semantic::Detector::getErrors() {
-    return errors;
 }
