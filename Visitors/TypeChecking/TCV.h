@@ -97,7 +97,8 @@ private:
     Semantic::Detector *detector;
 
     bool isGoodToGo = true;
-
+    bool shouldReturn = false;
+    bool didReturn = false;
     std::string returnType;
     std::string currentFuncName;
     std::string currentNamespace;

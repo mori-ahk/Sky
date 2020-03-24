@@ -15,6 +15,8 @@ TCV::TCV(AST::ASTNode *root, STGV *_stgv) {
 
 void TCV::visit(FuncDef *node) {
     AST::ASTNode *signature = node->getChild(0);
+    AST::ASTNode *returnNode = signature->getChildren().back();
+    shouldReturn = returnNode->getName() != "void";
     auto isClassFunc = [&node]() {
         return node->getChildren().size() == 4;
     };
@@ -24,6 +26,14 @@ void TCV::visit(FuncDef *node) {
     currentNamespace = isClassFunc() ? signature->getChild(0)->getName() : std::string();
     tempFunction = stgv->createTempFunction(node, currentFuncName, _returnType);
     node->getChild(1)->accept(*this);
+    if (shouldReturn) {
+        if (!didReturn) {
+            std::string errorString = "No return statement in " + tempFunction->getName() + " returning non-void ";
+            detector->addError(errorString);
+            isGoodToGo = false;
+            return;
+        }
+    }
 }
 
 void TCV::visit(AddOp *node) {
@@ -204,6 +214,7 @@ void TCV::visit(Return *node) {
         detector->addError(errorString);
         return;
     }
+    didReturn = true;
 }
 
 void TCV::visit(Statements *node) {
@@ -334,7 +345,12 @@ void TCV::checkIfArrayCalledWithRightDimensions(Variable *variable, std::string 
                     return;
                 }
             }
-            returnType = variable->getType() == "float[][]" ? "float" : "integer";
+            std::string _returnType;
+            for (auto c : variable->getType()) {
+                if (c != '[' && c != ']') _returnType += c;
+                else break;
+            }
+            returnType = _returnType;
         }
     }
 }
