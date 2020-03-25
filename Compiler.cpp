@@ -35,39 +35,42 @@ Compiler::~Compiler() {
 void Compiler::writeSymTab() {
     std::string fileName = extractFileName();
     std::ofstream stream(fileName + "_symtab.txt");
-    for (const auto &c : symTabGenerator->symbolTable->classes) stream << *c.second;
+    for (const auto &c : symTabGenerator->symbolTable->classes) stream << *c.second << "\n";
 
     for (const auto &functions : symTabGenerator->symbolTable->freeFunctions) {
-        for (const auto &f : functions.second) stream << *f;
+        for (const auto &f : functions.second) stream << *f << "\n";
     }
 
-    stream << *(symTabGenerator->symbolTable->main);
+    stream << *(symTabGenerator->symbolTable->main) << "\n";
 
     stream.close();
 }
 
 void Compiler::writeSymTabErrors(const std::vector<std::string> &errors) {
+    if (errors.empty()) return;
     std::string fileName = extractFileName();
     std::ofstream stream(fileName + "_symtab_errors.txt");
     stream << "============================ SYMBOL TABLE ERRORS ========================= \n";
-    for (const auto & error : errors) stream << error;
+    for (const auto & error : errors) stream << error << "\n";
 
     stream.close();
 }
 
 void Compiler::writeSymTabWarnings(const std::vector<std::string> &warnings) {
+    if (warnings.empty()) return;
     std::string fileName = extractFileName();
     std::ofstream stream(fileName + "_symtab_warnings.txt");
     stream << "============================ SYMBOL TABLE WARNINGS ========================= \n";
-    for (const auto & warning : warnings) stream << warning;
+    for (const auto & warning : warnings) stream << warning << "\n";
     stream.close();
 }
 
 void Compiler::writeTypeCheckingErrors(const std::vector<std::string> &errors) {
+    if (errors.empty()) return;
     std::string fileName = extractFileName();
-    std::ofstream stream(fileName + "_typecheck_warnings.txt");
+    std::ofstream stream(fileName + "_typecheck_errors.txt");
     stream << "============================ TYPE CHECKING ERRORS ========================= \n";
-    for (const auto & error : errors) stream << error;
+    for (const auto & error : errors) stream << error << "\n";
     stream.close();
 }
 

@@ -71,7 +71,7 @@ bool Semantic::Detector::detectCircularDependency() {
             std::unordered_set<std::string> visiting;
             auto pair = dependencyGraph->dfs(className, visiting, visited);
             if (!pair.first.empty() && !pair.second.empty()) {
-                std::string errorString = "Circular dependencies between " + pair.first + " and " + pair.second + "\n";
+                std::string errorString = "Circular dependencies between " + pair.first + " and " + pair.second;
                 addError(errorString);
                 return true;
             }
@@ -95,7 +95,7 @@ void Semantic::Detector::detectShadowMembers(Class *parent) {
 
 void Semantic::Detector::handleUndefinedClassFunctions(NamePair &undefined) {
     for (const auto &e : undefined) {
-        std::string warningString = "Undefined class functions " + e.first + " on class " + e.second + "\n";
+        std::string warningString = "Undefined class functions " + e.first + " on class " + e.second;
         addWarning(warningString);
     }
 }
@@ -103,7 +103,7 @@ void Semantic::Detector::handleUndefinedClassFunctions(NamePair &undefined) {
 void Semantic::Detector::handleErrors(NamePair &_errors, bool isOverloaded) {
     for (const auto &e : _errors) {
         std::string warningString = isOverloaded ? "Overloaded" : "Duplicate";
-        warningString += " class function " + e.first + " on class " + e.second + "\n";
+        warningString += " class function " + e.first + " on class " + e.second;
         addWarning(warningString);
     }
 }
@@ -111,7 +111,7 @@ void Semantic::Detector::handleErrors(NamePair &_errors, bool isOverloaded) {
 void Semantic::Detector::handleErrors(std::vector<std::string> &_errors, bool isOverloaded) {
     for (const auto &e : _errors) {
         std::string warningString = isOverloaded ? "Overloaded" : "Duplicate";
-        warningString += " free function " + e + "\n";
+        warningString += " free function " + e;
         addWarning(warningString);
     }
 }

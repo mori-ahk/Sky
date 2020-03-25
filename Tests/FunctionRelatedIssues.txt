@@ -1,0 +1,68 @@
+/*
+If an error is found, the compiler will not parse rest of the file
+*/
+
+class A {
+    //This will generate `overloaded function` warning
+    public hey() : void;
+
+    public hey(integer a) : void;
+    public see() : void;
+    public tick() : integer;
+    private hello() : void;
+};
+
+//Please comment this function to see `undefined class function` warning
+A::hello() : void
+    do
+    end
+
+//Please uncomment this to see `undeclared class function` error
+//due to unmatched function signature
+
+A::hey() : void
+    do
+    end
+
+A::hey(integer a) : void
+    do
+    end
+
+A::see() : void
+    do
+        //Please uncomment this to see `Wrong return type` error
+        //return(1);
+    end
+
+A::tick() : integer
+    do
+        //Please comment this to see `Expected return type` error
+        return(1.0);
+    end
+
+
+print(float b) : void
+    do
+    end
+
+//This will generate `overloaded free function` warning
+print() : void
+    do
+    end
+
+main
+    local
+        A a;
+    do
+        //Please uncomment this to see `use of private member function` error
+        // a.hello();
+
+        //Please uncomment this to see `no matching function` error
+        // a.hey(1.0);
+
+        //Please uncomment this to see `use of undeclared local variable` error
+        // b.hello();
+
+    end
+
+

@@ -166,7 +166,6 @@ namespace Semantic {
             std::string varName;
 
         };
-
     }
 }
 
