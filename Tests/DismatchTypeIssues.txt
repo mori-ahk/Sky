@@ -1,0 +1,25 @@
+class A {};
+class B {};
+main
+    local
+        A n;
+        B x;
+        integer a[][];
+        float b[];
+        integer r;
+        float t;
+
+    do
+        //Please uncomment any of this to see `Unmatched type` error
+        // n = x;
+        // a = b;
+        // t = r;
+
+        //Please uncomment this to see `Unmatched type` error
+        //Due to wrong comparison between `r` and `t`
+        /*
+        while ( r > t )
+            do
+            end
+        */
+    end

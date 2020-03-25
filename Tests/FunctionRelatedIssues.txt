@@ -31,13 +31,23 @@ A::hey(integer a) : void
 A::see() : void
     do
         //Please uncomment this to see `Wrong return type` error
-        // return(1);
+        //return(1);
     end
 
 A::tick() : integer
     do
         //Please comment this to see `Expected return type` error
         return(1.0);
+    end
+
+
+print(float b) : void
+    do
+    end
+
+//This will generate `overloaded free function` warning
+print() : void
+    do
     end
 
 main

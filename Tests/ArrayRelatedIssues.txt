@@ -1,0 +1,19 @@
+nothing(integer a[][], float b[]) : void
+    do
+    end
+main
+    local
+        integer a[][];
+        float b[];
+        integer i;
+        float t;
+    do
+        //Please uncomment this to see `missing array dimension` error
+        // nothing(a[i], b);
+
+        //Please uncomment this to see `Non integer value as dimension` error
+        // nothing(a[i][t], b[t]);
+
+        //Please uncomment this to see `Wrong arguments for function` error
+        // nothing(a[i][i], b[i]);
+    end
