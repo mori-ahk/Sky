@@ -67,7 +67,7 @@ std::vector<std::string> Class::findShadowMembers(Class &_class1) {
             auto v2 = getVariables().at(v1.first);
             if (*v1.second == *v2) {
                 std::string shadowMessage =
-                        "Shadow variable " + v1.first + " between " + _class1.getName() + " and " + getName() + "\n";
+                        "Shadow variable " + v1.first + " between " + _class1.getName() + " and " + getName();
                 shadowMessages.push_back(shadowMessage);
             }
         }
@@ -80,7 +80,7 @@ std::vector<std::string> Class::findShadowMembers(Class &_class1) {
                     if (*f1 == *f2) {
                         std::string shadowMessage =
                                 "Shadow function " + f1->getName() + " between " + _class1.getName() + " and " +
-                                getName() + "\n";
+                                getName();
                         shadowMessages.push_back(shadowMessage);
                     }
                 }

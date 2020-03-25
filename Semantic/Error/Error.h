@@ -24,7 +24,7 @@ namespace Semantic {
             }
 
             const char *what() const throw() {
-                std::string errorString = "duplicate data member " + varName + " at line " + std::to_string(position) + "\n";
+                std::string errorString = "duplicate data member " + varName + " at line " + std::to_string(position);
                 const char *_errorString = errorString.c_str();
                 return _errorString;
             }
@@ -40,7 +40,7 @@ namespace Semantic {
             }
 
             const char *what() const throw() {
-                std::string errorString = "duplicate func param with the same name at line " + std::to_string(position) + "\n";
+                std::string errorString = "duplicate func param with the same name at line " + std::to_string(position);
                 const char *_errorString = errorString.c_str();
                 return _errorString;
             }
@@ -55,7 +55,7 @@ namespace Semantic {
             }
 
             const char *what() const throw() {
-                std::string errorString = "multi declared class name " + className + "\n";
+                std::string errorString = "multi declared class name " + className;
                 const char *_errorString = errorString.c_str();
                 return _errorString;
             }
@@ -72,7 +72,7 @@ namespace Semantic {
 
             const char *what() const throw() {
                 std::string errorString =
-                        "no definition for declared member function " + funcName + " for class " + className + "\n";
+                        "no definition for declared member function " + funcName + " for class " + className;
                 const char *_errorString = errorString.c_str();
                 return _errorString;
             }
@@ -90,7 +90,7 @@ namespace Semantic {
             }
 
             const char *what() const throw() {
-                std::string errorString = "definition provided for undeclared member function " + funcName + " at line " + std::to_string(position) + "\n";
+                std::string errorString = "definition provided for undeclared member function " + funcName + " at line " + std::to_string(position);
                 const char *_errorString = errorString.c_str();
                 return _errorString;
             }
@@ -107,7 +107,7 @@ namespace Semantic {
             }
 
             const char *what() const throw() {
-                std::string errorString = "use of undeclared class " + className + "\n";
+                std::string errorString = "use of undeclared class " + className;
                 const char *_errorString = errorString.c_str();
                 return _errorString;
             }
@@ -124,7 +124,7 @@ namespace Semantic {
             }
 
             const char *what() const throw() {
-                std::string errorString = "Found duplicate function declaration of " + funcName + " at line " + std::to_string(position) + "\n";
+                std::string errorString = "Found duplicate function declaration of " + funcName + " at line " + std::to_string(position);
                 const char *_errorString = errorString.c_str();
                 return _errorString;
             }
@@ -141,7 +141,7 @@ namespace Semantic {
             }
 
             const char *what() const throw() {
-                std::string errorString = "Use of undeclared local variable " + varName + "\n";
+                std::string errorString = "Use of undeclared local variable " + varName;
                 const char *_errorString = errorString.c_str();
                 return _errorString;
             }
@@ -157,7 +157,7 @@ namespace Semantic {
             }
 
             const char *what() const throw() {
-                std::string errorString = "Use of undeclared class variable " + varName + "\n";
+                std::string errorString = "Use of undeclared class variable " + varName;
                 const char* _errorString = errorString.c_str();
                 return _errorString;
             }

@@ -1,3 +1,7 @@
+/*
+If an error is found, the compiler will not parse rest of the file
+*/
+
 class A {
     //This will generate `overloaded function` warning
     public hey() : void;
@@ -33,7 +37,7 @@ A::see() : void
 A::tick() : integer
     do
         //Please comment this to see `Expected return type` error
-        return(1);
+        return(1.0);
     end
 
 main
@@ -43,7 +47,7 @@ main
         //Please uncomment this to see `use of private member function` error
         // a.hello();
 
-        //Please uncomment this to see `Wrong argument passed` error
+        //Please uncomment this to see `no matching function` error
         // a.hey(1.0);
 
         //Please uncomment this to see `use of undeclared local variable` error

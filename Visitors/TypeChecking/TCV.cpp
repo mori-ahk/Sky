@@ -17,8 +17,8 @@ void TCV::visit(FuncDef *node) {
     AST::ASTNode *signature = node->getChild(0);
     AST::ASTNode *returnNode = signature->getChildren().back();
     shouldReturn = returnNode->getName() != "void";
-    auto isClassFunc = [&node]() {
-        return node->getChildren().size() == 4;
+    auto isClassFunc = [&signature]() {
+        return signature->getChildren().size() == 4;
     };
 
     std::string _returnType = isClassFunc() ? signature->getChild(3)->getName() : signature->getChild(2)->getName();
@@ -165,6 +165,7 @@ void TCV::visit(If *node) {
 
 void TCV::visit(MainFunc *node) {
     currentFuncName = "main";
+    currentNamespace = std::string();
     for (const auto &child : node->getChildren())
         child->accept(*this);
 }
