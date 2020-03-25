@@ -1,0 +1,30 @@
+/*
+If an error is found, the compiler will not parse rest of the file
+*/
+
+class A inherits B {
+    private float a;
+};
+
+//Please uncomment this to see `duplicate class declaration` error
+//class A {};
+
+//Please comment this class to see `use of undeclared class` error
+class B inherits C {
+    //This will generate `shadow member` warnings between class B and C
+    private float x;
+};
+
+class C {
+    //Please uncomment this to see `circular dependency` error
+    //private A a;
+
+    private float x;
+};
+
+
+main
+    do
+    end
+
+

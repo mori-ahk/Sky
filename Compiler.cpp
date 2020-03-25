@@ -47,6 +47,7 @@ void Compiler::writeSymTab() {
 }
 
 void Compiler::writeSymTabErrors(const std::vector<std::string> &errors) {
+    if (errors.empty()) return;
     std::string fileName = extractFileName();
     std::ofstream stream(fileName + "_symtab_errors.txt");
     stream << "============================ SYMBOL TABLE ERRORS ========================= \n";
@@ -56,6 +57,7 @@ void Compiler::writeSymTabErrors(const std::vector<std::string> &errors) {
 }
 
 void Compiler::writeSymTabWarnings(const std::vector<std::string> &warnings) {
+    if (warnings.empty()) return;
     std::string fileName = extractFileName();
     std::ofstream stream(fileName + "_symtab_warnings.txt");
     stream << "============================ SYMBOL TABLE WARNINGS ========================= \n";
@@ -64,6 +66,7 @@ void Compiler::writeSymTabWarnings(const std::vector<std::string> &warnings) {
 }
 
 void Compiler::writeTypeCheckingErrors(const std::vector<std::string> &errors) {
+    if (errors.empty()) return;
     std::string fileName = extractFileName();
     std::ofstream stream(fileName + "_typecheck_warnings.txt");
     stream << "============================ TYPE CHECKING ERRORS ========================= \n";

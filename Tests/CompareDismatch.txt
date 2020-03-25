@@ -1,34 +1,13 @@
-class A {
-    public integer a;
-    public integer b[][];
-};
-
-s(integer a, integer b) : integer
-do
-end
-
-f() : float
-do
-end
-
-c() : integer
-local
-A a;
-do
-    return(a.b);
-end
-
 main
 local
-    integer n[][];
-    integer i;
-    integer m;
-    integer a[][];
-    float j;
-    A f;
+    integer n;
+    float i;
 do
-    n = a;
-    while ( m < s(a[i][i], c()))
+
+    //this line generate unmatched type error,
+    //since each side of the compare expression has
+    //different types
+    while (n < i)
     do
     end;
 end
