@@ -17,6 +17,8 @@ public:
 
     std::string &getType();
 
+    std::string getRawType();
+
     int &getDimensions();
 
     std::string &getName();

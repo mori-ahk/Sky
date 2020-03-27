@@ -81,36 +81,17 @@ void TCV::visit(Call *node) {
     auto nodeName = _node->getName();
 
     try {
-        Variable *variable;
         if (isFuncCall(node)) {
-            if (isCalledOnObject(node)) {
-                checkIfClassFunctionCalledWithRightAccess(nodeName, node);
-                return;
-            } else if (isCalledOnFunction(node)) {
-                if (returnType != "integer" && returnType != "float") {
-                    checkIfClassFunctionCalledWithRightAccess(nodeName, node, true);
-                    return;
-                }
-            } else {
-                checkIfFreeFunctionCalledWithRightArgument(nodeName, node);
-                return;
-            }
+            handleChainCalls(nodeName, node);
+            return;
         } else {
             if (isCalledOnObject(node) || isCalledOnFunction(node)) {
                 checkIfClassVariableCalledWithRightAccess(nodeName, node);
                 return;
             }
         }
-        if (currentNamespace.empty()) {
-            if (currentFuncName == "main")
-                variable = stgv->symbolTable->main->getVariable(nodeName);
-            else
-                variable = stgv->symbolTable->getFreeFunction(currentFuncName, tempFunction)->getVariable(nodeName);
-        } else {
-            auto _class = stgv->symbolTable->classes.at(currentNamespace);
-            variable = _class->getFunction(currentFuncName, tempFunction)->getVariable(nodeName);
-        }
 
+        Variable *variable = getAvailableVar(nodeName);
         if (isCalledWithDimension(node)) {
             checkIfArrayCalledWithRightDimensions(variable, nodeName, node);
             return;
@@ -140,8 +121,7 @@ void TCV::visit(CompareOp *node) {
 }
 
 void TCV::visit(FuncCall *node) {
-    for (const auto &child : node->getChildren())
-        child->accept(*this);
+    for (const auto &child : node->getChildren()) child->accept(*this);
 }
 
 void TCV::visit(FuncBody *node) {
@@ -150,15 +130,13 @@ void TCV::visit(FuncBody *node) {
 }
 
 void TCV::visit(If *node) {
-    for (const auto &child : node->getChildren())
-        child->accept(*this);
+    for (const auto &child : node->getChildren()) child->accept(*this);
 }
 
 void TCV::visit(MainFunc *node) {
     currentFuncName = "main";
     currentNamespace = std::string();
-    for (const auto &child : node->getChildren())
-        child->accept(*this);
+    for (const auto &child : node->getChildren()) child->accept(*this);
 }
 
 void TCV::visit(MultOp *node) {
@@ -331,12 +309,7 @@ void TCV::checkIfArrayCalledWithRightDimensions(Variable *variable, std::string 
                     return;
                 }
             }
-            std::string _returnType;
-            for (auto c : variable->getType()) {
-                if (c != '[' && c != ']') _returnType += c;
-                else break;
-            }
-            returnType = _returnType;
+            returnType = variable->getRawType();
         }
     }
 }
@@ -359,6 +332,33 @@ void TCV::checkIfClassVariableCalledWithRightAccess(std::string &nodeName, AST::
     }
 }
 
+void TCV::handleChainCalls(std::string &nodeName, AST::ASTNode *node) {
+    if (isCalledOnObject(node)) {
+        checkIfClassFunctionCalledWithRightAccess(nodeName, node);
+    } else if (isCalledOnFunction(node)) {
+        if (returnType != "integer" && returnType != "float") {
+            checkIfClassFunctionCalledWithRightAccess(nodeName, node, true);
+        }
+    } else {
+        checkIfFreeFunctionCalledWithRightArgument(nodeName, node);
+    }
+}
+
+Variable *TCV::getAvailableVar(std::string &nodeName) {
+    Variable *variable;
+    if (currentNamespace.empty()) {
+        if (currentFuncName == "main")
+            variable = stgv->symbolTable->main->getVariable(nodeName);
+        else
+            variable = stgv->symbolTable->getFreeFunction(currentFuncName, tempFunction)->getVariable(nodeName);
+    } else {
+        auto _class = stgv->symbolTable->classes.at(currentNamespace);
+        variable = _class->getFunction(currentFuncName, tempFunction)->getVariable(nodeName);
+    }
+    return variable;
+}
+
+
 Function *TCV::getRightFunction(const std::vector<Function *> &__functions, AST::ASTNode *_node) {
     auto callParams = getParamsType(_node->getChild(1));
     for (const auto &_function : __functions) {
@@ -369,9 +369,7 @@ Function *TCV::getRightFunction(const std::vector<Function *> &__functions, AST:
             if (!isMatchType(fType, callParams.at(i))) break;
             else matchedParams++;
         }
-        if (matchedParams == callParams.size()) {
-            return _function;
-        }
+        if (matchedParams == callParams.size()) return _function;
     }
     return nullptr;
 }
