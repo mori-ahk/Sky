@@ -26,13 +26,11 @@ void TCV::visit(FuncDef *node) {
     currentNamespace = isClassFunc() ? signature->getChild(0)->getName() : std::string();
     tempFunction = stgv->createTempFunction(node, currentFuncName, _returnType);
     node->getChild(1)->accept(*this);
-    if (shouldReturn) {
-        if (!didReturn) {
-            std::string errorString = "No return statement in " + tempFunction->getName() + " returning non-void ";
-            detector->addError(errorString);
-            isGoodToGo = false;
-            return;
-        }
+    if (shouldReturn && !didReturn) {
+        std::string errorString = "No return statement in " + tempFunction->getName() + " returning non-void ";
+        detector->addError(errorString);
+        isGoodToGo = false;
+        return;
     }
 }
 

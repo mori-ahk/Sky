@@ -12,7 +12,6 @@
 #include <unordered_set>
 
 typedef std::vector<std::pair<std::string, std::string> > NamePair;
-//typedef std::pair<std::string> error;
 
 namespace Semantic {
     class Detector {
