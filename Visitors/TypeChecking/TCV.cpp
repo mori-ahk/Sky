@@ -118,17 +118,8 @@ void TCV::visit(Call *node) {
 
         returnType = variable->getType();
         position = _node->getLineNumber();
-    } catch (Semantic::Err::UndeclaredLocalVariable &undeclaredLocalVariable) {
-        detector->addError(undeclaredLocalVariable.what());
-        isGoodToGo = false;
-        return;
-    } catch (Semantic::Err::UndeclaredFunction &undeclaredFunction) {
-        detector->addError(undeclaredFunction.what());
-        isGoodToGo = false;
-        return;
-    } catch (Semantic::Err::UndeclaredClassVariable &undeclaredClassVariable) {
-        detector->addError(undeclaredClassVariable.what());
-        isGoodToGo = false;
+    } catch (Semantic::Error &error) {
+        detector->addError(error.what());
         return;
     }
 }
