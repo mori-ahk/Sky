@@ -183,13 +183,11 @@ void TCV::visit(Program *node) {
 }
 
 void TCV::visit(Read *node) {
-    for (const auto &child : node->getChildren())
-        child->accept(*this);
+    for (const auto &child : node->getChildren()) child->accept(*this);
 }
 
 void TCV::visit(Return *node) {
-    for (const auto &child : node->getChildren())
-        child->accept(*this);
+    for (const auto &child : node->getChildren()) child->accept(*this);
 
     Function *currentFunction;
     if (currentNamespace.empty())
@@ -217,27 +215,23 @@ void TCV::visit(Statements *node) {
 }
 
 void TCV::visit(While *node) {
-    for (const auto &child : node->getChildren())
-        child->accept(*this);
+    for (const auto &child : node->getChildren()) child->accept(*this);
 }
 
 void TCV::visit(Write *node) {
-    for (const auto &child: node->getChildren())
-        child->accept(*this);
+    for (const auto &child: node->getChildren()) child->accept(*this);
 }
 
 void TCV::visit(AST::ASTNode *node) {
     returnType = node->getType();
     position = node->getLineNumber();
-    for (const auto &child: node->getChildren())
-        child->accept(*this);
+    for (const auto &child: node->getChildren()) child->accept(*this);
 }
 
 bool TCV::isMatchType(std::string &lhs, std::string &rhs) {
     if ((rhs == "integer" && lhs == "intnum") || (rhs == "intnum" && lhs == "integer")) return true;
     else if ((rhs == "float" && lhs == "floatnum") || (rhs == "floatnum" && lhs == "float")) return true;
-    else if (rhs == lhs) return true;
-    else return false;
+    else return rhs == lhs;
 }
 
 bool TCV::isFuncCall(AST::ASTNode *node) {
