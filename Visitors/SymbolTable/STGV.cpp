@@ -14,9 +14,7 @@ STGV::STGV(AST::ASTNode *root) {
 }
 
 void STGV::visit(Program *node) {
-    for (auto child : node->getChildren()) {
-        child->accept(*this);
-    }
+    for (auto child : node->getChildren()) child->accept(*this);
 
     //detect for errors
     detector->detect();
@@ -46,11 +44,8 @@ void STGV::visit(FuncDef *node) {
         try {
             auto classFunction = symbolTable->getClass(namespaceName)->getFunction(funcName, function);
             classFunction->isDefined = true;
-        } catch (Semantic::Err::UndeclaredClass &undeclaredClass) {
-            detector->addError(undeclaredClass.what());
-            return;
-        } catch (Semantic::Err::UndeclaredFunction &undeclaredFunc) {
-            detector->addError(undeclaredFunc.what());
+        } catch (Semantic::Error &error) {
+            detector->addError(error.what());
             return;
         }
     }
@@ -61,11 +56,8 @@ void STGV::visit(FuncDef *node) {
         Variable *variable = createVar(localVar);
 
         //throw a semantic error if `variable` is a duplicate variable in the `function`'s local scope.
-        try {
-            function->addVariable(variable);
-        } catch (Semantic::Err::DuplicateDataMember &duplicateLocalVar) {
-            detector->addError(duplicateLocalVar.what());
-        }
+        try { function->addVariable(variable); }
+        catch (Semantic::Error &error) { detector->addError(error.what()); }
 
         //fetching the class that this function corresponds to and add local variable to its scope
         if (isClassFunc()) {
@@ -79,10 +71,10 @@ void STGV::visit(FuncDef *node) {
 
 void STGV::visit(VarDecl *node) {
     Variable *variable = createVar(node);
-    try {
-        symbolTable->classes.at(node->getParent()->getName())->addVariable(variable->getName(), variable);
-    } catch (Semantic::Err::DuplicateDataMember &duplicateDataMember) {
-        detector->addError(duplicateDataMember.what());
+    auto name = node->getParent()->getName();
+    try { symbolTable->classes.at(name)->addVariable(variable->getName(), variable); }
+    catch (Semantic::Error &error) {
+        detector->addError(error.what());
         return;
     }
 }
@@ -114,11 +106,8 @@ void STGV::visit(ClassDecl *node) {
     }
 
     Class *classEntry = new Class(className, className, inherits, node->getChild(0)->getLineNumber());
-    try {
-        symbolTable->addClass(className, classEntry);
-    } catch (Semantic::Err::DuplicateClassDecl &duplicateClassDecl) {
-        detector->addError(duplicateClassDecl.what());
-    }
+    try { symbolTable->addClass(className, classEntry); }
+    catch (Semantic::Error &error) { detector->addError(error.what()); }
 
     for (auto &child : node->getChild(2)->getChildren()) {
         //setting the parent of each member in `MEMBERDECLARATIONS` to `className` node
@@ -141,9 +130,7 @@ void STGV::visit(FuncParams *node) {
         std::string funcName = node->getParent()->getName();
         try {
             symbolTable->classes.at(className)->getFunctions().at(funcName).back()->addParam(variable);
-        } catch (Semantic::Err::DuplicateFuncParam &duplicateFuncParam) {
-            detector->addError(duplicateFuncParam.what());
-        }
+        } catch (Semantic::Error &error) { detector->addError(error.what()); }
     }
 }
 
@@ -154,11 +141,8 @@ void STGV::visit(MainFunc *node) {
 
     for (auto &var : localVars->getChildren()) {
         Variable *variable = createVar(var);
-        try {
-            symbolTable->main->addVariable(variable);
-        } catch (Semantic::Err::DuplicateDataMember &duplicateLocalVar) {
-            detector->addError(duplicateLocalVar.what());
-        }
+        try { symbolTable->main->addVariable(variable); }
+        catch (Semantic::Error &error) { detector->addError(error.what()); }
     }
 }
 
@@ -180,11 +164,8 @@ Variable *STGV::createVar(AST::ASTNode *node) {
 
     std::string type = node->getChild(startIndex)->getName();
     if (node->getChild(startIndex++)->getType() == "id") {
-        try {
-            symbolTable->getClass(type);
-        } catch (Semantic::Err::UndeclaredClass &undeclaredClass) {
-            detector->addError(undeclaredClass.what());
-        }
+        try { symbolTable->getClass(type); }
+        catch (Semantic::Error &error) { detector->addError(error.what()); }
     }
 
     std::string varName = node->getChild(startIndex)->getName();
@@ -214,11 +195,8 @@ Function *STGV::createTempFunction(AST::ASTNode *node, std::string &funcName, st
         Variable *variable = createVar(param);
 
         //throw a semantic error if `variable` is a duplicate param in the `function`
-        try {
-            function->addParam(variable);
-        } catch (Semantic::Err::DuplicateFuncParam &duplicateParam) {
-            detector->addError(duplicateParam.what());
-        }
+        try { function->addParam(variable); }
+        catch (Semantic::Error &error) { detector->addError(error.what()); }
     }
 
     return function;

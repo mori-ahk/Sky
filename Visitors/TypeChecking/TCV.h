@@ -89,10 +89,14 @@ private:
 
     void checkIfArrayCalledWithRightDimensions(Variable *, std::string &, AST::ASTNode *);
 
+    void handleChainCalls(std::string &, AST::ASTNode *);
+
     STGV *stgv;
     Function *tempFunction;
 
     Function *getRightFunction(const std::vector<Function *>&, AST::ASTNode *);
+
+    Variable *getAvailableVar(std::string &);
 
     Semantic::Detector *detector;
 

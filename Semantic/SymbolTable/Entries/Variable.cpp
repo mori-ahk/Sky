@@ -22,6 +22,15 @@ std::string &Variable::getType() {
     return type;
 }
 
+std::string Variable::getRawType() {
+    std::string rawType;
+    for (auto c : getType()) {
+        if (c != '[' && c != ']') rawType += c;
+        else break;
+    }
+    return rawType;
+}
+
 std::string &Variable::getName() {
     return name;
 }
