@@ -27,7 +27,7 @@ public:
 private:
     Tokenizer *tokenizer;
 
-    void handleWord(std::string &, int, int &);
+    void handleWord(std::string &, int &, int &);
 
     void read(std::string &);
 
@@ -36,6 +36,8 @@ private:
     static bool doesOnlyContainWhitespace(std::string &);
 
     static bool isComment(Token *);
+
+    static int countNewLines(const std::string&);
 
     static std::string extractErrorString(std::string &);
 
