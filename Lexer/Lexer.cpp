@@ -38,13 +38,21 @@ bool Lexer::doesOnlyContainWhitespace(std::string &line) {
     return true;
 }
 
+int Lexer::countNewLines(const std::string& token) {
+    int counter = 0;
+    for (char c : token) {
+        if (c == '\n') counter++;
+    }
+    return counter;
+}
+
 std::string Lexer::extractErrorString(std::string &line) {
     int counter = 0;
     while (line.size() > counter && line.at(counter) != ' ' && line.at(counter) != '\n') counter++;
     return line.substr(0, counter);
 }
 
-void Lexer::handleWord(std::string &line, int lineNumber, int &pos) {
+void Lexer::handleWord(std::string &line, int &lineNumber, int &pos) {
     //process the next line if the current line is empty.
     if (doesOnlyContainWhitespace(line)) return;
 
@@ -69,7 +77,7 @@ void Lexer::handleWord(std::string &line, int lineNumber, int &pos) {
         if (!isComment(matchedToken)) {
             totalMatches.push_back(matchedToken);
             totalTokens.push_back(matchedToken);
-        }
+        } else lineNumber += countNewLines(matchedToken->getValue());
 
         pos += matchedToken->getValue().size();
         linePosition += pos;

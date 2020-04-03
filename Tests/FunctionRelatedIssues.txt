@@ -10,6 +10,12 @@ class A {
     public see() : void;
     public tick() : integer;
     private hello() : void;
+    public getB() : B;
+};
+
+class B {
+    private foo() : void;
+    public man() : integer;
 };
 
 //Please comment this function to see `undefined class function` warning
@@ -19,6 +25,11 @@ A::hello() : void
 
 //Please uncomment this to see `undeclared class function` error
 //due to unmatched function signature
+/*
+A::bar() : void
+    do
+    end
+*/
 
 A::hey() : void
     do
@@ -37,7 +48,7 @@ A::see() : void
 A::tick() : integer
     do
         //Please comment this to see `Expected return type` error
-        return(1.0);
+        return(1);
     end
 
 
@@ -53,6 +64,7 @@ print() : void
 main
     local
         A a;
+        integer f;
     do
         //Please uncomment this to see `use of private member function` error
         // a.hello();
@@ -63,6 +75,9 @@ main
         //Please uncomment this to see `use of undeclared local variable` error
         // b.hello();
 
+        // a.getB().foo();
+
+        // f = a.getB().man();
     end
 
 
