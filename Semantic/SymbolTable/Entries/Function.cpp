@@ -7,7 +7,7 @@
 #include <utility>
 #include "../../Error/Error.h"
 
-Function::Function(Visibility visibility, std::string name, std::string returnType, std::vector<Variable *> params,
+Function::Function(Enums::Enums visibility, std::string name, std::string returnType, std::vector<Variable *> params,
                    std::vector<Variable *> localVars, int position) {
     this->visibility = visibility;
     this->name = std::move(name);
@@ -27,7 +27,7 @@ std::string &Function::getReturnType() {
 }
 
 std::string Function::getVisibilityString() {
-    if (getVisibility() == Visibility::PUBLIC) return "public";
+    if (getVisibility() == Enums::Enums::PUBLIC) return "public";
     else return "private";
 }
 
@@ -46,7 +46,7 @@ Variable *Function::getVariable(std::string &varName) {
     throw Semantic::Err::UndeclaredLocalVariable(varName);
 }
 
-Visibility Function::getVisibility() {
+Enums::Enums Function::getVisibility() {
     return visibility;
 }
 

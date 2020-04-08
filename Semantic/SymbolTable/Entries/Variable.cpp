@@ -6,7 +6,7 @@
 
 #include <utility>
 
-Variable::Variable(Visibility visibility, std::string name, std::string type, int dimensions, int position) {
+Variable::Variable(Enums::Enums visibility, std::string name, std::string type, int dimensions, int position) {
     this->visibility = visibility;
     this->name = std::move(name);
     this->type = std::move(type);
@@ -36,11 +36,11 @@ std::string &Variable::getName() {
 }
 
 std::string Variable::getVisibilityString() {
-    if (getVisibility() == Visibility::PUBLIC) return "public";
+    if (getVisibility() == Enums::Enums::PUBLIC) return "public";
     else return "private";
 }
 
-Visibility Variable::getVisibility() {
+Enums::Enums Variable::getVisibility() {
     return visibility;
 }
 

@@ -317,7 +317,7 @@ void TCV::checkIfClassVariableCalledWithRightAccess(std::string &nodeName, AST::
         std::string lineNumber = std::to_string(node->getChild(0)->getLineNumber());
         auto _variable = stgv->symbolTable->getClass(returnType)->getVariable(nodeName);
         if (isCalledWithDimension(node)) checkIfArrayCalledWithRightDimensions(_variable, nodeName, node);
-        if (_variable->getVisibility() == Visibility::PRIVATE) {
+        if (_variable->isPrivate()) {
             std::string errorString =
                     "Use of private member " + nodeName + " of class " + returnType + " at line " + lineNumber;
             detector->addError(errorString);

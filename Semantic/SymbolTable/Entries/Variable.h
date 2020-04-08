@@ -7,13 +7,13 @@
 
 #include <string>
 #include <vector>
-#include "Visibility.h"
+#include "Enums.h"
 #include <iostream>
 
 class Variable {
 public:
 
-    Variable(Visibility, std::string, std::string, int, int);
+    Variable(Enums::Enums, std::string, std::string, int, int);
 
     std::string &getType();
 
@@ -25,7 +25,7 @@ public:
 
     std::string getVisibilityString();
 
-    Visibility getVisibility();
+    Enums::Enums getVisibility();
 
     friend std::ostream &operator<<(std::ostream &, Variable &);
 
@@ -42,12 +42,14 @@ public:
 
     inline bool isArray() { return dimensions != 0; }
 
+    inline bool isPrivate() { return visibility == Enums::Enums::PRIVATE; }
+
 private:
 
     std::string type;
     std::string name;
     int dimensions;
-    Visibility visibility;
+    Enums::Enums visibility;
     int position;
 };
 

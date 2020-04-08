@@ -8,13 +8,13 @@
 
 #include <vector>
 #include "Variable.h"
-#include "Visibility.h"
+#include "Enums.h"
 #include <iostream>
 
 class Function {
 public:
 
-    Function(Visibility , std::string, std::string, std::vector<Variable *>,
+    Function(Enums::Enums , std::string, std::string, std::vector<Variable *>,
              std::vector<Variable *>, int);
 
     std::vector<Variable *> &getParams();
@@ -29,7 +29,7 @@ public:
 
     std::string getVisibilityString();
 
-    Visibility getVisibility();
+    Enums::Enums getVisibility();
 
     void addParam(Variable *);
 
@@ -55,7 +55,7 @@ public:
 
     inline int getPosition() { return position; }
 
-    inline bool isPrivate() { return visibility == Visibility::PRIVATE; }
+    inline bool isPrivate() { return visibility == Enums::Enums::PRIVATE; }
 
     private:
 
@@ -63,7 +63,7 @@ public:
     std::vector<Variable *> localVars;
     std::string name;
     std::string returnType;
-    Visibility visibility;
+    Enums::Enums visibility;
     int position;
 };
 

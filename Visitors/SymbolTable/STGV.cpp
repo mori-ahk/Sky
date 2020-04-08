@@ -81,7 +81,7 @@ void STGV::visit(VarDecl *node) {
 
 void STGV::visit(FuncDecl *node) {
     std::string visibilityString = node->getChild(0)->getName();
-    Visibility visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
+    Enums::Enums visibility = visibilityString == "private" ? Enums::Enums::PRIVATE : Enums::Enums::PUBLIC;
     std::string funcName = node->getChild(1)->getName();
     std::string returnType = node->getChild(3)->getName();
     Function *function = new Function(visibility, funcName, returnType, {}, {}, node->getChild(1)->getLineNumber());
@@ -155,11 +155,11 @@ void STGV::visit(AST::ASTNode *node) {
 
 Variable *STGV::createVar(AST::ASTNode *node) {
     int startIndex = node->getChildren().size() == 4 ? 1 : 0;
-    Visibility visibility = Visibility::PRIVATE;
+    Enums::Enums visibility = Enums::Enums::PRIVATE;
 
     if (node->getChildren().size() == 4) {
         std::string visibilityString = node->getChildren().at(0)->getName();
-        visibility = visibilityString == "private" ? Visibility::PRIVATE : Visibility::PUBLIC;
+        visibility = visibilityString == "private" ? Enums::Enums::PRIVATE : Enums::Enums::PUBLIC;
     }
 
     std::string type = node->getChild(startIndex)->getName();
@@ -185,7 +185,7 @@ Function *STGV::createTempFunction(AST::ASTNode *node, std::string &funcName, st
         return signature->getChildren().size() == 4;
     };
 
-    Function *function = new Function(Visibility::PUBLIC, funcName, returnType, {}, {},
+    Function *function = new Function(Enums::Enums::PUBLIC, funcName, returnType, {}, {},
                                       signature->getChild(0)->getLineNumber());
 
     //iterating on params
