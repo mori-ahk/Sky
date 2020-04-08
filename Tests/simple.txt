@@ -1,0 +1,6 @@
+main
+    local
+        integer x;
+    do
+        x = 3 + 2;
+    end

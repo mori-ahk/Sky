@@ -107,9 +107,9 @@ std::ostream &operator<<(std::ostream &os, Class &c) {
             os << "\t" << *(_f) << std::endl;
     }
 
+    os << "\tVARIABLE(S): \n";
     for (auto &v: c.getVariables()) {
-        os << "\tVARIABLE\n";
-        os << "\t" << *(v.second) << std::endl;
+        os << "\t" << *(v.second);
     }
 
     return os;

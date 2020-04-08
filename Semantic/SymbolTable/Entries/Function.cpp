@@ -72,8 +72,8 @@ std::ostream &operator<<(std::ostream &os, Function &f) {
     os << "FUNCTION:\n";
     os << "\t[ " << "visibility: " << visibility << " | name: " << f.getName() << " | returns: " << f.getReturnType()
        << " ]" << std::endl;
+    os << "\t\tVARIABLE(S): \n";
     for (auto &var : f.getLocalVars()) {
-        os << "\t\tVARIABLE\n";
         os << "\t\t" << *var;
     }
     return os;
