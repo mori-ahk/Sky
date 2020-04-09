@@ -48,6 +48,8 @@ public:
 
     void visit(MultOp *node) override;
 
+    void visit(Number *node) override;
+
     void visit(Program *node) override;
 
     void visit(Read *node) override;
@@ -73,6 +75,7 @@ public:
     inline std::vector<std::string> getErrors() { return detector->getErrors(); }
 
     inline std::vector<std::string> getWarnings() { return detector->getWarnings(); }
+
     Semantic::SymbolTable *symbolTable;
 private:
 

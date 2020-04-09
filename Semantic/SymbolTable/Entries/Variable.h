@@ -25,6 +25,8 @@ public:
 
     std::string getVisibilityString() const;
 
+    std::string getKindString() const;
+
     Enums::Visibility getVisibility() const;
 
     Enums::Kind getKind() const;
@@ -39,6 +41,8 @@ public:
     }
 
     inline void setPosition(int _position) { this->position = _position; }
+
+    inline void setKind(Enums::Kind _kind) { this->kind = _kind; }
 
     inline int getPosition() const { return position; }
 

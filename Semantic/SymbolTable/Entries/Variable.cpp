@@ -10,6 +10,7 @@ Variable::Variable(Enums::Visibility visibility, std::string name, std::string t
     this->type = std::move(type);
     this->dimensions = dimensions;
     this->position = position;
+
 }
 
 const int &Variable::getDimensions() const {
@@ -38,8 +39,18 @@ std::string Variable::getVisibilityString() const {
     else return "private";
 }
 
+std::string Variable::getKindString() const {
+    if (getKind() == Enums::Kind::VAR) return "var";
+    else if (getKind() == Enums::Kind::LITERAL) return "literal";
+    else return "temp";
+}
+
 Enums::Visibility Variable::getVisibility() const {
     return visibility;
+}
+
+Enums::Kind Variable::getKind() const {
+    return kind;
 }
 
 std::ostream &operator<<(std::ostream &os, Variable &v) {
@@ -50,6 +61,4 @@ std::ostream &operator<<(std::ostream &os, Variable &v) {
     return os;
 }
 
-Enums::Kind Variable::getKind() const {
-    return kind;
-}
+

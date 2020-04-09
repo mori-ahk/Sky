@@ -48,6 +48,8 @@ public:
 
     void visit(MultOp *node) override;
 
+    void visit(Number *node) override;
+
     void visit(Program *node) override;
 
     void visit(Read *node) override;
@@ -94,7 +96,7 @@ private:
     STGV *stgv;
     Function *tempFunction;
 
-    Function *getRightFunction(const std::vector<Function *>&, AST::ASTNode *);
+    Function *getRightFunction(const std::vector<Function *> &, AST::ASTNode *);
 
     const Variable *getAvailableVar(std::string &) const;
 

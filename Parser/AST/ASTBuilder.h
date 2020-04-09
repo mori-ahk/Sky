@@ -34,6 +34,7 @@
 #include "Nodes/Statements.h"
 #include "Nodes/Calls.h"
 #include "Nodes/Call.h"
+#include "Nodes/Number.h"
 
 namespace AST {
     class ASTBuilder {

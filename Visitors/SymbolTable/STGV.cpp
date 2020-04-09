@@ -54,7 +54,7 @@ void STGV::visit(FuncDef *node) {
     AST::ASTNode *localVars = funcBody->getChild(0);
     for (auto &localVar : localVars->getChildren()) {
         Variable *variable = createVar(localVar);
-
+        variable->setKind(Enums::Kind::VAR);
         //throw a semantic error if `variable` is a duplicate variable in the `function`'s local scope.
         try { function->addVariable(variable); }
         catch (Semantic::Error &error) { detector->addError(error.what()); }
@@ -71,6 +71,7 @@ void STGV::visit(FuncDef *node) {
 
 void STGV::visit(VarDecl *node) {
     Variable *variable = createVar(node);
+    variable->setKind(Enums::Kind::VAR);
     auto name = node->getParent()->getName();
     try { symbolTable->classes.at(name)->addVariable(variable->getName(), variable); }
     catch (Semantic::Error &error) {
@@ -239,4 +240,4 @@ void STGV::visit(While *node) {}
 
 void STGV::visit(Write *node) {}
 
-
+void STGV::visit(Number *node) {}

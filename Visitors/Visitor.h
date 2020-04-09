@@ -44,6 +44,8 @@ public:
 
     virtual void visit(MultOp *node) = 0;
 
+    virtual void visit(Number *node) = 0;
+
     virtual void visit(Program *node) = 0;
 
     virtual void visit(Read *node) = 0;
@@ -61,7 +63,6 @@ public:
     virtual void visit(Write *node) = 0;
 
     virtual void visit(AST::ASTNode *node) = 0;
-
 
     virtual ~Visitor() = default;
 };

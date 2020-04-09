@@ -130,6 +130,7 @@ AST::ASTNode *AST::ASTBuilder::createCustomNode(std::string &nodeName, Token *to
     else if (nodeName == "LOCALSCOPE") return new Local(nodeName, token);
     else if (nodeName == "main") return new MainFunc(nodeName, token);
     else if (nodeName == "mult") return new MultOp(nodeName, token);
+    else if (nodeName == "number") return new Number(nodeName, token);
     else if (nodeName == "PROGRAM") return new Program(nodeName, token);
     else if (nodeName == "read") return new Read(nodeName, token);
     else if (nodeName == "return") return new Return(nodeName, token);

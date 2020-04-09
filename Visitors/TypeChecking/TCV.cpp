@@ -390,3 +390,5 @@ void TCV::visit(VarDecl *node) {}
 void TCV::visit(Local *node) {}
 
 void TCV::visit(Sign *node) {}
+
+void TCV::visit(Number *node) {}
