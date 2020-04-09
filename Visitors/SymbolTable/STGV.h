@@ -80,6 +80,10 @@ public:
 private:
 
     Semantic::Detector *detector;
+    std::string currentFuncName;
+    std::string currentNamespace;
+
+    Function *currentFunction;
 };
 
 

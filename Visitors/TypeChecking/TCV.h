@@ -94,7 +94,7 @@ private:
     void handleChainCalls(std::string &, AST::ASTNode *);
 
     STGV *stgv;
-    Function *tempFunction;
+    Function *currentFunction;
 
     Function *getRightFunction(const std::vector<Function *> &, AST::ASTNode *);
 

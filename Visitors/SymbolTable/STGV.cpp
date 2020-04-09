@@ -20,29 +20,31 @@ void STGV::visit(Program *node) {
     detector->detect();
 }
 
+void STGV::visit(FuncBody *node) {
+    for (auto &child : node->getChildren()) child->accept(*this);
+}
+
 void STGV::visit(FuncDef *node) {
-    std::string namespaceName;
 
     AST::ASTNode *signature = node->getChild(0);
-    AST::ASTNode *funcBody = node->getChild(1);
     auto isClassFunc = [&signature]() {
         return signature->getChildren().size() == 4;
     };
 
     //if the function belongs to a class and has a namespace;
-    if (isClassFunc()) namespaceName = signature->getChild(0)->getName();
+    if (isClassFunc()) currentNamespace = signature->getChild(0)->getName();
+    else currentNamespace = std::string();
 
-    std::string funcName;
-    if (isClassFunc()) funcName = signature->getChild(1)->getName();
-    else funcName = signature->getChild(0)->getName();
+    if (isClassFunc()) currentFuncName = signature->getChild(1)->getName();
+    else currentFuncName = signature->getChild(0)->getName();
 
     std::string returnType = isClassFunc() ? signature->getChild(3)->getName() : signature->getChild(2)->getName();
-    Function *function = createTempFunction(node, funcName, returnType);
+    currentFunction = createTempFunction(node, currentFuncName, returnType);
 
     //check if the class function signature and defined function signature match.
     if (isClassFunc()) {
         try {
-            auto classFunction = symbolTable->getClass(namespaceName)->getFunction(funcName, function);
+            auto classFunction = symbolTable->getClass(currentNamespace)->getFunction(currentFuncName, currentFunction);
             classFunction->isDefined = true;
         } catch (Semantic::Error &error) {
             detector->addError(error.what());
@@ -51,29 +53,15 @@ void STGV::visit(FuncDef *node) {
     }
 
     //iterating on local vars
-    AST::ASTNode *localVars = funcBody->getChild(0);
-    for (auto &localVar : localVars->getChildren()) {
-        Variable *variable = createVar(localVar);
-        variable->setKind(Enums::Kind::VAR);
-        //throw a semantic error if `variable` is a duplicate variable in the `function`'s local scope.
-        try { function->addVariable(variable); }
-        catch (Semantic::Error &error) { detector->addError(error.what()); }
+    for (auto &child : node->getChild(1)->getChildren()) child->accept(*this);
 
-        //fetching the class that this function corresponds to and add local variable to its scope
-        if (isClassFunc()) {
-            auto classFunction = symbolTable->classes.at(namespaceName)->getFunction(funcName, function);
-            classFunction->addVariable(variable);
-        }
-    }
-
-    if (!isClassFunc()) symbolTable->addFunction(funcName, function);
+    if (!isClassFunc()) symbolTable->addFunction(currentFuncName, currentFunction);
 }
 
 void STGV::visit(VarDecl *node) {
     Variable *variable = createVar(node);
     variable->setKind(Enums::Kind::VAR);
-    auto name = node->getParent()->getName();
-    try { symbolTable->classes.at(name)->addVariable(variable->getName(), variable); }
+    try { symbolTable->classes.at(currentNamespace)->addVariable(variable->getName(), variable); }
     catch (Semantic::Error &error) {
         detector->addError(error.what());
         return;
@@ -82,39 +70,33 @@ void STGV::visit(VarDecl *node) {
 
 void STGV::visit(FuncDecl *node) {
     std::string visibilityString = node->getChild(0)->getName();
-    Enums::Visibility visibility = visibilityString == "private" ? Enums::Visibility::PRIVATE : Enums::Visibility::PUBLIC;
-    std::string funcName = node->getChild(1)->getName();
+    Enums::Visibility visibility =
+            visibilityString == "private" ? Enums::Visibility::PRIVATE : Enums::Visibility::PUBLIC;
+    currentFuncName = node->getChild(1)->getName();
     std::string returnType = node->getChild(3)->getName();
-    Function *function = new Function(visibility, funcName, returnType, {}, {}, node->getChild(1)->getLineNumber());
+    Function *function = new Function(visibility, currentFuncName, returnType, {}, {},
+                                      node->getChild(1)->getLineNumber());
 
-    symbolTable->getClass(node->getParent()->getName())->addFunction(funcName, function);
-
-    //setting the parent of `funcName` node to `className` node
-    node->getChild(1)->setParent(node->getParent());
-    //setting the parent of `params` node to `funcName` node
-    node->getChild(2)->setParent(node->getChild(1));
+    symbolTable->getClass(currentNamespace)->addFunction(currentFuncName, function);
 
     node->getChild(2)->accept(*this);
 }
 
 void STGV::visit(ClassDecl *node) {
     //Creating a class entry
-    std::string className = node->getChild(0)->getName();
+    currentNamespace = node->getChild(0)->getName();
     std::vector<std::string> inherits;
+
     //constructing a string indicating all the parent class
     for (auto &child : node->getChild(1)->getChildren()) {
         inherits.push_back(child->getName());
     }
 
-    Class *classEntry = new Class(className, className, inherits, node->getChild(0)->getLineNumber());
-    try { symbolTable->addClass(className, classEntry); }
+    Class *classEntry = new Class(currentNamespace, currentNamespace, inherits, node->getChild(0)->getLineNumber());
+    try { symbolTable->addClass(currentNamespace, classEntry); }
     catch (Semantic::Error &error) { detector->addError(error.what()); }
 
-    for (auto &child : node->getChild(2)->getChildren()) {
-        //setting the parent of each member in `MEMBERDECLARATIONS` to `className` node
-        child->setParent(node->getChild(0));
-        child->accept(*this);
-    }
+    for (auto &child : node->getChild(2)->getChildren()) child->accept(*this);
 }
 
 void STGV::visit(ClassDecls *node) {
@@ -123,19 +105,33 @@ void STGV::visit(ClassDecls *node) {
 
 void STGV::visit(FuncParams *node) {
     for (auto &child: node->getChildren()) {
-        //setting the parent of each `param` node to `funcName` node
-        child->setParent(node->getParent());
-
         Variable *variable = createVar(child);
-        std::string className = node->getParent()->getParent()->getName();
-        std::string funcName = node->getParent()->getName();
         try {
-            symbolTable->classes.at(className)->getFunctions().at(funcName).back()->addParam(variable);
+            symbolTable->classes.at(currentNamespace)->getFunctions().at(currentFuncName).back()->addParam(variable);
         } catch (Semantic::Error &error) { detector->addError(error.what()); }
     }
 }
 
+void STGV::visit(Local *node) {
+    for (auto &localVar : node->getChildren()) {
+        Variable *variable = createVar(localVar);
+        variable->setKind(Enums::Kind::VAR);
+        //throw a semantic error if `variable` is a duplicate variable in the `function`'s local scope.
+        try { currentFunction->addVariable(variable); }
+        catch (Semantic::Error &error) { detector->addError(error.what()); }
+
+        //fetching the class that this function corresponds to and add local variable to its scope
+        if (!currentNamespace.empty()) {
+            auto classFunction = symbolTable->classes.at(currentNamespace)->getFunction(currentFuncName,
+                                                                                        currentFunction);
+            classFunction->addVariable(variable);
+        }
+    }
+}
+
 void STGV::visit(MainFunc *node) {
+    currentFuncName = "main";
+    currentNamespace = std::string();
     AST::ASTNode *funcBody = node->getChild(0);
     AST::ASTNode *localVars = funcBody->getChild(0);
     symbolTable->main->setPosition(node->getLineNumber());
@@ -149,7 +145,6 @@ void STGV::visit(MainFunc *node) {
 
 void STGV::visit(AST::ASTNode *node) {
     for (auto &child : node->getChildren()) {
-        child->setParent(node->getParent());
         child->accept(*this);
     }
 }
@@ -207,10 +202,6 @@ Function *STGV::createTempFunction(AST::ASTNode *node, std::string &funcName, st
 //but they have to have an implementation to make the compiler happy
 
 void STGV::visit(ArrayDim *node) {}
-
-void STGV::visit(FuncBody *node) {}
-
-void STGV::visit(Local *node) {}
 
 void STGV::visit(AddOp *node) {}
 

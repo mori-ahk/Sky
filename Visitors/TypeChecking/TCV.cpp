@@ -24,10 +24,10 @@ void TCV::visit(FuncDef *node) {
     std::string _returnType = isClassFunc() ? signature->getChild(3)->getName() : signature->getChild(2)->getName();
     currentFuncName = isClassFunc() ? signature->getChild(1)->getName() : signature->getChild(0)->getName();
     currentNamespace = isClassFunc() ? signature->getChild(0)->getName() : std::string();
-    tempFunction = stgv->createTempFunction(node, currentFuncName, _returnType);
+    currentFunction = stgv->createTempFunction(node, currentFuncName, _returnType);
     node->getChild(1)->accept(*this);
     if (shouldReturn && !didReturn) {
-        std::string errorString = "No return statement in " + tempFunction->getName() + " returning non-void ";
+        std::string errorString = "No return statement in " + currentFunction->getName() + " returning non-void ";
         detector->addError(errorString);
         isGoodToGo = false;
         return;
@@ -165,15 +165,15 @@ void TCV::visit(Read *node) {
 void TCV::visit(Return *node) {
     for (const auto &child : node->getChildren()) child->accept(*this);
 
-    const Function *currentFunction;
+    const Function *_currentFunction;
     if (currentNamespace.empty())
-        currentFunction = stgv->symbolTable->getFreeFunction(currentFuncName, tempFunction);
+        _currentFunction = stgv->symbolTable->getFreeFunction(currentFuncName, currentFunction);
     else
-        currentFunction = stgv->symbolTable->getClass(currentNamespace)->getFunction(currentFuncName, tempFunction);
+        _currentFunction = stgv->symbolTable->getClass(currentNamespace)->getFunction(currentFuncName, currentFunction);
 
 
-    if (!isMatchType(currentFunction->getReturnType(), returnType)) {
-        std::string errorString = "Expected to return " + currentFunction->getReturnType() +
+    if (!isMatchType(_currentFunction->getReturnType(), returnType)) {
+        std::string errorString = "Expected to return " + _currentFunction->getReturnType() +
                                   " but return " + returnType + " instead, at line " +
                                   std::to_string(node->getLineNumber());
         isGoodToGo = false;
@@ -267,7 +267,7 @@ TCV::checkIfClassFunctionCalledWithRightAccess(std::string &nodeName, AST::ASTNo
     //if in main function scope, we need to fetch main function local variable
     if (objectType.empty()) {
         if (currentFuncName == "main") objectType = stgv->symbolTable->main->getVariable(object->getName())->getType();
-        else objectType = tempFunction->getVariable(object->getName())->getType();
+        else objectType = currentFunction->getVariable(object->getName())->getType();
     }
     auto functions = stgv->symbolTable->getClass(objectType)->getFunctions().at(nodeName);
 
@@ -348,10 +348,10 @@ const Variable *TCV::getAvailableVar(std::string &nodeName) const {
         if (currentFuncName == "main")
             variable = stgv->symbolTable->main->getVariable(nodeName);
         else
-            variable = stgv->symbolTable->getFreeFunction(currentFuncName, tempFunction)->getVariable(nodeName);
+            variable = stgv->symbolTable->getFreeFunction(currentFuncName, currentFunction)->getVariable(nodeName);
     } else {
         auto _class = stgv->symbolTable->classes.at(currentNamespace);
-        variable = _class->getFunction(currentFuncName, tempFunction)->getVariable(nodeName);
+        variable = _class->getFunction(currentFuncName, currentFunction)->getVariable(nodeName);
     }
     return variable;
 }
