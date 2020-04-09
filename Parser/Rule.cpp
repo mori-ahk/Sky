@@ -10,27 +10,27 @@ Language::Rule::Rule(std::string name) {
     this->name = name;
 }
 
-bool Language::Rule::doesBelongToFirst(Token *token) {
+bool Language::Rule::doesBelongToFirst(Token *token) const {
     return first.find(token->getReverseTokenTypeMap()[token->getType()]) != first.end();
 }
 
-bool Language::Rule::doesBelongToFollow(Token *token) {
+bool Language::Rule::doesBelongToFollow(Token *token) const {
     return follow.find(token->getReverseTokenTypeMap()[token->getType()]) != follow.end();
 }
 
-std::unordered_set<std::string> &Language::Rule::getFirst() {
+const std::unordered_set<std::string> &Language::Rule::getFirst() const {
     return first;
 }
 
-std::unordered_set<std::string> &Language::Rule::getFollow() {
+const std::unordered_set<std::string> &Language::Rule::getFollow() const {
     return follow;
 }
 
-std::string &Language::Rule::getName() {
+const std::string &Language::Rule::getName() const {
     return name;
 }
 
-std::vector<std::vector<std::string>> &Language::Rule::getRHS() {
+const std::vector<std::vector<std::string>> &Language::Rule::getRHS() const {
     return RHS;
 }
 
@@ -52,18 +52,18 @@ void Language::Rule::addToFollow(std::string terminal) {
         callWatchlist(false);
 }
 
-int Language::Rule::indexOf(std::vector<std::string> vector, std::string rule) {
+int Language::Rule::indexOf(std::vector<std::string> vector, std::string rule) const {
     for (int i = 0; i < vector.size(); i++) {
         if (rule == vector.at(i)) return i;
     }
     return -1;
 }
 
-bool Language::Rule::isNullable() {
+bool Language::Rule::isNullable() const {
     return first.find("#") != first.end();
 }
 
-bool Language::Rule::isTerminal() {
+bool Language::Rule::isTerminal() const {
     return TERMINALS.find(this->name) != TERMINALS.end();
 }
 
@@ -98,5 +98,9 @@ void Language::Rule::callWatchlist(bool isFirst) {
             }
         }
     }
+}
+
+void Language::Rule::appendFirst(std::unordered_set<std::string> & set) {
+    first.insert(set.begin(), set.end());
 }
 

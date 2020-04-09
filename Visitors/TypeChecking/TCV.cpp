@@ -89,7 +89,7 @@ void TCV::visit(Call *node) {
             }
         }
 
-        Variable *variable = getAvailableVar(nodeName);
+        const Variable *variable = getAvailableVar(nodeName);
         if (isCalledWithDimension(node)) {
             checkIfArrayCalledWithRightDimensions(variable, nodeName, node);
             return;
@@ -165,7 +165,7 @@ void TCV::visit(Read *node) {
 void TCV::visit(Return *node) {
     for (const auto &child : node->getChildren()) child->accept(*this);
 
-    Function *currentFunction;
+    const Function *currentFunction;
     if (currentNamespace.empty())
         currentFunction = stgv->symbolTable->getFreeFunction(currentFuncName, tempFunction);
     else
@@ -204,7 +204,7 @@ void TCV::visit(AST::ASTNode *node) {
     for (const auto &child: node->getChildren()) child->accept(*this);
 }
 
-bool TCV::isMatchType(std::string &lhs, std::string &rhs) {
+bool TCV::isMatchType(const std::string &lhs, const std::string &rhs) {
     if ((rhs == "integer" && lhs == "intnum") || (rhs == "intnum" && lhs == "integer")) return true;
     else if ((rhs == "float" && lhs == "floatnum") || (rhs == "floatnum" && lhs == "float")) return true;
     else return rhs == lhs;
@@ -288,7 +288,7 @@ TCV::checkIfClassFunctionCalledWithRightAccess(std::string &nodeName, AST::ASTNo
     }
 }
 
-void TCV::checkIfArrayCalledWithRightDimensions(Variable *variable, std::string &nodeName, AST::ASTNode *node) {
+void TCV::checkIfArrayCalledWithRightDimensions(const Variable *variable, std::string &nodeName, AST::ASTNode *node) {
     std::string lineNumber = std::to_string(node->getChild(0)->getLineNumber());
     if (variable->isArray()) {
         int indices = node->getChild(1)->getChildren().size();
@@ -342,8 +342,8 @@ void TCV::handleChainCalls(std::string &nodeName, AST::ASTNode *node) {
     }
 }
 
-Variable *TCV::getAvailableVar(std::string &nodeName) {
-    Variable *variable;
+const Variable *TCV::getAvailableVar(std::string &nodeName) const {
+    const Variable *variable;
     if (currentNamespace.empty()) {
         if (currentFuncName == "main")
             variable = stgv->symbolTable->main->getVariable(nodeName);

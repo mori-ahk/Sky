@@ -7,7 +7,7 @@
 #include <utility>
 #include "../../Error/Error.h"
 
-Function::Function(Enums::Enums visibility, std::string name, std::string returnType, std::vector<Variable *> params,
+Function::Function(Enums::Visibility visibility, std::string name, std::string returnType, std::vector<Variable *> params,
                    std::vector<Variable *> localVars, int position) {
     this->visibility = visibility;
     this->name = std::move(name);
@@ -18,35 +18,35 @@ Function::Function(Enums::Enums visibility, std::string name, std::string return
     this->isDefined = false;
 }
 
-std::string &Function::getName() {
+const std::string &Function::getName() const {
     return name;
 }
 
-std::string &Function::getReturnType() {
+const std::string &Function::getReturnType() const {
     return returnType;
 }
 
-std::string Function::getVisibilityString() {
-    if (getVisibility() == Enums::Enums::PUBLIC) return "public";
+std::string Function::getVisibilityString() const {
+    if (getVisibility() == Enums::Visibility::PUBLIC) return "public";
     else return "private";
 }
 
-std::vector<Variable *> &Function::getParams() {
+const std::vector<Variable *> &Function::getParams() const {
     return params;
 }
 
-std::vector<Variable *> &Function::getLocalVars() {
+const std::vector<Variable *> &Function::getLocalVars() const {
     return localVars;
 }
 
-Variable *Function::getVariable(std::string &varName) {
+const Variable *Function::getVariable(std::string &varName) const {
     for (const auto& var : localVars) {
         if (var->getName() == varName) return var;
     }
     throw Semantic::Err::UndeclaredLocalVariable(varName);
 }
 
-Enums::Enums Function::getVisibility() {
+Enums::Visibility Function::getVisibility() const {
     return visibility;
 }
 

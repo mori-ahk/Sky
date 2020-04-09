@@ -4,9 +4,7 @@
 
 #include "Variable.h"
 
-#include <utility>
-
-Variable::Variable(Enums::Enums visibility, std::string name, std::string type, int dimensions, int position) {
+Variable::Variable(Enums::Visibility visibility, std::string name, std::string type, int dimensions, int position) {
     this->visibility = visibility;
     this->name = std::move(name);
     this->type = std::move(type);
@@ -14,15 +12,15 @@ Variable::Variable(Enums::Enums visibility, std::string name, std::string type, 
     this->position = position;
 }
 
-int &Variable::getDimensions() {
+const int &Variable::getDimensions() const {
     return dimensions;
 }
 
-std::string &Variable::getType() {
+const std::string &Variable::getType() const {
     return type;
 }
 
-std::string Variable::getRawType() {
+std::string Variable::getRawType() const {
     std::string rawType;
     for (auto c : getType()) {
         if (c != '[' && c != ']') rawType += c;
@@ -31,16 +29,16 @@ std::string Variable::getRawType() {
     return rawType;
 }
 
-std::string &Variable::getName() {
+const std::string &Variable::getName() const {
     return name;
 }
 
-std::string Variable::getVisibilityString() {
-    if (getVisibility() == Enums::Enums::PUBLIC) return "public";
+std::string Variable::getVisibilityString() const {
+    if (getVisibility() == Enums::Visibility::PUBLIC) return "public";
     else return "private";
 }
 
-Enums::Enums Variable::getVisibility() {
+Enums::Visibility Variable::getVisibility() const {
     return visibility;
 }
 
@@ -50,4 +48,8 @@ std::ostream &operator<<(std::ostream &os, Variable &v) {
     os << "[ " << "visibility: " << visibility << " | name: " << v.getName() << " | type: " << v.getType()
        << " | dimensions: " << dimension << " ]" << std::endl;
     return os;
+}
+
+Enums::Kind Variable::getKind() const {
+    return kind;
 }

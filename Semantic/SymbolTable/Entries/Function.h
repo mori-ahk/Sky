@@ -14,22 +14,22 @@
 class Function {
 public:
 
-    Function(Enums::Enums , std::string, std::string, std::vector<Variable *>,
+    Function(Enums::Visibility , std::string, std::string, std::vector<Variable *>,
              std::vector<Variable *>, int);
 
-    std::vector<Variable *> &getParams();
+    const std::vector<Variable *> &getParams() const ;
 
-    std::vector<Variable *> &getLocalVars();
+    const std::vector<Variable *> &getLocalVars() const;
 
-    Variable *getVariable(std::string &);
+    const Variable *getVariable(std::string &) const;
 
-    std::string &getName();
+    const std::string &getName() const;
 
-    std::string &getReturnType();
+    const std::string &getReturnType() const;
 
-    std::string getVisibilityString();
+    std::string getVisibilityString() const;
 
-    Enums::Enums getVisibility();
+    Enums::Visibility getVisibility() const;
 
     void addParam(Variable *);
 
@@ -55,7 +55,8 @@ public:
 
     inline int getPosition() { return position; }
 
-    inline bool isPrivate() { return visibility == Enums::Enums::PRIVATE; }
+    inline bool isPrivate() { return visibility == Enums::Visibility::PRIVATE; }
+
 
     private:
 
@@ -63,7 +64,7 @@ public:
     std::vector<Variable *> localVars;
     std::string name;
     std::string returnType;
-    Enums::Enums visibility;
+    Enums::Visibility visibility;
     int position;
 };
 

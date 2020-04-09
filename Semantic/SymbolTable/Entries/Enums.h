@@ -7,7 +7,7 @@
 
 
 namespace Enums {
-    enum class Enums {
+    enum class Visibility {
         PUBLIC,
         PRIVATE,
     };

@@ -8,7 +8,7 @@
 void DependencyGraph::build(Semantic::SymbolTable *symbolTable) {
     for (const auto &_class : symbolTable->classes) {
         auto node = new DependencyNode(_class.first);
-        for (std::string &inherit : _class.second->getInherits()) {
+        for (const std::string &inherit : _class.second->getInherits()) {
             try {
                 symbolTable->getClass(inherit);
                 node->addToList(inherit);

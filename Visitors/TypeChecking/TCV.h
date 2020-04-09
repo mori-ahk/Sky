@@ -69,7 +69,7 @@ public:
     inline std::vector<std::string> getErrors() { return detector->getErrors(); }
 
 private:
-    static bool isMatchType(std::string &, std::string &);
+    static bool isMatchType(const std::string &, const std::string &);
 
     static bool isCalledOnObject(AST::ASTNode *);
 
@@ -87,7 +87,7 @@ private:
 
     void checkIfClassVariableCalledWithRightAccess(std::string &, AST::ASTNode *);
 
-    void checkIfArrayCalledWithRightDimensions(Variable *, std::string &, AST::ASTNode *);
+    void checkIfArrayCalledWithRightDimensions(const Variable *, std::string &, AST::ASTNode *);
 
     void handleChainCalls(std::string &, AST::ASTNode *);
 
@@ -96,7 +96,7 @@ private:
 
     Function *getRightFunction(const std::vector<Function *>&, AST::ASTNode *);
 
-    Variable *getAvailableVar(std::string &);
+    const Variable *getAvailableVar(std::string &) const;
 
     Semantic::Detector *detector;
 

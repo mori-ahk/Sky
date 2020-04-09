@@ -17,13 +17,13 @@ namespace Language {
 
         ~Rule() = default;
 
-        std::unordered_set<std::string> &getFirst();
+        const std::unordered_set<std::string> &getFirst() const;
 
-        std::unordered_set<std::string> &getFollow();
+        const std::unordered_set<std::string> &getFollow() const;
 
-        std::vector<std::vector<std::string>> &getRHS();
+        const std::vector<std::vector<std::string>> &getRHS() const;
 
-        std::string &getName();
+        const std::string &getName() const;
 
         static const std::unordered_map<std::string, std::string> &getTerminals();
 
@@ -39,15 +39,17 @@ namespace Language {
 
         void clearWatchList();
 
-        int indexOf(std::vector<std::string>, std::string);
+        void appendFirst(std::unordered_set<std::string> &);
 
-        bool isTerminal();
+        int indexOf(std::vector<std::string>, std::string) const;
 
-        bool isNullable();
+        bool isTerminal() const;
 
-        bool doesBelongToFirst(Token *);
+        bool isNullable() const;
 
-        bool doesBelongToFollow(Token *);
+        bool doesBelongToFirst(Token *) const;
+
+        bool doesBelongToFollow(Token *) const;
 
         bool visited;
 

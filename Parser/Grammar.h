@@ -22,7 +22,7 @@ namespace Language {
 
         ~Grammar() = default;
 
-        Rule *getRule(std::string &);
+        const Rule *getRule(std::string &) const;
 
         bool shouldTake(std::string &, Token *);
 

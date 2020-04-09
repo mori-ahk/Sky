@@ -38,9 +38,9 @@ namespace Semantic {
 
         void initDependencyGraph(Semantic::SymbolTable *);
 
-        inline const std::vector<std::string> &getErrors() { return errors; }
+        inline const std::vector<std::string> &getErrors() const { return errors; }
 
-        inline const std::vector<std::string> &getWarnings() { return warnings; }
+        inline const std::vector<std::string> &getWarnings() const { return warnings; }
 
     private:
 

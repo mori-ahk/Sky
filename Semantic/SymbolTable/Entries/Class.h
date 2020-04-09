@@ -18,23 +18,23 @@ public:
 
     ~Class() = default;
 
-    std::string &getName();
+    const std::string &getName() const;
 
-    std::string &getType();
+    const std::string &getType() const;
 
-    std::vector<std::string> &getInherits();
+    const std::vector<std::string> &getInherits() const;
 
-    std::unordered_map<std::string, std::vector<Function *> > &getFunctions();
+    const std::unordered_map<std::string, std::vector<Function *> > &getFunctions() const;
 
-    std::unordered_map<std::string, Variable *> &getVariables();
+    const std::unordered_map<std::string, Variable *> &getVariables() const;
 
     std::vector<std::string> findShadowMembers(Class &);
 
-    Function *getFunction(std::string &, Function *);
+    Function *getFunction(const std::string &, Function *) const;
 
-    Variable *getVariable(std::string &);
+    const Variable *getVariable(std::string &) const;
 
-    void addVariable(std::string &, Variable *);
+    void addVariable(const std::string &, Variable *);
 
     void addFunction(std::string &, Function *);
 

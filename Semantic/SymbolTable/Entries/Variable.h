@@ -13,19 +13,21 @@
 class Variable {
 public:
 
-    Variable(Enums::Enums, std::string, std::string, int, int);
+    Variable(Enums::Visibility, std::string, std::string, int, int);
 
-    std::string &getType();
+    const std::string &getType() const ;
 
-    std::string getRawType();
+    std::string getRawType() const ;
 
-    int &getDimensions();
+    const int &getDimensions() const ;
 
-    std::string &getName();
+    const std::string &getName() const;
 
-    std::string getVisibilityString();
+    std::string getVisibilityString() const;
 
-    Enums::Enums getVisibility();
+    Enums::Visibility getVisibility() const;
+
+    Enums::Kind getKind() const;
 
     friend std::ostream &operator<<(std::ostream &, Variable &);
 
@@ -38,18 +40,19 @@ public:
 
     inline void setPosition(int _position) { this->position = _position; }
 
-    inline int getPosition() { return position; }
+    inline int getPosition() const { return position; }
 
-    inline bool isArray() { return dimensions != 0; }
+    inline bool isArray() const { return dimensions != 0; }
 
-    inline bool isPrivate() { return visibility == Enums::Enums::PRIVATE; }
+    inline bool isPrivate() const { return visibility == Enums::Visibility::PRIVATE; }
 
 private:
 
     std::string type;
     std::string name;
     int dimensions;
-    Enums::Enums visibility;
+    Enums::Visibility visibility;
+    Enums::Kind kind;
     int position;
 };
 

@@ -70,7 +70,7 @@ void Language::Grammar::constructFirstSetHelper(Rule *rule) {
             // union the two sets except the null character.
             auto firstSet = std::unordered_set<std::string>(toDiscover->getFirst());
             firstSet.erase("#");
-            rule->getFirst().insert(firstSet.begin(), firstSet.end());
+            rule->appendFirst(firstSet);
 
             if (toDiscover->getFirst().find("#") == toDiscover->getFirst().end()) {
                 nullable = false;
@@ -143,7 +143,7 @@ longVector Language::Grammar::findUsage(const std::string &name) {
     return toReturn;
 }
 
-Language::Rule *Language::Grammar::getRule(std::string &rule) {
+const Language::Rule *Language::Grammar::getRule(std::string &rule) const {
     return RULES.at(rule);
 }
 
@@ -151,7 +151,7 @@ bool Language::Grammar::shouldTake(std::string &production, Token *token) {
     if (Rule::isTerminal(production)) {
         return production == token->getReverseTokenTypeMap()[token->getType()];
     }
-    Rule *rule = getRule(production);
+    const Rule *rule = getRule(production);
     return rule->doesBelongToFirst(token) ||
            (rule->isNullable() && rule->doesBelongToFollow(token));
 }

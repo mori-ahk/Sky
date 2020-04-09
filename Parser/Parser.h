@@ -30,7 +30,7 @@ namespace Syntax {
 
         void next();
 
-        void printError(Language::Rule &);
+        void printError(const Language::Rule &);
 
         void panic(std::string &);
 

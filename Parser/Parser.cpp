@@ -30,7 +30,7 @@ bool Syntax::Parser::isKeyword(std::string &rule) {
     return KEYWORDS.find(rule) != KEYWORDS.end();
 }
 
-void Syntax::Parser::printError(Language::Rule &rule) {
+void Syntax::Parser::printError(const Language::Rule &rule) {
     if (currentToken == nullptr) return;
     std::cout << "ERROR: at line " << currentToken->getLineno() << " at position: " << currentToken->getPosition()
               << " expected one of these: ";
@@ -59,10 +59,10 @@ bool Syntax::Parser::parse(std::string LHS, bool isOnPanicMode) {
         } else return false;
     }
 
-    Language::Rule *currentRule = grammar->getRule(LHS);
+    const Language::Rule *currentRule = grammar->getRule(LHS);
     if (!currentRule->doesBelongToFirst(currentToken)) {
         if ((isOnPanicMode || currentRule->isNullable()) && currentRule->doesBelongToFollow(currentToken)) {
-            AST_Builder->push(LHS, 0);
+            AST_Builder->push(LHS, nullptr);
             return true;
         } else return false;
     }
@@ -71,7 +71,7 @@ bool Syntax::Parser::parse(std::string LHS, bool isOnPanicMode) {
     bool found = false;
     for (auto &production : currentRule->getRHS()) {
         if (found) break;
-        for (auto &_rule: production) {
+        for (auto _rule: production) {
             if (_rule != "#" && _rule.front() != '@') {
                 if (grammar->shouldTake(_rule, currentToken)) {
                     rulesToProcess = production;
