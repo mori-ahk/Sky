@@ -29,20 +29,16 @@ void TCV::visit(FuncDef *node) {
     if (shouldReturn && !didReturn) {
         std::string errorString = "No return statement in " + currentFunction->getName() + " returning non-void ";
         detector->addError(errorString);
-        isGoodToGo = false;
         return;
     }
 }
 
 void TCV::visit(AddOp *node) {
     node->getChild(0)->accept(*this);
-    if (!isGoodToGo) return;
     std::string lhsType = returnType;
     node->getChild(2)->accept(*this);
-    if (!isGoodToGo) return;
     std::string rhsType = returnType;
     if (!isMatchType(lhsType, rhsType)) {
-        isGoodToGo = false;
         std::string errorString = "Unmatched type at line " + std::to_string(position);
         detector->addError(errorString);
     }
@@ -50,24 +46,20 @@ void TCV::visit(AddOp *node) {
 
 void TCV::visit(AssignOp *node) {
     node->getChild(0)->accept(*this);
-    if (!isGoodToGo) return;
     std::string lhsType = returnType;
     node->getChild(1)->accept(*this);
     std::string rhsType = returnType;
-    if (!isGoodToGo) return;
     if (!isMatchType(lhsType, rhsType)) {
-        isGoodToGo = false;
         std::string errorString = "Unmatched type at line " + std::to_string(position);
         detector->addError(errorString);
     }
-    returnType = "";
+    returnType = std::string();
 }
 
 
 void TCV::visit(Calls *node) {
     for (const auto &child: node->getChildren()) {
         child->setParent(node);
-        if (!isGoodToGo) return;
         child->accept(*this);
         lastProcessedNode++;
     }
@@ -105,17 +97,14 @@ void TCV::visit(Call *node) {
 
 void TCV::visit(CompareOp *node) {
     node->getChild(0)->accept(*this);
-    if (!isGoodToGo) return;
     std::string lhsType = returnType;
     node->getChild(2)->accept(*this);
-    if (!isGoodToGo) return;
     std::string rhsType = returnType;
     if (!isMatchType(lhsType, rhsType)) {
-        isGoodToGo = false;
         std::string errorString = "Unmatched type at line " + std::to_string(position);
         detector->addError(errorString);
     }
-    returnType = "";
+    returnType = std::string();
 }
 
 void TCV::visit(FuncCall *node) {
@@ -139,23 +128,21 @@ void TCV::visit(MainFunc *node) {
 
 void TCV::visit(MultOp *node) {
     node->getChild(0)->accept(*this);
-    if (!isGoodToGo) return;
     std::string lhsType = returnType;
     node->getChild(2)->accept(*this);
-    if (!isGoodToGo) return;
     std::string rhsType = returnType;
     if (!isMatchType(lhsType, rhsType)) {
-        isGoodToGo = false;
         std::string errorString = "Unmatched type at line " + std::to_string(position);
         detector->addError(errorString);
     }
 }
 
+void TCV::visit(Number *node) {
+    for (auto &child: node->getChildren()) child->accept(*this);
+}
+
 void TCV::visit(Program *node) {
-    for (const auto &child : node->getChildren()) {
-        if (!isGoodToGo) return;
-        child->accept(*this);
-    }
+    for (const auto &child : node->getChildren()) child->accept(*this);
 }
 
 void TCV::visit(Read *node) {
@@ -176,7 +163,6 @@ void TCV::visit(Return *node) {
         std::string errorString = "Expected to return " + _currentFunction->getReturnType() +
                                   " but return " + returnType + " instead, at line " +
                                   std::to_string(node->getLineNumber());
-        isGoodToGo = false;
         detector->addError(errorString);
         return;
     }
@@ -184,10 +170,7 @@ void TCV::visit(Return *node) {
 }
 
 void TCV::visit(Statements *node) {
-    for (const auto &child : node->getChildren()) {
-        if (!isGoodToGo) return;
-        child->accept(*this);
-    }
+    for (const auto &child : node->getChildren()) child->accept(*this);
 }
 
 void TCV::visit(While *node) {
@@ -249,7 +232,6 @@ void TCV::checkIfFreeFunctionCalledWithRightArgument(std::string &nodeName, AST:
     auto function = getRightFunction(functions, _node);
     if (function != nullptr) returnType = function->getReturnType();
     else {
-        isGoodToGo = false;
         std::string errorString = "Wrong arguments were passed to function name " + nodeName;
         detector->addError(errorString);
     }
@@ -262,7 +244,7 @@ TCV::checkIfClassFunctionCalledWithRightAccess(std::string &nodeName, AST::ASTNo
     //if there is a chain of function calls, the return type
     //of the last processed function is the object type that
     //next function should be called on.
-    std::string objectType = isCalledOnFunction ? returnType : "";
+    std::string objectType = isCalledOnFunction ? returnType : std::string();
 
     //if in main function scope, we need to fetch main function local variable
     if (objectType.empty()) {
@@ -273,19 +255,13 @@ TCV::checkIfClassFunctionCalledWithRightAccess(std::string &nodeName, AST::ASTNo
 
     auto function = getRightFunction(functions, _node);
     if (function != nullptr && function->isPrivate()) {
-        isGoodToGo = false;
         std::string errorString = "Accessing private function name " + nodeName;
         detector->addError(errorString);
-        return;
     } else if (function == nullptr) {
-        isGoodToGo = false;
         std::string errorString = "no matching function name " + nodeName;
         detector->addError(errorString);
-        return;
-    } else {
-        returnType = function->getReturnType();
-        return;
-    }
+    } else returnType = function->getReturnType();
+
 }
 
 void TCV::checkIfArrayCalledWithRightDimensions(const Variable *variable, std::string &nodeName, AST::ASTNode *node) {
@@ -295,15 +271,12 @@ void TCV::checkIfArrayCalledWithRightDimensions(const Variable *variable, std::s
         if (variable->getDimensions() != indices) {
             std::string errorString = "missing dimensions for variable " + nodeName + " at line " + lineNumber;
             detector->addError(errorString);
-            isGoodToGo = false;
-            return;
         } else {
             for (const auto &index : node->getChild(1)->getChildren()) {
                 index->accept(*this);
                 if (returnType != "intnum" && returnType != "integer") {
                     std::string errorString = "Array dimensions should be of type integer at line " + lineNumber;
                     detector->addError(errorString);
-                    isGoodToGo = false;
                     return;
                 }
             }
@@ -321,12 +294,7 @@ void TCV::checkIfClassVariableCalledWithRightAccess(std::string &nodeName, AST::
             std::string errorString =
                     "Use of private member " + nodeName + " of class " + returnType + " at line " + lineNumber;
             detector->addError(errorString);
-            isGoodToGo = false;
-            return;
-        } else {
-            returnType = _variable->getType();
-            return;
-        }
+        } else returnType = _variable->getType();
     }
 }
 
@@ -334,12 +302,10 @@ void TCV::handleChainCalls(std::string &nodeName, AST::ASTNode *node) {
     if (isCalledOnObject(node)) {
         checkIfClassFunctionCalledWithRightAccess(nodeName, node);
     } else if (isCalledOnFunction(node)) {
-        if (returnType != "integer" && returnType != "float") {
+        if (returnType != "integer" && returnType != "float")
             checkIfClassFunctionCalledWithRightAccess(nodeName, node, true);
-        }
-    } else {
-        checkIfFreeFunctionCalledWithRightArgument(nodeName, node);
-    }
+
+    } else checkIfFreeFunctionCalledWithRightArgument(nodeName, node);
 }
 
 const Variable *TCV::getAvailableVar(std::string &nodeName) const {
@@ -390,5 +356,3 @@ void TCV::visit(VarDecl *node) {}
 void TCV::visit(Local *node) {}
 
 void TCV::visit(Sign *node) {}
-
-void TCV::visit(Number *node) {}
