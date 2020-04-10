@@ -4,13 +4,17 @@
 
 #include "Variable.h"
 
-Variable::Variable(Enums::Visibility visibility, std::string name, std::string type, int dimensions, int position) {
+#include <utility>
+
+Variable::Variable(Enums::Visibility visibility, std::string name, std::string type, int dimensions,int position, std::vector<int> arraySize) {
     this->visibility = visibility;
     this->name = std::move(name);
     this->type = std::move(type);
     this->dimensions = dimensions;
     this->position = position;
-
+    this->arraySize = std::move(arraySize);
+    this->offset = 0;
+    this->size = 0;
 }
 
 const int &Variable::getDimensions() const {
@@ -57,8 +61,28 @@ std::ostream &operator<<(std::ostream &os, Variable &v) {
     std::string dimension = std::to_string(v.getDimensions());
     std::string visibility = v.getVisibilityString();
     os << "[ " << "visibility: " << visibility << " | name: " << v.getName() << " | type: " << v.getType()
-       << " | dimensions: " << dimension << " ]" << std::endl;
+       << " | dimensions: " << dimension << " | offset: " << v.getOffset() << " | size: " << v.getSize() <<" ]" << std::endl;
     return os;
+}
+
+int Variable::getSize() const {
+    return size;
+}
+
+void Variable::setSize(int _size) {
+    Variable::size = _size;
+}
+
+const std::vector<int> &Variable::getArraySize() const {
+    return arraySize;
+}
+
+int Variable::getOffset() const {
+    return offset;
+}
+
+void Variable::setOffset(int _offset) {
+    Variable::offset = _offset;
 }
 
 

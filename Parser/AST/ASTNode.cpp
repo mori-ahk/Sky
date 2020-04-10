@@ -11,7 +11,7 @@
 static int counter = 0;
 
 AST::ASTNode::ASTNode() {
-    this->name = "";
+    this->name = std::string();
     this->parent = nullptr;
 }
 

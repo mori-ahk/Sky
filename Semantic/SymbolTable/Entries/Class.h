@@ -28,6 +28,16 @@ public:
 
     const std::unordered_map<std::string, Variable *> &getVariables() const;
 
+    int getOffset() const;
+
+    void setOffset(int offset);
+
+    int getSize() const;
+
+    void setSize(int size);
+
+    int getVariableOffset() const;
+
     std::vector<std::string> findShadowMembers(Class &);
 
     Function *getFunction(const std::string &, Function *) const;
@@ -40,17 +50,25 @@ public:
 
     friend std::ostream &operator<<(std::ostream &, Class &);
 
-    inline void setPosition(int _position) { this->position = _position; }
+    inline void addOffset(int _size) { offset += _size; }
 
-    inline int getPosition() { return position; }
+    inline void addSize(int _size) {
+        sizes.push_back(_size);
+        size += _size;
+    }
+
+    bool isMemSizeAlreadyCalculated = false;
 
 private:
     std::string name;
     std::string type;
     std::vector<std::string> inherits;
+    std::vector<int> sizes;
     std::unordered_map<std::string, std::vector<Function *> > functions;
     std::unordered_map<std::string, Variable *> variables;
     int position;
+    int offset;
+    int size;
 };
 
 

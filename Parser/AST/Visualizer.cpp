@@ -24,5 +24,5 @@ void Visualizer::generateDot(AST::ASTNode *root) {
 }
 
 Visualizer::Visualizer() {
-    dotFileContent = "";
+    dotFileContent = std::string();
 }

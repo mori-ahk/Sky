@@ -286,7 +286,7 @@ void TCV::checkIfArrayCalledWithRightDimensions(const Variable *variable, std::s
 }
 
 void TCV::checkIfClassVariableCalledWithRightAccess(std::string &nodeName, AST::ASTNode *node) {
-    if (returnType != "integer" && returnType != "float") {
+    if (Variable::isTypeId(returnType)) {
         std::string lineNumber = std::to_string(node->getChild(0)->getLineNumber());
         auto _variable = stgv->symbolTable->getClass(returnType)->getVariable(nodeName);
         if (isCalledWithDimension(node)) checkIfArrayCalledWithRightDimensions(_variable, nodeName, node);
@@ -302,7 +302,7 @@ void TCV::handleChainCalls(std::string &nodeName, AST::ASTNode *node) {
     if (isCalledOnObject(node)) {
         checkIfClassFunctionCalledWithRightAccess(nodeName, node);
     } else if (isCalledOnFunction(node)) {
-        if (returnType != "integer" && returnType != "float")
+        if (Variable::isTypeId(returnType))
             checkIfClassFunctionCalledWithRightAccess(nodeName, node, true);
 
     } else checkIfFreeFunctionCalledWithRightArgument(nodeName, node);

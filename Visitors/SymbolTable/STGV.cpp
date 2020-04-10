@@ -141,6 +141,8 @@ void STGV::visit(MainFunc *node) {
         try { symbolTable->main->addVariable(variable); }
         catch (Semantic::Error &error) { detector->addError(error.what()); }
     }
+
+    funcBody->getChild(1)->accept(*this);
 }
 
 void STGV::visit(AST::ASTNode *node) {
@@ -158,21 +160,23 @@ Variable *STGV::createVar(AST::ASTNode *node) {
         visibility = visibilityString == "private" ? Enums::Visibility::PRIVATE : Enums::Visibility::PUBLIC;
     }
 
-    std::string type = node->getChild(startIndex)->getName();
-    if (node->getChild(startIndex++)->getType() == "id") {
-        try { symbolTable->getClass(type); }
-        catch (Semantic::Error &error) { detector->addError(error.what()); }
-    }
+    std::string type = node->getChild(startIndex++)->getName();
 
     std::string varName = node->getChild(startIndex)->getName();
     int dimensions = 0;
-
+    std::vector<int> arraySize;
     AST::ASTNode *dimNodeToIterate = node->getChildren().size() == 4 ? node->getChild(3) : node->getChild(2);
     for (auto &arrayDimensionChild: dimNodeToIterate->getChildren()) {
+        int size;
         type += "[]";
         dimensions++;
+        try {
+            size = std::stoi(arrayDimensionChild->getChild(0)->getName());
+            arraySize.push_back(size);
+        } catch (std::exception &ignored) {}
     }
-    return new Variable(visibility, varName, type, dimensions, node->getChild(startIndex)->getLineNumber());
+
+    return new Variable(visibility, varName, type, dimensions, node->getChild(startIndex)->getLineNumber(), arraySize);
 }
 
 Function *STGV::createTempFunction(AST::ASTNode *node, std::string &funcName, std::string &returnType) {
@@ -205,11 +209,17 @@ void STGV::visit(ArrayDim *node) {}
 
 void STGV::visit(AddOp *node) {}
 
-void STGV::visit(AssignOp *node) {}
+void STGV::visit(AssignOp *node) {
+    for(auto &child : node->getChildren()) child->accept(*this);
+}
 
-void STGV::visit(Calls *node) {}
+void STGV::visit(Calls *node) {
+    for(auto &child : node->getChildren()) child->accept(*this);
+}
 
-void STGV::visit(Call *node) {}
+void STGV::visit(Call *node) {
+    for(auto &child : node->getChildren()) child->accept(*this);
+}
 
 void STGV::visit(CompareOp *node) {}
 
@@ -225,10 +235,14 @@ void STGV::visit(Return *node) {}
 
 void STGV::visit(Sign *node) {}
 
-void STGV::visit(Statements *node) {}
+void STGV::visit(Statements *node) {
+    for(auto &child : node->getChildren()) child->accept(*this);
+}
 
 void STGV::visit(While *node) {}
 
 void STGV::visit(Write *node) {}
 
-void STGV::visit(Number *node) {}
+void STGV::visit(Number *node) {
+    std::cout << "Hello" << std::endl;
+}

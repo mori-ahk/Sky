@@ -1,5 +1,0 @@
-FUNCTION:
-	[ visibility: public | name: main | returns: void ]
-		VARIABLE(S): 
-		[ visibility: private | name: x | type: integer | dimensions: 0 ]
-

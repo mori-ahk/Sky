@@ -12,6 +12,8 @@ Class::Class(std::string name, std::string type, std::vector<std::string> inheri
     this->type = std::move(type);
     this->inherits = std::move(inherits);
     this->position = position;
+    this->offset = 0;
+    this->size = 0;
 }
 
 const std::string &Class::getName() const {
@@ -100,7 +102,7 @@ std::ostream &operator<<(std::ostream &os, Class &c) {
     }
     if (!inherits.empty()) inherits.pop_back();
     os << "CLASS:\n";
-    os << "[ " << "name: " << c.getName() << " | inherits: " << inherits << " | type: " << c.getType() << " ]"
+    os << "[ " << "name: " << c.getName() << " | inherits: " << inherits << " | type: " << c.getType() << " | scope offset: " << c.getOffset() << " ]"
        << std::endl;
     for (auto &f : c.getFunctions()) {
         for (auto &_f : f.second)
@@ -113,4 +115,27 @@ std::ostream &operator<<(std::ostream &os, Class &c) {
     }
 
     return os;
+}
+
+int Class::getOffset() const {
+    return offset;
+}
+
+void Class::setOffset(int _offset) {
+    Class::offset = _offset;
+}
+
+int Class::getSize() const {
+    return size;
+}
+
+void Class::setSize(int size) {
+    Class::size = size;
+}
+
+int Class::getVariableOffset() const {
+    if (sizes.size() == 1) return 0;
+    int toReturn = 0;
+    for (int i = 0; i < sizes.size() - 1; i++) toReturn += sizes.at(i);
+    return toReturn;
 }

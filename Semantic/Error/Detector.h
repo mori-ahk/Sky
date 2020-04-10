@@ -7,6 +7,7 @@
 
 #include "../SymbolTable/SymbolTable.h"
 #include "../SymbolTable/DependencyGraph.h"
+#include "../SymbolTable/MemSizeCalculator.h"
 #include <vector>
 #include <string>
 #include <unordered_set>
@@ -38,6 +39,8 @@ namespace Semantic {
 
         void initDependencyGraph(Semantic::SymbolTable *);
 
+        void calculateMemSize(Semantic::SymbolTable *);
+
         inline const std::vector<std::string> &getErrors() const { return errors; }
 
         inline const std::vector<std::string> &getWarnings() const { return warnings; }
@@ -52,6 +55,7 @@ namespace Semantic {
 
         Semantic::SymbolTable *symbolTable;
         DependencyGraph *dependencyGraph;
+        MemSizeCalculator *memSizeCalculator;
         std::vector<std::string> errors;
         std::vector<std::string> warnings;
     };

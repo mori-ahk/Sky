@@ -1,6 +1,27 @@
-main
+class A inherits C {
+    private float b;
+    private B q;
+};
+
+class B {
+    private integer s;
+    private float e;
+};
+
+class C {
+    private float r;
+    private float u;
+
+    private eval() : void;
+};
+
+C::eval() : void
     local
-        integer x;
+        integer x[4][4];
+        C b;
+        A a;
     do
-        x = 3 + 2;
+    end
+main
+    do
     end

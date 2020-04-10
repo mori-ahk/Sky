@@ -77,13 +77,14 @@ public:
     inline std::vector<std::string> getWarnings() { return detector->getWarnings(); }
 
     Semantic::SymbolTable *symbolTable;
+
 private:
 
     Semantic::Detector *detector;
+    Function *currentFunction;
+
     std::string currentFuncName;
     std::string currentNamespace;
-
-    Function *currentFunction;
 };
 
 

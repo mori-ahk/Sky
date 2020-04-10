@@ -16,6 +16,8 @@ Function::Function(Enums::Visibility visibility, std::string name, std::string r
     this->localVars = std::move(localVars);
     this->position = position;
     this->isDefined = false;
+    this->offset = 0;
+    this->size = 0;
 }
 
 const std::string &Function::getName() const {
@@ -91,3 +93,25 @@ bool Function::isParamsEqual(Function &lhs, Function &rhs) {
     return true;
 }
 
+int Function::getOffset() const {
+    return offset;
+}
+
+void Function::setOffset(int _offset) {
+    Function::offset = _offset;
+}
+
+int Function::getSize() const {
+    return size;
+}
+
+void Function::setSize(int size) {
+    Function::size = size;
+}
+
+int Function::getVariableOffset() const {
+    if (sizes.size() == 1) return 0;
+    int toReturn = 0;
+    for (int i = 0; i < sizes.size() - 1; i++) toReturn += sizes.at(i);
+    return toReturn;
+}

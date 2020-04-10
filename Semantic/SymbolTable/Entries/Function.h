@@ -27,6 +27,16 @@ public:
 
     const std::string &getReturnType() const;
 
+    int getOffset() const;
+
+    void setOffset(int offset);
+
+    int getSize() const;
+
+    void setSize(int size);
+
+    int getVariableOffset() const;
+
     std::string getVisibilityString() const;
 
     Enums::Visibility getVisibility() const;
@@ -57,15 +67,24 @@ public:
 
     inline bool isPrivate() { return visibility == Enums::Visibility::PRIVATE; }
 
+    inline void addOffset(int _size) { offset += _size; }
+
+    inline void addSize(int _size) {
+        sizes.push_back(_size);
+        size += _size;
+    }
 
     private:
 
     std::vector<Variable *> params;
     std::vector<Variable *> localVars;
+    std::vector<int> sizes;
     std::string name;
     std::string returnType;
     Enums::Visibility visibility;
     int position;
+    int offset;
+    int size;
 };
 
 

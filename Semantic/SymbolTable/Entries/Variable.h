@@ -13,13 +13,15 @@
 class Variable {
 public:
 
-    Variable(Enums::Visibility, std::string, std::string, int, int);
+    Variable(Enums::Visibility, std::string, std::string, int, int, std::vector<int>);
 
-    const std::string &getType() const ;
+    const std::string &getType() const;
 
-    std::string getRawType() const ;
+    std::string getRawType() const;
 
-    const int &getDimensions() const ;
+    const int &getDimensions() const;
+
+    const std::vector<int> &getArraySize() const;
 
     const std::string &getName() const;
 
@@ -50,14 +52,32 @@ public:
 
     inline bool isPrivate() const { return visibility == Enums::Visibility::PRIVATE; }
 
+    inline bool isTypeId() { return getRawType() != "integer" && getRawType() != "float"; }
+
+    static inline bool isTypeId(const std::string &type) { return type != "integer" && type != "float"; }
+
+    int getSize() const;
+
+    void setSize(int);
+
+    int getOffset() const;
+
+    void setOffset(int offset);
+
 private:
 
+    std::vector<int> arraySize;
     std::string type;
     std::string name;
+
     int dimensions;
+    int position;
+    int size;
+    int offset;
+
     Enums::Visibility visibility;
     Enums::Kind kind;
-    int position;
+
 };
 
 

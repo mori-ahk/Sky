@@ -10,6 +10,10 @@ void Semantic::Detector::initDependencyGraph(Semantic::SymbolTable *_symbolTable
     catch (Semantic::Err::UndeclaredClass &undeclaredClass) { throw; }
 }
 
+void Semantic::Detector::calculateMemSize(Semantic::SymbolTable *_symbolTable) {
+    this->memSizeCalculator = new MemSizeCalculator(_symbolTable);
+}
+
 void Semantic::Detector::detectUndefinedClassFunctions() {
     NamePair undefinedFunctions;
     for (const auto &_class : symbolTable->classes) {
@@ -141,6 +145,8 @@ void Semantic::Detector::detect() {
             detectShadowMembers(c.second);
         }
     }
+
+    if (!containsCircularDependency) calculateMemSize(symbolTable);
 
     detectUndefinedClassFunctions();
     detectFreeFunctionsErrors();
