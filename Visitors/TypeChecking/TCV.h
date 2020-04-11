@@ -93,6 +93,7 @@ private:
 
     void handleChainCalls(std::string &, AST::ASTNode *);
 
+    Semantic::SymbolTable *symbolTable;
     STGV *stgv;
     Function *currentFunction;
 

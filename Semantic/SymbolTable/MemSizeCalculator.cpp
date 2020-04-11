@@ -8,6 +8,9 @@ void MemSizeCalculator::calculate() {
     for (auto &_class : symbolTable->classes) calculateClass(_class.second);
     for (auto &functions: symbolTable->freeFunctions)
         for (auto &function : functions.second) calculateFunction(function);
+
+    //calculate mem size for main function
+    calculateFunction(symbolTable->main);
 }
 
 int MemSizeCalculator::calculateClass(Class *_class) {

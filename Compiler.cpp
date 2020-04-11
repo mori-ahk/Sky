@@ -77,6 +77,7 @@ void Compiler::writeTypeCheckingErrors(const std::vector<std::string> &errors) {
 void Compiler::compile() {
     parser->parse("START");
     parser->AST_Builder->visualize();
+
     AST::ASTNode *root = parser->AST_Builder->getRoot();
     symTabGenerator = new STGV(root);
     writeSymTabErrors(symTabGenerator->getErrors());
@@ -86,4 +87,6 @@ void Compiler::compile() {
 
     typeChecker = new TCV(root, symTabGenerator);
     writeTypeCheckingErrors(typeChecker->getErrors());
+
+    codeGenerator = new CGV(root, symTabGenerator->symbolTable);
 }

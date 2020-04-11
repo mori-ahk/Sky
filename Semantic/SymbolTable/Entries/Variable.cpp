@@ -82,7 +82,7 @@ int Variable::getOffset() const {
 }
 
 void Variable::setOffset(int _offset) {
-    Variable::offset = _offset;
+    Variable::offset = -(_offset);
 }
 
 

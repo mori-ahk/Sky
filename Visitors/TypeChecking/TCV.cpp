@@ -9,6 +9,7 @@ static int lastProcessedNode = -1;
 
 TCV::TCV(AST::ASTNode *root, STGV *_stgv) {
     this->stgv = _stgv;
+    this->symbolTable = _stgv->symbolTable;
     this->detector = new Semantic::Detector();
     root->getChild(0)->accept(*this);
 }
@@ -154,9 +155,9 @@ void TCV::visit(Return *node) {
 
     const Function *_currentFunction;
     if (currentNamespace.empty())
-        _currentFunction = stgv->symbolTable->getFreeFunction(currentFuncName, currentFunction);
+        _currentFunction = symbolTable->getFreeFunction(currentFuncName, currentFunction);
     else
-        _currentFunction = stgv->symbolTable->getClass(currentNamespace)->getFunction(currentFuncName, currentFunction);
+        _currentFunction = symbolTable->getClass(currentNamespace)->getFunction(currentFuncName, currentFunction);
 
 
     if (!isMatchType(_currentFunction->getReturnType(), returnType)) {
@@ -228,7 +229,7 @@ std::vector<std::string> TCV::getParamsType(AST::ASTNode *_node) {
 
 
 void TCV::checkIfFreeFunctionCalledWithRightArgument(std::string &nodeName, AST::ASTNode *_node) {
-    auto functions = stgv->symbolTable->getFreeFunction(nodeName);
+    auto functions = symbolTable->getFreeFunction(nodeName);
     auto function = getRightFunction(functions, _node);
     if (function != nullptr) returnType = function->getReturnType();
     else {
@@ -248,10 +249,10 @@ TCV::checkIfClassFunctionCalledWithRightAccess(std::string &nodeName, AST::ASTNo
 
     //if in main function scope, we need to fetch main function local variable
     if (objectType.empty()) {
-        if (currentFuncName == "main") objectType = stgv->symbolTable->main->getVariable(object->getName())->getType();
+        if (currentFuncName == "main") objectType = symbolTable->main->getVariable(object->getName())->getType();
         else objectType = currentFunction->getVariable(object->getName())->getType();
     }
-    auto functions = stgv->symbolTable->getClass(objectType)->getFunctions().at(nodeName);
+    auto functions = symbolTable->getClass(objectType)->getFunctions().at(nodeName);
 
     auto function = getRightFunction(functions, _node);
     if (function != nullptr && function->isPrivate()) {
@@ -288,7 +289,7 @@ void TCV::checkIfArrayCalledWithRightDimensions(const Variable *variable, std::s
 void TCV::checkIfClassVariableCalledWithRightAccess(std::string &nodeName, AST::ASTNode *node) {
     if (Variable::isTypeId(returnType)) {
         std::string lineNumber = std::to_string(node->getChild(0)->getLineNumber());
-        auto _variable = stgv->symbolTable->getClass(returnType)->getVariable(nodeName);
+        auto _variable = symbolTable->getClass(returnType)->getVariable(nodeName);
         if (isCalledWithDimension(node)) checkIfArrayCalledWithRightDimensions(_variable, nodeName, node);
         if (_variable->isPrivate()) {
             std::string errorString =
@@ -312,11 +313,11 @@ const Variable *TCV::getAvailableVar(std::string &nodeName) const {
     const Variable *variable;
     if (currentNamespace.empty()) {
         if (currentFuncName == "main")
-            variable = stgv->symbolTable->main->getVariable(nodeName);
+            variable = symbolTable->main->getVariable(nodeName);
         else
-            variable = stgv->symbolTable->getFreeFunction(currentFuncName, currentFunction)->getVariable(nodeName);
+            variable = symbolTable->getFreeFunction(currentFuncName, currentFunction)->getVariable(nodeName);
     } else {
-        auto _class = stgv->symbolTable->classes.at(currentNamespace);
+        auto _class = symbolTable->classes.at(currentNamespace);
         variable = _class->getFunction(currentFuncName, currentFunction)->getVariable(nodeName);
     }
     return variable;
