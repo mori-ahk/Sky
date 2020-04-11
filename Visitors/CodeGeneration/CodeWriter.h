@@ -7,19 +7,22 @@
 
 
 #include <string>
+#include <fstream>
 
 class CodeWriter {
 public:
-    CodeWriter() = default;
+    CodeWriter();
 
     void start();
     void finish();
+    void write(std::string &);
     void comment(std::string);
     void loadWord(const std::string&, int, const std::string&);
-    void saveWord(const std::string&, int, const std::string&);
+    void saveWord(int, const std::string&, const std::string&);
+    void OP(const std::string &, const std::string &, const std::string &);
+    void OP(const std::string &, const std::string &, const std::string &, const std::string &);
 private:
     std::string moonOutput;
-    const std::string commentIndent = "\t\t";
     const std::string tab = "\t";
     const std::string newLine = "\n";
     const std::string comma = ",";

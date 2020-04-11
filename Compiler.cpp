@@ -9,7 +9,7 @@
 Compiler::Compiler(std::string _filePath) {
     this->filePath = std::move(_filePath);
     this->lexer = new Lexer();
-    lexer->lex(filePath);
+    lexer->lex("Tests/" + filePath);
     this->parser = new Syntax::Parser(lexer);
     this->symTabGenerator = nullptr;
     this->typeChecker = nullptr;
@@ -34,7 +34,7 @@ Compiler::~Compiler() {
 
 void Compiler::writeSymTab() {
     std::string fileName = extractFileName();
-    std::ofstream stream(fileName + "_symtab.txt");
+    std::ofstream stream("Output/" + fileName + "_symtab.txt");
     for (const auto &c : symTabGenerator->symbolTable->classes) stream << *c.second << "\n";
 
     for (const auto &functions : symTabGenerator->symbolTable->freeFunctions) {
@@ -49,7 +49,7 @@ void Compiler::writeSymTab() {
 void Compiler::writeSymTabErrors(const std::vector<std::string> &errors) {
     if (errors.empty()) return;
     std::string fileName = extractFileName();
-    std::ofstream stream(fileName + "_symtab_errors.txt");
+    std::ofstream stream("Output/" + fileName + "_symtab_errors.txt");
     stream << "============================ SYMBOL TABLE ERRORS ========================= \n";
     for (const auto & error : errors) stream << error << "\n";
 
@@ -59,7 +59,7 @@ void Compiler::writeSymTabErrors(const std::vector<std::string> &errors) {
 void Compiler::writeSymTabWarnings(const std::vector<std::string> &warnings) {
     if (warnings.empty()) return;
     std::string fileName = extractFileName();
-    std::ofstream stream(fileName + "_symtab_warnings.txt");
+    std::ofstream stream("Output/" + fileName + "_symtab_warnings.txt");
     stream << "============================ SYMBOL TABLE WARNINGS ========================= \n";
     for (const auto & warning : warnings) stream << warning << "\n";
     stream.close();
@@ -68,10 +68,15 @@ void Compiler::writeSymTabWarnings(const std::vector<std::string> &warnings) {
 void Compiler::writeTypeCheckingErrors(const std::vector<std::string> &errors) {
     if (errors.empty()) return;
     std::string fileName = extractFileName();
-    std::ofstream stream(fileName + "_typecheck_errors.txt");
+    std::ofstream stream("Output/" + fileName + "_typecheck_errors.txt");
     stream << "============================ TYPE CHECKING ERRORS ========================= \n";
     for (const auto & error : errors) stream << error << "\n";
     stream.close();
+}
+
+void Compiler::writeMoonOutput() {
+    std::string fileName = extractFileName();
+    codeGenerator->write(fileName);
 }
 
 void Compiler::compile() {
@@ -89,4 +94,10 @@ void Compiler::compile() {
     writeTypeCheckingErrors(typeChecker->getErrors());
 
     codeGenerator = new CGV(root, symTabGenerator->symbolTable);
+    writeMoonOutput();
+
+    system("dot -Tpng TreeContent.gv -o TreeContent.png");
+    std::cout << extractFileName() << std::endl;
+    std::string moonCommand = "Moon/moon Moon/Generated/" + extractFileName() + ".m" + " Moon/util.m";
+    system(moonCommand.c_str());
 }

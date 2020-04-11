@@ -21,7 +21,7 @@ public:
 
     const std::vector<Variable *> &getLocalVars() const;
 
-    const Variable *getVariable(std::string &) const;
+    Variable *getVariable(std::string &) const;
 
     const std::string &getName() const;
 

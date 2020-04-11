@@ -1,0 +1,3 @@
+============================ TYPE CHECKING ERRORS ========================= 
+No return statement in build returning non-void 
+No return statement in evaluate returning non-void 

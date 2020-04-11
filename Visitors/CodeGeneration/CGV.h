@@ -69,10 +69,18 @@ public:
 
     void visit(AST::ASTNode *node) override;
 
+    void write(std::string &);
 private:
     Semantic::SymbolTable *symbolTable;
     std::string output;
+    std::string currentNamespace;
+    std::string currentFuncName;
+    Variable *currentVar;
+    Function *currentFunction;
+
     CodeWriter *writer;
+    int currentNumber;
+
 
 };
 

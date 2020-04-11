@@ -41,7 +41,7 @@ const std::vector<Variable *> &Function::getLocalVars() const {
     return localVars;
 }
 
-const Variable *Function::getVariable(std::string &varName) const {
+Variable *Function::getVariable(std::string &varName) const {
     for (const auto& var : localVars) {
         if (var->getName() == varName) return var;
     }

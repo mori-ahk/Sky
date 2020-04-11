@@ -31,6 +31,7 @@ private:
     void writeSymTabErrors(const std::vector<std::string> &errors);
     void writeSymTabWarnings(const std::vector<std::string> &warnings);
     void writeTypeCheckingErrors(const std::vector<std::string> &errors);
+    void writeMoonOutput();
 
     std::string extractFileName();
 };

@@ -1,0 +1,3 @@
+============================ SYMBOL TABLE WARNINGS ========================= 
+Shadow function evaluate between LINEAR and POLYNOMIAL
+Undefined class functions evaluate on class POLYNOMIAL

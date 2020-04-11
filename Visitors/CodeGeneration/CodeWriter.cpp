@@ -3,8 +3,15 @@
 //
 
 #include "CodeWriter.h"
+
+CodeWriter::CodeWriter() {
+    start();
+}
+
 void CodeWriter::start() {
     moonOutput += entry;
+    moonOutput += newLine;
+    moonOutput += tab;
     moonOutput += initStackPointer;
     moonOutput += newLine;
 }
@@ -15,12 +22,13 @@ void CodeWriter::finish() {
 }
 
 void CodeWriter::comment(std::string _comment) {
-    moonOutput += commentIndent;
+    moonOutput += newLine;
+    moonOutput += tab;
     moonOutput += "% " + _comment;
     moonOutput += newLine;
 }
 
-void CodeWriter::loadWord(const std::string& Ri, int K, const std::string& Rj) {
+void CodeWriter::loadWord(const std::string &Ri, int K, const std::string &Rj) {
     moonOutput += tab;
     moonOutput += loadOp;
     moonOutput += tab;
@@ -31,7 +39,7 @@ void CodeWriter::loadWord(const std::string& Ri, int K, const std::string& Rj) {
     moonOutput += newLine;
 }
 
-void CodeWriter::saveWord(const std::string& Ri, int K, const std::string& Rj) {
+void CodeWriter::saveWord(int K, const std::string &Rj, const std::string &Ri) {
     moonOutput += tab;
     moonOutput += saveOp;
     moonOutput += tab;
@@ -40,4 +48,24 @@ void CodeWriter::saveWord(const std::string& Ri, int K, const std::string& Rj) {
     moonOutput += comma;
     moonOutput += Ri;
     moonOutput += newLine;
+}
+
+void CodeWriter::OP(const std::string &op, const std::string &Ri, const std::string &Rj) {
+    moonOutput += tab;
+    moonOutput += op;
+    moonOutput += tab;
+    moonOutput += Ri;
+    moonOutput += comma;
+    moonOutput += Rj; //this could be subroutine sometimes
+    moonOutput += newLine;
+}
+
+void CodeWriter::OP(const std::string &, const std::string &, const std::string &, const std::string &) {
+
+}
+
+void CodeWriter::write(std::string &fileName) {
+    std::string base = "Moon/Generated/";
+    std::ofstream stream( base + fileName + ".m");
+    stream << moonOutput;
 }
