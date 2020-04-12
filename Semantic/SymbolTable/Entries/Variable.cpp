@@ -17,6 +17,17 @@ Variable::Variable(Enums::Visibility visibility, std::string name, std::string t
     this->size = 0;
 }
 
+Variable::Variable(Enums::Kind kind, std::string type, int value, int tag) {
+    this->kind = kind;
+    this->name = "literal_" + std::to_string(tag);
+    this->visibility = Enums::Visibility::PRIVATE;
+    this->type = std::move(type);
+    this->value = value;
+    this->dimensions = 0;
+    this->offset = 0;
+    this->size = 0;
+}
+
 const int &Variable::getDimensions() const {
     return dimensions;
 }

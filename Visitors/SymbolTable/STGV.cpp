@@ -5,7 +5,7 @@
 #include "STGV.h"
 #include <iostream>
 #include <vector>
-
+static int tag = 0;
 
 STGV::STGV(AST::ASTNode *root) {
     this->symbolTable = new Semantic::SymbolTable();
@@ -132,6 +132,7 @@ void STGV::visit(Local *node) {
 void STGV::visit(MainFunc *node) {
     currentFuncName = "main";
     currentNamespace = std::string();
+    currentFunction = symbolTable->main;
     AST::ASTNode *funcBody = node->getChild(0);
     AST::ASTNode *localVars = funcBody->getChild(0);
     symbolTable->main->setPosition(node->getLineNumber());
@@ -202,12 +203,6 @@ Function *STGV::createTempFunction(AST::ASTNode *node, std::string &funcName, st
     return function;
 }
 
-//Symbol table visitors do not need to implement these functions
-//but they have to have an implementation to make the compiler happy
-
-void STGV::visit(ArrayDim *node) {}
-
-void STGV::visit(AddOp *node) {}
 
 void STGV::visit(AssignOp *node) {
     for(auto &child : node->getChildren()) child->accept(*this);
@@ -219,6 +214,26 @@ void STGV::visit(Calls *node) {
 
 void STGV::visit(Call *node) {
     for(auto &child : node->getChildren()) child->accept(*this);
+}
+
+void STGV::visit(Statements *node) {
+    for(auto &child : node->getChildren()) child->accept(*this);
+}
+
+void STGV::visit(Number *node) {
+//    auto number = node->getChild(0);
+//    std::string type = number->getType() == "intnum" ? "integer" : "float";
+//    Variable *var = new Variable(Enums::Kind::LITERAL, type, std::stoi(number->getName()), tag++);
+//    currentFunction->addVariable(var);
+}
+
+//Symbol table visitors do not need to implement these functions
+//but they have to have an implementation to make the compiler happy
+
+void STGV::visit(ArrayDim *node) {}
+
+void STGV::visit(AddOp *node) {
+    for (auto &child : node->getChildren()) child->accept(*this);
 }
 
 void STGV::visit(CompareOp *node) {}
@@ -235,14 +250,6 @@ void STGV::visit(Return *node) {}
 
 void STGV::visit(Sign *node) {}
 
-void STGV::visit(Statements *node) {
-    for(auto &child : node->getChildren()) child->accept(*this);
-}
-
 void STGV::visit(While *node) {}
 
 void STGV::visit(Write *node) {}
-
-void STGV::visit(Number *node) {
-    std::cout << "Hello" << std::endl;
-}

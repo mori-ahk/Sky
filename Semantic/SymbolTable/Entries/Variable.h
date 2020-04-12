@@ -15,6 +15,8 @@ public:
 
     Variable(Enums::Visibility, std::string, std::string, int, int, std::vector<int>);
 
+    Variable(Enums::Kind, std::string ,int, int);
+
     const std::string &getType() const;
 
     std::string getRawType() const;
@@ -74,6 +76,7 @@ private:
     int position;
     int size;
     int offset;
+    int value;
 
     Enums::Visibility visibility;
     Enums::Kind kind;

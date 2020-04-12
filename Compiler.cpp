@@ -96,8 +96,9 @@ void Compiler::compile() {
     codeGenerator = new CGV(root, symTabGenerator->symbolTable);
     writeMoonOutput();
 
-    system("dot -Tpng TreeContent.gv -o TreeContent.png");
-    std::cout << extractFileName() << std::endl;
+    std::string visualizerCommand = "dot -Tpng TreeContent.gv -o TreeContent.png";
     std::string moonCommand = "Moon/moon Moon/Generated/" + extractFileName() + ".m" + " Moon/util.m";
+
+    system(visualizerCommand.c_str());
     system(moonCommand.c_str());
 }

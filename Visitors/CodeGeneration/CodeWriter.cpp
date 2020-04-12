@@ -28,6 +28,13 @@ void CodeWriter::comment(std::string _comment) {
     moonOutput += newLine;
 }
 
+void CodeWriter::tag(std::string tag) {
+    moonOutput += tag;
+    moonOutput += tab;
+    moonOutput += nop;
+    moonOutput += newLine;
+}
+
 void CodeWriter::loadWord(const std::string &Ri, int K, const std::string &Rj) {
     moonOutput += tab;
     moonOutput += loadOp;
@@ -50,6 +57,14 @@ void CodeWriter::saveWord(int K, const std::string &Rj, const std::string &Ri) {
     moonOutput += newLine;
 }
 
+void CodeWriter::OP(const std::string &op, const std::string &K) {
+    moonOutput += tab;
+    moonOutput += op;
+    moonOutput += tab;
+    moonOutput += K;
+    moonOutput += newLine;
+}
+
 void CodeWriter::OP(const std::string &op, const std::string &Ri, const std::string &Rj) {
     moonOutput += tab;
     moonOutput += op;
@@ -60,8 +75,20 @@ void CodeWriter::OP(const std::string &op, const std::string &Ri, const std::str
     moonOutput += newLine;
 }
 
-void CodeWriter::OP(const std::string &, const std::string &, const std::string &, const std::string &) {
+void CodeWriter::OP(const std::string &op, const std::string &Ri, const std::string &Rj, const std::string &K) {
+    moonOutput += tab;
+    moonOutput += op;
+    moonOutput += tab;
+    moonOutput += Ri;
+    moonOutput += comma;
+    moonOutput += Rj;
+    moonOutput += comma;
+    moonOutput += K; //sometimes this could be offset
+    moonOutput += newLine;
+}
 
+void CodeWriter::line() {
+    moonOutput += newLine;
 }
 
 void CodeWriter::write(std::string &fileName) {

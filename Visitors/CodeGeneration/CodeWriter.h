@@ -17,10 +17,14 @@ public:
     void finish();
     void write(std::string &);
     void comment(std::string);
+    void tag(std::string);
     void loadWord(const std::string&, int, const std::string&);
     void saveWord(int, const std::string&, const std::string&);
+    void OP(const std::string &, const std::string &);
     void OP(const std::string &, const std::string &, const std::string &);
     void OP(const std::string &, const std::string &, const std::string &, const std::string &);
+    void line();
+
 private:
     std::string moonOutput;
     const std::string tab = "\t";
@@ -30,6 +34,7 @@ private:
     const std::string saveOp = "sw ";
     const std::string entry = "entry";
     const std::string halt = "hlt";
+    const std::string nop = "nop";
     const std::string initStackPointer = "addi\tr14,r0,topaddr";
 };
 

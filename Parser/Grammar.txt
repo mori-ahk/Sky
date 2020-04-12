@@ -121,7 +121,7 @@ FACTOR -> @1_#number intnum @2  .
 FACTOR -> @1_#number floatnum @2  .
 FACTOR -> lpar ARITHEXPRESSION rpar  .
 FACTOR -> @1 not @2 FACTOR @2  .
-FACTOR -> @1 @1_#sign SIGN @2 @2 FACTOR @2  .
+FACTOR -> @1_#sign SIGN @2 FACTOR @2  .
 
 VARIABLEFUNCTIONCALL -> @1_#call id @2 VARIABLEORFUNCTIONCALL  .
 

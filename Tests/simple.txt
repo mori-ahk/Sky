@@ -1,7 +1,18 @@
 main
   local
     integer x;
+    integer y;
   do
-    x = 2;
-    write(x);
+    x = 3 * 2;
+    y = 2;
+    if (y > x)
+      then
+        do
+        write(x);
+        end
+    else
+        do
+        write(y);
+        end
+    ;
   end
