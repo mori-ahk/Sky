@@ -202,6 +202,8 @@ void CGV::visit(Write *node) {
         writer->comment("Writing variable " + currentVar->getName());
         writer->loadWord("r1", -4, "r12");
         writer->OP("jl", "r15", "putint");
+        writer->comment("Printing new line");
+        writer->endl();
     }
 }
 

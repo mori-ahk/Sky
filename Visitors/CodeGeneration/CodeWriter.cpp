@@ -87,8 +87,10 @@ void CodeWriter::OP(const std::string &op, const std::string &Ri, const std::str
     moonOutput += newLine;
 }
 
-void CodeWriter::line() {
-    moonOutput += newLine;
+void CodeWriter::endl() {
+    OP("addi", "r1", "r0", std::to_string(10));
+    OP("putc", "R1");
+
 }
 
 void CodeWriter::write(std::string &fileName) {

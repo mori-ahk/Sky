@@ -23,7 +23,7 @@ public:
     void OP(const std::string &, const std::string &);
     void OP(const std::string &, const std::string &, const std::string &);
     void OP(const std::string &, const std::string &, const std::string &, const std::string &);
-    void line();
+    void endl();
 
 private:
     std::string moonOutput;
