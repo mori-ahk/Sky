@@ -15,6 +15,7 @@
 #include "Nodes/FuncDef.h"
 #include "Nodes/FuncBody.h"
 #include "Nodes/FuncCall.h"
+#include "Nodes/FuncCallParams.h"
 #include "Nodes/FuncParams.h"
 #include "Nodes/Local.h"
 #include "Nodes/Program.h"
@@ -34,6 +35,7 @@
 #include "Nodes/Statements.h"
 #include "Nodes/Calls.h"
 #include "Nodes/Call.h"
+#include "Nodes/Number.h"
 
 namespace AST {
     class ASTBuilder {

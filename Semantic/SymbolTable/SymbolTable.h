@@ -23,15 +23,15 @@ namespace Semantic {
 
         void addFunction(std::string &, Function *);
 
-        Function *getFreeFunction(std::string &, Function *);
+        Function *getFreeFunction(const std::string &, Function *) const ;
 
-        std::vector<Function *> getFreeFunction(std::string &);
+        const std::vector<Function *> &getFreeFunction(const std::string &) const;
 
-        Class *getClass(std::string &);
+        Class *getClass(const std::string &);
 
         std::unordered_map<std::string, Class *> classes;
         std::unordered_map<std::string, std::vector<Function *> > freeFunctions;
-        Function *main = new Function(Visibility::PUBLIC, "main", "void", {}, {}, 0);
+        Function *main = new Function(Enums::Visibility::PUBLIC, "main", "void", {}, {}, 0);
     };
 }
 

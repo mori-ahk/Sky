@@ -18,39 +18,57 @@ public:
 
     ~Class() = default;
 
-    std::string &getName();
+    const std::string &getName() const;
 
-    std::string &getType();
+    const std::string &getType() const;
 
-    std::vector<std::string> &getInherits();
+    const std::vector<std::string> &getInherits() const;
 
-    std::unordered_map<std::string, std::vector<Function *> > &getFunctions();
+    const std::unordered_map<std::string, std::vector<Function *> > &getFunctions() const;
 
-    std::unordered_map<std::string, Variable *> &getVariables();
+    const std::unordered_map<std::string, Variable *> &getVariables() const;
+
+    int getOffset() const;
+
+    void setOffset(int offset);
+
+    int getSize() const;
+
+    void setSize(int size);
+
+    int getVariableOffset() const;
 
     std::vector<std::string> findShadowMembers(Class &);
 
-    Function *getFunction(std::string &, Function *);
+    Function *getFunction(const std::string &, Function *) const;
 
-    Variable *getVariable(std::string &);
+    const Variable *getVariable(std::string &) const;
 
-    void addVariable(std::string &, Variable *);
+    void addVariable(const std::string &, Variable *);
 
     void addFunction(std::string &, Function *);
 
     friend std::ostream &operator<<(std::ostream &, Class &);
 
-    inline void setPosition(int _position) { this->position = _position; }
+    inline void addOffset(int _size) { offset += _size; }
 
-    inline int getPosition() { return position; }
+    inline void addSize(int _size) {
+        sizes.push_back(_size);
+        size += _size;
+    }
+
+    bool isMemSizeAlreadyCalculated = false;
 
 private:
     std::string name;
     std::string type;
     std::vector<std::string> inherits;
+    std::vector<int> sizes;
     std::unordered_map<std::string, std::vector<Function *> > functions;
     std::unordered_map<std::string, Variable *> variables;
     int position;
+    int offset;
+    int size;
 };
 
 

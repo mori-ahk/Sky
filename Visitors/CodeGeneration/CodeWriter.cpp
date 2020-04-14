@@ -1,0 +1,109 @@
+//
+// Created by Morteza Ahmadi on 2020-04-10.
+//
+
+#include "CodeWriter.h"
+
+void CodeWriter::start() {
+    moonOutput += entry;
+    moonOutput += newLine;
+    moonOutput += tab;
+    moonOutput += initStackPointer;
+    moonOutput += newLine;
+}
+
+void CodeWriter::finish() {
+    tag("main_end");
+    moonOutput += halt;
+    moonOutput += newLine;
+}
+
+void CodeWriter::comment(const std::string &_comment) {
+    moonOutput += newLine;
+    moonOutput += tab;
+    moonOutput += "% " + _comment;
+    moonOutput += newLine;
+}
+
+void CodeWriter::tag(const std::string &tag, bool isForEnd) {
+    moonOutput += tag;
+    moonOutput += tab;
+    moonOutput += nop;
+    moonOutput += newLine;
+}
+
+void CodeWriter::loadWord(const std::string &Ri, int K, const std::string &Rj) {
+    moonOutput += tab;
+    moonOutput += loadOp;
+    moonOutput += tab;
+    moonOutput += Ri;
+    moonOutput += comma;
+    moonOutput += std::to_string(K);
+    moonOutput += "(" + Rj + ")";
+    moonOutput += newLine;
+}
+
+void CodeWriter::saveWord(int K, const std::string &Rj, const std::string &Ri) {
+    moonOutput += tab;
+    moonOutput += saveOp;
+    moonOutput += tab;
+    moonOutput += std::to_string(K);
+    moonOutput += "(" + Rj + ")";
+    moonOutput += comma;
+    moonOutput += Ri;
+    moonOutput += newLine;
+}
+
+void CodeWriter::OP(const std::string &op, const std::string &K) {
+    moonOutput += tab;
+    moonOutput += op;
+    moonOutput += tab;
+    moonOutput += K;
+    moonOutput += newLine;
+}
+
+void CodeWriter::OP(const std::string &op, const std::string &Ri, const std::string &Rj) {
+    moonOutput += tab;
+    moonOutput += op;
+    moonOutput += tab;
+    moonOutput += Ri;
+    moonOutput += comma;
+    moonOutput += Rj; //this could be subroutine sometimes
+    moonOutput += newLine;
+}
+
+void CodeWriter::OP(const std::string &op, const std::string &Ri, const std::string &Rj, const std::string &K) {
+    moonOutput += tab;
+    moonOutput += op;
+    moonOutput += tab;
+    moonOutput += Ri;
+    moonOutput += comma;
+    moonOutput += Rj;
+    moonOutput += comma;
+    moonOutput += K; //sometimes this could be offset
+    moonOutput += newLine;
+}
+
+void CodeWriter::endl() {
+    OP("addi", "r1", "r0", std::to_string(10));
+    OP("putc", "R1");
+
+}
+
+void CodeWriter::write(std::string &fileName) {
+    std::string base = "Moon/Generated/";
+    std::ofstream stream( base + fileName + ".m");
+    stream << moonOutput;
+}
+
+std::string CodeWriter::generateTag(const std::string & _tag, bool isForEnd) {
+    if (tags.find(_tag) != tags.end()) {
+        tags.at(_tag)++;
+        std::string toReturn = _tag + "_" + std::to_string(tags.at(_tag));
+        if (isForEnd) toReturn += "_end";
+        return toReturn;
+    } else {
+        tags[_tag] = 1;
+        return _tag;
+    }
+}

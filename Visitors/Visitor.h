@@ -30,6 +30,8 @@ public:
 
     virtual void visit(FuncCall *node) = 0;
 
+    virtual void visit(FuncCallParams *node) = 0;
+
     virtual void visit(FuncDef *node) = 0;
 
     virtual void visit(FuncDecl *node) = 0;
@@ -43,6 +45,8 @@ public:
     virtual void visit(MainFunc *node) = 0;
 
     virtual void visit(MultOp *node) = 0;
+
+    virtual void visit(Number *node) = 0;
 
     virtual void visit(Program *node) = 0;
 
@@ -61,7 +65,6 @@ public:
     virtual void visit(Write *node) = 0;
 
     virtual void visit(AST::ASTNode *node) = 0;
-
 
     virtual ~Visitor() = default;
 };

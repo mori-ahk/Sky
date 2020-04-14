@@ -7,7 +7,7 @@
 #include <utility>
 #include "../../Error/Error.h"
 
-Function::Function(Visibility visibility, std::string name, std::string returnType, std::vector<Variable *> params,
+Function::Function(Enums::Visibility visibility, std::string name, std::string returnType, std::vector<Variable *> params,
                    std::vector<Variable *> localVars, int position) {
     this->visibility = visibility;
     this->name = std::move(name);
@@ -16,37 +16,39 @@ Function::Function(Visibility visibility, std::string name, std::string returnTy
     this->localVars = std::move(localVars);
     this->position = position;
     this->isDefined = false;
+    this->offset = 0;
+    this->size = 0;
 }
 
-std::string &Function::getName() {
+const std::string &Function::getName() const {
     return name;
 }
 
-std::string &Function::getReturnType() {
+const std::string &Function::getReturnType() const {
     return returnType;
 }
 
-std::string Function::getVisibilityString() {
-    if (getVisibility() == Visibility::PUBLIC) return "public";
+std::string Function::getVisibilityString() const {
+    if (getVisibility() == Enums::Visibility::PUBLIC) return "public";
     else return "private";
 }
 
-std::vector<Variable *> &Function::getParams() {
+const std::vector<Variable *> &Function::getParams() const {
     return params;
 }
 
-std::vector<Variable *> &Function::getLocalVars() {
+const std::vector<Variable *> &Function::getLocalVars() const {
     return localVars;
 }
 
-Variable *Function::getVariable(std::string &varName) {
+Variable *Function::getVariable(std::string &varName) const {
     for (const auto& var : localVars) {
         if (var->getName() == varName) return var;
     }
     throw Semantic::Err::UndeclaredLocalVariable(varName);
 }
 
-Visibility Function::getVisibility() {
+Enums::Visibility Function::getVisibility() const {
     return visibility;
 }
 
@@ -72,8 +74,8 @@ std::ostream &operator<<(std::ostream &os, Function &f) {
     os << "FUNCTION:\n";
     os << "\t[ " << "visibility: " << visibility << " | name: " << f.getName() << " | returns: " << f.getReturnType()
        << " ]" << std::endl;
+    os << "\t\tVARIABLE(S): \n";
     for (auto &var : f.getLocalVars()) {
-        os << "\t\tVARIABLE\n";
         os << "\t\t" << *var;
     }
     return os;
@@ -91,3 +93,33 @@ bool Function::isParamsEqual(Function &lhs, Function &rhs) {
     return true;
 }
 
+int Function::getOffset() const {
+    return offset;
+}
+
+void Function::setOffset(int _offset) {
+    Function::offset = _offset;
+}
+
+int Function::getSize() const {
+    return size;
+}
+
+void Function::setSize(int size) {
+    Function::size = size;
+}
+
+int Function::getVariableOffset() const {
+    if (sizes.size() == 1) return 0;
+    int toReturn = 0;
+    for (int i = 0; i < sizes.size() - 1; i++) toReturn += sizes.at(i);
+    return toReturn;
+}
+
+const std::string &Function::getTag() const {
+    return tag;
+}
+
+void Function::setTag(const std::string &tag) {
+    Function::tag = tag;
+}

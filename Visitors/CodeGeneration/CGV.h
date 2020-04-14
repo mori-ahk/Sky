@@ -1,18 +1,20 @@
 //
-// Created by Morteza Ahmadi on 2020-03-08.
+// Created by Morteza Ahmadi on 2020-04-10.
 //
 
-#ifndef SKY_STGV_H
-#define SKY_STGV_H
-
+#ifndef SKY_CGV_H
+#define SKY_CGV_H
 
 #include "../Visitor.h"
 #include "../../Semantic/SymbolTable/SymbolTable.h"
-#include "../../Semantic/Error/Detector.h"
+#include "../SymbolTable/STGV.h"
+#include "CodeWriter.h"
+#include "../TypeChecking/TCV.h"
 
-class STGV : public Visitor {
+class CGV : public Visitor {
 public:
-    explicit STGV(AST::ASTNode *root);
+
+    CGV(AST::ASTNode *, Semantic::SymbolTable *);
 
     void visit(AddOp *node) override;
 
@@ -70,24 +72,26 @@ public:
 
     void visit(AST::ASTNode *node) override;
 
-    static Function *createTempFunction(AST::ASTNode *, std::string &, std::string &, Semantic::Detector *);
+    void write(std::string &);
 
-    static Variable *createVar(AST::ASTNode *);
-
-    inline std::vector<std::string> getErrors() { return detector->getErrors(); }
-
-    inline std::vector<std::string> getWarnings() { return detector->getWarnings(); }
-
-    Semantic::SymbolTable *symbolTable;
-
+    Variable *getLiteralVariableWithTag();
 private:
+    Semantic::SymbolTable *symbolTable;
+    std::string output;
+    std::string currentNamespace;
+    std::string currentFuncName;
 
-    Semantic::Detector *detector;
+    Variable *currentVar;
+    Variable *currentLiteralVar;
     Function *currentFunction;
 
-    std::string currentFuncName;
-    std::string currentNamespace;
+    CodeWriter *writer;
+    int currentNumber;
+
+    void visitNodesAndUpdateFramePointer(AST::ASTNode *, bool);
+    static std::string generateTag(const std::string&);
+
 };
 
 
-#endif //SKY_STGV_H
+#endif //SKY_CGV_H

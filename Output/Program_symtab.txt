@@ -1,0 +1,52 @@
+CLASS:
+[ name: POLYNOMIAL | inherits:  | type: POLYNOMIAL | scope offset: 4 ]
+	FUNCTION:
+	[ visibility: public | name: evaluate | returns: float ]
+		VARIABLE(S): 
+		[ visibility: private | name: x | type: float | dimensions: 0 | offset: 0 | size: 4 ]
+
+	VARIABLE(S): 
+	[ visibility: private | name: b | type: float[] | dimensions: 1 | offset: 0 | size: 4 ]
+
+CLASS:
+[ name: LINEAR | inherits: POLYNOMIAL | type: LINEAR | scope offset: 12 ]
+	FUNCTION:
+	[ visibility: public | name: evaluate | returns: float ]
+		VARIABLE(S): 
+		[ visibility: private | name: x | type: float | dimensions: 0 | offset: 0 | size: 4 ]
+		[ visibility: private | name: a | type: integer | dimensions: 0 | offset: 4 | size: 4 ]
+
+	FUNCTION:
+	[ visibility: public | name: build | returns: LINEAR ]
+		VARIABLE(S): 
+		[ visibility: private | name: A | type: float | dimensions: 0 | offset: 0 | size: 4 ]
+		[ visibility: private | name: B | type: float | dimensions: 0 | offset: 4 | size: 4 ]
+
+	VARIABLE(S): 
+	[ visibility: private | name: b | type: float | dimensions: 0 | offset: 4 | size: 4 ]
+	[ visibility: private | name: a | type: float[][] | dimensions: 2 | offset: 8 | size: 4 ]
+
+FUNCTION:
+	[ visibility: public | name: printArray | returns: void ]
+		VARIABLE(S): 
+		[ visibility: private | name: arr | type: integer[] | dimensions: 1 | offset: 0 | size: 4 ]
+		[ visibility: private | name: size | type: integer | dimensions: 0 | offset: 4 | size: 4 ]
+		[ visibility: private | name: a | type: integer | dimensions: 0 | offset: 8 | size: 4 ]
+		[ visibility: private | name: i | type: integer | dimensions: 0 | offset: 12 | size: 4 ]
+
+FUNCTION:
+	[ visibility: public | name: bubbleSort | returns: void ]
+		VARIABLE(S): 
+		[ visibility: private | name: arr | type: integer | dimensions: 0 | offset: 0 | size: 4 ]
+		[ visibility: private | name: size | type: integer | dimensions: 0 | offset: 4 | size: 4 ]
+		[ visibility: private | name: n | type: integer | dimensions: 0 | offset: 8 | size: 4 ]
+		[ visibility: private | name: i | type: integer | dimensions: 0 | offset: 12 | size: 4 ]
+		[ visibility: private | name: j | type: integer | dimensions: 0 | offset: 16 | size: 4 ]
+		[ visibility: private | name: temp | type: integer | dimensions: 0 | offset: 20 | size: 4 ]
+
+FUNCTION:
+	[ visibility: public | name: main | returns: void ]
+		VARIABLE(S): 
+		[ visibility: private | name: arr | type: integer[][] | dimensions: 2 | offset: 0 | size: 196 ]
+		[ visibility: private | name: x | type: integer | dimensions: 0 | offset: 196 | size: 4 ]
+

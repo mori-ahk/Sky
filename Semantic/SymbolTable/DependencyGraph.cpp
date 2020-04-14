@@ -8,7 +8,7 @@
 void DependencyGraph::build(Semantic::SymbolTable *symbolTable) {
     for (const auto &_class : symbolTable->classes) {
         auto node = new DependencyNode(_class.first);
-        for (std::string &inherit : _class.second->getInherits()) {
+        for (const std::string &inherit : _class.second->getInherits()) {
             try {
                 symbolTable->getClass(inherit);
                 node->addToList(inherit);
@@ -16,8 +16,8 @@ void DependencyGraph::build(Semantic::SymbolTable *symbolTable) {
             catch (Semantic::Err::UndeclaredClass &undeclaredClass) { throw; }
         }
         for (const auto &_variable : _class.second->getVariables()) {
-            std::string localVarType = _variable.second->getType();
-            if (localVarType != "float" && localVarType != "integer" && localVarType != "integer[][]" && localVarType != "float[][]" && localVarType != "integer[]" && localVarType != "float[]") {
+            std::string localVarType = _variable.second->getRawType();
+            if (Variable::isTypeId(localVarType)) {
                 try {
                     symbolTable->getClass(localVarType);
                     node->addToList(localVarType);
@@ -45,5 +45,5 @@ DependencyGraph::dfs(std::string &className, StringSet visiting, StringSet visit
             if (!pair.first.empty() && !pair.second.empty()) return pair;
         }
     }
-    return std::make_pair("", "");
+    return std::make_pair(std::string(), std::string());
 }

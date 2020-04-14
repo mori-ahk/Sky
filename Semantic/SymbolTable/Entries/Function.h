@@ -8,28 +8,38 @@
 
 #include <vector>
 #include "Variable.h"
-#include "Visibility.h"
+#include "Enums.h"
 #include <iostream>
 
 class Function {
 public:
 
-    Function(Visibility , std::string, std::string, std::vector<Variable *>,
+    Function(Enums::Visibility , std::string, std::string, std::vector<Variable *>,
              std::vector<Variable *>, int);
 
-    std::vector<Variable *> &getParams();
+    const std::vector<Variable *> &getParams() const ;
 
-    std::vector<Variable *> &getLocalVars();
+    const std::vector<Variable *> &getLocalVars() const;
 
-    Variable *getVariable(std::string &);
+    Variable *getVariable(std::string &) const;
 
-    std::string &getName();
+    const std::string &getName() const;
 
-    std::string &getReturnType();
+    const std::string &getReturnType() const;
 
-    std::string getVisibilityString();
+    int getOffset() const;
 
-    Visibility getVisibility();
+    void setOffset(int offset);
+
+    int getSize() const;
+
+    void setSize(int size);
+
+    int getVariableOffset() const;
+
+    std::string getVisibilityString() const;
+
+    Enums::Visibility getVisibility() const;
 
     void addParam(Variable *);
 
@@ -55,16 +65,31 @@ public:
 
     inline int getPosition() { return position; }
 
-    inline bool isPrivate() { return visibility == Visibility::PRIVATE; }
+    inline bool isPrivate() { return visibility == Enums::Visibility::PRIVATE; }
 
-    private:
+    inline void addOffset(int _size) { offset += _size; }
+
+    inline void addSize(int _size) {
+        sizes.push_back(_size);
+        size += _size;
+    }
+
+    const std::string &getTag() const;
+
+    void setTag(const std::string &tag);
+
+private:
 
     std::vector<Variable *> params;
     std::vector<Variable *> localVars;
+    std::vector<int> sizes;
     std::string name;
     std::string returnType;
-    Visibility visibility;
+    std::string tag;
+    Enums::Visibility visibility;
     int position;
+    int offset;
+    int size;
 };
 
 

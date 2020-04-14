@@ -12,44 +12,46 @@ Class::Class(std::string name, std::string type, std::vector<std::string> inheri
     this->type = std::move(type);
     this->inherits = std::move(inherits);
     this->position = position;
+    this->offset = 0;
+    this->size = 0;
 }
 
-std::string &Class::getName() {
+const std::string &Class::getName() const {
     return name;
 }
 
-std::string &Class::getType() {
+const std::string &Class::getType() const {
     return type;
 }
 
-std::vector<std::string> &Class::getInherits() {
+const std::vector<std::string> &Class::getInherits() const {
     return inherits;
 }
 
-std::unordered_map<std::string, std::vector<Function *> > &Class::getFunctions() {
+const std::unordered_map<std::string, std::vector<Function *> > &Class::getFunctions() const {
     return functions;
 }
 
-std::unordered_map<std::string, Variable *> &Class::getVariables() {
+const std::unordered_map<std::string, Variable *> &Class::getVariables() const {
     return variables;
 }
 
-Function *Class::getFunction(std::string &funcName, Function *function) {
+Function *Class::getFunction(const std::string &funcName, Function *function) const {
     if (functions.find(funcName) == functions.end())
         throw Semantic::Err::UndeclaredFunction(funcName, function->getPosition());
-    for (auto &f : functions[funcName]) {
+    for (auto &f : functions.at(funcName)) {
         if (*f == *function) return f;
     }
     throw Semantic::Err::UndeclaredFunction(funcName, function->getPosition());
 }
 
-Variable *Class::getVariable(std::string &varName) {
+const Variable *Class::getVariable(std::string &varName) const {
     if (variables.find(varName) == variables.end())
         throw Semantic::Err::UndeclaredClassVariable(varName);
     return variables.at(varName);
 }
 
-void Class::addVariable(std::string &varName, Variable *variable) {
+void Class::addVariable(const std::string &varName, Variable *variable) {
     if (variables.find(varName) != variables.end())
         throw Semantic::Err::DuplicateDataMember(varName, variable->getPosition());
 
@@ -100,17 +102,40 @@ std::ostream &operator<<(std::ostream &os, Class &c) {
     }
     if (!inherits.empty()) inherits.pop_back();
     os << "CLASS:\n";
-    os << "[ " << "name: " << c.getName() << " | inherits: " << inherits << " | type: " << c.getType() << " ]"
+    os << "[ " << "name: " << c.getName() << " | inherits: " << inherits << " | type: " << c.getType() << " | scope offset: " << c.getOffset() << " ]"
        << std::endl;
     for (auto &f : c.getFunctions()) {
         for (auto &_f : f.second)
             os << "\t" << *(_f) << std::endl;
     }
 
+    os << "\tVARIABLE(S): \n";
     for (auto &v: c.getVariables()) {
-        os << "\tVARIABLE\n";
-        os << "\t" << *(v.second) << std::endl;
+        os << "\t" << *(v.second);
     }
 
     return os;
+}
+
+int Class::getOffset() const {
+    return offset;
+}
+
+void Class::setOffset(int _offset) {
+    Class::offset = _offset;
+}
+
+int Class::getSize() const {
+    return size;
+}
+
+void Class::setSize(int size) {
+    Class::size = size;
+}
+
+int Class::getVariableOffset() const {
+    if (sizes.size() == 1) return 0;
+    int toReturn = 0;
+    for (int i = 0; i < sizes.size() - 1; i++) toReturn += sizes.at(i);
+    return toReturn;
 }

@@ -7,25 +7,33 @@
 
 #include <string>
 #include <vector>
-#include "Visibility.h"
+#include "Enums.h"
 #include <iostream>
 
 class Variable {
 public:
 
-    Variable(Visibility, std::string, std::string, int, int);
+    Variable(Enums::Visibility, std::string, std::string, int, int, std::vector<int>);
 
-    std::string &getType();
+    Variable(Enums::Kind, std::string ,int, int);
 
-    std::string getRawType();
+    const std::string &getType() const;
 
-    int &getDimensions();
+    std::string getRawType() const;
 
-    std::string &getName();
+    const int &getDimensions() const;
 
-    std::string getVisibilityString();
+    const std::vector<int> &getArraySize() const;
 
-    Visibility getVisibility();
+    const std::string &getName() const;
+
+    std::string getVisibilityString() const;
+
+    std::string getKindString() const;
+
+    Enums::Visibility getVisibility() const;
+
+    Enums::Kind getKind() const;
 
     friend std::ostream &operator<<(std::ostream &, Variable &);
 
@@ -38,17 +46,41 @@ public:
 
     inline void setPosition(int _position) { this->position = _position; }
 
-    inline int getPosition() { return position; }
+    inline void setKind(Enums::Kind _kind) { this->kind = _kind; }
 
-    inline bool isArray() { return dimensions != 0; }
+    inline int getPosition() const { return position; }
+
+    inline bool isArray() const { return dimensions != 0; }
+
+    inline bool isPrivate() const { return visibility == Enums::Visibility::PRIVATE; }
+
+    inline bool isTypeId() { return getRawType() != "integer" && getRawType() != "float"; }
+
+    static inline bool isTypeId(const std::string &type) { return type != "integer" && type != "float"; }
+
+    int getSize() const;
+
+    void setSize(int);
+
+    int getOffset() const;
+
+    void setOffset(int offset);
 
 private:
 
+    std::vector<int> arraySize;
     std::string type;
     std::string name;
+
     int dimensions;
-    Visibility visibility;
     int position;
+    int size;
+    int offset;
+    int value;
+
+    Enums::Visibility visibility;
+    Enums::Kind kind;
+
 };
 
 

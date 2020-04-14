@@ -9,6 +9,7 @@
 #include "Parser/Parser.h"
 #include "Visitors/SymbolTable/STGV.h"
 #include "Visitors/TypeChecking/TCV.h"
+#include "Visitors/CodeGeneration/CGV.h"
 
 class Compiler {
 public:
@@ -23,12 +24,14 @@ private:
     Syntax::Parser *parser;
     STGV *symTabGenerator;
     TCV *typeChecker;
+    CGV *codeGenerator;
     std::string filePath;
 
     void writeSymTab();
     void writeSymTabErrors(const std::vector<std::string> &errors);
     void writeSymTabWarnings(const std::vector<std::string> &warnings);
     void writeTypeCheckingErrors(const std::vector<std::string> &errors);
+    void writeMoonOutput();
 
     std::string extractFileName();
 };

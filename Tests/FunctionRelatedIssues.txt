@@ -48,7 +48,7 @@ A::see() : void
 A::tick() : integer
     do
         //Please comment this to see `Expected return type` error
-        return(1);
+        return(1.0);
     end
 
 
@@ -67,17 +67,17 @@ main
         integer f;
     do
         //Please uncomment this to see `use of private member function` error
-        // a.hello();
+        a.hello();
 
         //Please uncomment this to see `no matching function` error
-        // a.hey(1.0);
+        a.hey(1.0);
 
         //Please uncomment this to see `use of undeclared local variable` error
-        // b.hello();
+        b.hello();
 
-        // a.getB().foo();
+        a.getB().foo();
 
-        // f = a.getB().man();
+        f = a.getB().man();
     end
 
 

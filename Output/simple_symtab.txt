@@ -1,0 +1,22 @@
+FUNCTION:
+	[ visibility: public | name: print | returns: integer ]
+		VARIABLE(S): 
+		[ visibility: private | name: x | type: integer | dimensions: 0 | offset: 0 | size: 4 ]
+		[ visibility: private | name: y | type: integer | dimensions: 0 | offset: 4 | size: 4 ]
+
+FUNCTION:
+	[ visibility: public | name: add | returns: integer ]
+		VARIABLE(S): 
+		[ visibility: private | name: x | type: integer | dimensions: 0 | offset: 0 | size: 4 ]
+
+FUNCTION:
+	[ visibility: public | name: factorial | returns: integer ]
+		VARIABLE(S): 
+		[ visibility: private | name: x | type: integer | dimensions: 0 | offset: 0 | size: 4 ]
+
+FUNCTION:
+	[ visibility: public | name: main | returns: void ]
+		VARIABLE(S): 
+		[ visibility: private | name: x | type: integer | dimensions: 0 | offset: 0 | size: 4 ]
+		[ visibility: private | name: y | type: integer | dimensions: 0 | offset: 4 | size: 4 ]
+

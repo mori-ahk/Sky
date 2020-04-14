@@ -34,6 +34,8 @@ public:
 
     void visit(FuncCall *node) override;
 
+    void visit(FuncCallParams *node) override;
+
     void visit(FuncDef *node) override;
 
     void visit(FuncDecl *node) override;
@@ -47,6 +49,8 @@ public:
     void visit(MainFunc *node) override;
 
     void visit(MultOp *node) override;
+
+    void visit(Number *node) override;
 
     void visit(Program *node) override;
 
@@ -68,12 +72,12 @@ public:
 
     inline std::vector<std::string> getErrors() { return detector->getErrors(); }
 
+    static bool isFuncCall(AST::ASTNode *);
+
 private:
-    static bool isMatchType(std::string &, std::string &);
+    static bool isMatchType(const std::string &, const std::string &);
 
     static bool isCalledOnObject(AST::ASTNode *);
-
-    static bool isFuncCall(AST::ASTNode *);
 
     static bool isCalledOnFunction(AST::ASTNode *);
 
@@ -87,20 +91,20 @@ private:
 
     void checkIfClassVariableCalledWithRightAccess(std::string &, AST::ASTNode *);
 
-    void checkIfArrayCalledWithRightDimensions(Variable *, std::string &, AST::ASTNode *);
+    void checkIfArrayCalledWithRightDimensions(const Variable *, std::string &, AST::ASTNode *);
 
     void handleChainCalls(std::string &, AST::ASTNode *);
 
+    Semantic::SymbolTable *symbolTable;
     STGV *stgv;
-    Function *tempFunction;
+    Function *currentFunction;
 
-    Function *getRightFunction(const std::vector<Function *>&, AST::ASTNode *);
+    Function *getRightFunction(const std::vector<Function *> &, AST::ASTNode *);
 
-    Variable *getAvailableVar(std::string &);
+    const Variable *getAvailableVar(std::string &) const;
 
     Semantic::Detector *detector;
 
-    bool isGoodToGo = true;
     bool shouldReturn = false;
     bool didReturn = false;
     std::string returnType;
