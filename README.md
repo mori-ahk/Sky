@@ -51,5 +51,36 @@ entry. the symbol table is built by visitor pattern in Symbol table generator vi
  pattern to call a specific function on a custom node type.
  
  
+## Code Generation
+Here is the list of features that the compiler can generate code for:
 
- 
+    - Memory allocation for basic types (integer only)
+    - Functions (except member functions)
+    - Statements
+    - Expressions (only involving integer)
+    - Recursive functions
+    
+### How does it work?
+Code generation for Sky compiler works as stack based. 
+There are three special purpose registers that are used throughout
+the code generation phase: 
+
+    - `r14` which holds the value of stack pointer
+    - `r12` which holds the value of frame pointer
+    - `r15` which holds the value of PC(Program Counter) in case jump op is required
+The idea of frame pointer was inspired by [this](http://www.cs.uwm.edu/classes/cs315/Bacon/Lecture/HTML/ch10s07.html) link.
+
+In Sky compiler, the first `4` bytes above frame pointer is the address of just-read variable
+and the second `4` bytes above the frame pointer is the value of just-read variable, which both
+the address and the value is saved in temporary registers of `r1` and `r2`.
+
+#### Code generation for function definition
+First we save the values of the special registers right before 
+code generation for a function definition. Frame pointer is moved `12`
+bytes up (`3` registers each `4` bytes = `12` bytes) and stack pointer 
+will be set to the frame pointer in order to write the function local vars 
+from that point on. It is important to know that the compiler also generates tag 
+for the moon processor in order to use jump link op in case of a function call.
+When the end of function is reached, all the values of special 
+registers will be set back the their values before the function definition.
+and whenever the function is called, its return value can be read by the caller from `r13` 
