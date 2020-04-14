@@ -1,0 +1,25 @@
+main
+    local
+        integer x;
+        integer y;
+    do
+        x = 2;
+        y = 1;
+        
+        if (x > 4)
+        then write(x);
+        else
+            do
+                if ( y < 2)
+                then write(y);
+                else;
+            end
+        ;
+        
+        x = 4;
+        while ( x >= 0 )
+            do
+                write(x);
+                x = x - 1;
+            end;
+    end

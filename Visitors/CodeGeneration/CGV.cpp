@@ -87,8 +87,8 @@ void CGV::visit(CompareOp *node) {
     else if (compareNodeSymbol == "<>") writer->OP("cne", "r1", "r1", "r2");
     else if (compareNodeSymbol == "<=") writer->OP("cle", "r1", "r1", "r2");
     else if (compareNodeSymbol == ">=") writer->OP("cge", "r1", "r1", "r2");
-    else if (compareNodeSymbol == ">") writer->OP("clt", "r1", "r1", "r2");
-    else writer->OP("cgt", "r1", "r1", "r2");
+    else if (compareNodeSymbol == ">") writer->OP("cgt", "r1", "r1", "r2");
+    else writer->OP("clt", "r1", "r1", "r2");
     writer->saveWord(-4, "r12", "r1");
 }
 
@@ -231,7 +231,11 @@ void CGV::visit(Return *node) {
 }
 
 void CGV::visit(Sign *node) {
-
+    node->getChild(1)->accept(*this);
+    writer->comment("Loading the number and multiply it by -1");
+    writer->loadWord("r1", -4, "r12");
+    writer->OP("muli", "r1", "r1", std::to_string(-1));
+    writer->saveWord(-4, "r12", "r1");
 }
 
 void CGV::visit(Statements *node) {
@@ -247,7 +251,20 @@ void CGV::visit(VarDecl *node) {
 }
 
 void CGV::visit(While *node) {
+    writer->comment("While loop");
+    std::string whileTag = generateTag("while");
+    writer->tag(whileTag);
+    //calling `cmp` node
+    node->getChild(0)->accept(*this);
 
+    writer->comment("check condition value");
+    //if r1 is zero (condition is false), the program will jump to end of while loop
+    writer->OP("bz", "r1", whileTag + "_end");
+
+    //calling `statement block` node
+    node->getChild(1)->accept(*this);
+    writer->OP("j", whileTag);
+    writer->tag(whileTag + "_end");
 }
 
 void CGV::visit(Write *node) {

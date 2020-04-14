@@ -1,0 +1,10 @@
+main
+  local
+    integer x;
+    integer y;
+  do
+    read(x);
+    read(y);
+    write(x);
+    write(y);
+  end

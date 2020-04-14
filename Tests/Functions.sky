@@ -1,0 +1,32 @@
+add(integer x) : integer
+    do
+        return (x + 2);
+    end
+
+fibonacci(integer a) : integer
+    do
+        if (a == 0)
+        then return(a);
+        else
+            do
+                if (a == 1)
+                then return(a);
+                else
+                    do
+                        return(fibonacci(a - 1) + fibonacci(a - 2));
+                    end
+                ;
+            end
+        ;
+    end
+
+main
+    local
+        integer a;
+    do
+        a = fibonacci(8);
+        write(a);
+
+        a = add(add(add(2)));
+        write(a);
+    end

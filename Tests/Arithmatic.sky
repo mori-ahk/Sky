@@ -1,0 +1,15 @@
+main
+    local
+        integer x;
+        integer y;
+        integer z;
+    do
+        x = 2;
+        y = -4;
+        z = x + y;
+        write(z);
+        write(z * z);
+        write(z / z);
+        write(x * y);
+
+    end

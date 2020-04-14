@@ -93,6 +93,8 @@ void Compiler::compile() {
     typeChecker = new TCV(root, symTabGenerator);
     writeTypeCheckingErrors(typeChecker->getErrors());
 
+    if (!typeChecker->getErrors().empty()) return;
+
     codeGenerator = new CGV(root, symTabGenerator->symbolTable);
     writeMoonOutput();
 
