@@ -8,9 +8,9 @@ The lexer for Sky is written in C++ using regex matching, and it works as follow
 -  Once `Tokenizer` finished its jobs. it stores all the `matchedToken` in `totalMatches`  and `errorToken`  in `totalErrors` list whose contents will be written to output files with `_lex_tokens.txt` and `_lex_errors.txt` name format.
     
 ### Lexer
-- Id tokens are matched against `^(([a-z]|[A-Z])+([1-9][0-9]*|_)*)` which could be translated to first match of  `letter | number starting with 1 | _` . You can find examples for valid and invalid Id token in `Tests/Id.txt` text file.
-- Integer tokens are matched against `^([1-9][0-9]*|0)` which can be written as `numbers starting with 1 | 0`. You can find examples for valid and invalid Id token in `Tests/Numbers.txt` text file.
-- Float tokens are matched against `^([0-9]*\\.[0-9]+[e]?[+-]?[0-9]+)` which accepts `nullable number following by . follwing by optional e and number`. You can find examples for valid and invalid Id token in `Tests/Numbers.txt` text file.
+- Id tokens are matched against `^(([a-z]|[A-Z])+([1-9][0-9]*|_)*)` which could be translated to first match of  `letter | number starting with 1 | _` .
+- Integer tokens are matched against `^([1-9][0-9]*|0)` which can be written as `numbers starting with 1 | 0`.
+- Float tokens are matched against `^([0-9]*\\.[0-9]+[e]?[+-]?[0-9]+)` which accepts `nullable number following by . follwing by optional e and number`.
 - The rest of the reserved keyword tokens is matched with the hard coded regex expression. The string value of a reserved keyword will be retrieved from `RESERVED_WORDS` map once they have been matched by the tokenizer.
     
 ## Parser Actions
