@@ -23,7 +23,7 @@ namespace Semantic {
 
         void addFunction(std::string &, Function *);
 
-        const Function *getFreeFunction(const std::string &, Function *) const ;
+        Function *getFreeFunction(const std::string &, Function *) const ;
 
         const std::vector<Function *> &getFreeFunction(const std::string &) const;
 

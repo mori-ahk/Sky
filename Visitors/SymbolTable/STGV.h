@@ -34,6 +34,8 @@ public:
 
     void visit(FuncCall *node) override;
 
+    void visit(FuncCallParams *node) override;
+
     void visit(FuncDef *node) override;
 
     void visit(FuncDecl *node) override;
@@ -68,9 +70,9 @@ public:
 
     void visit(AST::ASTNode *node) override;
 
-    Function *createTempFunction(AST::ASTNode *, std::string &, std::string &);
+    static Function *createTempFunction(AST::ASTNode *, std::string &, std::string &, Semantic::Detector *);
 
-    Variable *createVar(AST::ASTNode *);
+    static Variable *createVar(AST::ASTNode *);
 
     inline std::vector<std::string> getErrors() { return detector->getErrors(); }
 

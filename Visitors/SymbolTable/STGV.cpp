@@ -39,7 +39,7 @@ void STGV::visit(FuncDef *node) {
     else currentFuncName = signature->getChild(0)->getName();
 
     std::string returnType = isClassFunc() ? signature->getChild(3)->getName() : signature->getChild(2)->getName();
-    currentFunction = createTempFunction(node, currentFuncName, returnType);
+    currentFunction = createTempFunction(node, currentFuncName, returnType, detector);
 
     //check if the class function signature and defined function signature match.
     if (isClassFunc()) {
@@ -180,7 +180,7 @@ Variable *STGV::createVar(AST::ASTNode *node) {
     return new Variable(visibility, varName, type, dimensions, node->getChild(startIndex)->getLineNumber(), arraySize);
 }
 
-Function *STGV::createTempFunction(AST::ASTNode *node, std::string &funcName, std::string &returnType) {
+Function *STGV::createTempFunction(AST::ASTNode *node, std::string &funcName, std::string &returnType, Semantic::Detector *_detector) {
     AST::ASTNode *signature = node->getChild(0);
     auto isClassFunc = [&signature]() {
         return signature->getChildren().size() == 4;
@@ -197,7 +197,7 @@ Function *STGV::createTempFunction(AST::ASTNode *node, std::string &funcName, st
 
         //throw a semantic error if `variable` is a duplicate param in the `function`
         try { function->addParam(variable); }
-        catch (Semantic::Error &error) { detector->addError(error.what()); }
+        catch (Semantic::Error &error) { _detector->addError(error.what()); }
     }
 
     return function;
@@ -220,12 +220,7 @@ void STGV::visit(Statements *node) {
     for(auto &child : node->getChildren()) child->accept(*this);
 }
 
-void STGV::visit(Number *node) {
-//    auto number = node->getChild(0);
-//    std::string type = number->getType() == "intnum" ? "integer" : "float";
-//    Variable *var = new Variable(Enums::Kind::LITERAL, type, std::stoi(number->getName()), tag++);
-//    currentFunction->addVariable(var);
-}
+void STGV::visit(Number *node) {}
 
 //Symbol table visitors do not need to implement these functions
 //but they have to have an implementation to make the compiler happy
@@ -253,3 +248,7 @@ void STGV::visit(Sign *node) {}
 void STGV::visit(While *node) {}
 
 void STGV::visit(Write *node) {}
+
+void STGV::visit(FuncCallParams *node) {
+
+}

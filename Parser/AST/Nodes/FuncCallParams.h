@@ -5,9 +5,13 @@
 #ifndef SKY_FUNCCALLPARAMS_H
 #define SKY_FUNCCALLPARAMS_H
 
+#include "../ASTNode.h"
 
-class FuncCallParams {
+class FuncCallParams : public AST::ASTNode {
+public:
+    FuncCallParams(std::string name, Token *token) : ASTNode(std::move(name), token) {}
 
+    void accept(Visitor &visitor) override;
 };
 
 

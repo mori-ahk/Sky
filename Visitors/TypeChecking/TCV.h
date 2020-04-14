@@ -34,6 +34,8 @@ public:
 
     void visit(FuncCall *node) override;
 
+    void visit(FuncCallParams *node) override;
+
     void visit(FuncDef *node) override;
 
     void visit(FuncDecl *node) override;
@@ -70,12 +72,12 @@ public:
 
     inline std::vector<std::string> getErrors() { return detector->getErrors(); }
 
+    static bool isFuncCall(AST::ASTNode *);
+
 private:
     static bool isMatchType(const std::string &, const std::string &);
 
     static bool isCalledOnObject(AST::ASTNode *);
-
-    static bool isFuncCall(AST::ASTNode *);
 
     static bool isCalledOnFunction(AST::ASTNode *);
 

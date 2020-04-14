@@ -4,10 +4,6 @@
 
 #include "CodeWriter.h"
 
-CodeWriter::CodeWriter() {
-    start();
-}
-
 void CodeWriter::start() {
     moonOutput += entry;
     moonOutput += newLine;
@@ -17,18 +13,19 @@ void CodeWriter::start() {
 }
 
 void CodeWriter::finish() {
+    tag("main_end");
     moonOutput += halt;
     moonOutput += newLine;
 }
 
-void CodeWriter::comment(std::string _comment) {
+void CodeWriter::comment(const std::string &_comment) {
     moonOutput += newLine;
     moonOutput += tab;
     moonOutput += "% " + _comment;
     moonOutput += newLine;
 }
 
-void CodeWriter::tag(std::string tag) {
+void CodeWriter::tag(const std::string &tag, bool isForEnd) {
     moonOutput += tag;
     moonOutput += tab;
     moonOutput += nop;
@@ -97,4 +94,16 @@ void CodeWriter::write(std::string &fileName) {
     std::string base = "Moon/Generated/";
     std::ofstream stream( base + fileName + ".m");
     stream << moonOutput;
+}
+
+std::string CodeWriter::generateTag(const std::string & _tag, bool isForEnd) {
+    if (tags.find(_tag) != tags.end()) {
+        tags.at(_tag)++;
+        std::string toReturn = _tag + "_" + std::to_string(tags.at(_tag));
+        if (isForEnd) toReturn += "_end";
+        return toReturn;
+    } else {
+        tags[_tag] = 1;
+        return _tag;
+    }
 }

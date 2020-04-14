@@ -30,6 +30,8 @@ public:
 
     virtual void visit(FuncCall *node) = 0;
 
+    virtual void visit(FuncCallParams *node) = 0;
+
     virtual void visit(FuncDef *node) = 0;
 
     virtual void visit(FuncDecl *node) = 0;

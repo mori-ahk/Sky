@@ -35,6 +35,10 @@ namespace AST {
 
         std::string &getType();
 
+        const std::string &getTag() const;
+
+        void setTag(const std::string &tag);
+
         void setParent(ASTNode *);
 
         void addChildToLeft(ASTNode *);
@@ -55,6 +59,7 @@ namespace AST {
         int uniqueID;
         int lineNumber;
         std::string type;
+        std::string tag = std::string();
     };
 }
 

@@ -8,23 +8,23 @@
 
 #include <string>
 #include <fstream>
-
+#include <unordered_map>
 class CodeWriter {
 public:
-    CodeWriter();
+    CodeWriter() = default;
 
     void start();
     void finish();
     void write(std::string &);
-    void comment(std::string);
-    void tag(std::string);
+    void comment(const std::string&);
+    void tag(const std::string&, bool isForEnd = false);
     void loadWord(const std::string&, int, const std::string&);
     void saveWord(int, const std::string&, const std::string&);
     void OP(const std::string &, const std::string &);
     void OP(const std::string &, const std::string &, const std::string &);
     void OP(const std::string &, const std::string &, const std::string &, const std::string &);
     void endl();
-
+    std::string generateTag(const std::string &, bool isForEnd = false);
 private:
     std::string moonOutput;
     const std::string tab = "\t";
@@ -36,6 +36,7 @@ private:
     const std::string halt = "hlt";
     const std::string nop = "nop";
     const std::string initStackPointer = "addi\tr14,r0,topaddr";
+    std::unordered_map<std::string, int> tags;
 };
 
 

@@ -74,13 +74,18 @@ public:
         size += _size;
     }
 
-    private:
+    const std::string &getTag() const;
+
+    void setTag(const std::string &tag);
+
+private:
 
     std::vector<Variable *> params;
     std::vector<Variable *> localVars;
     std::vector<int> sizes;
     std::string name;
     std::string returnType;
+    std::string tag;
     Enums::Visibility visibility;
     int position;
     int offset;

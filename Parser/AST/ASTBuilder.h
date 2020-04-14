@@ -15,6 +15,7 @@
 #include "Nodes/FuncDef.h"
 #include "Nodes/FuncBody.h"
 #include "Nodes/FuncCall.h"
+#include "Nodes/FuncCallParams.h"
 #include "Nodes/FuncParams.h"
 #include "Nodes/Local.h"
 #include "Nodes/Program.h"

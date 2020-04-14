@@ -79,3 +79,11 @@ void AST::ASTNode::adoptChildren(const std::deque<ASTNode *> &_children) {
 void AST::ASTNode::accept(Visitor &visitor) {
     visitor.visit(this);
 }
+
+const std::string &AST::ASTNode::getTag() const {
+    return tag;
+}
+
+void AST::ASTNode::setTag(const std::string &tag) {
+    ASTNode::tag = tag;
+}

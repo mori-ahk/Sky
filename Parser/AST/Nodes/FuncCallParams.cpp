@@ -3,3 +3,8 @@
 //
 
 #include "FuncCallParams.h"
+#include "../../../Visitors/Visitor.h"
+
+void FuncCallParams::accept(Visitor &visitor) {
+    visitor.visit(this);
+}

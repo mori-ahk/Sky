@@ -1,20 +1,26 @@
+factorial(integer x) : integer
+    do
+        if (x == 1)
+        then return(1);
+        else
+           return(factorial(x-1) * x);
+        ;
+    end
+
+add(integer x) : integer
+    do
+        return (x + 2);
+    end
+
+print(integer x, integer y): integer
+    do
+        return (x + y);
+    end
+
 main
   local
     integer x;
     integer y;
   do
-
-    y = 2;
-    x = y * 2;
-    if (y > x)
-      then
-        do
-        write(x);
-        end
-    else
-        do
-        write(y);
-        end
-    ;
-    write(x);
+    write(print(add(factorial(4)), add(factorial(5))));
   end

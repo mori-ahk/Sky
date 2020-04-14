@@ -25,7 +25,7 @@ void TCV::visit(FuncDef *node) {
     std::string _returnType = isClassFunc() ? signature->getChild(3)->getName() : signature->getChild(2)->getName();
     currentFuncName = isClassFunc() ? signature->getChild(1)->getName() : signature->getChild(0)->getName();
     currentNamespace = isClassFunc() ? signature->getChild(0)->getName() : std::string();
-    currentFunction = stgv->createTempFunction(node, currentFuncName, _returnType);
+    currentFunction = STGV::createTempFunction(node, currentFuncName, _returnType, detector);
     node->getChild(1)->accept(*this);
     if (shouldReturn && !didReturn) {
         std::string errorString = "No return statement in " + currentFunction->getName() + " returning non-void ";
@@ -73,6 +73,7 @@ void TCV::visit(Call *node) {
 
     try {
         if (isFuncCall(node)) {
+
             handleChainCalls(nodeName, node);
             return;
         } else {
@@ -196,7 +197,7 @@ bool TCV::isMatchType(const std::string &lhs, const std::string &rhs) {
 
 bool TCV::isFuncCall(AST::ASTNode *node) {
     if (node->getChildren().size() > 1)
-        return node->getChild(1)->getName().front() == 'F';
+        return node->getChild(1)->getName().front() == 'p';
     else return false;
 }
 
@@ -231,6 +232,7 @@ std::vector<std::string> TCV::getParamsType(AST::ASTNode *_node) {
 void TCV::checkIfFreeFunctionCalledWithRightArgument(std::string &nodeName, AST::ASTNode *_node) {
     auto functions = symbolTable->getFreeFunction(nodeName);
     auto function = getRightFunction(functions, _node);
+    _node->setTag(function->getTag());
     if (function != nullptr) returnType = function->getReturnType();
     else {
         std::string errorString = "Wrong arguments were passed to function name " + nodeName;
@@ -305,7 +307,6 @@ void TCV::handleChainCalls(std::string &nodeName, AST::ASTNode *node) {
     } else if (isCalledOnFunction(node)) {
         if (Variable::isTypeId(returnType))
             checkIfClassFunctionCalledWithRightAccess(nodeName, node, true);
-
     } else checkIfFreeFunctionCalledWithRightArgument(nodeName, node);
 }
 
@@ -357,3 +358,7 @@ void TCV::visit(VarDecl *node) {}
 void TCV::visit(Local *node) {}
 
 void TCV::visit(Sign *node) {}
+
+void TCV::visit(FuncCallParams *node) {
+
+}

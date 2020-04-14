@@ -115,3 +115,11 @@ int Function::getVariableOffset() const {
     for (int i = 0; i < sizes.size() - 1; i++) toReturn += sizes.at(i);
     return toReturn;
 }
+
+const std::string &Function::getTag() const {
+    return tag;
+}
+
+void Function::setTag(const std::string &tag) {
+    Function::tag = tag;
+}

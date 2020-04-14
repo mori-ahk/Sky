@@ -9,6 +9,7 @@
 #include "../../Semantic/SymbolTable/SymbolTable.h"
 #include "../SymbolTable/STGV.h"
 #include "CodeWriter.h"
+#include "../TypeChecking/TCV.h"
 
 class CGV : public Visitor {
 public:
@@ -34,6 +35,8 @@ public:
     void visit(FuncBody *node) override;
 
     void visit(FuncCall *node) override;
+
+    void visit(FuncCallParams *node) override;
 
     void visit(FuncDef *node) override;
 
@@ -86,7 +89,7 @@ private:
     int currentNumber;
 
     void visitNodesAndUpdateFramePointer(AST::ASTNode *, bool);
-    std::string generateTag(const std::string&);
+    static std::string generateTag(const std::string&);
 
 };
 

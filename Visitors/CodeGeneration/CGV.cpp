@@ -47,14 +47,25 @@ void CGV::visit(Calls *node) {
 }
 
 void CGV::visit(Call *node) {
-    currentVar = currentFunction->getVariable(node->getChild(0)->getName());
-    writer->comment("Setting the address and value of " + currentVar->getName());
-    int offset = -(currentVar->getOffset() + currentVar->getSize());
-    //load the value of node from memory
-    writer->loadWord("r1", offset, "r14");
-    writer->OP("addi", "r2", "r14", std::to_string(offset));
-    writer->saveWord(-4, "r12", "r1");
-    writer->saveWord(-8, "r12", "r2");
+    if (TCV::isFuncCall(node)) {
+        writer->comment("Allocating memory for function call " + node->getChild(0)->getName());
+        writer->comment("Moving frame pointer to reserve stack space for current scope");
+        writer->OP("subi", "r12", "r12", std::to_string(12));
+        currentFuncName = node->getChild(0)->getName();
+        node->getChild(1)->accept(*this);
+        writer->comment("Moving back the frame pointer to its position before the function call");
+        writer->OP("addi", "r12", "r12", std::to_string(12));
+        writer->OP("jl", "r15", node->getTag());
+    } else {
+        currentVar = currentFunction->getVariable(node->getChild(0)->getName());
+        writer->comment("Allocating memory for variable " + currentVar->getName());
+        int offset = -(currentVar->getOffset() + currentVar->getSize());
+        //load the value of node from memory
+        writer->loadWord("r1", offset, "r14");
+        writer->OP("addi", "r2", "r14", std::to_string(offset));
+        writer->saveWord(-4, "r12", "r1");
+        writer->saveWord(-8, "r12", "r2");
+    }
 }
 
 void CGV::visit(ClassDecls *node) {
@@ -67,6 +78,8 @@ void CGV::visit(ClassDecl *node) {
 
 void CGV::visit(CompareOp *node) {
     visitNodesAndUpdateFramePointer(node, false);
+    writer->loadWord("r1", -4, "r12");
+    writer->loadWord("r2", -12, "r12");
 
     writer->comment("Comparing");
     auto compareNodeSymbol = node->getChild(1)->getName();
@@ -74,8 +87,8 @@ void CGV::visit(CompareOp *node) {
     else if (compareNodeSymbol == "<>") writer->OP("cne", "r1", "r1", "r2");
     else if (compareNodeSymbol == "<=") writer->OP("cle", "r1", "r1", "r2");
     else if (compareNodeSymbol == ">=") writer->OP("cge", "r1", "r1", "r2");
-    else if (compareNodeSymbol == ">") writer->OP("cgt", "r1", "r1", "r2");
-    else writer->OP("clt", "r1", "r1", "r2");
+    else if (compareNodeSymbol == ">") writer->OP("clt", "r1", "r1", "r2");
+    else writer->OP("cgt", "r1", "r1", "r2");
     writer->saveWord(-4, "r12", "r1");
 }
 
@@ -88,11 +101,47 @@ void CGV::visit(FuncBody *node) {
 }
 
 void CGV::visit(FuncCall *node) {
+    for (auto &child : node->getChildren()) child->accept(*this);
+}
 
+void CGV::visit(FuncCallParams *node) {
+    writer->comment("Allocating memory for function params");
+    for (auto &child : node->getChildren()) {
+        child->accept(*this);
+        writer->OP("subi", "r12", "r12", std::to_string(4));
+    }
+    int params = node->getChildren().size();
+    writer->comment("Move back the frame pointer to first of the function stack frame");
+    writer->OP("addi", "r12", "r12", std::to_string(params * 4));
 }
 
 void CGV::visit(FuncDef *node) {
-
+    auto signature = node->getChild(0);
+    std::string funcName = signature->getChild(0)->getName();
+    std::string returnType = signature->getChildren().back()->getName();
+    currentFunction = symbolTable->getFreeFunction(funcName, STGV::createTempFunction(node, funcName, returnType, nullptr));
+    writer->tag(currentFunction->getTag());
+    writer->comment("Saving values of reserved registers");
+    writer->saveWord(-4, "r12", "r15");
+    writer->saveWord(-8, "r12", "r14");
+    writer->saveWord(-12, "r12", "r12");
+    writer->comment("Moving stack pointer to the same address as frame pointer");
+    writer->OP("subi", "r14", "r12", std::to_string(12));
+    //calling `funcBody` node
+    node->getChild(1)->accept(*this);
+    writer->tag(currentFunction->getTag() + "_end");
+    writer->comment("Moving stack pointer back to its position before function definition");
+    writer->OP("addi", "r12", "r14", std::to_string(12));
+    writer->comment("setting values of reserved registers to their old values before function definition");
+    writer->loadWord("r15", -4, "r12");
+    writer->loadWord("r14", -8, "r12");
+    writer->loadWord("r12", -12, "r12");
+    if (currentFunction->getReturnType() != "void") {
+        writer->comment("Loading return value to r1");
+        writer->loadWord("r1", -4, "r13");
+        writer->saveWord(-4, "r12", "r1");
+    }
+    writer->OP("jr", "r15");
 }
 
 void CGV::visit(FuncDecl *node) {
@@ -129,9 +178,11 @@ void CGV::visit(Local *node) {
 }
 
 void CGV::visit(MainFunc *node) {
+    writer->start();
     currentFuncName = "main";
     currentNamespace = std::string();
     currentFunction = symbolTable->main;
+    writer->tag("main");
     node->getChild(0)->accept(*this);
     writer->finish();
 }
@@ -173,7 +224,10 @@ void CGV::visit(Read *node) {
 }
 
 void CGV::visit(Return *node) {
-
+    node->getChild(0)->accept(*this);
+    writer->comment("Returning from function " + currentFunction->getName());
+    writer->OP("add", "r13", "r12", "r0");
+    writer->OP("j", currentFunction->getTag() + "_end");
 }
 
 void CGV::visit(Sign *node) {
@@ -221,7 +275,7 @@ Variable *CGV::getLiteralVariableWithTag() {
 }
 
 std::string CGV::generateTag(const std::string &label) {
-    std::string tagString = currentFunction->getName() + "_" + std::to_string(tag++) + "_" + label;
+    std::string tagString =  label + "_" + std::to_string(tag++);
     return tagString;
 }
 

@@ -126,6 +126,7 @@ AST::ASTNode *AST::ASTBuilder::createCustomNode(std::string &nodeName, Token *to
     else if (nodeName == "func_def") return new FuncDef(nodeName, token);
     else if (nodeName == "func_decl") return new FuncDecl(nodeName, token);
     else if (nodeName == "params") return new FuncParams(nodeName, token);
+    else if (nodeName == "params_call") return new FuncCallParams(nodeName, token);
     else if (nodeName == "if") return new If(nodeName, token);
     else if (nodeName == "LOCALSCOPE") return new Local(nodeName, token);
     else if (nodeName == "main") return new MainFunc(nodeName, token);
