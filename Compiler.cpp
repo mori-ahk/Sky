@@ -9,7 +9,7 @@
 Compiler::Compiler(std::string _filePath) {
     this->filePath = std::move(_filePath);
     this->lexer = new Lexer();
-    lexer->lex("Tests/" + filePath);
+    lexer->lex(filePath);
     this->parser = new Syntax::Parser(lexer);
     this->symTabGenerator = nullptr;
     this->typeChecker = nullptr;
