@@ -24,7 +24,6 @@ public:
     void OP(const std::string &, const std::string &, const std::string &);
     void OP(const std::string &, const std::string &, const std::string &, const std::string &);
     void endl();
-    std::string generateTag(const std::string &, bool isForEnd = false);
 private:
     std::string moonOutput;
     const std::string tab = "\t";

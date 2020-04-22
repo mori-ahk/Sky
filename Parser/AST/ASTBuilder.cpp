@@ -92,22 +92,6 @@ void AST::ASTBuilder::handle(std::string &action, std::string &LHS) {
     else removeSelfIfOnlyHasOneChild();
 }
 
-void AST::ASTBuilder::printStack() {
-    std::vector<ASTNode *> v;
-    testStack = stack;
-    while (!testStack.empty()) {
-        v.push_back(testStack.top());
-        testStack.pop();
-    }
-
-    for (int i = v.size() - 1; i > -1; i--) {
-        std::cout << v.at(i)->getName() << "| ";
-    }
-
-    std::cout << std::endl;
-}
-
-
 void AST::ASTBuilder::visualize() {
     visualizer->visualize(root);
 }

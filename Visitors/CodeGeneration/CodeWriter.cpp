@@ -95,15 +95,3 @@ void CodeWriter::write(std::string &fileName) {
     std::ofstream stream( base + fileName + ".m");
     stream << moonOutput;
 }
-
-std::string CodeWriter::generateTag(const std::string & _tag, bool isForEnd) {
-    if (tags.find(_tag) != tags.end()) {
-        tags.at(_tag)++;
-        std::string toReturn = _tag + "_" + std::to_string(tags.at(_tag));
-        if (isForEnd) toReturn += "_end";
-        return toReturn;
-    } else {
-        tags[_tag] = 1;
-        return _tag;
-    }
-}

@@ -51,8 +51,6 @@ namespace AST {
 
         bool isIgnoreModeOn;
 
-        void printStack();
-
         ASTNode *getRoot();
 
         void visualize();
@@ -74,7 +72,6 @@ namespace AST {
         static ASTNode *createCustomNode(std::string &, Token *token = nullptr);
 
         std::stack<ASTNode *> stack;
-        std::stack<ASTNode *> testStack;
         ASTNode *root;
         Visualizer *visualizer;
     };

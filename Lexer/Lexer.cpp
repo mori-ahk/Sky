@@ -89,16 +89,17 @@ void Lexer::read(std::string &filePath) {
     std::string fileContent;
     std::string line;
     std::ifstream stream;
+    std::string _filePath = "Tests/" + filePath;
     int pos = 0;
     int lineNumber = 1;
-    stream.open(filePath, std::ios::in);
+    stream.open(_filePath, std::ios::in);
 
     while (!stream.eof()) {
         std::getline(stream, line);
         fileContent += line + "\n";
     }
 
-    while (fileContent.size() != 0) {
+    while (!fileContent.empty()) {
         if (fileContent.at(pos) == '\n') {
             lineNumber++;
             linePosition = 0;
@@ -115,13 +116,13 @@ void Lexer::read(std::string &filePath) {
 
 void Lexer::write(std::string &filePath) {
     std::string fileName;
-
+    std::string base = "Output/";
     for (const auto &c : filePath) {
         if (c == '.') break;
         fileName += c;
     }
 
-    std::ofstream stream(fileName + "_lex_tokens.txt");
+    std::ofstream stream(base + fileName + "_lex_tokens.txt");
     for (int i = 0; i < totalMatches.size(); i++) {
         if (i + 1 < totalMatches.size() && totalMatches.at(i)->getLineno() < totalMatches.at(i + 1)->getLineno()) {
             stream << *(totalMatches.at(i)) << std::endl;
@@ -130,7 +131,7 @@ void Lexer::write(std::string &filePath) {
 
     stream.close();
 
-    stream.open(fileName + "_lex_errors.txt");
+    stream.open(base + fileName + "_lex_errors.txt");
     for (int i = 0; i < totalErrors.size(); i++) {
         if (i + 1 < totalErrors.size() && totalErrors.at(i)->getLineno() < totalErrors.at(i + 1)->getLineno()) {
             stream << *(totalErrors.at(i)) << std::endl;
@@ -149,5 +150,5 @@ void Lexer::lex(std::string filePath) {
     totalMatches.clear();
     totalErrors.clear();
     read(filePath);
-//    write(filePath);
+    write(filePath);
 }
