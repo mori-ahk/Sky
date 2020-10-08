@@ -1,6 +1,9 @@
 # Sky
 ## Lexer
-### How it works?
+### How it works? 
+
+**Please check [here](https://www.mortezaa.com/posts/lexer_compiler) for deep dive on how the lexer works**
+
 The lexer for Sky is written in C++ using regex matching, and it works as follows:
 - When the lexer is passed a file to tokenize, first it stores the entire file content to a string
 - Then the content of the file is passed to the `Tokenizer` class to be matched against regex expressions.
@@ -12,6 +15,8 @@ The lexer for Sky is written in C++ using regex matching, and it works as follow
 - Integer tokens are matched against `^([1-9][0-9]*|0)` which can be written as `numbers starting with 1 | 0`.
 - Float tokens are matched against `^([0-9]*\\.[0-9]+[e]?[+-]?[0-9]+)` which accepts `nullable number following by . follwing by optional e and number`.
 - The rest of the reserved keyword tokens is matched with the hard coded regex expression. The string value of a reserved keyword will be retrieved from `RESERVED_WORDS` map once they have been matched by the tokenizer.
+
+
     
 ## Parser Actions
 
